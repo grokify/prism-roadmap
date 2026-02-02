@@ -15,38 +15,38 @@
         { "description": "Add completeness scoring for in-scope and related documents sections", "commit": "2004120" }
       ],
       "added": [
-        { "description": "Add --text-icons CLI flag for Pandoc PDF compatibility" },
-        { "description": "Add Service type with layer, protocol, language, responsibilities, dependencies", "commit": "2b8dc56" },
-        { "description": "Add APISpec and APIEndpoint types for API documentation", "commit": "2b8dc56" },
-        { "description": "Add StorageCategory type for storage architecture by category", "commit": "2b8dc56" },
-        { "description": "Add GitOpsConfig and SourceOfTruth types for GitOps configuration", "commit": "2b8dc56" },
-        { "description": "Add OrchestrationConfig type for workflow orchestration (short-lived, long-running)", "commit": "2b8dc56" },
-        { "description": "Add RelatedDocument type for linking PRDs, TRDs, design docs, RFCs", "commit": "2b8dc56" },
-        { "description": "Add InScope field to Document (complements OutOfScope)", "commit": "2b8dc56" },
-        { "description": "Add enum types: ServiceLayer, Protocol, StorageCategoryType, SourceOfTruthLocation, RelationshipType, DocumentType", "commit": "2b8dc56" },
+        { "description": "Add `--text-icons` CLI flag for Pandoc PDF compatibility" },
+        { "description": "Add `Service` type with layer, protocol, language, responsibilities, dependencies", "commit": "2b8dc56" },
+        { "description": "Add `APISpec` and `APIEndpoint` types for API documentation", "commit": "2b8dc56" },
+        { "description": "Add `StorageCategory` type for storage architecture by category", "commit": "2b8dc56" },
+        { "description": "Add `GitOpsConfig` and `SourceOfTruth` types for GitOps configuration", "commit": "2b8dc56" },
+        { "description": "Add `OrchestrationConfig` type for workflow orchestration (short-lived, long-running)", "commit": "2b8dc56" },
+        { "description": "Add `RelatedDocument` type for linking PRDs, TRDs, design docs, RFCs", "commit": "2b8dc56" },
+        { "description": "Add `InScope` field to `Document` (complements `OutOfScope`)", "commit": "2b8dc56" },
+        { "description": "Add enum types: `ServiceLayer`, `Protocol`, `StorageCategoryType`, `SourceOfTruthLocation`, `RelationshipType`, `DocumentType`", "commit": "2b8dc56" },
         { "description": "Add markdown rendering for Services table and detailed sections", "commit": "48be2d0" },
         { "description": "Add markdown rendering for APIs with endpoints table", "commit": "48be2d0" },
         { "description": "Add markdown rendering for Storage Architecture table", "commit": "48be2d0" },
         { "description": "Add markdown rendering for GitOps Configuration", "commit": "48be2d0" },
         { "description": "Add markdown rendering for Workflow Orchestration", "commit": "48be2d0" },
         { "description": "Add markdown rendering for In Scope and Related Documents", "commit": "48be2d0" },
-        { "description": "Add checkInScope() completeness function for in-scope items", "commit": "2004120" },
-        { "description": "Add checkRelatedDocuments() completeness function for related documents", "commit": "2004120" }
+        { "description": "Add `checkInScope()` completeness function for in-scope items", "commit": "2004120" },
+        { "description": "Add `checkRelatedDocuments()` completeness function for related documents", "commit": "2004120" }
       ],
       "changed": [
-        { "description": "Update TechnicalArchitecture scoring: +1 for Services, +1 for APIs, +0.5 for Storage/GitOps/Orchestration", "commit": "2004120" },
-        { "description": "Update OptionalTotal from 6 to 8 sections", "commit": "2004120" },
-        { "description": "Update TechArchitecture maxPoints from 4.0 to 7.5", "commit": "2004120" },
+        { "description": "Update `TechnicalArchitecture` scoring: +1 for Services, +1 for APIs, +0.5 for Storage/GitOps/Orchestration", "commit": "2004120" },
+        { "description": "Update `OptionalTotal` from 6 to 8 sections", "commit": "2004120" },
+        { "description": "Update `TechArchitecture` maxPoints from 4.0 to 7.5", "commit": "2004120" },
         { "description": "Regenerate PRD JSON schema with new types", "commit": "15f937f" }
       ],
       "fixed": [
-        { "description": "Add UseTextIcons option for Pandoc PDF compatibility (converts emoji to ASCII)", "commit": "52c6128" }
+        { "description": "Add `UseTextIcons` option for Pandoc PDF compatibility (converts emoji to ASCII)", "commit": "52c6128" }
       ],
       "documentation": [
-        { "description": "Reorganize release notes from root to docs/releases/", "commit": "6f11b20" },
+        { "description": "Reorganize release notes from root to `docs/releases/`", "commit": "6f11b20" },
         { "description": "Add v0.7.0 release notes with PRD platform architecture features", "commit": "fd11129" },
         { "description": "Document PRD technical architecture sections in README", "commit": "38078c1" },
-        { "description": "Update PRD section table with inScope and relatedDocuments", "commit": "38078c1" },
+        { "description": "Update PRD section table with `inScope` and `relatedDocuments`", "commit": "38078c1" },
         { "description": "Update completeness check example output for 8 optional sections", "commit": "38078c1" },
         { "description": "Document Pandoc PDF generation with XeLaTeX and DejaVu font requirements", "commit": "7123664" },
         { "description": "Add release notes to MkDocs navigation", "commit": "b65aa90" }
@@ -56,30 +56,30 @@
       "version": "v0.6.0",
       "date": "2026-01-30",
       "highlights": [
-        { "description": "BREAKING: Migrate all JSON tags from snake_case to camelCase for consistency with JSON/JavaScript conventions", "commit": "7469a09" },
+        { "description": "BREAKING: Migrate all JSON tags from `snake_case` to `camelCase` for consistency with JSON/JavaScript conventions", "commit": "7469a09" },
         { "description": "Add Goals CLI commands (V2MOM and OKR) for validation, Marp slide generation, and template creation", "commit": "c3677cf" },
         { "description": "Add JSON Schema generation for OKR and V2MOM documents", "commit": "13a69b0" }
       ],
       "changed": [
-        { "description": "BREAKING: Migrate 252 JSON field names from snake_case to camelCase", "commit": "7469a09" },
-        { "description": "Update all example JSON files to use camelCase field names", "commit": "53e5121" },
-        { "description": "Regenerate PRD JSON schema with camelCase field names", "commit": "33dc1fb" }
+        { "description": "BREAKING: Migrate 252 JSON field names from `snake_case` to `camelCase`", "commit": "7469a09" },
+        { "description": "Update all example JSON files to use `camelCase` field names", "commit": "53e5121" },
+        { "description": "Regenerate PRD JSON schema with `camelCase` field names", "commit": "33dc1fb" }
       ],
       "added": [
-        { "description": "Add 'splan goals v2mom validate' command for V2MOM validation", "commit": "c3677cf" },
-        { "description": "Add 'splan goals v2mom generate marp' command for Marp slide generation", "commit": "c3677cf" },
-        { "description": "Add 'splan goals v2mom init' command for creating V2MOM templates", "commit": "c3677cf" },
-        { "description": "Add 'splan goals okr validate' command for OKR validation", "commit": "13a69b0" },
-        { "description": "Add 'splan goals okr generate marp' command for Marp slide generation", "commit": "13a69b0" },
-        { "description": "Add 'splan goals okr init' command for creating OKR templates", "commit": "13a69b0" },
-        { "description": "Add OKR and V2MOM JSON Schema generation (splan schema generate --type okr/v2mom)", "commit": "13a69b0" },
-        { "description": "Add embedded OKR and V2MOM JSON schemas with OKRSchema() and V2MOMSchema()", "commit": "13a69b0" },
+        { "description": "Add `splan goals v2mom validate` command for V2MOM validation", "commit": "c3677cf" },
+        { "description": "Add `splan goals v2mom generate marp` command for Marp slide generation", "commit": "c3677cf" },
+        { "description": "Add `splan goals v2mom init` command for creating V2MOM templates", "commit": "c3677cf" },
+        { "description": "Add `splan goals okr validate` command for OKR validation", "commit": "13a69b0" },
+        { "description": "Add `splan goals okr generate marp` command for Marp slide generation", "commit": "13a69b0" },
+        { "description": "Add `splan goals okr init` command for creating OKR templates", "commit": "13a69b0" },
+        { "description": "Add OKR and V2MOM JSON Schema generation (`splan schema generate --type okr/v2mom`)", "commit": "13a69b0" },
+        { "description": "Add embedded OKR and V2MOM JSON schemas with `OKRSchema()` and `V2MOMSchema()`", "commit": "13a69b0" },
         { "description": "Add V2MOM example files (minimal, product, agentplexus)", "commit": "13a69b0" },
-        { "description": "Add migration script for user JSON files (scripts/migrate_json_to_camelcase.sh)", "commit": "28dbd35" },
-        { "description": "Add migration plan documenting all field name changes (MIGRATION_CAMELCASE.md)", "commit": "28dbd35" }
+        { "description": "Add migration script for user JSON files (`scripts/migrate_json_to_camelcase.sh`)", "commit": "28dbd35" },
+        { "description": "Add migration plan documenting all field name changes (`MIGRATION_CAMELCASE.md`)", "commit": "28dbd35" }
       ],
       "documentation": [
-        { "description": "Document complete snake_case to camelCase field mapping", "commit": "28dbd35" }
+        { "description": "Document complete `snake_case` to `camelCase` field mapping", "commit": "28dbd35" }
       ]
     },
     {
@@ -87,42 +87,42 @@
       "date": "2026-01-30",
       "highlights": [
         { "description": "Rename repository from structured-requirements to structured-plan", "commit": "5cde98e" },
-        { "description": "Add framework-agnostic Goals wrapper supporting both OKR and V2MOM", "commit": "c1282b4" },
-        { "description": "Extract common types (Risk, Assumption, Constraint, etc.) to common/ package", "commit": "8f2ba1c" }
+        { "description": "Add framework-agnostic `Goals` wrapper supporting both OKR and V2MOM", "commit": "c1282b4" },
+        { "description": "Extract common types (`Risk`, `Assumption`, `Constraint`, etc.) to `common/` package", "commit": "8f2ba1c" }
       ],
       "added": [
-        { "description": "Add goals/ package with framework-agnostic Goals wrapper", "commit": "c1282b4" },
-        { "description": "Add GoalItem and ResultItem abstractions for unified rendering", "commit": "c1282b4" },
-        { "description": "Add GoalLabel()/ResultLabel() for dynamic framework-specific labels", "commit": "c1282b4" },
-        { "description": "Add ResultItemsByPhase() for roadmap alignment", "commit": "c1282b4" },
-        { "description": "Add ProductGoals field to PRD for framework-agnostic goals", "commit": "288156d" },
-        { "description": "Add GetProductGoals() helper for unified goals access", "commit": "288156d" },
-        { "description": "Add ToSwimlaneTableWithGoals() with dynamic labels (Objectives/Methods, Key Results/Measures)", "commit": "288156d" },
-        { "description": "Add common/status.go with Status type and constants", "commit": "8f2ba1c" },
-        { "description": "Add common/risk.go with Risk, RiskProbability, RiskImpact, RiskStatus types", "commit": "8f2ba1c" },
-        { "description": "Add common/assumption.go with Assumption type", "commit": "8f2ba1c" },
-        { "description": "Add common/constraint.go with Constraint and ConstraintType", "commit": "8f2ba1c" },
-        { "description": "Add common/decision.go with OpenItem, Option, DecisionRecord types", "commit": "8f2ba1c" },
-        { "description": "Add common/glossary.go with GlossaryTerm type", "commit": "8f2ba1c" },
-        { "description": "Add common/custom.go with CustomSection type", "commit": "8f2ba1c" },
-        { "description": "Add common/nongoals.go with NonGoal type", "commit": "8f2ba1c" },
+        { "description": "Add `goals/` package with framework-agnostic `Goals` wrapper", "commit": "c1282b4" },
+        { "description": "Add `GoalItem` and `ResultItem` abstractions for unified rendering", "commit": "c1282b4" },
+        { "description": "Add `GoalLabel()`/`ResultLabel()` for dynamic framework-specific labels", "commit": "c1282b4" },
+        { "description": "Add `ResultItemsByPhase()` for roadmap alignment", "commit": "c1282b4" },
+        { "description": "Add `ProductGoals` field to PRD for framework-agnostic goals", "commit": "288156d" },
+        { "description": "Add `GetProductGoals()` helper for unified goals access", "commit": "288156d" },
+        { "description": "Add `ToSwimlaneTableWithGoals()` with dynamic labels (Objectives/Methods, Key Results/Measures)", "commit": "288156d" },
+        { "description": "Add `common/status.go` with `Status` type and constants", "commit": "8f2ba1c" },
+        { "description": "Add `common/risk.go` with `Risk`, `RiskProbability`, `RiskImpact`, `RiskStatus` types", "commit": "8f2ba1c" },
+        { "description": "Add `common/assumption.go` with `Assumption` type", "commit": "8f2ba1c" },
+        { "description": "Add `common/constraint.go` with `Constraint` and `ConstraintType`", "commit": "8f2ba1c" },
+        { "description": "Add `common/decision.go` with `OpenItem`, `Option`, `DecisionRecord` types", "commit": "8f2ba1c" },
+        { "description": "Add `common/glossary.go` with `GlossaryTerm` type", "commit": "8f2ba1c" },
+        { "description": "Add `common/custom.go` with `CustomSection` type", "commit": "8f2ba1c" },
+        { "description": "Add `common/nongoals.go` with `NonGoal` type", "commit": "8f2ba1c" },
         { "description": "Add GoReleaser with multi-platform builds (linux, darwin, windows on amd64/arm64)", "commit": "d38d5b0" },
         { "description": "Add Homebrew tap publishing to grokify/homebrew-tap", "commit": "d38d5b0" },
         { "description": "Add release workflow triggered on version tags", "commit": "d38d5b0" }
       ],
       "changed": [
-        { "description": "Rename module from github.com/grokify/structured-requirements to github.com/grokify/structured-plan", "commit": "5cde98e" },
-        { "description": "Deprecate ToSwimlaneTableWithOKRs() in favor of ToSwimlaneTableWithGoals()", "commit": "288156d" },
-        { "description": "Consolidate CLI: migrate merge command to splan and remove legacy srequirements", "commit": "20b77f0" }
+        { "description": "Rename module from `github.com/grokify/structured-requirements` to `github.com/grokify/structured-plan`", "commit": "5cde98e" },
+        { "description": "Deprecate `ToSwimlaneTableWithOKRs()` in favor of `ToSwimlaneTableWithGoals()`", "commit": "288156d" },
+        { "description": "Consolidate CLI: migrate `merge` command to splan and remove legacy srequirements", "commit": "20b77f0" }
       ],
       "refactored": [
-        { "description": "Consolidate OKR types into goals/okr package with merged fields from PRD", "commit": "d68dc6b" },
-        { "description": "Add PhaseTarget, MeasurementMethod, Tags to KeyResult from PRD", "commit": "d68dc6b" },
-        { "description": "Add Rationale, Category, Tags to Objective from PRD", "commit": "d68dc6b" },
-        { "description": "Update PRD to use goals/okr types via type aliases", "commit": "d68dc6b" },
-        { "description": "Extract common types from PRD/MRD/TRD to common/ package", "commit": "8f2ba1c" },
+        { "description": "Consolidate OKR types into `goals/okr` package with merged fields from PRD", "commit": "d68dc6b" },
+        { "description": "Add `PhaseTarget`, `MeasurementMethod`, `Tags` to `KeyResult` from PRD", "commit": "d68dc6b" },
+        { "description": "Add `Rationale`, `Category`, `Tags` to `Objective` from PRD", "commit": "d68dc6b" },
+        { "description": "Update PRD to use `goals/okr` types via type aliases", "commit": "d68dc6b" },
+        { "description": "Extract common types from PRD/MRD/TRD to `common/` package", "commit": "8f2ba1c" },
         { "description": "Update PRD/MRD/TRD to use common types via type aliases", "commit": "8f2ba1c" },
-        { "description": "Migrate merge command to splan CLI and remove legacy srequirements CLI", "commit": "20b77f0" }
+        { "description": "Migrate `merge` command to splan CLI and remove legacy srequirements CLI", "commit": "20b77f0" }
       ],
       "documentation": [
         { "description": "Document Phase 5 decision: structured-roadmap renamed to structured-tasks", "commit": "052e728" }
@@ -137,29 +137,29 @@
         { "description": "Add roadmap swimlane table with auto-derived OKR swimlanes", "commit": "813616e" }
       ],
       "added": [
-        { "description": "Add OKR structure with nested Objectives and KeyResults replacing legacy goals", "commit": "7f96f4d" },
-        { "description": "Add KeyResult type with baseline, target, current, confidence, and phase targets", "commit": "7f96f4d" },
-        { "description": "Add PhaseTarget type for roadmap-aligned OKR progress tracking", "commit": "7f96f4d" },
+        { "description": "Add OKR structure with nested `Objectives` and `KeyResults` replacing legacy goals", "commit": "7f96f4d" },
+        { "description": "Add `KeyResult` type with baseline, target, current, confidence, and phase targets", "commit": "7f96f4d" },
+        { "description": "Add `PhaseTarget` type for roadmap-aligned OKR progress tracking", "commit": "7f96f4d" },
         { "description": "Add CLI `filter` command for tag-based PRD filtering", "commit": "471ab77" },
-        { "description": "Add FilterByTags() method to PRD/MRD/TRD for OR-logic tag filtering", "commit": "3d3eb3b" },
-        { "description": "Add FilterByTagsAll() method for AND-logic tag filtering", "commit": "3d3eb3b" },
-        { "description": "Add ValidateTag() and ValidateTags() for kebab-case tag validation", "commit": "3d3eb3b" },
-        { "description": "Add roadmap swimlane table with ToSwimlaneTable() method", "commit": "813616e" },
-        { "description": "Add ToSwimlaneTableWithOKRs() for combined deliverables and OKR swimlanes", "commit": "813616e" },
-        { "description": "Add StatusLegend() for roadmap status icon reference table", "commit": "813616e" },
+        { "description": "Add `FilterByTags()` method to PRD/MRD/TRD for OR-logic tag filtering", "commit": "3d3eb3b" },
+        { "description": "Add `FilterByTagsAll()` method for AND-logic tag filtering", "commit": "3d3eb3b" },
+        { "description": "Add `ValidateTag()` and `ValidateTags()` for kebab-case tag validation", "commit": "3d3eb3b" },
+        { "description": "Add roadmap swimlane table with `ToSwimlaneTable()` method", "commit": "813616e" },
+        { "description": "Add `ToSwimlaneTableWithOKRs()` for combined deliverables and OKR swimlanes", "commit": "813616e" },
+        { "description": "Add `StatusLegend()` for roadmap status icon reference table", "commit": "813616e" },
         { "description": "Add Objectives overview list in markdown output", "commit": "7f96f4d" },
-        { "description": "Add common package with shared Person and Approver types", "commit": "fc0a9dc" },
-        { "description": "Add FormatPersonMarkdown() and FormatPeopleMarkdown() utilities", "commit": "fc0a9dc" },
+        { "description": "Add `common` package with shared `Person` and `Approver` types", "commit": "fc0a9dc" },
+        { "description": "Add `FormatPersonMarkdown()` and `FormatPeopleMarkdown()` utilities", "commit": "fc0a9dc" },
         { "description": "Add new PRD sections: Appendices, CurrentState, OpenItems, SecurityModel", "commit": "a589855" },
-        { "description": "Add OpenItem type for pending decisions with options and tradeoffs", "commit": "a589855" },
-        { "description": "Add Option type with pros/cons/effort/risk for decision tracking", "commit": "a589855" },
-        { "description": "Add generic appendix helpers: NewTableAppendix, NewTextAppendix, NewCodeAppendix", "commit": "a589855" },
-        { "description": "Add DeliverableRollout type for operational customer rollout swimlanes", "commit": "813616e" },
+        { "description": "Add `OpenItem` type for pending decisions with options and tradeoffs", "commit": "a589855" },
+        { "description": "Add `Option` type with pros/cons/effort/risk for decision tracking", "commit": "a589855" },
+        { "description": "Add generic appendix helpers: `NewTableAppendix`, `NewTextAppendix`, `NewCodeAppendix`", "commit": "a589855" },
+        { "description": "Add `DeliverableRollout` type for operational customer rollout swimlanes", "commit": "813616e" },
         { "description": "Add Marp presentation template for structured-plan overview", "commit": "aa9478c" },
-        { "description": "Add TODO.md documenting restructuring plan for structured-plan rename", "commit": "aa9478c" }
+        { "description": "Add `TODO.md` documenting restructuring plan for structured-plan rename", "commit": "aa9478c" }
       ],
       "changed": [
-        { "description": "Replace BusinessObjectives, ProductGoals, SuccessMetrics with OKR structure", "commit": "7f96f4d" },
+        { "description": "Replace `BusinessObjectives`, `ProductGoals`, `SuccessMetrics` with OKR structure", "commit": "7f96f4d" },
         { "description": "Show objectives in all phases where their Key Results appear (not just first phase)", "commit": "7f96f4d" }
       ],
       "improved": [
@@ -170,7 +170,7 @@
       ],
       "refactored": [
         { "description": "Simplify appendix system by removing domain-specific schemas", "commit": "a589855" },
-        { "description": "Use type aliases for backwards-compatible Person and Approver types", "commit": "fc0a9dc" }
+        { "description": "Use type aliases for backwards-compatible `Person` and `Approver` types", "commit": "fc0a9dc" }
       ],
       "documentation": [
         { "description": "Add roadmap and swimlane table documentation to README", "commit": "9333044" },
@@ -184,7 +184,7 @@
         { "description": "Reduce requirements table title column width to 70%", "commit": "e9c3017" }
       ],
       "dependencies": [
-        { "description": "Update go.mod dependencies", "commit": "c8bd2b7" }
+        { "description": "Update `go.mod` dependencies", "commit": "c8bd2b7" }
       ]
     },
     {
@@ -199,47 +199,47 @@
       "date": "2026-01-26",
       "highlights": [
         { "description": "Add structured-evaluation integration for standardized PRD quality reports", "commit": "b5c79ce" },
-        { "description": "Add merge command for combining multiple PRD files", "commit": "8476603" }
+        { "description": "Add `merge` command for combining multiple PRD files", "commit": "8476603" }
       ],
       "added": [
-        { "description": "Add ScoreToEvaluationReport() to convert deterministic scoring to EvaluationReport format", "commit": "b5c79ce" },
-        { "description": "Add GenerateEvaluationTemplate() for LLM judge template generation", "commit": "b5c79ce" },
-        { "description": "Add GenerateEvaluationTemplateWithWeights() for custom category weights", "commit": "b5c79ce" },
-        { "description": "Add StandardCategories() returning 10 PRD evaluation categories with weights", "commit": "b5c79ce" },
-        { "description": "Add CategoryDescriptions() and CategoryOwners() helper functions for LLM prompts", "commit": "b5c79ce" },
-        { "description": "Add GetCategoriesFromDocument() to extract categories including custom sections", "commit": "b5c79ce" },
-        { "description": "Add 'srequirements merge' CLI command for combining multiple JSON files", "commit": "8476603" },
+        { "description": "Add `ScoreToEvaluationReport()` to convert deterministic scoring to `EvaluationReport` format", "commit": "b5c79ce" },
+        { "description": "Add `GenerateEvaluationTemplate()` for LLM judge template generation", "commit": "b5c79ce" },
+        { "description": "Add `GenerateEvaluationTemplateWithWeights()` for custom category weights", "commit": "b5c79ce" },
+        { "description": "Add `StandardCategories()` returning 10 PRD evaluation categories with weights", "commit": "b5c79ce" },
+        { "description": "Add `CategoryDescriptions()` and `CategoryOwners()` helper functions for LLM prompts", "commit": "b5c79ce" },
+        { "description": "Add `GetCategoriesFromDocument()` to extract categories including custom sections", "commit": "b5c79ce" },
+        { "description": "Add `srequirements merge` CLI command for combining multiple JSON files", "commit": "8476603" },
         { "description": "Add deep merge support for nested JSON objects", "commit": "8476603" },
-        { "description": "Add structured user story fields: epic_id, story_points, labels, dependencies", "commit": "4bc8bd7" }
+        { "description": "Add structured user story fields: `epic_id`, `story_points`, `labels`, `dependencies`", "commit": "4bc8bd7" }
       ],
       "improved": [
         { "description": "Use relative dash widths in markdown tables for wider Story and Description columns in Pandoc output", "commit": "c161df1" },
-        { "description": "Add --desc-len CLI flag to control description truncation length in tables (default: 100, was 60)", "commit": "c161df1" }
+        { "description": "Add `--desc-len` CLI flag to control description truncation length in tables (default: 100, was 60)", "commit": "c161df1" }
       ],
       "dependencies": [
-        { "description": "Update github.com/agentplexus/structured-evaluation to v0.2.0", "commit": "a4e41d1" }
+        { "description": "Update `github.com/agentplexus/structured-evaluation` to v0.2.0", "commit": "a4e41d1" }
       ],
       "chore": [
-        { "description": "Add built binaries to .gitignore", "commit": "cd2651c" }
+        { "description": "Add built binaries to `.gitignore`", "commit": "cd2651c" }
       ]
     },
     {
       "version": "v0.2.0",
       "date": "2026-01-25",
       "highlights": [
-        { "description": "Add schema package with //go:embed for programmatic JSON Schema access", "commit": "c219bed" },
-        { "description": "Add schema generator from Go types using invopop/jsonschema (Go-first approach)", "commit": "699ef11" }
+        { "description": "Add schema package with `//go:embed` for programmatic JSON Schema access", "commit": "c219bed" },
+        { "description": "Add schema generator from Go types using `invopop/jsonschema` (Go-first approach)", "commit": "699ef11" }
       ],
       "added": [
-        { "description": "Add schema embed package with PRDSchemaJSON, PRDSchema(), and PRDSchemaBytes()", "commit": "c219bed" },
-        { "description": "Add PRDSchemaID constant for canonical schema URL", "commit": "c219bed" },
-        { "description": "Add schema generator using invopop/jsonschema to generate from Go types", "commit": "699ef11" },
-        { "description": "Add NewGenerator(), GeneratePRDSchema(), WritePRDSchema() functions", "commit": "699ef11" },
-        { "description": "Add 'srequirements schema generate' CLI command for schema generation", "commit": "1970cb9" },
+        { "description": "Add schema embed package with `PRDSchemaJSON`, `PRDSchema()`, and `PRDSchemaBytes()`", "commit": "c219bed" },
+        { "description": "Add `PRDSchemaID` constant for canonical schema URL", "commit": "c219bed" },
+        { "description": "Add schema generator using `invopop/jsonschema` to generate from Go types", "commit": "699ef11" },
+        { "description": "Add `NewGenerator()`, `GeneratePRDSchema()`, `WritePRDSchema()` functions", "commit": "699ef11" },
+        { "description": "Add `srequirements schema generate` CLI command for schema generation", "commit": "1970cb9" },
         { "description": "Add extended PRD sections: problem, market, solution, decisions, reviews, revision_history, goals", "commit": "0911fd5" }
       ],
       "dependencies": [
-        { "description": "Add github.com/invopop/jsonschema v0.13.0 for JSON Schema generation", "commit": "699ef11" }
+        { "description": "Add `github.com/invopop/jsonschema` v0.13.0 for JSON Schema generation", "commit": "699ef11" }
       ]
     },
     {
@@ -270,8 +270,8 @@
         { "description": "Add changelog and release notes for v0.1.0", "commit": "64acec9" }
       ],
       "dependencies": [
-        { "description": "Add github.com/grokify/structureddocs v0.1.0 for shared Marp utilities", "commit": "c1493a4" },
-        { "description": "Add github.com/grokify/structured-goals v0.1.0 for goals alignment", "commit": "c1493a4" }
+        { "description": "Add `github.com/grokify/structureddocs` v0.1.0 for shared Marp utilities", "commit": "c1493a4" },
+        { "description": "Add `github.com/grokify/structured-goals` v0.1.0 for goals alignment", "commit": "c1493a4" }
       ],
       "ci": [
         { "description": "Add GitHub Actions workflows for build, lint, and test", "commit": "2219a95" }
