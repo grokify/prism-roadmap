@@ -727,41 +727,52 @@ HIGH (should fix):
 
 ## PDF Generation
 
-The generated markdown includes YAML frontmatter compatible with Pandoc. The frontmatter configures DejaVu fonts via `fontspec` for full Unicode/emoji support (✅, 🔄, ⏳, etc.).
+The generated markdown includes YAML frontmatter compatible with Pandoc.
 
 ```bash
 # Generate markdown
 splan req prd generate myproduct.prd.json -o myproduct.md
 
-# Convert to PDF with XeLaTeX (required for Unicode/emoji support)
-pandoc myproduct.md -o myproduct.pdf --pdf-engine=xelatex
+# Convert to PDF
+pandoc myproduct.md -o myproduct.pdf
 ```
 
 **Requirements:**
 
 - [Pandoc](https://pandoc.org/installing.html)
-- XeLaTeX (included with TeX Live or MacTeX)
-- DejaVu fonts (commonly pre-installed, or install via your package manager)
+- A LaTeX distribution (TeX Live, MacTeX, or MiKTeX)
 
-**Font installation (if needed):**
+### Handling Status Icons (Emoji)
 
-```bash
-# macOS (Homebrew)
-brew install --cask font-dejavu
+The default output uses emoji status icons (✅, 🔄, ⏳, etc.) which display correctly in HTML but may not render in PDF output. You have two options:
 
-# Ubuntu/Debian
-sudo apt-get install fonts-dejavu
+**Option 1: Use text icons for PDF compatibility**
 
-# Fedora
-sudo dnf install dejavu-sans-fonts dejavu-sans-mono-fonts
+```go
+opts := prd.DefaultMarkdownOptions()
+opts.UseTextIcons = true  // Uses [DONE], [WIP], [TODO] instead of emoji
+markdown := doc.ToMarkdown(opts)
 ```
 
-**Alternative PDF engines:**
+Text icon mappings:
+
+| Emoji | Text Icon |
+|-------|-----------|
+| ✅ | [DONE] |
+| 🔄 | [WIP] |
+| ⏳ | [TODO] |
+| 🚫 | [BLOCKED] |
+| ❌ | [MISSED] |
+
+**Option 2: Use XeLaTeX with emoji-capable fonts**
 
 ```bash
-# LuaLaTeX also supports Unicode
-pandoc myproduct.md -o myproduct.pdf --pdf-engine=lualatex
+pandoc myproduct.md -o myproduct.pdf --pdf-engine=xelatex \
+  -V mainfont="Noto Sans" \
+  -V monofont="Noto Sans Mono"
 ```
+
+Note: This requires fonts with emoji support (e.g., Noto Color Emoji, Apple Color Emoji).
 
 ## Examples
 

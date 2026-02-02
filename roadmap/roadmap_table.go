@@ -20,6 +20,9 @@ type TableOptions struct {
 	// IncludeOKRs adds Objectives and Key Results swimlanes derived from PhaseTargets.
 	// This is primarily used by PRD documents that have OKR integration.
 	IncludeOKRs bool
+	// UseTextIcons uses ASCII text instead of emoji for status icons.
+	// Enable this for Pandoc/LaTeX PDF generation compatibility.
+	UseTextIcons bool
 }
 
 // DefaultTableOptions returns sensible defaults for roadmap table generation.
@@ -120,7 +123,7 @@ func (r *Roadmap) ToSwimlaneTable(opts TableOptions) string {
 						item = item[:opts.MaxTitleLen-3] + "..."
 					}
 					if opts.IncludeStatus && del.Status != "" {
-						item = fmt.Sprintf("%s %s", StatusIcon(del.Status), item)
+						item = fmt.Sprintf("%s %s", StatusIconWithOptions(del.Status, opts.UseTextIcons), item)
 					}
 					// Add bullet point prefix
 					items = append(items, "• "+item)
@@ -164,7 +167,7 @@ func (r *Roadmap) ToPhaseTable(opts TableOptions) string {
 				item = item[:opts.MaxTitleLen-3] + "..."
 			}
 			if opts.IncludeStatus && del.Status != "" {
-				item = fmt.Sprintf("%s %s", StatusIcon(del.Status), item)
+				item = fmt.Sprintf("%s %s", StatusIconWithOptions(del.Status, opts.UseTextIcons), item)
 			}
 			// Add bullet point prefix
 			items = append(items, "• "+item)
@@ -210,6 +213,26 @@ func SwimlaneLabel(dt DeliverableType) string {
 
 // StatusIcon returns an emoji/icon for the deliverable status.
 func StatusIcon(status DeliverableStatus) string {
+	return StatusIconWithOptions(status, false)
+}
+
+// StatusIconWithOptions returns an icon for the deliverable status.
+// If useText is true, returns ASCII text instead of emoji for PDF compatibility.
+func StatusIconWithOptions(status DeliverableStatus, useText bool) string {
+	if useText {
+		switch status {
+		case DeliverableCompleted:
+			return "[DONE]"
+		case DeliverableInProgress:
+			return "[WIP]"
+		case DeliverableBlocked:
+			return "[BLOCKED]"
+		case DeliverableNotStarted:
+			return "[TODO]"
+		default:
+			return ""
+		}
+	}
 	switch status {
 	case DeliverableCompleted:
 		return "✅"
@@ -226,6 +249,26 @@ func StatusIcon(status DeliverableStatus) string {
 
 // PhaseTargetStatusIcon returns an emoji/icon for the phase target status.
 func PhaseTargetStatusIcon(status string) string {
+	return PhaseTargetStatusIconWithOptions(status, false)
+}
+
+// PhaseTargetStatusIconWithOptions returns an icon for the phase target status.
+// If useText is true, returns ASCII text instead of emoji for PDF compatibility.
+func PhaseTargetStatusIconWithOptions(status string, useText bool) string {
+	if useText {
+		switch status {
+		case "achieved":
+			return "[DONE]"
+		case "in_progress":
+			return "[WIP]"
+		case "missed":
+			return "[MISSED]"
+		case "not_started":
+			return "[TODO]"
+		default:
+			return ""
+		}
+	}
 	switch status {
 	case "achieved":
 		return "✅"
@@ -242,6 +285,22 @@ func PhaseTargetStatusIcon(status string) string {
 
 // StatusLegend returns a markdown table explaining the status icons.
 func StatusLegend() string {
+	return StatusLegendWithOptions(false)
+}
+
+// StatusLegendWithOptions returns a markdown table explaining the status icons.
+// If useText is true, shows ASCII text icons instead of emoji.
+func StatusLegendWithOptions(useText bool) string {
+	if useText {
+		return `| Icon | Status |
+|------|--------|
+| [DONE] | Completed / Achieved |
+| [WIP] | In Progress |
+| [TODO] | Not Started |
+| [BLOCKED] | Blocked |
+| [MISSED] | Missed |
+`
+	}
 	return `| Icon | Status |
 |------|--------|
 | ✅ | Completed / Achieved |

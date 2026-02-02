@@ -30,6 +30,10 @@ type MarkdownOptions struct {
 	RoadmapTableOptions *RoadmapTableOptions
 	// IncludeTOC adds a Table of Contents with internal links (default: true)
 	IncludeTOC *bool
+	// UseTextIcons uses ASCII text instead of emoji for status icons.
+	// Enable this for Pandoc/LaTeX PDF generation compatibility.
+	// This sets RoadmapTableOptions.UseTextIcons and affects open items rendering.
+	UseTextIcons bool
 }
 
 // DefaultDescriptionMaxLen is the default maximum length for description fields in tables.
@@ -38,14 +42,15 @@ const DefaultDescriptionMaxLen = 0
 
 // DefaultMarkdownOptions returns sensible defaults for markdown generation.
 // By default, no text truncation is applied (DescriptionMaxLen = 0).
-// Fonts default to DejaVu family for Unicode/emoji support in Pandoc PDF output.
+// Default fonts work with standard pdflatex. For Unicode/emoji support,
+// use --pdf-engine=xelatex with appropriate system fonts.
 func DefaultMarkdownOptions() MarkdownOptions {
 	return MarkdownOptions{
 		IncludeFrontmatter: true,
 		Margin:             "2cm",
-		MainFont:           "DejaVu Sans",
-		SansFont:           "DejaVu Sans",
-		MonoFont:           "DejaVu Sans Mono",
+		MainFont:           "",
+		SansFont:           "",
+		MonoFont:           "",
 		FontFamily:         "",
 		DescriptionMaxLen:  DefaultDescriptionMaxLen,
 	}
@@ -112,7 +117,7 @@ func (d *Document) ToMarkdown(opts MarkdownOptions) string {
 	}
 
 	if len(d.OpenItems) > 0 {
-		sb.WriteString(d.generateOpenItems())
+		sb.WriteString(d.generateOpenItems(opts))
 	}
 
 	if d.CurrentState != nil {
@@ -187,11 +192,6 @@ func (d *Document) generateFrontmatter(opts MarkdownOptions) string {
 		sb.WriteString(fmt.Sprintf("fontfamily: %s\n", opts.FontFamily))
 	}
 
-	sb.WriteString("header-includes:\n")
-	sb.WriteString("  - \\usepackage{fontspec}\n")
-	sb.WriteString("  - \\setmainfont{DejaVu Sans}\n")
-	sb.WriteString("  - \\setsansfont{DejaVu Sans}\n")
-	sb.WriteString("  - \\setmonofont{DejaVu Sans Mono}\n")
 	sb.WriteString("---\n\n")
 
 	return sb.String()
@@ -656,6 +656,10 @@ func (d *Document) generateRoadmap(opts MarkdownOptions) string {
 		if opts.RoadmapTableOptions != nil {
 			tableOpts = *opts.RoadmapTableOptions
 		}
+		// Pass through UseTextIcons from markdown options
+		if opts.UseTextIcons {
+			tableOpts.UseTextIcons = true
+		}
 		// Enable OKR swimlanes by default if OKRs with PhaseTargets exist
 		if len(d.Objectives.OKRs) > 0 {
 			tableOpts.IncludeOKRs = true
@@ -664,7 +668,7 @@ func (d *Document) generateRoadmap(opts MarkdownOptions) string {
 		sb.WriteString("\n")
 		if tableOpts.IncludeStatus {
 			sb.WriteString("**Legend:**\n\n")
-			sb.WriteString(StatusLegend())
+			sb.WriteString(StatusLegendWithOptions(opts.UseTextIcons))
 			sb.WriteString("\n")
 		}
 		sb.WriteString("### 7.2 Phase Details\n\n")
@@ -983,7 +987,7 @@ func (d *Document) generateRisks() string {
 	return sb.String()
 }
 
-func (d *Document) generateOpenItems() string {
+func (d *Document) generateOpenItems(opts MarkdownOptions) string {
 	var sb strings.Builder
 	sb.WriteString("## Open Items\n\n")
 	sb.WriteString("*The following items require decisions. Please review the options and tradeoffs.*\n\n")
@@ -991,19 +995,36 @@ func (d *Document) generateOpenItems() string {
 	for i, item := range d.OpenItems {
 		// Item header with status
 		statusBadge := ""
-		switch item.Status {
-		case OpenItemStatusOpen:
-			statusBadge = "🔴 Open"
-		case OpenItemStatusInDiscussion:
-			statusBadge = "🟡 In Discussion"
-		case OpenItemStatusBlocked:
-			statusBadge = "⛔ Blocked"
-		case OpenItemStatusResolved:
-			statusBadge = "✅ Resolved"
-		case OpenItemStatusDeferred:
-			statusBadge = "⏸️ Deferred"
-		default:
-			statusBadge = "🔴 Open"
+		if opts.UseTextIcons {
+			switch item.Status {
+			case OpenItemStatusOpen:
+				statusBadge = "[OPEN]"
+			case OpenItemStatusInDiscussion:
+				statusBadge = "[DISCUSS]"
+			case OpenItemStatusBlocked:
+				statusBadge = "[BLOCKED]"
+			case OpenItemStatusResolved:
+				statusBadge = "[RESOLVED]"
+			case OpenItemStatusDeferred:
+				statusBadge = "[DEFERRED]"
+			default:
+				statusBadge = "[OPEN]"
+			}
+		} else {
+			switch item.Status {
+			case OpenItemStatusOpen:
+				statusBadge = "🔴 Open"
+			case OpenItemStatusInDiscussion:
+				statusBadge = "🟡 In Discussion"
+			case OpenItemStatusBlocked:
+				statusBadge = "⛔ Blocked"
+			case OpenItemStatusResolved:
+				statusBadge = "✅ Resolved"
+			case OpenItemStatusDeferred:
+				statusBadge = "⏸️ Deferred"
+			default:
+				statusBadge = "🔴 Open"
+			}
 		}
 
 		sb.WriteString(fmt.Sprintf("### %d. %s\n\n", i+1, item.Title))
@@ -1032,7 +1053,11 @@ func (d *Document) generateOpenItems() string {
 			for _, opt := range item.Options {
 				recommended := ""
 				if opt.Recommended {
-					recommended = "⭐ Yes"
+					if opts.UseTextIcons {
+						recommended = "[*] Yes"
+					} else {
+						recommended = "⭐ Yes"
+					}
 				}
 				sb.WriteString(fmt.Sprintf("| **%s** | %s | %s | %s | %s |\n",
 					opt.Title, opt.Description, opt.Effort, opt.Risk, recommended))
@@ -1044,20 +1069,31 @@ func (d *Document) generateOpenItems() string {
 				if len(opt.Pros) > 0 || len(opt.Cons) > 0 {
 					sb.WriteString(fmt.Sprintf("**%s**", opt.Title))
 					if opt.Recommended {
-						sb.WriteString(" ⭐ *Recommended*")
+						if opts.UseTextIcons {
+							sb.WriteString(" [*] *Recommended*")
+						} else {
+							sb.WriteString(" ⭐ *Recommended*")
+						}
 					}
 					sb.WriteString("\n\n")
+
+					proIcon := "✅"
+					conIcon := "⚠️"
+					if opts.UseTextIcons {
+						proIcon = "[+]"
+						conIcon = "[-]"
+					}
 
 					if len(opt.Pros) > 0 {
 						sb.WriteString("*Pros:*\n")
 						for _, pro := range opt.Pros {
-							sb.WriteString(fmt.Sprintf("- ✅ %s\n", pro))
+							sb.WriteString(fmt.Sprintf("- %s %s\n", proIcon, pro))
 						}
 					}
 					if len(opt.Cons) > 0 {
 						sb.WriteString("\n*Cons:*\n")
 						for _, con := range opt.Cons {
-							sb.WriteString(fmt.Sprintf("- ⚠️ %s\n", con))
+							sb.WriteString(fmt.Sprintf("- %s %s\n", conIcon, con))
 						}
 					}
 					if opt.RecommendationRationale != "" {

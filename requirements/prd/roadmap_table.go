@@ -23,6 +23,12 @@ func StatusLegend() string {
 	return roadmap.StatusLegend()
 }
 
+// StatusLegendWithOptions returns a markdown table explaining the status icons.
+// If useText is true, shows ASCII text icons instead of emoji.
+func StatusLegendWithOptions(useText bool) string {
+	return roadmap.StatusLegendWithOptions(useText)
+}
+
 // ToSwimlaneTableWithOKRs generates a markdown table with phases as columns,
 // deliverable types as swimlane rows, and OKR swimlanes auto-derived from PhaseTargets.
 // Deprecated: Use ToSwimlaneTableWithGoals for framework-agnostic goal support.
@@ -127,7 +133,7 @@ func (d *Document) ToSwimlaneTableWithGoals(opts RoadmapTableOptions) string {
 						item = item[:opts.MaxTitleLen-3] + "..."
 					}
 					if opts.IncludeStatus && del.Status != "" {
-						item = fmt.Sprintf("%s %s", roadmap.StatusIcon(del.Status), item)
+						item = fmt.Sprintf("%s %s", roadmap.StatusIconWithOptions(del.Status, opts.UseTextIcons), item)
 					}
 					items = append(items, "• "+item)
 				}
@@ -195,7 +201,7 @@ func (d *Document) ToSwimlaneTableWithGoals(opts RoadmapTableOptions) string {
 					// Format: R1: Title → Target
 					label := fmt.Sprintf("%s → %s", r.Title, r.PhaseTarget)
 					if opts.IncludeStatus && r.Status != "" {
-						label = fmt.Sprintf("%s %s", roadmap.PhaseTargetStatusIcon(r.Status), label)
+						label = fmt.Sprintf("%s %s", roadmap.PhaseTargetStatusIconWithOptions(r.Status, opts.UseTextIcons), label)
 					}
 					items = append(items, "• "+label)
 				}
