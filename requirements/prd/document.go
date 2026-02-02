@@ -133,11 +133,15 @@ type Document struct {
 
 	// Optional sections
 	Assumptions      *AssumptionsConstraints `json:"assumptions,omitempty"`
+	InScope          []string                `json:"inScope,omitempty"`
 	OutOfScope       []string                `json:"outOfScope,omitempty"`
 	TechArchitecture *TechnicalArchitecture  `json:"technicalArchitecture,omitempty"`
-	UXRequirements   *UXRequirements         `json:"uxRequirements,omitempty"`
-	Risks            []Risk                  `json:"risks,omitempty"`
-	Glossary         []GlossaryTerm          `json:"glossary,omitempty"`
+
+	// RelatedDocuments lists related requirements documents.
+	RelatedDocuments []RelatedDocument `json:"relatedDocuments,omitempty"`
+	UXRequirements   *UXRequirements   `json:"uxRequirements,omitempty"`
+	Risks            []Risk            `json:"risks,omitempty"`
+	Glossary         []GlossaryTerm    `json:"glossary,omitempty"`
 
 	// Custom sections for project-specific needs
 	CustomSections []CustomSection `json:"customSections,omitempty"`
