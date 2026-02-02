@@ -38,12 +38,16 @@
         { "description": "Update TechArchitecture maxPoints from 4.0 to 7.5", "commit": "2004120" },
         { "description": "Regenerate PRD JSON schema with new types", "commit": "15f937f" }
       ],
+      "fixed": [
+        { "description": "Use DejaVu fonts with fontspec for Pandoc PDF Unicode/emoji support", "commit": "7123664" }
+      ],
       "documentation": [
         { "description": "Reorganize release notes from root to docs/releases/", "commit": "6f11b20" },
         { "description": "Add v0.7.0 release notes with PRD platform architecture features", "commit": "fd11129" },
         { "description": "Document PRD technical architecture sections in README", "commit": "38078c1" },
         { "description": "Update PRD section table with inScope and relatedDocuments", "commit": "38078c1" },
-        { "description": "Update completeness check example output for 8 optional sections", "commit": "38078c1" }
+        { "description": "Update completeness check example output for 8 optional sections", "commit": "38078c1" },
+        { "description": "Document Pandoc PDF generation with XeLaTeX and DejaVu font requirements", "commit": "7123664" }
       ]
     },
     {
