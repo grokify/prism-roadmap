@@ -3,6 +3,78 @@
   "$id": "https://github.com/grokify/structured-plan/schema/prd.schema.json",
   "$ref": "#/$defs/Document",
   "$defs": {
+    "APIEndpoint": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "method": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "requestBody": {
+          "type": "string"
+        },
+        "response": {
+          "type": "string"
+        },
+        "auth": {
+          "type": "string"
+        },
+        "tags": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "APISpec": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "serviceId": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "protocol": {
+          "type": "string"
+        },
+        "basePath": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "endpoints": {
+          "items": {
+            "$ref": "#/$defs/APIEndpoint"
+          },
+          "type": "array"
+        },
+        "openApiSpec": {
+          "type": "string"
+        },
+        "protobufSpec": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
     "AcceptanceCriterion": {
       "properties": {
         "id": {
@@ -671,6 +743,12 @@
         "assumptions": {
           "$ref": "#/$defs/AssumptionsConstraints"
         },
+        "inScope": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
         "outOfScope": {
           "items": {
             "type": "string"
@@ -679,6 +757,12 @@
         },
         "technicalArchitecture": {
           "$ref": "#/$defs/TechnicalArchitecture"
+        },
+        "relatedDocuments": {
+          "items": {
+            "$ref": "#/$defs/RelatedDocument"
+          },
+          "type": "array"
         },
         "uxRequirements": {
           "$ref": "#/$defs/UXRequirements"
@@ -884,6 +968,27 @@
         "appendixRefs": {
           "items": {
             "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "GitOpsConfig": {
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "provider": {
+          "type": "string"
+        },
+        "workflow": {
+          "type": "string"
+        },
+        "sourcesOfTruth": {
+          "items": {
+            "$ref": "#/$defs/SourceOfTruth"
           },
           "type": "array"
         }
@@ -1619,6 +1724,42 @@
       "additionalProperties": false,
       "type": "object"
     },
+    "OrchestrationConfig": {
+      "properties": {
+        "shortLived": {
+          "$ref": "#/$defs/OrchestrationEngine"
+        },
+        "longRunning": {
+          "$ref": "#/$defs/OrchestrationEngine"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "OrchestrationEngine": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "useCases": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "language": {
+          "type": "string"
+        },
+        "rationale": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
     "Person": {
       "properties": {
         "name": {
@@ -1930,6 +2071,33 @@
       "additionalProperties": false,
       "type": "object"
     },
+    "RelatedDocument": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "relationship": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
     "Requirements": {
       "properties": {
         "functional": {
@@ -2216,6 +2384,54 @@
       "additionalProperties": false,
       "type": "object"
     },
+    "Service": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "responsibilities": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "language": {
+          "type": "string"
+        },
+        "languageRationale": {
+          "type": "string"
+        },
+        "layer": {
+          "type": "string"
+        },
+        "protocol": {
+          "type": "string"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "dependencies": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "tags": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
     "SolutionDefinition": {
       "properties": {
         "solutionOptions": {
@@ -2279,6 +2495,54 @@
       "additionalProperties": false,
       "type": "object"
     },
+    "SourceOfTruth": {
+      "properties": {
+        "artifact": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "rationale": {
+          "type": "string"
+        },
+        "gitOpsEnabled": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "StorageCategory": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string"
+        },
+        "purpose": {
+          "type": "string"
+        },
+        "technology": {
+          "type": "string"
+        },
+        "rationale": {
+          "type": "string"
+        },
+        "encryption": {
+          "type": "string"
+        },
+        "retention": {
+          "type": "string"
+        },
+        "perTenant": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
     "TechnicalArchitecture": {
       "properties": {
         "overview": {
@@ -2304,6 +2568,30 @@
         },
         "scalabilityDesign": {
           "type": "string"
+        },
+        "services": {
+          "items": {
+            "$ref": "#/$defs/Service"
+          },
+          "type": "array"
+        },
+        "apis": {
+          "items": {
+            "$ref": "#/$defs/APISpec"
+          },
+          "type": "array"
+        },
+        "storageArchitecture": {
+          "items": {
+            "$ref": "#/$defs/StorageCategory"
+          },
+          "type": "array"
+        },
+        "gitOps": {
+          "$ref": "#/$defs/GitOpsConfig"
+        },
+        "orchestration": {
+          "$ref": "#/$defs/OrchestrationConfig"
         }
       },
       "additionalProperties": false,
