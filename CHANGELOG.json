@@ -7,6 +7,46 @@
   "maintainers": ["grokify", "johncwang@gmail.com"],
   "releases": [
     {
+      "version": "v0.7.0",
+      "date": "2026-02-02",
+      "highlights": [
+        { "description": "Add PRD schema types for platform/infrastructure PRDs with microservices support", "commit": "2b8dc56" },
+        { "description": "Add markdown rendering for technical architecture enhancements", "commit": "48be2d0" },
+        { "description": "Add completeness scoring for in-scope and related documents sections", "commit": "2004120" }
+      ],
+      "added": [
+        { "description": "Add Service type with layer, protocol, language, responsibilities, dependencies", "commit": "2b8dc56" },
+        { "description": "Add APISpec and APIEndpoint types for API documentation", "commit": "2b8dc56" },
+        { "description": "Add StorageCategory type for storage architecture by category", "commit": "2b8dc56" },
+        { "description": "Add GitOpsConfig and SourceOfTruth types for GitOps configuration", "commit": "2b8dc56" },
+        { "description": "Add OrchestrationConfig type for workflow orchestration (short-lived, long-running)", "commit": "2b8dc56" },
+        { "description": "Add RelatedDocument type for linking PRDs, TRDs, design docs, RFCs", "commit": "2b8dc56" },
+        { "description": "Add InScope field to Document (complements OutOfScope)", "commit": "2b8dc56" },
+        { "description": "Add enum types: ServiceLayer, Protocol, StorageCategoryType, SourceOfTruthLocation, RelationshipType, DocumentType", "commit": "2b8dc56" },
+        { "description": "Add markdown rendering for Services table and detailed sections", "commit": "48be2d0" },
+        { "description": "Add markdown rendering for APIs with endpoints table", "commit": "48be2d0" },
+        { "description": "Add markdown rendering for Storage Architecture table", "commit": "48be2d0" },
+        { "description": "Add markdown rendering for GitOps Configuration", "commit": "48be2d0" },
+        { "description": "Add markdown rendering for Workflow Orchestration", "commit": "48be2d0" },
+        { "description": "Add markdown rendering for In Scope and Related Documents", "commit": "48be2d0" },
+        { "description": "Add checkInScope() completeness function for in-scope items", "commit": "2004120" },
+        { "description": "Add checkRelatedDocuments() completeness function for related documents", "commit": "2004120" }
+      ],
+      "changed": [
+        { "description": "Update TechnicalArchitecture scoring: +1 for Services, +1 for APIs, +0.5 for Storage/GitOps/Orchestration", "commit": "2004120" },
+        { "description": "Update OptionalTotal from 6 to 8 sections", "commit": "2004120" },
+        { "description": "Update TechArchitecture maxPoints from 4.0 to 7.5", "commit": "2004120" },
+        { "description": "Regenerate PRD JSON schema with new types", "commit": "15f937f" }
+      ],
+      "documentation": [
+        { "description": "Reorganize release notes from root to docs/releases/", "commit": "6f11b20" },
+        { "description": "Add v0.7.0 release notes with PRD platform architecture features", "commit": "fd11129" },
+        { "description": "Document PRD technical architecture sections in README", "commit": "38078c1" },
+        { "description": "Update PRD section table with inScope and relatedDocuments", "commit": "38078c1" },
+        { "description": "Update completeness check example output for 8 optional sections", "commit": "38078c1" }
+      ]
+    },
+    {
       "version": "v0.6.0",
       "date": "2026-01-30",
       "highlights": [
