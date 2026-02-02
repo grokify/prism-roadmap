@@ -38,14 +38,15 @@ const DefaultDescriptionMaxLen = 0
 
 // DefaultMarkdownOptions returns sensible defaults for markdown generation.
 // By default, no text truncation is applied (DescriptionMaxLen = 0).
+// Fonts default to DejaVu family for Unicode/emoji support in Pandoc PDF output.
 func DefaultMarkdownOptions() MarkdownOptions {
 	return MarkdownOptions{
 		IncludeFrontmatter: true,
 		Margin:             "2cm",
-		MainFont:           "Helvetica",
-		SansFont:           "Helvetica",
-		MonoFont:           "Courier New",
-		FontFamily:         "helvet",
+		MainFont:           "DejaVu Sans",
+		SansFont:           "DejaVu Sans",
+		MonoFont:           "DejaVu Sans Mono",
+		FontFamily:         "",
 		DescriptionMaxLen:  DefaultDescriptionMaxLen,
 	}
 }
@@ -187,7 +188,10 @@ func (d *Document) generateFrontmatter(opts MarkdownOptions) string {
 	}
 
 	sb.WriteString("header-includes:\n")
-	sb.WriteString("  - \\renewcommand{\\familydefault}{\\sfdefault}\n")
+	sb.WriteString("  - \\usepackage{fontspec}\n")
+	sb.WriteString("  - \\setmainfont{DejaVu Sans}\n")
+	sb.WriteString("  - \\setsansfont{DejaVu Sans}\n")
+	sb.WriteString("  - \\setmonofont{DejaVu Sans Mono}\n")
 	sb.WriteString("---\n\n")
 
 	return sb.String()

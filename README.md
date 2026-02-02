@@ -727,14 +727,40 @@ HIGH (should fix):
 
 ## PDF Generation
 
-The generated markdown includes YAML frontmatter compatible with Pandoc:
+The generated markdown includes YAML frontmatter compatible with Pandoc. The frontmatter configures DejaVu fonts via `fontspec` for full Unicode/emoji support (✅, 🔄, ⏳, etc.).
 
 ```bash
 # Generate markdown
 splan req prd generate myproduct.prd.json -o myproduct.md
 
-# Convert to PDF with Pandoc
+# Convert to PDF with XeLaTeX (required for Unicode/emoji support)
 pandoc myproduct.md -o myproduct.pdf --pdf-engine=xelatex
+```
+
+**Requirements:**
+
+- [Pandoc](https://pandoc.org/installing.html)
+- XeLaTeX (included with TeX Live or MacTeX)
+- DejaVu fonts (commonly pre-installed, or install via your package manager)
+
+**Font installation (if needed):**
+
+```bash
+# macOS (Homebrew)
+brew install --cask font-dejavu
+
+# Ubuntu/Debian
+sudo apt-get install fonts-dejavu
+
+# Fedora
+sudo dnf install dejavu-sans-fonts dejavu-sans-mono-fonts
+```
+
+**Alternative PDF engines:**
+
+```bash
+# LuaLaTeX also supports Unicode
+pandoc myproduct.md -o myproduct.pdf --pdf-engine=lualatex
 ```
 
 ## Examples
