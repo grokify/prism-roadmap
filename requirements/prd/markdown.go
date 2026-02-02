@@ -98,6 +98,10 @@ func (d *Document) ToMarkdown(opts MarkdownOptions) string {
 		sb.WriteString(d.generateAssumptions())
 	}
 
+	if len(d.InScope) > 0 {
+		sb.WriteString(d.generateInScope())
+	}
+
 	if len(d.OutOfScope) > 0 {
 		sb.WriteString(d.generateOutOfScope())
 	}
@@ -124,6 +128,10 @@ func (d *Document) ToMarkdown(opts MarkdownOptions) string {
 
 	if len(d.Glossary) > 0 {
 		sb.WriteString(d.generateGlossary())
+	}
+
+	if len(d.RelatedDocuments) > 0 {
+		sb.WriteString(d.generateRelatedDocuments())
 	}
 
 	// Custom sections
@@ -244,6 +252,11 @@ func (d *Document) generateTableOfContents(_ MarkdownOptions) string {
 		sectionNum++
 	}
 
+	if len(d.InScope) > 0 {
+		sb.WriteString(fmt.Sprintf("%d. [In Scope](#in-scope)\n", sectionNum))
+		sectionNum++
+	}
+
 	if len(d.OutOfScope) > 0 {
 		sb.WriteString(fmt.Sprintf("%d. [Out of Scope](#out-of-scope)\n", sectionNum))
 		sectionNum++
@@ -276,6 +289,11 @@ func (d *Document) generateTableOfContents(_ MarkdownOptions) string {
 
 	if len(d.Glossary) > 0 {
 		sb.WriteString(fmt.Sprintf("%d. [Glossary](#glossary)\n", sectionNum))
+		sectionNum++
+	}
+
+	if len(d.RelatedDocuments) > 0 {
+		sb.WriteString(fmt.Sprintf("%d. [Related Documents](#related-documents)\n", sectionNum))
 		sectionNum++
 	}
 
@@ -699,6 +717,173 @@ func (d *Document) generateTechArchitecture() string {
 		sb.WriteString(d.TechArchitecture.Overview + "\n\n")
 	}
 
+	// Services
+	if len(d.TechArchitecture.Services) > 0 {
+		sb.WriteString("### Services\n\n")
+		sb.WriteString("| ID | Name | Layer | Protocol | Language | Owner |\n")
+		sb.WriteString("|----|------|-------|----------|----------|-------|\n")
+		for _, svc := range d.TechArchitecture.Services {
+			sb.WriteString(fmt.Sprintf("| %s | %s | %s | %s | %s | %s |\n",
+				svc.ID, svc.Name, svc.Layer, svc.Protocol, svc.Language, svc.Owner))
+		}
+		sb.WriteString("\n")
+
+		// Service details
+		for _, svc := range d.TechArchitecture.Services {
+			if len(svc.Responsibilities) > 0 || svc.Description != "" || len(svc.Dependencies) > 0 {
+				sb.WriteString(fmt.Sprintf("#### %s\n\n", svc.Name))
+				if svc.Description != "" {
+					sb.WriteString(svc.Description + "\n\n")
+				}
+				if len(svc.Responsibilities) > 0 {
+					sb.WriteString("**Responsibilities:**\n\n")
+					for _, r := range svc.Responsibilities {
+						sb.WriteString(fmt.Sprintf("- %s\n", r))
+					}
+					sb.WriteString("\n")
+				}
+				if svc.LanguageRationale != "" {
+					sb.WriteString(fmt.Sprintf("**Language Rationale:** %s\n\n", svc.LanguageRationale))
+				}
+				if len(svc.Dependencies) > 0 {
+					sb.WriteString(fmt.Sprintf("**Dependencies:** %s\n\n", strings.Join(svc.Dependencies, ", ")))
+				}
+			}
+		}
+	}
+
+	// APIs
+	if len(d.TechArchitecture.APIs) > 0 {
+		sb.WriteString("### APIs\n\n")
+		for _, api := range d.TechArchitecture.APIs {
+			sb.WriteString(fmt.Sprintf("#### %s\n\n", api.Name))
+			sb.WriteString(fmt.Sprintf("**Protocol:** %s", api.Protocol))
+			if api.Version != "" {
+				sb.WriteString(fmt.Sprintf(" | **Version:** %s", api.Version))
+			}
+			if api.BasePath != "" {
+				sb.WriteString(fmt.Sprintf(" | **Base Path:** %s", api.BasePath))
+			}
+			sb.WriteString("\n\n")
+
+			if api.Description != "" {
+				sb.WriteString(api.Description + "\n\n")
+			}
+
+			if len(api.Endpoints) > 0 {
+				sb.WriteString("| Method | Path | Description | Auth |\n")
+				sb.WriteString("|--------|------|-------------|------|\n")
+				for _, ep := range api.Endpoints {
+					sb.WriteString(fmt.Sprintf("| %s | %s | %s | %s |\n",
+						ep.Method, ep.Path, ep.Description, ep.Auth))
+				}
+				sb.WriteString("\n")
+			}
+
+			if api.OpenAPISpec != "" {
+				sb.WriteString(fmt.Sprintf("**OpenAPI Spec:** %s\n\n", api.OpenAPISpec))
+			}
+			if api.ProtobufSpec != "" {
+				sb.WriteString(fmt.Sprintf("**Protobuf Spec:** %s\n\n", api.ProtobufSpec))
+			}
+		}
+	}
+
+	// Storage Architecture
+	if len(d.TechArchitecture.StorageArchitecture) > 0 {
+		sb.WriteString("### Storage Architecture\n\n")
+		sb.WriteString("| Category | Purpose | Technology | Encryption | Retention |\n")
+		sb.WriteString("|----------|---------|------------|------------|----------|\n")
+		for _, sc := range d.TechArchitecture.StorageArchitecture {
+			encryption := sc.Encryption
+			if encryption == "" {
+				encryption = "-"
+			}
+			retention := sc.Retention
+			if retention == "" {
+				retention = "-"
+			}
+			sb.WriteString(fmt.Sprintf("| %s | %s | %s | %s | %s |\n",
+				sc.Category, sc.Purpose, sc.Technology, encryption, retention))
+		}
+		sb.WriteString("\n")
+	}
+
+	// GitOps
+	if d.TechArchitecture.GitOps != nil && d.TechArchitecture.GitOps.Enabled {
+		sb.WriteString("### GitOps Configuration\n\n")
+		gitops := d.TechArchitecture.GitOps
+		if gitops.Provider != "" {
+			sb.WriteString(fmt.Sprintf("**Provider:** %s\n\n", gitops.Provider))
+		}
+		if gitops.Workflow != "" {
+			sb.WriteString(fmt.Sprintf("**Workflow:** %s\n\n", gitops.Workflow))
+		}
+		if len(gitops.SourcesOfTruth) > 0 {
+			sb.WriteString("**Sources of Truth:**\n\n")
+			sb.WriteString("| Artifact | Location | GitOps Enabled | Rationale |\n")
+			sb.WriteString("|----------|----------|----------------|----------|\n")
+			for _, sot := range gitops.SourcesOfTruth {
+				gitOpsEnabled := "No"
+				if sot.GitOpsEnabled {
+					gitOpsEnabled = "Yes"
+				}
+				rationale := sot.Rationale
+				if rationale == "" {
+					rationale = "-"
+				}
+				sb.WriteString(fmt.Sprintf("| %s | %s | %s | %s |\n",
+					sot.Artifact, sot.Location, gitOpsEnabled, rationale))
+			}
+			sb.WriteString("\n")
+		}
+	}
+
+	// Orchestration
+	if d.TechArchitecture.Orchestration != nil {
+		sb.WriteString("### Workflow Orchestration\n\n")
+		orch := d.TechArchitecture.Orchestration
+		if orch.Description != "" {
+			sb.WriteString(orch.Description + "\n\n")
+		}
+
+		if orch.ShortLived != nil {
+			sb.WriteString("**Short-Lived Workflows:**\n\n")
+			sb.WriteString(fmt.Sprintf("- **Engine:** %s\n", orch.ShortLived.Name))
+			if orch.ShortLived.Language != "" {
+				sb.WriteString(fmt.Sprintf("- **Language:** %s\n", orch.ShortLived.Language))
+			}
+			if orch.ShortLived.Rationale != "" {
+				sb.WriteString(fmt.Sprintf("- **Rationale:** %s\n", orch.ShortLived.Rationale))
+			}
+			if len(orch.ShortLived.UseCases) > 0 {
+				sb.WriteString("- **Use Cases:**\n")
+				for _, uc := range orch.ShortLived.UseCases {
+					sb.WriteString(fmt.Sprintf("  - %s\n", uc))
+				}
+			}
+			sb.WriteString("\n")
+		}
+
+		if orch.LongRunning != nil {
+			sb.WriteString("**Long-Running Workflows:**\n\n")
+			sb.WriteString(fmt.Sprintf("- **Engine:** %s\n", orch.LongRunning.Name))
+			if orch.LongRunning.Language != "" {
+				sb.WriteString(fmt.Sprintf("- **Language:** %s\n", orch.LongRunning.Language))
+			}
+			if orch.LongRunning.Rationale != "" {
+				sb.WriteString(fmt.Sprintf("- **Rationale:** %s\n", orch.LongRunning.Rationale))
+			}
+			if len(orch.LongRunning.UseCases) > 0 {
+				sb.WriteString("- **Use Cases:**\n")
+				for _, uc := range orch.LongRunning.UseCases {
+					sb.WriteString(fmt.Sprintf("  - %s\n", uc))
+				}
+			}
+			sb.WriteString("\n")
+		}
+	}
+
 	if len(d.TechArchitecture.IntegrationPoints) > 0 {
 		sb.WriteString("### Integration Points\n\n")
 		sb.WriteString("| ID | Name | Type | Description | Auth Method |\n")
@@ -752,6 +937,18 @@ func (d *Document) generateAssumptions() string {
 	}
 
 	sb.WriteString("---\n\n")
+	return sb.String()
+}
+
+func (d *Document) generateInScope() string {
+	var sb strings.Builder
+	sb.WriteString("## In Scope\n\n")
+
+	for _, item := range d.InScope {
+		sb.WriteString(fmt.Sprintf("- %s\n", item))
+	}
+	sb.WriteString("\n---\n\n")
+
 	return sb.String()
 }
 
@@ -1240,6 +1437,31 @@ func (d *Document) generateGlossary() string {
 			name = fmt.Sprintf("**%s**", term.Term)
 		}
 		sb.WriteString(fmt.Sprintf("| %s | %s |\n", name, term.Definition))
+	}
+	sb.WriteString("\n---\n\n")
+
+	return sb.String()
+}
+
+func (d *Document) generateRelatedDocuments() string {
+	var sb strings.Builder
+	sb.WriteString("## Related Documents\n\n")
+
+	sb.WriteString("| ID | Title | Type | Relationship | Description |\n")
+	sb.WriteString("|----|-------|------|--------------|-------------|\n")
+	for _, doc := range d.RelatedDocuments {
+		title := doc.Title
+		if doc.URL != "" {
+			title = fmt.Sprintf("[%s](%s)", doc.Title, doc.URL)
+		} else if doc.Path != "" {
+			title = fmt.Sprintf("[%s](%s)", doc.Title, doc.Path)
+		}
+		description := doc.Description
+		if description == "" {
+			description = "-"
+		}
+		sb.WriteString(fmt.Sprintf("| %s | %s | %s | %s | %s |\n",
+			doc.ID, title, doc.Type, doc.Relationship, description))
 	}
 	sb.WriteString("\n---\n\n")
 
