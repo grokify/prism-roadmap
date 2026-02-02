@@ -39,7 +39,7 @@
         { "description": "Regenerate PRD JSON schema with new types", "commit": "15f937f" }
       ],
       "fixed": [
-        { "description": "Use DejaVu fonts with fontspec for Pandoc PDF Unicode/emoji support", "commit": "7123664" }
+        { "description": "Add UseTextIcons option for Pandoc PDF compatibility (converts emoji to ASCII)", "commit": "52c6128" }
       ],
       "documentation": [
         { "description": "Reorganize release notes from root to docs/releases/", "commit": "6f11b20" },
