@@ -132,8 +132,8 @@ func TestCompletenessMinimalDocument(t *testing.T) {
 	}
 
 	// Check that required sections are evaluated
-	if len(report.Sections) != 13 {
-		t.Errorf("Expected 13 sections (7 required + 6 optional), got %d", len(report.Sections))
+	if len(report.Sections) != 15 {
+		t.Errorf("Expected 15 sections (7 required + 8 optional), got %d", len(report.Sections))
 	}
 }
 

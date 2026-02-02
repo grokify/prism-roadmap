@@ -51,7 +51,7 @@ const (
 func (d *Document) CheckCompleteness() CompletenessReport {
 	report := CompletenessReport{
 		RequiredTotal: 7,
-		OptionalTotal: 6,
+		OptionalTotal: 8,
 	}
 
 	// Check each section
@@ -65,11 +65,13 @@ func (d *Document) CheckCompleteness() CompletenessReport {
 
 	// Optional sections
 	report.Sections = append(report.Sections, d.checkAssumptions())
+	report.Sections = append(report.Sections, d.checkInScope())
 	report.Sections = append(report.Sections, d.checkOutOfScope())
 	report.Sections = append(report.Sections, d.checkTechnicalArchitecture())
 	report.Sections = append(report.Sections, d.checkUXRequirements())
 	report.Sections = append(report.Sections, d.checkRisks())
 	report.Sections = append(report.Sections, d.checkGlossary())
+	report.Sections = append(report.Sections, d.checkRelatedDocuments())
 
 	// Calculate overall score
 	var totalPoints, earnedPoints float64
@@ -721,6 +723,32 @@ func (d *Document) checkAssumptions() SectionScore {
 	return score
 }
 
+func (d *Document) checkInScope() SectionScore {
+	score := SectionScore{
+		Name:      "In Scope",
+		MaxPoints: 5,
+		Required:  false,
+	}
+
+	if len(d.InScope) == 0 {
+		score.Score = 0
+		score.Status = "missing"
+		score.Suggestions = append(score.Suggestions, "Consider documenting what's explicitly in scope for clarity")
+		return score
+	}
+
+	if len(d.InScope) >= 5 {
+		score.Score = 100
+	} else if len(d.InScope) >= 3 {
+		score.Score = 80
+	} else {
+		score.Score = 60
+	}
+	score.Status = getStatus(score.Score)
+
+	return score
+}
+
 func (d *Document) checkOutOfScope() SectionScore {
 	score := SectionScore{
 		Name:      "Out of Scope",
@@ -747,6 +775,51 @@ func (d *Document) checkOutOfScope() SectionScore {
 	return score
 }
 
+func (d *Document) checkRelatedDocuments() SectionScore {
+	score := SectionScore{
+		Name:      "Related Documents",
+		MaxPoints: 5,
+		Required:  false,
+	}
+
+	if len(d.RelatedDocuments) == 0 {
+		score.Score = 0
+		score.Status = "missing"
+		score.Suggestions = append(score.Suggestions, "Consider linking related PRDs, TRDs, or design docs")
+		return score
+	}
+
+	points := 0.0
+	maxPoints := 4.0
+
+	// Points for having related documents
+	if len(d.RelatedDocuments) >= 3 {
+		points += 2
+	} else {
+		points += 1
+	}
+
+	// Check document quality - count complete entries
+	completeCount := 0
+	for _, doc := range d.RelatedDocuments {
+		if doc.ID != "" && doc.Title != "" && doc.Type != "" && doc.Relationship != "" {
+			completeCount++
+		}
+	}
+
+	if completeCount == len(d.RelatedDocuments) {
+		points += 2
+	} else if completeCount > 0 {
+		points += 1
+		score.Issues = append(score.Issues, "Some related documents missing required fields (id, title, type, relationship)")
+	}
+
+	score.Score = (points / maxPoints) * 100
+	score.Status = getStatus(score.Score)
+
+	return score
+}
+
 func (d *Document) checkTechnicalArchitecture() SectionScore {
 	score := SectionScore{
 		Name:      "Technical Architecture",
@@ -762,7 +835,7 @@ func (d *Document) checkTechnicalArchitecture() SectionScore {
 	}
 
 	points := 0.0
-	maxPoints := 4.0
+	maxPoints := 7.5
 
 	if d.TechArchitecture.Overview != "" {
 		points += 1
@@ -781,6 +854,27 @@ func (d *Document) checkTechnicalArchitecture() SectionScore {
 	}
 
 	if d.TechArchitecture.ScalabilityDesign != "" {
+		points += 0.5
+	}
+
+	// New fields for microservices architecture
+	if len(d.TechArchitecture.Services) > 0 {
+		points += 1
+	}
+
+	if len(d.TechArchitecture.APIs) > 0 {
+		points += 1
+	}
+
+	if len(d.TechArchitecture.StorageArchitecture) > 0 {
+		points += 0.5
+	}
+
+	if d.TechArchitecture.GitOps != nil && d.TechArchitecture.GitOps.Enabled {
+		points += 0.5
+	}
+
+	if d.TechArchitecture.Orchestration != nil {
 		points += 0.5
 	}
 
