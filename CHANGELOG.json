@@ -15,6 +15,7 @@
         { "description": "Add completeness scoring for in-scope and related documents sections", "commit": "2004120" }
       ],
       "added": [
+        { "description": "Add --text-icons CLI flag for Pandoc PDF compatibility" },
         { "description": "Add Service type with layer, protocol, language, responsibilities, dependencies", "commit": "2b8dc56" },
         { "description": "Add APISpec and APIEndpoint types for API documentation", "commit": "2b8dc56" },
         { "description": "Add StorageCategory type for storage architecture by category", "commit": "2b8dc56" },

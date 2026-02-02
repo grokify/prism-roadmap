@@ -1000,6 +1000,7 @@ type generateFlags struct {
 	noSwimlane       bool
 	descLen          int
 	swimlaneNoStatus bool
+	textIcons        bool
 }
 
 // ============================================================================
@@ -1023,7 +1024,8 @@ The output includes YAML frontmatter compatible with Pandoc for PDF generation.
 By default, the output file has the same name as the input with a .md extension.`,
 	Example: `  splan requirements prd generate myproduct.prd.json
   splan requirements prd generate myproduct.json -o output.md
-  splan requirements prd generate myproduct.json --no-frontmatter`,
+  splan requirements prd generate myproduct.json --no-frontmatter
+  splan requirements prd generate myproduct.json --text-icons  # For Pandoc PDF`,
 	Args: cobra.ExactArgs(1),
 	RunE: runPRDGenerate,
 }
@@ -1144,6 +1146,7 @@ func init() {
 	prdGenerateCmd.Flags().IntVar(&prdGenerateFlags.descLen, "desc-len", prd.DefaultDescriptionMaxLen, "Max length for description fields in tables (0 = no limit)")
 	prdGenerateCmd.Flags().BoolVar(&prdGenerateFlags.noSwimlane, "no-swimlane", false, "Disable swimlane table view in roadmap section")
 	prdGenerateCmd.Flags().BoolVar(&prdGenerateFlags.swimlaneNoStatus, "swimlane-no-status", false, "Hide status icons in swimlane table")
+	prdGenerateCmd.Flags().BoolVar(&prdGenerateFlags.textIcons, "text-icons", false, "Use ASCII text icons instead of emoji for Pandoc/LaTeX PDF compatibility")
 
 	prdCmd.AddCommand(prdGenerateCmd)
 	prdCmd.AddCommand(prdValidateCmd)
@@ -1198,12 +1201,14 @@ func runPRDGenerate(cmd *cobra.Command, args []string) error {
 		DescriptionMaxLen:    prdGenerateFlags.descLen,
 		IncludeSwimlaneTable: includeSwimlane,
 		IncludeTOC:           &includeTOC,
+		UseTextIcons:         prdGenerateFlags.textIcons,
 	}
 
 	// Configure swimlane table options
 	if includeSwimlane {
 		tableOpts := prd.DefaultRoadmapTableOptions()
 		tableOpts.IncludeStatus = !prdGenerateFlags.swimlaneNoStatus
+		tableOpts.UseTextIcons = prdGenerateFlags.textIcons
 		opts.RoadmapTableOptions = &tableOpts
 	}
 

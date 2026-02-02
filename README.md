@@ -92,6 +92,7 @@ splan req prd generate input.json -o output.md    # Custom output path
 splan req prd generate input.json --no-frontmatter # Without YAML frontmatter
 splan req prd generate input.json --margin 1in    # Custom page margin
 splan req prd generate input.json --mainfont Arial # Custom font
+splan req prd generate input.json --text-icons    # ASCII icons for Pandoc PDF
 ```
 
 ### Check Options (PRD only)
