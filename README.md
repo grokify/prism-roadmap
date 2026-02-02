@@ -292,8 +292,10 @@ Defines what the product should do and for whom.
 | `requirements.nonFunctional` | Yes | NFRs (performance, security, etc.) |
 | `roadmap` | Yes | Phases with deliverables and success criteria |
 | `assumptions` | No | Assumptions, constraints, dependencies |
+| `inScope` | No | Explicitly included items |
 | `outOfScope` | No | Explicitly excluded items |
-| `technicalArchitecture` | No | System overview, integrations |
+| `technicalArchitecture` | No | System overview, integrations, services, APIs |
+| `relatedDocuments` | No | Links to related PRDs, TRDs, design docs |
 | `risks` | No | Product and technical risks |
 | `glossary` | No | Term definitions |
 
@@ -512,6 +514,78 @@ Use the `→` notation to distinguish rollout targets:
 | `observability` | Logging, metrics, tracing | 100% trace coverage |
 | `compliance` | Regulatory requirements | GDPR, HIPAA |
 
+### Technical Architecture (Platform PRDs)
+
+For platform and infrastructure PRDs, the `technicalArchitecture` section supports microservices documentation:
+
+#### Services Inventory
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `id` | Yes | Unique service identifier |
+| `name` | Yes | Service name |
+| `description` | Yes | What the service does |
+| `layer` | No | `control-plane`, `execution-plane`, `data-plane`, `gateway` |
+| `protocol` | No | `REST`, `gRPC`, `GraphQL`, `WebSocket` |
+| `language` | No | Primary programming language |
+| `languageRationale` | No | Why this language was chosen |
+| `responsibilities` | No | List of service responsibilities |
+| `dependencies` | No | IDs of dependent services |
+
+#### API Specifications
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `name` | Yes | API name |
+| `protocol` | Yes | `REST`, `gRPC`, `GraphQL`, `WebSocket` |
+| `basePath` | No | Base URL path |
+| `version` | No | API version |
+| `endpoints` | No | List of endpoints (method, path, description, auth) |
+| `openApiSpec` | No | URL to OpenAPI/Swagger spec |
+| `protobufSpec` | No | URL to protobuf definitions |
+
+#### Storage Architecture
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `category` | Yes | `metadata`, `artifacts`, `state`, `cache`, `observability`, `audit`, `secrets` |
+| `purpose` | Yes | What this storage is for |
+| `technology` | Yes | Storage technology (DynamoDB, S3, etc.) |
+| `encryption` | No | Encryption approach |
+| `retention` | No | Data retention policy |
+| `perTenant` | No | Whether storage is isolated per tenant |
+
+#### GitOps Configuration
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `enabled` | Yes | Whether GitOps is used |
+| `provider` | No | GitOps provider (ArgoCD, Flux, etc.) |
+| `workflow` | No | GitOps workflow description |
+| `sourcesOfTruth` | No | List of artifacts and their locations (`git`, `s3`, `database`, `secrets-manager`, `registry`) |
+
+#### Workflow Orchestration
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `shortLived` | No | Engine for short-lived workflows (Step Functions, etc.) |
+| `longRunning` | No | Engine for long-running workflows (Temporal, etc.) |
+| `description` | No | Orchestration approach description |
+
+### Related Documents
+
+Link to related PRDs, TRDs, and design documents:
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `id` | Yes | Document identifier |
+| `title` | Yes | Document title |
+| `type` | Yes | `prd`, `trd`, `mrd`, `design-doc`, `rfc` |
+| `relationship` | Yes | `child`, `parent`, `sibling`, `implements`, `supersedes`, `related` |
+| `path` | No | File path to document |
+| `url` | No | URL to document |
+| `description` | No | Relationship context |
+
 ## MRD Details
 
 ### Market Size (TAM/SAM/SOM)
@@ -605,7 +679,7 @@ The completeness check evaluates:
 | User Stories | 10% | Acceptance criteria coverage, persona/phase linkage |
 | Requirements | 10% | Functional/non-functional count, essential NFR categories |
 | Roadmap | 10% | Phases with deliverables, success criteria, goals |
-| Optional sections | 30% | Assumptions, out of scope, tech architecture, UX, risks, glossary |
+| Optional sections | 30% | Assumptions, in/out of scope, tech architecture, UX, risks, glossary, related docs |
 
 ### Example Output
 
@@ -616,7 +690,7 @@ PRD COMPLETENESS REPORT
 
 Overall Score: 90.8% (Grade: A)
 Required Sections: 7/7 complete
-Optional Sections: 4/6 complete
+Optional Sections: 5/8 complete
 
 -------------------------------------------------------------
 SECTION BREAKDOWN
@@ -633,11 +707,13 @@ Required Sections:
 
 Optional Sections:
   [+] Assumptions & Constraints 100.0% (complete)
+  [+] In Scope                  100.0% (complete)
   [+] Out of Scope              100.0% (complete)
   [~] Technical Architecture     50.0% (partial)
   [ ] UX Requirements             0.0% (missing)
   [+] Risks                     100.0% (complete)
   [+] Glossary                  100.0% (complete)
+  [ ] Related Documents           0.0% (missing)
 
 -------------------------------------------------------------
 RECOMMENDATIONS
