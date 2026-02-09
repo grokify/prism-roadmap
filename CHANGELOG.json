@@ -12,7 +12,8 @@
       "highlights": [
         { "description": "Add markdown rendering for 8 extended PRD sections (Problem, Market, Solution, Decisions, Reviews, RevisionHistory, NonGoals, SuccessMetrics)", "commit": "1507c7b" },
         { "description": "Add structured `NonGoals` and `SuccessMetrics` fields to PRD Document type", "commit": "1507c7b" },
-        { "description": "Add completeness scoring for all 8 new optional sections", "commit": "1507c7b" }
+        { "description": "Add completeness scoring for all 8 new optional sections", "commit": "1507c7b" },
+        { "description": "Add configurable section ordering with PRD type templates (strategy, feature, technical)", "commit": "cb616e6" }
       ],
       "added": [
         { "description": "Add `generateProblem()` rendering for problem statement, evidence table, root causes, affected segments", "commit": "1507c7b" },
@@ -35,16 +36,34 @@
         { "description": "Add `checkRevisionHistory()` completeness function for revision history scoring", "commit": "1507c7b" },
         { "description": "Add `checkNonGoals()` completeness function for non-goals scoring", "commit": "1507c7b" },
         { "description": "Add `checkSuccessMetrics()` completeness function for success metrics scoring", "commit": "1507c7b" },
-        { "description": "Add TOC entries for all 8 new sections in `generateTableOfContents()`", "commit": "1507c7b" }
+        { "description": "Add TOC entries for all 8 new sections in `generateTableOfContents()`", "commit": "1507c7b" },
+        { "description": "Add `SectionID` type and constants for all 27 PRD sections", "commit": "cb616e6" },
+        { "description": "Add `PRDType` enum with `strategy`, `feature`, `technical` templates for section ordering", "commit": "cb616e6" },
+        { "description": "Add `--type` CLI flag to select PRD type template for section ordering", "commit": "cb616e6" },
+        { "description": "Add `--order` CLI flag to specify custom section order (comma-separated IDs)", "commit": "cb616e6" },
+        { "description": "Add `list-sections` subcommand to display available section IDs", "commit": "cb616e6" },
+        { "description": "Add `HasSection()` method to check if a section has content", "commit": "cb616e6" },
+        { "description": "Add `GetSectionOrder()` method to get section order based on PRDType or custom order", "commit": "cb616e6" },
+        { "description": "Add `GetActiveSections()` method to get only sections with content", "commit": "cb616e6" },
+        { "description": "Add `PRDType` and `SectionOrder` fields to PRD Metadata", "commit": "cb616e6" }
       ],
       "changed": [
         { "description": "Update `OptionalTotal` from 8 to 16 sections in completeness scoring", "commit": "1507c7b" },
-        { "description": "Regenerate PRD JSON schema with `nonGoals` and `successMetrics` fields", "commit": "fe1b86f" }
+        { "description": "Regenerate PRD JSON schema with `nonGoals` and `successMetrics` fields", "commit": "fe1b86f" },
+        { "description": "Remove hardcoded section numbers from markdown headers for dynamic ordering", "commit": "cb616e6" },
+        { "description": "Refactor `ToMarkdown()` to use `renderSection()` dispatcher with dynamic ordering", "commit": "cb616e6" },
+        { "description": "Split `generateRequirements()` into `generateFunctionalRequirements()` and `generateNonFunctionalRequirements()`", "commit": "cb616e6" }
+      ],
+      "fixed": [
+        { "description": "Add blank lines before lists in markdown for Pandoc PDF compatibility", "commit": "cb616e6" }
       ],
       "tests": [
         { "description": "Add tests for all 8 `generateX()` rendering functions", "commit": "29b0701" },
         { "description": "Add JSON round-trip tests for `SuccessMetrics` and `Metric` types", "commit": "29b0701" },
-        { "description": "Update completeness test expectations for 23 sections (7 required + 16 optional)", "commit": "29b0701" }
+        { "description": "Update completeness test expectations for 23 sections (7 required + 16 optional)", "commit": "29b0701" },
+        { "description": "Add tests for section ordering (strategy, feature, technical templates)", "commit": "cb616e6" },
+        { "description": "Add tests for `HasSection()`, `GetSectionOrder()`, `GetActiveSections()` methods", "commit": "cb616e6" },
+        { "description": "Add tests for `CompleteSectionOrder()` and `ValidateSectionOrder()` functions", "commit": "cb616e6" }
       ],
       "documentation": [
         { "description": "Add v0.8.0 release notes with extended section rendering examples", "commit": "5fb7d15" },

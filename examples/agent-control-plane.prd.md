@@ -9,8 +9,6 @@ mainfont: "Helvetica"
 sansfont: "Helvetica"
 monofont: "Courier New"
 fontfamily: helvet
-header-includes:
-  - \renewcommand{\familydefault}{\sfdefault}
 ---
 
 # Agent and MCP Control Plane

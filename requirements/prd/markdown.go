@@ -77,111 +77,78 @@ func (d *Document) ToMarkdown(opts MarkdownOptions) string {
 		sb.WriteString(d.generateTableOfContents(opts))
 	}
 
-	// Executive Summary
-	sb.WriteString(d.generateExecutiveSummary())
-
-	// Objectives
-	sb.WriteString(d.generateObjectives())
-
-	// Personas
-	sb.WriteString(d.generatePersonas())
-
-	// User Stories
-	sb.WriteString(d.generateUserStories())
-
-	// Requirements
-	sb.WriteString(d.generateRequirements(opts))
-
-	// Roadmap
-	sb.WriteString(d.generateRoadmap(opts))
-
-	// Optional sections
-	if d.TechArchitecture != nil {
-		sb.WriteString(d.generateTechArchitecture())
-	}
-
-	if d.Assumptions != nil {
-		sb.WriteString(d.generateAssumptions())
-	}
-
-	if len(d.InScope) > 0 {
-		sb.WriteString(d.generateInScope())
-	}
-
-	if len(d.OutOfScope) > 0 {
-		sb.WriteString(d.generateOutOfScope())
-	}
-
-	if len(d.Risks) > 0 {
-		sb.WriteString(d.generateRisks())
-	}
-
-	if len(d.OpenItems) > 0 {
-		sb.WriteString(d.generateOpenItems(opts))
-	}
-
-	if d.CurrentState != nil {
-		sb.WriteString(d.generateCurrentState())
-	}
-
-	if d.SecurityModel != nil {
-		sb.WriteString(d.generateSecurityModel())
-	}
-
-	if len(d.Appendices) > 0 {
-		sb.WriteString(d.generateAppendices())
-	}
-
-	if len(d.Glossary) > 0 {
-		sb.WriteString(d.generateGlossary())
-	}
-
-	if len(d.RelatedDocuments) > 0 {
-		sb.WriteString(d.generateRelatedDocuments())
-	}
-
-	// Extended sections
-	if d.Problem != nil {
-		sb.WriteString(d.generateProblem())
-	}
-
-	if d.Market != nil {
-		sb.WriteString(d.generateMarket())
-	}
-
-	if d.Solution != nil {
-		sb.WriteString(d.generateSolution(opts))
-	}
-
-	if d.Decisions != nil && len(d.Decisions.Records) > 0 {
-		sb.WriteString(d.generateDecisions())
-	}
-
-	if d.Reviews != nil {
-		sb.WriteString(d.generateReviews(opts))
-	}
-
-	if len(d.RevisionHistory) > 0 {
-		sb.WriteString(d.generateRevisionHistory())
-	}
-
-	if len(d.NonGoals) > 0 {
-		sb.WriteString(d.generateNonGoals())
-	}
-
-	if d.SuccessMetrics != nil {
-		sb.WriteString(d.generateSuccessMetrics())
-	}
-
-	// Custom sections
-	if len(d.CustomSections) > 0 {
-		sb.WriteString(d.generateCustomSections())
+	// Render sections in configured order
+	activeSections := d.GetActiveSections()
+	for _, sectionID := range activeSections {
+		sb.WriteString(d.renderSection(sectionID, opts))
 	}
 
 	// Footer
 	sb.WriteString("\n---\n\n*Generated from structured PRD JSON format*\n")
 
 	return sb.String()
+}
+
+// renderSection renders a single section by ID.
+func (d *Document) renderSection(id SectionID, opts MarkdownOptions) string {
+	switch id {
+	case SectionExecutiveSummary:
+		return d.generateExecutiveSummary()
+	case SectionObjectives:
+		return d.generateObjectives()
+	case SectionPersonas:
+		return d.generatePersonas()
+	case SectionUserStories:
+		return d.generateUserStories()
+	case SectionFunctionalReqs:
+		return d.generateFunctionalRequirements(opts)
+	case SectionNonFunctionalReqs:
+		return d.generateNonFunctionalRequirements(opts)
+	case SectionRoadmap:
+		return d.generateRoadmap(opts)
+	case SectionTechArchitecture:
+		return d.generateTechArchitecture()
+	case SectionAssumptions:
+		return d.generateAssumptions()
+	case SectionInScope:
+		return d.generateInScope()
+	case SectionOutOfScope:
+		return d.generateOutOfScope()
+	case SectionRisks:
+		return d.generateRisks()
+	case SectionOpenItems:
+		return d.generateOpenItems(opts)
+	case SectionCurrentState:
+		return d.generateCurrentState()
+	case SectionSecurityModel:
+		return d.generateSecurityModel()
+	case SectionAppendices:
+		return d.generateAppendices()
+	case SectionGlossary:
+		return d.generateGlossary()
+	case SectionRelatedDocuments:
+		return d.generateRelatedDocuments()
+	case SectionProblem:
+		return d.generateProblem()
+	case SectionMarket:
+		return d.generateMarket()
+	case SectionSolution:
+		return d.generateSolution(opts)
+	case SectionDecisions:
+		return d.generateDecisions()
+	case SectionReviews:
+		return d.generateReviews(opts)
+	case SectionRevisionHistory:
+		return d.generateRevisionHistory()
+	case SectionNonGoals:
+		return d.generateNonGoals()
+	case SectionSuccessMetrics:
+		return d.generateSuccessMetrics()
+	case SectionCustom:
+		return d.generateCustomSections()
+	default:
+		return ""
+	}
 }
 
 func (d *Document) generateFrontmatter(opts MarkdownOptions) string {
@@ -267,119 +234,30 @@ func (d *Document) generateTableOfContents(_ MarkdownOptions) string {
 	var sb strings.Builder
 	sb.WriteString("## Table of Contents\n\n")
 
-	// Fixed sections (always present)
-	sb.WriteString("1. [Executive Summary](#1-executive-summary)\n")
-	sb.WriteString("2. [Objectives and Goals](#2-objectives-and-goals)\n")
-	sb.WriteString("3. [Personas](#3-personas)\n")
-	sb.WriteString("4. [User Stories](#4-user-stories)\n")
-	sb.WriteString("5. [Functional Requirements](#5-functional-requirements)\n")
-	sb.WriteString("6. [Non-Functional Requirements](#6-non-functional-requirements)\n")
-	sb.WriteString("7. [Roadmap](#7-roadmap)\n")
+	activeSections := d.GetActiveSections()
+	for i, id := range activeSections {
+		sectionNum := i + 1
 
-	// Optional sections - track section number
-	sectionNum := 8
+		// Handle custom sections specially (they have dynamic titles)
+		if id == SectionCustom {
+			for j, cs := range d.CustomSections {
+				slug := toSlug(cs.Title)
+				sb.WriteString(fmt.Sprintf("%d. [%s](#%s)\n", sectionNum+j, cs.Title, slug))
+			}
+			continue
+		}
 
-	if d.TechArchitecture != nil {
-		sb.WriteString(fmt.Sprintf("%d. [Technical Architecture](#technical-architecture)\n", sectionNum))
-		sectionNum++
-	}
+		displayName := SectionDisplayNames[id]
+		anchor := SectionAnchors[id]
 
-	if d.Assumptions != nil {
-		sb.WriteString(fmt.Sprintf("%d. [Assumptions and Constraints](#assumptions-and-constraints)\n", sectionNum))
-		sectionNum++
-	}
+		if displayName == "" {
+			displayName = string(id)
+		}
+		if anchor == "" {
+			anchor = toSlug(displayName)
+		}
 
-	if len(d.InScope) > 0 {
-		sb.WriteString(fmt.Sprintf("%d. [In Scope](#in-scope)\n", sectionNum))
-		sectionNum++
-	}
-
-	if len(d.OutOfScope) > 0 {
-		sb.WriteString(fmt.Sprintf("%d. [Out of Scope](#out-of-scope)\n", sectionNum))
-		sectionNum++
-	}
-
-	if len(d.Risks) > 0 {
-		sb.WriteString(fmt.Sprintf("%d. [Risk Assessment](#risk-assessment)\n", sectionNum))
-		sectionNum++
-	}
-
-	if len(d.OpenItems) > 0 {
-		sb.WriteString(fmt.Sprintf("%d. [Open Items](#open-items)\n", sectionNum))
-		sectionNum++
-	}
-
-	if d.CurrentState != nil {
-		sb.WriteString(fmt.Sprintf("%d. [Current State](#current-state)\n", sectionNum))
-		sectionNum++
-	}
-
-	if d.SecurityModel != nil {
-		sb.WriteString(fmt.Sprintf("%d. [Security Model](#security-model)\n", sectionNum))
-		sectionNum++
-	}
-
-	if len(d.Appendices) > 0 {
-		sb.WriteString(fmt.Sprintf("%d. [Appendices](#appendices)\n", sectionNum))
-		sectionNum++
-	}
-
-	if len(d.Glossary) > 0 {
-		sb.WriteString(fmt.Sprintf("%d. [Glossary](#glossary)\n", sectionNum))
-		sectionNum++
-	}
-
-	if len(d.RelatedDocuments) > 0 {
-		sb.WriteString(fmt.Sprintf("%d. [Related Documents](#related-documents)\n", sectionNum))
-		sectionNum++
-	}
-
-	// Extended sections
-	if d.Problem != nil {
-		sb.WriteString(fmt.Sprintf("%d. [Problem Definition](#problem-definition)\n", sectionNum))
-		sectionNum++
-	}
-
-	if d.Market != nil {
-		sb.WriteString(fmt.Sprintf("%d. [Market Analysis](#market-analysis)\n", sectionNum))
-		sectionNum++
-	}
-
-	if d.Solution != nil {
-		sb.WriteString(fmt.Sprintf("%d. [Solution](#solution)\n", sectionNum))
-		sectionNum++
-	}
-
-	if d.Decisions != nil && len(d.Decisions.Records) > 0 {
-		sb.WriteString(fmt.Sprintf("%d. [Decisions](#decisions)\n", sectionNum))
-		sectionNum++
-	}
-
-	if d.Reviews != nil {
-		sb.WriteString(fmt.Sprintf("%d. [Reviews](#reviews)\n", sectionNum))
-		sectionNum++
-	}
-
-	if len(d.RevisionHistory) > 0 {
-		sb.WriteString(fmt.Sprintf("%d. [Revision History](#revision-history)\n", sectionNum))
-		sectionNum++
-	}
-
-	if len(d.NonGoals) > 0 {
-		sb.WriteString(fmt.Sprintf("%d. [Non-Goals](#non-goals)\n", sectionNum))
-		sectionNum++
-	}
-
-	if d.SuccessMetrics != nil {
-		sb.WriteString(fmt.Sprintf("%d. [Success Metrics](#success-metrics)\n", sectionNum))
-		sectionNum++
-	}
-
-	// Custom sections
-	for _, cs := range d.CustomSections {
-		slug := toSlug(cs.Title)
-		sb.WriteString(fmt.Sprintf("%d. [%s](#%s)\n", sectionNum, cs.Title, slug))
-		sectionNum++
+		sb.WriteString(fmt.Sprintf("%d. [%s](#%s)\n", sectionNum, displayName, anchor))
 	}
 
 	sb.WriteString("\n---\n\n")
@@ -402,16 +280,16 @@ func toSlug(s string) string {
 
 func (d *Document) generateExecutiveSummary() string {
 	var sb strings.Builder
-	sb.WriteString("## 1. Executive Summary\n\n")
+	sb.WriteString("## Executive Summary\n\n")
 
-	sb.WriteString("### 1.1 Problem Statement\n\n")
+	sb.WriteString("### Problem Statement\n\n")
 	sb.WriteString(d.ExecutiveSummary.ProblemStatement + "\n\n")
 
-	sb.WriteString("### 1.2 Proposed Solution\n\n")
+	sb.WriteString("### Proposed Solution\n\n")
 	sb.WriteString(d.ExecutiveSummary.ProposedSolution + "\n\n")
 
 	if len(d.ExecutiveSummary.ExpectedOutcomes) > 0 {
-		sb.WriteString("### 1.3 Expected Outcomes\n\n")
+		sb.WriteString("### Expected Outcomes\n\n")
 		for _, outcome := range d.ExecutiveSummary.ExpectedOutcomes {
 			sb.WriteString(fmt.Sprintf("- %s\n", outcome))
 		}
@@ -419,12 +297,12 @@ func (d *Document) generateExecutiveSummary() string {
 	}
 
 	if d.ExecutiveSummary.TargetAudience != "" {
-		sb.WriteString("### 1.4 Target Audience\n\n")
+		sb.WriteString("### Target Audience\n\n")
 		sb.WriteString(d.ExecutiveSummary.TargetAudience + "\n\n")
 	}
 
 	if d.ExecutiveSummary.ValueProposition != "" {
-		sb.WriteString("### 1.5 Value Proposition\n\n")
+		sb.WriteString("### Value Proposition\n\n")
 		sb.WriteString(d.ExecutiveSummary.ValueProposition + "\n\n")
 	}
 
@@ -434,7 +312,7 @@ func (d *Document) generateExecutiveSummary() string {
 
 func (d *Document) generateObjectives() string {
 	var sb strings.Builder
-	sb.WriteString("## 2. Objectives and Goals\n\n")
+	sb.WriteString("## Objectives and Goals\n\n")
 
 	if len(d.Objectives.OKRs) > 0 {
 		sb.WriteString(d.generateOKRs())
@@ -448,7 +326,7 @@ func (d *Document) generateOKRs() string {
 	var sb strings.Builder
 
 	// Objectives overview - quick scan of all objectives
-	sb.WriteString("### 2.1 Objectives Overview\n\n")
+	sb.WriteString("### Objectives Overview\n\n")
 	for i, okr := range d.Objectives.OKRs {
 		obj := okr.Objective
 		timeframe := ""
@@ -460,7 +338,7 @@ func (d *Document) generateOKRs() string {
 	sb.WriteString("\n")
 
 	// Detailed OKRs with Key Results
-	sb.WriteString("### 2.2 OKRs (Objectives and Key Results)\n\n")
+	sb.WriteString("### OKRs (Objectives and Key Results)\n\n")
 
 	for i, okr := range d.Objectives.OKRs {
 		obj := okr.Objective
@@ -559,14 +437,14 @@ func (d *Document) generateOKRs() string {
 
 func (d *Document) generatePersonas() string {
 	var sb strings.Builder
-	sb.WriteString("## 3. Personas\n\n")
+	sb.WriteString("## Personas\n\n")
 
-	for i, p := range d.Personas {
+	for _, p := range d.Personas {
 		primary := ""
 		if p.IsPrimary {
 			primary = " (Primary)"
 		}
-		sb.WriteString(fmt.Sprintf("### 3.%d %s%s\n\n", i+1, p.Name, primary))
+		sb.WriteString(fmt.Sprintf("### %s%s\n\n", p.Name, primary))
 
 		sb.WriteString("| Attribute | Description |\n")
 		sb.WriteString("|-----------|-------------|\n")
@@ -600,7 +478,7 @@ func (d *Document) generatePersonas() string {
 
 func (d *Document) generateUserStories() string {
 	var sb strings.Builder
-	sb.WriteString("## 4. User Stories\n\n")
+	sb.WriteString("## User Stories\n\n")
 
 	// Group by persona
 	personaStories := make(map[string][]UserStory)
@@ -608,14 +486,13 @@ func (d *Document) generateUserStories() string {
 		personaStories[us.PersonaID] = append(personaStories[us.PersonaID], us)
 	}
 
-	sectionNum := 1
 	for _, p := range d.Personas {
 		stories, ok := personaStories[p.ID]
 		if !ok || len(stories) == 0 {
 			continue
 		}
 
-		sb.WriteString(fmt.Sprintf("### 4.%d %s Stories\n\n", sectionNum, p.Name))
+		sb.WriteString(fmt.Sprintf("### %s Stories\n\n", p.Name))
 		sb.WriteString("| ID | Story | Priority | Phase |\n")
 		sb.WriteString("|------|----------------------------------------|----------|-------|\n")
 		for _, us := range stories {
@@ -623,18 +500,16 @@ func (d *Document) generateUserStories() string {
 				us.ID, us.Story(), us.Priority, us.PhaseID))
 		}
 		sb.WriteString("\n")
-		sectionNum++
 	}
 
 	sb.WriteString("---\n\n")
 	return sb.String()
 }
 
-func (d *Document) generateRequirements(opts MarkdownOptions) string {
+func (d *Document) generateFunctionalRequirements(opts MarkdownOptions) string {
 	var sb strings.Builder
 
-	// Functional Requirements
-	sb.WriteString("## 5. Functional Requirements\n\n")
+	sb.WriteString("## Functional Requirements\n\n")
 
 	// Group by category
 	categories := make(map[string][]FunctionalRequirement)
@@ -649,10 +524,9 @@ func (d *Document) generateRequirements(opts MarkdownOptions) string {
 	}
 	sort.Strings(categoryNames)
 
-	sectionNum := 1
 	for _, cat := range categoryNames {
 		reqs := categories[cat]
-		sb.WriteString(fmt.Sprintf("### 5.%d %s\n\n", sectionNum, cat))
+		sb.WriteString(fmt.Sprintf("### %s\n\n", cat))
 		sb.WriteString("| ID | Title | Description | Priority | Phase |\n")
 		sb.WriteString("|------|-----------------|--------------------------------------------|----------|-------|\n")
 		for _, r := range reqs {
@@ -660,11 +534,16 @@ func (d *Document) generateRequirements(opts MarkdownOptions) string {
 				r.ID, r.Title, truncate(r.Description, opts.DescriptionMaxLen), r.Priority, r.PhaseID))
 		}
 		sb.WriteString("\n")
-		sectionNum++
 	}
 
-	// Non-Functional Requirements
-	sb.WriteString("## 6. Non-Functional Requirements\n\n")
+	sb.WriteString("---\n\n")
+	return sb.String()
+}
+
+func (d *Document) generateNonFunctionalRequirements(_ MarkdownOptions) string {
+	var sb strings.Builder
+
+	sb.WriteString("## Non-Functional Requirements\n\n")
 
 	// Group by category
 	nfrCategories := make(map[NFRCategory][]NonFunctionalRequirement)
@@ -697,14 +576,13 @@ func (d *Document) generateRequirements(opts MarkdownOptions) string {
 		return string(nfrCategoryKeys[i]) < string(nfrCategoryKeys[j])
 	})
 
-	sectionNum = 1
 	for _, cat := range nfrCategoryKeys {
 		reqs := nfrCategories[cat]
 		catName := nfrCategoryDisplayNames[cat]
 		if catName == "" {
 			catName = string(cat)
 		}
-		sb.WriteString(fmt.Sprintf("### 6.%d %s\n\n", sectionNum, catName))
+		sb.WriteString(fmt.Sprintf("### %s\n\n", catName))
 		sb.WriteString("| ID | Title | Target | Priority | Phase |\n")
 		sb.WriteString("|----|-------|--------|----------|-------|\n")
 		for _, r := range reqs {
@@ -712,7 +590,6 @@ func (d *Document) generateRequirements(opts MarkdownOptions) string {
 				r.ID, r.Title, r.Target, r.Priority, r.PhaseID))
 		}
 		sb.WriteString("\n")
-		sectionNum++
 	}
 
 	sb.WriteString("---\n\n")
@@ -721,11 +598,11 @@ func (d *Document) generateRequirements(opts MarkdownOptions) string {
 
 func (d *Document) generateRoadmap(opts MarkdownOptions) string {
 	var sb strings.Builder
-	sb.WriteString("## 7. Roadmap\n\n")
+	sb.WriteString("## Roadmap\n\n")
 
 	// Swimlane table view (phases as columns, deliverable types as rows)
 	if opts.IncludeSwimlaneTable && len(d.Roadmap.Phases) > 0 {
-		sb.WriteString("### 7.1 Roadmap Overview (Swimlane View)\n\n")
+		sb.WriteString("### Roadmap Overview (Swimlane View)\n\n")
 		tableOpts := DefaultRoadmapTableOptions()
 		if opts.RoadmapTableOptions != nil {
 			tableOpts = *opts.RoadmapTableOptions
@@ -745,7 +622,7 @@ func (d *Document) generateRoadmap(opts MarkdownOptions) string {
 			sb.WriteString(StatusLegendWithOptions(opts.UseTextIcons))
 			sb.WriteString("\n")
 		}
-		sb.WriteString("### 7.2 Phase Details\n\n")
+		sb.WriteString("### Phase Details\n\n")
 	}
 
 	for _, phase := range d.Roadmap.Phases {
@@ -1159,13 +1036,13 @@ func (d *Document) generateOpenItems(opts MarkdownOptions) string {
 					}
 
 					if len(opt.Pros) > 0 {
-						sb.WriteString("*Pros:*\n")
+						sb.WriteString("*Pros:*\n\n")
 						for _, pro := range opt.Pros {
 							sb.WriteString(fmt.Sprintf("- %s %s\n", proIcon, pro))
 						}
 					}
 					if len(opt.Cons) > 0 {
-						sb.WriteString("\n*Cons:*\n")
+						sb.WriteString("\n*Cons:*\n\n")
 						for _, con := range opt.Cons {
 							sb.WriteString(fmt.Sprintf("- %s %s\n", conIcon, con))
 						}

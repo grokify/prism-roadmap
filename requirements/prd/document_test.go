@@ -379,32 +379,32 @@ func TestMarkdownGeneration(t *testing.T) {
 			t.Error("expected frontmatter to contain margin")
 		}
 
-		// Check content sections
+		// Check content sections (headers are now unnumbered for dynamic ordering)
 		if !strings.Contains(md, "# Test Product Requirements") {
 			t.Error("expected markdown to contain document title as H1")
 		}
-		if !strings.Contains(md, "## 1. Executive Summary") {
+		if !strings.Contains(md, "## Executive Summary") {
 			t.Error("expected markdown to contain Executive Summary section")
 		}
 		if !strings.Contains(md, "Users need a better solution.") {
 			t.Error("expected markdown to contain problem statement")
 		}
-		if !strings.Contains(md, "## 2. Objectives") {
+		if !strings.Contains(md, "## Objectives and Goals") {
 			t.Error("expected markdown to contain Objectives section")
 		}
-		if !strings.Contains(md, "## 3. Personas") {
+		if !strings.Contains(md, "## Personas") {
 			t.Error("expected markdown to contain Personas section")
 		}
 		if !strings.Contains(md, "Developer") {
 			t.Error("expected markdown to contain persona name")
 		}
-		if !strings.Contains(md, "## 4. User Stories") {
+		if !strings.Contains(md, "## User Stories") {
 			t.Error("expected markdown to contain User Stories section")
 		}
-		if !strings.Contains(md, "## 5. Functional Requirements") {
+		if !strings.Contains(md, "## Functional Requirements") {
 			t.Error("expected markdown to contain Functional Requirements section")
 		}
-		if !strings.Contains(md, "## 7. Roadmap") {
+		if !strings.Contains(md, "## Roadmap") {
 			t.Error("expected markdown to contain Roadmap section")
 		}
 		if !strings.Contains(md, "Glossary") {

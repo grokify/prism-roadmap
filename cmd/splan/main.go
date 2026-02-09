@@ -1001,6 +1001,8 @@ type generateFlags struct {
 	descLen          int
 	swimlaneNoStatus bool
 	textIcons        bool
+	prdType          string
+	sectionOrder     string
 }
 
 // ============================================================================
@@ -1021,11 +1023,22 @@ var prdGenerateCmd = &cobra.Command{
 	Long: `Generate markdown from a Product Requirements Document (PRD).
 
 The output includes YAML frontmatter compatible with Pandoc for PDF generation.
-By default, the output file has the same name as the input with a .md extension.`,
+By default, the output file has the same name as the input with a .md extension.
+
+Section ordering:
+  --type controls the section ordering template:
+    - strategy: Context-first (CurrentState, Problem, Market early)
+    - feature: User-needs-first (Problem, Personas, UserStories early)
+    - technical: Architecture-focused (TechArchitecture early)
+
+  --order allows custom section ordering (comma-separated IDs).
+  Use 'splan requirements prd list-sections' to see available IDs.`,
 	Example: `  splan requirements prd generate myproduct.prd.json
   splan requirements prd generate myproduct.json -o output.md
   splan requirements prd generate myproduct.json --no-frontmatter
-  splan requirements prd generate myproduct.json --text-icons  # For Pandoc PDF`,
+  splan requirements prd generate myproduct.json --text-icons  # For Pandoc PDF
+  splan requirements prd generate myproduct.json --type=strategy
+  splan requirements prd generate myproduct.json --order=executiveSummary,problem,solution`,
 	Args: cobra.ExactArgs(1),
 	RunE: runPRDGenerate,
 }
@@ -1075,6 +1088,18 @@ var prdFilterFlags struct {
 	includeTags []string
 	excludeTags []string
 	matchAll    bool
+}
+
+var prdListSectionsCmd = &cobra.Command{
+	Use:   "list-sections",
+	Short: "List available section IDs for --order flag",
+	Long: `List all available section IDs that can be used with the --order flag.
+
+Each section ID can be used in a comma-separated list with the --order flag
+to customize the section ordering in the generated markdown.`,
+	Example: `  splan requirements prd list-sections
+  splan requirements prd generate myproduct.json --order=executiveSummary,problem,solution`,
+	RunE: runPRDListSections,
 }
 
 var prdFilterCmd = &cobra.Command{
@@ -1147,8 +1172,11 @@ func init() {
 	prdGenerateCmd.Flags().BoolVar(&prdGenerateFlags.noSwimlane, "no-swimlane", false, "Disable swimlane table view in roadmap section")
 	prdGenerateCmd.Flags().BoolVar(&prdGenerateFlags.swimlaneNoStatus, "swimlane-no-status", false, "Hide status icons in swimlane table")
 	prdGenerateCmd.Flags().BoolVar(&prdGenerateFlags.textIcons, "text-icons", false, "Use ASCII text icons instead of emoji for Pandoc/LaTeX PDF compatibility")
+	prdGenerateCmd.Flags().StringVar(&prdGenerateFlags.prdType, "type", "", "PRD type for section ordering (strategy, feature, technical)")
+	prdGenerateCmd.Flags().StringVar(&prdGenerateFlags.sectionOrder, "order", "", "Custom section order (comma-separated IDs)")
 
 	prdCmd.AddCommand(prdGenerateCmd)
+	prdCmd.AddCommand(prdListSectionsCmd)
 	prdCmd.AddCommand(prdValidateCmd)
 	prdCmd.AddCommand(prdCheckCmd)
 	prdCmd.AddCommand(prdScoreCmd)
@@ -1184,6 +1212,31 @@ func runPRDGenerate(cmd *cobra.Command, args []string) error {
 	var doc prd.Document
 	if err := json.Unmarshal(data, &doc); err != nil {
 		return fmt.Errorf("parsing JSON: %w", err)
+	}
+
+	// Apply PRD type flag (overrides JSON value)
+	if prdGenerateFlags.prdType != "" {
+		prdType := prd.PRDType(prdGenerateFlags.prdType)
+		switch prdType {
+		case prd.PRDTypeStrategy, prd.PRDTypeFeature, prd.PRDTypeTechnical:
+			doc.Metadata.PRDType = prdType
+		default:
+			return fmt.Errorf("invalid --type value: %s (expected strategy, feature, or technical)", prdGenerateFlags.prdType)
+		}
+	}
+
+	// Apply custom section order flag (overrides JSON value)
+	if prdGenerateFlags.sectionOrder != "" {
+		orderIDs := strings.Split(prdGenerateFlags.sectionOrder, ",")
+		for i := range orderIDs {
+			orderIDs[i] = strings.TrimSpace(orderIDs[i])
+		}
+		// Validate section IDs
+		invalid := prd.ValidateSectionOrder(orderIDs)
+		if len(invalid) > 0 {
+			return fmt.Errorf("invalid section IDs in --order: %s (use 'splan requirements prd list-sections' to see valid IDs)", strings.Join(invalid, ", "))
+		}
+		doc.Metadata.SectionOrder = orderIDs
 	}
 
 	// Handle TOC option (default: enabled, disabled with --no-toc)
@@ -1413,6 +1466,31 @@ func runPRDFilter(cmd *cobra.Command, args []string) error {
 	} else {
 		fmt.Println(string(output))
 	}
+
+	return nil
+}
+
+func runPRDListSections(cmd *cobra.Command, args []string) error {
+	sections := prd.ListSections()
+
+	fmt.Println("Available PRD section IDs for --order flag:")
+	fmt.Println()
+	fmt.Println("PRD Types (--type flag):")
+	fmt.Println("  strategy  - Context-first ordering (CurrentState, Problem, Market early)")
+	fmt.Println("  feature   - User-needs-first ordering (Problem, Personas, UserStories early)")
+	fmt.Println("  technical - Architecture-focused ordering (TechArchitecture early)")
+	fmt.Println()
+	fmt.Println("Section IDs:")
+	fmt.Println("  ID                        Display Name")
+	fmt.Println("  --------------------------  --------------------------------")
+	for _, s := range sections {
+		if s.DisplayName != "" {
+			fmt.Printf("  %-26s  %s\n", s.ID, s.DisplayName)
+		}
+	}
+	fmt.Println()
+	fmt.Println("Example:")
+	fmt.Println("  splan requirements prd generate myproduct.json --order=executiveSummary,problem,solution,objectives")
 
 	return nil
 }

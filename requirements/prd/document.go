@@ -281,6 +281,17 @@ type Metadata struct {
 
 	// SemanticVersioning indicates the Version field follows Semantic Versioning (semver.org).
 	SemanticVersioning bool `json:"semanticVersioning,omitempty"`
+
+	// PRDType determines the section ordering template for markdown generation.
+	// Options: "", "strategy", "feature", "technical"
+	// If empty, uses default order for backward compatibility.
+	PRDType PRDType `json:"prdType,omitempty"`
+
+	// SectionOrder specifies a custom section order for markdown generation.
+	// If provided, overrides the template order from PRDType.
+	// Sections not listed are appended in template order.
+	// Use section IDs like "executiveSummary", "problem", "market", etc.
+	SectionOrder []string `json:"sectionOrder,omitempty"`
 }
 
 // ExecutiveSummary provides high-level product overview.
@@ -318,4 +329,96 @@ func (d *Document) GetProductGoals() *Goals {
 // (either in ProductGoals or legacy Objectives).
 func (d *Document) HasProductGoals() bool {
 	return d.ProductGoals != nil || len(d.Objectives.OKRs) > 0
+}
+
+// HasSection returns true if the document has content for the given section.
+func (d *Document) HasSection(id SectionID) bool {
+	switch id {
+	case SectionExecutiveSummary:
+		return true // Always present
+	case SectionObjectives:
+		return true // Always present
+	case SectionPersonas:
+		return len(d.Personas) > 0
+	case SectionUserStories:
+		return len(d.UserStories) > 0
+	case SectionFunctionalReqs:
+		return len(d.Requirements.Functional) > 0
+	case SectionNonFunctionalReqs:
+		return len(d.Requirements.NonFunctional) > 0
+	case SectionRoadmap:
+		return true // Always present
+	case SectionTechArchitecture:
+		return d.TechArchitecture != nil
+	case SectionAssumptions:
+		return d.Assumptions != nil
+	case SectionInScope:
+		return len(d.InScope) > 0
+	case SectionOutOfScope:
+		return len(d.OutOfScope) > 0
+	case SectionRisks:
+		return len(d.Risks) > 0
+	case SectionOpenItems:
+		return len(d.OpenItems) > 0
+	case SectionCurrentState:
+		return d.CurrentState != nil
+	case SectionSecurityModel:
+		return d.SecurityModel != nil
+	case SectionAppendices:
+		return len(d.Appendices) > 0
+	case SectionGlossary:
+		return len(d.Glossary) > 0
+	case SectionRelatedDocuments:
+		return len(d.RelatedDocuments) > 0
+	case SectionProblem:
+		return d.Problem != nil
+	case SectionMarket:
+		return d.Market != nil
+	case SectionSolution:
+		return d.Solution != nil
+	case SectionDecisions:
+		return d.Decisions != nil && len(d.Decisions.Records) > 0
+	case SectionReviews:
+		return d.Reviews != nil
+	case SectionRevisionHistory:
+		return len(d.RevisionHistory) > 0
+	case SectionNonGoals:
+		return len(d.NonGoals) > 0
+	case SectionSuccessMetrics:
+		return d.SuccessMetrics != nil
+	case SectionCustom:
+		return len(d.CustomSections) > 0
+	default:
+		return false
+	}
+}
+
+// GetSectionOrder returns the effective section order for this document.
+// Priority: 1) Custom SectionOrder, 2) PRDType template, 3) DefaultSectionOrder
+func (d *Document) GetSectionOrder() []SectionID {
+	// Get base template
+	template := GetSectionOrder(d.Metadata.PRDType)
+
+	// If custom order specified, use it with completion
+	if len(d.Metadata.SectionOrder) > 0 {
+		partial := make([]SectionID, len(d.Metadata.SectionOrder))
+		for i, id := range d.Metadata.SectionOrder {
+			partial[i] = SectionID(id)
+		}
+		return CompleteSectionOrder(partial, template)
+	}
+
+	return template
+}
+
+// GetActiveSections returns only sections that have content, in order.
+func (d *Document) GetActiveSections() []SectionID {
+	order := d.GetSectionOrder()
+	var active []SectionID
+	for _, id := range order {
+		if d.HasSection(id) {
+			active = append(active, id)
+		}
+	}
+	return active
 }
