@@ -1,9 +1,9 @@
 {
-  "ir_version": "1.0",
+  "irVersion": "1.0",
   "project": "structured-plan",
   "repository": "https://github.com/grokify/structured-plan",
   "versioning": "semver",
-  "commit_convention": "conventional",
+  "commitConvention": "conventional",
   "maintainers": ["grokify", "johncwang@gmail.com"],
   "releases": [
     {
