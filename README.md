@@ -95,6 +95,23 @@ splan req prd generate input.json --mainfont Arial # Custom font
 splan req prd generate input.json --text-icons    # ASCII icons for Pandoc PDF
 ```
 
+### Section Ordering (PRD only)
+
+Control the order of sections in generated markdown:
+
+```bash
+# Use a PRD type template for section ordering
+splan req prd generate input.json --type=strategy   # Context-first (CurrentState, Problem, Market early)
+splan req prd generate input.json --type=feature    # User-needs-first (Problem, Personas, UserStories early)
+splan req prd generate input.json --type=technical  # Architecture-focused (TechArchitecture early)
+
+# Custom section order (comma-separated IDs)
+splan req prd generate input.json --order=executiveSummary,problem,solution,objectives
+
+# List available section IDs
+splan req prd list-sections
+```
+
 ### Check Options (PRD only)
 
 ```bash
