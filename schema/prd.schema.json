@@ -826,6 +826,15 @@
             "$ref": "#/$defs/Appendix"
           },
           "type": "array"
+        },
+        "nonGoals": {
+          "items": {
+            "$ref": "#/$defs/NonGoal"
+          },
+          "type": "array"
+        },
+        "successMetrics": {
+          "$ref": "#/$defs/SuccessMetrics"
         }
       },
       "additionalProperties": false,
@@ -1355,6 +1364,30 @@
       "additionalProperties": false,
       "type": "object"
     },
+    "Metric": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "baseline": {
+          "type": "string"
+        },
+        "target": {
+          "type": "string"
+        },
+        "measurementMethod": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
     "MultiTenancySpec": {
       "properties": {
         "isolationModel": {
@@ -1427,6 +1460,33 @@
           "type": "array"
         },
         "appendixRefs": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "NonGoal": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "rationale": {
+          "type": "string"
+        },
+        "futurePhase": {
+          "type": "string"
+        },
+        "tags": {
           "items": {
             "type": "string"
           },
@@ -2538,6 +2598,30 @@
         },
         "perTenant": {
           "type": "boolean"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "SuccessMetrics": {
+      "properties": {
+        "northStar": {
+          "items": {
+            "$ref": "#/$defs/Metric"
+          },
+          "type": "array"
+        },
+        "supporting": {
+          "items": {
+            "$ref": "#/$defs/Metric"
+          },
+          "type": "array"
+        },
+        "guardrail": {
+          "items": {
+            "$ref": "#/$defs/Metric"
+          },
+          "type": "array"
         }
       },
       "additionalProperties": false,
