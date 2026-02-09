@@ -116,14 +116,14 @@ func TestCompletenessMinimalDocument(t *testing.T) {
 	report := doc.CheckCompleteness()
 
 	// Should have a reasonable score with minimal required fields
-	// With just 1 persona, limited stories/requirements, and no optional sections,
-	// the score will be in the 50-60% range
-	if report.OverallScore < 40 {
-		t.Errorf("Minimal document score too low: got %.1f%%, want >= 40%%", report.OverallScore)
+	// With just 1 persona, limited stories/requirements, and no optional sections
+	// (16 optional sections now), the score will be in the 30-50% range
+	if report.OverallScore < 30 {
+		t.Errorf("Minimal document score too low: got %.1f%%, want >= 30%%", report.OverallScore)
 	}
 
-	if report.OverallScore > 70 {
-		t.Errorf("Minimal document score too high: got %.1f%%, want <= 70%%", report.OverallScore)
+	if report.OverallScore > 60 {
+		t.Errorf("Minimal document score too high: got %.1f%%, want <= 60%%", report.OverallScore)
 	}
 
 	// Grade should be D or F for minimal document (both are acceptable)
@@ -132,8 +132,9 @@ func TestCompletenessMinimalDocument(t *testing.T) {
 	}
 
 	// Check that required sections are evaluated
-	if len(report.Sections) != 15 {
-		t.Errorf("Expected 15 sections (7 required + 8 optional), got %d", len(report.Sections))
+	// 7 required + 16 optional (8 existing + 8 new extended sections)
+	if len(report.Sections) != 23 {
+		t.Errorf("Expected 23 sections (7 required + 16 optional), got %d", len(report.Sections))
 	}
 }
 
