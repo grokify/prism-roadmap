@@ -51,7 +51,7 @@ const (
 func (d *Document) CheckCompleteness() CompletenessReport {
 	report := CompletenessReport{
 		RequiredTotal: 7,
-		OptionalTotal: 8,
+		OptionalTotal: 16, // 8 existing + 8 new extended sections
 	}
 
 	// Check each section
@@ -72,6 +72,16 @@ func (d *Document) CheckCompleteness() CompletenessReport {
 	report.Sections = append(report.Sections, d.checkRisks())
 	report.Sections = append(report.Sections, d.checkGlossary())
 	report.Sections = append(report.Sections, d.checkRelatedDocuments())
+
+	// Extended sections
+	report.Sections = append(report.Sections, d.checkProblem())
+	report.Sections = append(report.Sections, d.checkMarket())
+	report.Sections = append(report.Sections, d.checkSolution())
+	report.Sections = append(report.Sections, d.checkDecisions())
+	report.Sections = append(report.Sections, d.checkReviews())
+	report.Sections = append(report.Sections, d.checkRevisionHistory())
+	report.Sections = append(report.Sections, d.checkNonGoals())
+	report.Sections = append(report.Sections, d.checkSuccessMetrics())
 
 	// Calculate overall score
 	var totalPoints, earnedPoints float64
@@ -989,6 +999,350 @@ func (d *Document) checkGlossary() SectionScore {
 		score.Score = 60
 	}
 
+	score.Status = getStatus(score.Score)
+
+	return score
+}
+
+func (d *Document) checkProblem() SectionScore {
+	score := SectionScore{
+		Name:      "Problem Definition",
+		MaxPoints: 5,
+		Required:  false,
+	}
+
+	if d.Problem == nil {
+		score.Score = 0
+		score.Status = "missing"
+		score.Suggestions = append(score.Suggestions, "Consider adding a detailed problem definition with evidence")
+		return score
+	}
+
+	points := 0.0
+	maxPoints := 5.0
+
+	if d.Problem.Statement != "" {
+		points += 1.5
+	} else {
+		score.Issues = append(score.Issues, "Problem definition missing statement")
+	}
+
+	if d.Problem.UserImpact != "" {
+		points += 1
+	}
+
+	if len(d.Problem.Evidence) > 0 {
+		points += 1.5
+	} else {
+		score.Suggestions = append(score.Suggestions, "Consider adding evidence to support the problem")
+	}
+
+	if len(d.Problem.RootCauses) > 0 {
+		points += 0.5
+	}
+
+	if d.Problem.Confidence > 0 {
+		points += 0.5
+	}
+
+	score.Score = (points / maxPoints) * 100
+	if score.Score > 100 {
+		score.Score = 100
+	}
+	score.Status = getStatus(score.Score)
+
+	return score
+}
+
+func (d *Document) checkMarket() SectionScore {
+	score := SectionScore{
+		Name:      "Market Analysis",
+		MaxPoints: 5,
+		Required:  false,
+	}
+
+	if d.Market == nil {
+		score.Score = 0
+		score.Status = "missing"
+		score.Suggestions = append(score.Suggestions, "Consider adding market analysis with alternatives")
+		return score
+	}
+
+	points := 0.0
+	maxPoints := 4.0
+
+	if len(d.Market.Alternatives) > 0 {
+		points += 2
+	} else {
+		score.Suggestions = append(score.Suggestions, "Consider documenting alternatives and competitors")
+	}
+
+	if len(d.Market.Differentiation) > 0 {
+		points += 1
+	}
+
+	if len(d.Market.MarketRisks) > 0 {
+		points += 1
+	}
+
+	score.Score = (points / maxPoints) * 100
+	score.Status = getStatus(score.Score)
+
+	return score
+}
+
+func (d *Document) checkSolution() SectionScore {
+	score := SectionScore{
+		Name:      "Solution",
+		MaxPoints: 5,
+		Required:  false,
+	}
+
+	if d.Solution == nil {
+		score.Score = 0
+		score.Status = "missing"
+		score.Suggestions = append(score.Suggestions, "Consider adding solution options and rationale")
+		return score
+	}
+
+	points := 0.0
+	maxPoints := 5.0
+
+	if len(d.Solution.SolutionOptions) > 0 {
+		points += 2
+	} else {
+		score.Issues = append(score.Issues, "Solution section missing options")
+	}
+
+	if d.Solution.SelectedSolutionID != "" {
+		points += 1
+	} else if len(d.Solution.SolutionOptions) > 0 {
+		score.Issues = append(score.Issues, "No solution selected from options")
+	}
+
+	if d.Solution.SolutionRationale != "" {
+		points += 1.5
+	} else {
+		score.Suggestions = append(score.Suggestions, "Consider adding rationale for solution selection")
+	}
+
+	if d.Solution.Confidence > 0 {
+		points += 0.5
+	}
+
+	score.Score = (points / maxPoints) * 100
+	score.Status = getStatus(score.Score)
+
+	return score
+}
+
+func (d *Document) checkDecisions() SectionScore {
+	score := SectionScore{
+		Name:      "Decisions",
+		MaxPoints: 5,
+		Required:  false,
+	}
+
+	if d.Decisions == nil || len(d.Decisions.Records) == 0 {
+		score.Score = 0
+		score.Status = "missing"
+		score.Suggestions = append(score.Suggestions, "Consider documenting key decisions made during development")
+		return score
+	}
+
+	points := 0.0
+	maxPoints := 4.0
+
+	recordCount := len(d.Decisions.Records)
+	if recordCount >= 3 {
+		points += 2
+	} else if recordCount > 0 {
+		points += 1
+	}
+
+	// Check decision quality
+	decisionsWithRationale := 0
+	for _, rec := range d.Decisions.Records {
+		if rec.Rationale != "" {
+			decisionsWithRationale++
+		}
+	}
+
+	if decisionsWithRationale == recordCount {
+		points += 2
+	} else if decisionsWithRationale > 0 {
+		points += 1
+		score.Issues = append(score.Issues, "Some decisions missing rationale")
+	}
+
+	score.Score = (points / maxPoints) * 100
+	score.Status = getStatus(score.Score)
+
+	return score
+}
+
+func (d *Document) checkReviews() SectionScore {
+	score := SectionScore{
+		Name:      "Reviews",
+		MaxPoints: 5,
+		Required:  false,
+	}
+
+	if d.Reviews == nil {
+		score.Score = 0
+		score.Status = "missing"
+		score.Suggestions = append(score.Suggestions, "Consider adding review outcomes and quality scores")
+		return score
+	}
+
+	points := 0.0
+	maxPoints := 4.0
+
+	if d.Reviews.Decision != "" {
+		points += 1
+	}
+
+	if d.Reviews.QualityScores != nil {
+		points += 2
+	}
+
+	if d.Reviews.ReviewBoardSummary != "" {
+		points += 0.5
+	}
+
+	if len(d.Reviews.Blockers) > 0 || len(d.Reviews.RevisionTriggers) > 0 {
+		points += 0.5
+	}
+
+	score.Score = (points / maxPoints) * 100
+	score.Status = getStatus(score.Score)
+
+	return score
+}
+
+func (d *Document) checkRevisionHistory() SectionScore {
+	score := SectionScore{
+		Name:      "Revision History",
+		MaxPoints: 5,
+		Required:  false,
+	}
+
+	if len(d.RevisionHistory) == 0 {
+		score.Score = 0
+		score.Status = "missing"
+		score.Suggestions = append(score.Suggestions, "Consider adding revision history to track changes")
+		return score
+	}
+
+	points := 0.0
+	maxPoints := 3.0
+
+	revCount := len(d.RevisionHistory)
+	if revCount >= 2 {
+		points += 2
+	} else {
+		points += 1
+	}
+
+	// Check revision quality
+	revisionsWithChanges := 0
+	for _, rev := range d.RevisionHistory {
+		if len(rev.Changes) > 0 {
+			revisionsWithChanges++
+		}
+	}
+
+	if revisionsWithChanges == revCount {
+		points += 1
+	} else if revisionsWithChanges > 0 {
+		points += 0.5
+		score.Issues = append(score.Issues, "Some revisions missing change descriptions")
+	}
+
+	score.Score = (points / maxPoints) * 100
+	score.Status = getStatus(score.Score)
+
+	return score
+}
+
+func (d *Document) checkNonGoals() SectionScore {
+	score := SectionScore{
+		Name:      "Non-Goals",
+		MaxPoints: 5,
+		Required:  false,
+	}
+
+	if len(d.NonGoals) == 0 {
+		score.Score = 0
+		score.Status = "missing"
+		score.Suggestions = append(score.Suggestions, "Consider adding structured non-goals with rationale")
+		return score
+	}
+
+	points := 0.0
+	maxPoints := 4.0
+
+	ngCount := len(d.NonGoals)
+	if ngCount >= 3 {
+		points += 2
+	} else {
+		points += 1
+	}
+
+	// Check non-goal quality
+	nonGoalsWithRationale := 0
+	for _, ng := range d.NonGoals {
+		if ng.Rationale != "" {
+			nonGoalsWithRationale++
+		}
+	}
+
+	if nonGoalsWithRationale == ngCount {
+		points += 2
+	} else if nonGoalsWithRationale > 0 {
+		points += 1
+		score.Issues = append(score.Issues, "Some non-goals missing rationale")
+	}
+
+	score.Score = (points / maxPoints) * 100
+	score.Status = getStatus(score.Score)
+
+	return score
+}
+
+func (d *Document) checkSuccessMetrics() SectionScore {
+	score := SectionScore{
+		Name:      "Success Metrics",
+		MaxPoints: 5,
+		Required:  false,
+	}
+
+	if d.SuccessMetrics == nil {
+		score.Score = 0
+		score.Status = "missing"
+		score.Suggestions = append(score.Suggestions, "Consider adding success metrics organized by type")
+		return score
+	}
+
+	points := 0.0
+	maxPoints := 5.0
+
+	// North star metrics are most important
+	if len(d.SuccessMetrics.NorthStar) > 0 {
+		points += 2.5
+	} else {
+		score.Issues = append(score.Issues, "Success metrics missing north star metrics")
+	}
+
+	if len(d.SuccessMetrics.Supporting) > 0 {
+		points += 1.25
+	}
+
+	if len(d.SuccessMetrics.Guardrail) > 0 {
+		points += 1.25
+	}
+
+	score.Score = (points / maxPoints) * 100
 	score.Status = getStatus(score.Score)
 
 	return score

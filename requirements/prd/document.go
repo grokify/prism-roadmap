@@ -183,6 +183,13 @@ type Document struct {
 
 	// Appendices contains supplementary information and domain-specific data.
 	Appendices []Appendix `json:"appendices,omitempty"`
+
+	// NonGoals contains structured non-goals with rationale.
+	// More structured than OutOfScope for explicit exclusions.
+	NonGoals []NonGoal `json:"nonGoals,omitempty"`
+
+	// SuccessMetrics contains structured success metrics organized by type.
+	SuccessMetrics *SuccessMetrics `json:"successMetrics,omitempty"`
 }
 
 // Status constants re-exported from common for backward compatibility.

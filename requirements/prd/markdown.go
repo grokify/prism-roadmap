@@ -140,6 +140,39 @@ func (d *Document) ToMarkdown(opts MarkdownOptions) string {
 		sb.WriteString(d.generateRelatedDocuments())
 	}
 
+	// Extended sections
+	if d.Problem != nil {
+		sb.WriteString(d.generateProblem())
+	}
+
+	if d.Market != nil {
+		sb.WriteString(d.generateMarket())
+	}
+
+	if d.Solution != nil {
+		sb.WriteString(d.generateSolution(opts))
+	}
+
+	if d.Decisions != nil && len(d.Decisions.Records) > 0 {
+		sb.WriteString(d.generateDecisions())
+	}
+
+	if d.Reviews != nil {
+		sb.WriteString(d.generateReviews(opts))
+	}
+
+	if len(d.RevisionHistory) > 0 {
+		sb.WriteString(d.generateRevisionHistory())
+	}
+
+	if len(d.NonGoals) > 0 {
+		sb.WriteString(d.generateNonGoals())
+	}
+
+	if d.SuccessMetrics != nil {
+		sb.WriteString(d.generateSuccessMetrics())
+	}
+
 	// Custom sections
 	if len(d.CustomSections) > 0 {
 		sb.WriteString(d.generateCustomSections())
@@ -298,6 +331,47 @@ func (d *Document) generateTableOfContents(_ MarkdownOptions) string {
 
 	if len(d.RelatedDocuments) > 0 {
 		sb.WriteString(fmt.Sprintf("%d. [Related Documents](#related-documents)\n", sectionNum))
+		sectionNum++
+	}
+
+	// Extended sections
+	if d.Problem != nil {
+		sb.WriteString(fmt.Sprintf("%d. [Problem Definition](#problem-definition)\n", sectionNum))
+		sectionNum++
+	}
+
+	if d.Market != nil {
+		sb.WriteString(fmt.Sprintf("%d. [Market Analysis](#market-analysis)\n", sectionNum))
+		sectionNum++
+	}
+
+	if d.Solution != nil {
+		sb.WriteString(fmt.Sprintf("%d. [Solution](#solution)\n", sectionNum))
+		sectionNum++
+	}
+
+	if d.Decisions != nil && len(d.Decisions.Records) > 0 {
+		sb.WriteString(fmt.Sprintf("%d. [Decisions](#decisions)\n", sectionNum))
+		sectionNum++
+	}
+
+	if d.Reviews != nil {
+		sb.WriteString(fmt.Sprintf("%d. [Reviews](#reviews)\n", sectionNum))
+		sectionNum++
+	}
+
+	if len(d.RevisionHistory) > 0 {
+		sb.WriteString(fmt.Sprintf("%d. [Revision History](#revision-history)\n", sectionNum))
+		sectionNum++
+	}
+
+	if len(d.NonGoals) > 0 {
+		sb.WriteString(fmt.Sprintf("%d. [Non-Goals](#non-goals)\n", sectionNum))
+		sectionNum++
+	}
+
+	if d.SuccessMetrics != nil {
+		sb.WriteString(fmt.Sprintf("%d. [Success Metrics](#success-metrics)\n", sectionNum))
 		sectionNum++
 	}
 
@@ -1505,6 +1579,536 @@ func (d *Document) generateRelatedDocuments() string {
 	}
 	sb.WriteString("\n---\n\n")
 
+	return sb.String()
+}
+
+func (d *Document) generateProblem() string {
+	var sb strings.Builder
+	sb.WriteString("## Problem Definition\n\n")
+
+	p := d.Problem
+
+	// Statement
+	if p.Statement != "" {
+		sb.WriteString("### Problem Statement\n\n")
+		sb.WriteString(p.Statement + "\n\n")
+	}
+
+	// User Impact
+	if p.UserImpact != "" {
+		sb.WriteString("### User Impact\n\n")
+		sb.WriteString(p.UserImpact + "\n\n")
+	}
+
+	// Confidence
+	if p.Confidence > 0 {
+		sb.WriteString(fmt.Sprintf("**Confidence:** %.0f%%\n\n", p.Confidence*100))
+	}
+
+	// Evidence
+	if len(p.Evidence) > 0 {
+		sb.WriteString("### Evidence\n\n")
+		sb.WriteString("| Type | Source | Summary | Sample Size | Strength | Date |\n")
+		sb.WriteString("|------|--------|---------|-------------|----------|------|\n")
+		for _, e := range p.Evidence {
+			sampleSize := "-"
+			if e.SampleSize > 0 {
+				sampleSize = fmt.Sprintf("%d", e.SampleSize)
+			}
+			strength := string(e.Strength)
+			if strength == "" {
+				strength = "-"
+			}
+			date := e.Date
+			if date == "" {
+				date = "-"
+			}
+			summary := e.Summary
+			if summary == "" {
+				summary = "-"
+			}
+			sb.WriteString(fmt.Sprintf("| %s | %s | %s | %s | %s | %s |\n",
+				e.Type, e.Source, summary, sampleSize, strength, date))
+		}
+		sb.WriteString("\n")
+	}
+
+	// Root Causes
+	if len(p.RootCauses) > 0 {
+		sb.WriteString("### Root Causes\n\n")
+		for _, rc := range p.RootCauses {
+			sb.WriteString(fmt.Sprintf("- %s\n", rc))
+		}
+		sb.WriteString("\n")
+	}
+
+	// Affected Segments
+	if len(p.AffectedSegments) > 0 {
+		sb.WriteString("### Affected Segments\n\n")
+		for _, seg := range p.AffectedSegments {
+			sb.WriteString(fmt.Sprintf("- %s\n", seg))
+		}
+		sb.WriteString("\n")
+	}
+
+	// Secondary Problems
+	if len(p.SecondaryProblems) > 0 {
+		sb.WriteString("### Secondary Problems\n\n")
+		for _, sp := range p.SecondaryProblems {
+			sb.WriteString(fmt.Sprintf("- **%s**", sp.Statement))
+			if sp.UserImpact != "" {
+				sb.WriteString(fmt.Sprintf(" - %s", sp.UserImpact))
+			}
+			sb.WriteString("\n")
+		}
+		sb.WriteString("\n")
+	}
+
+	sb.WriteString("---\n\n")
+	return sb.String()
+}
+
+func (d *Document) generateMarket() string {
+	var sb strings.Builder
+	sb.WriteString("## Market Analysis\n\n")
+
+	m := d.Market
+
+	// Alternatives
+	if len(m.Alternatives) > 0 {
+		sb.WriteString("### Alternatives\n\n")
+		sb.WriteString("| ID | Name | Type | Description | Why Not Chosen |\n")
+		sb.WriteString("|----|------|------|-------------|----------------|\n")
+		for _, alt := range m.Alternatives {
+			desc := alt.Description
+			if desc == "" {
+				desc = "-"
+			}
+			whyNot := alt.WhyNotChosen
+			if whyNot == "" {
+				whyNot = "-"
+			}
+			sb.WriteString(fmt.Sprintf("| %s | %s | %s | %s | %s |\n",
+				alt.ID, alt.Name, alt.Type, desc, whyNot))
+		}
+		sb.WriteString("\n")
+
+		// Detailed strengths/weaknesses for each alternative
+		for _, alt := range m.Alternatives {
+			if len(alt.Strengths) > 0 || len(alt.Weaknesses) > 0 {
+				sb.WriteString(fmt.Sprintf("#### %s\n\n", alt.Name))
+
+				if len(alt.Strengths) > 0 {
+					sb.WriteString("**Strengths:**\n\n")
+					for _, s := range alt.Strengths {
+						sb.WriteString(fmt.Sprintf("- %s\n", s))
+					}
+					sb.WriteString("\n")
+				}
+
+				if len(alt.Weaknesses) > 0 {
+					sb.WriteString("**Weaknesses:**\n\n")
+					for _, w := range alt.Weaknesses {
+						sb.WriteString(fmt.Sprintf("- %s\n", w))
+					}
+					sb.WriteString("\n")
+				}
+			}
+		}
+	}
+
+	// Differentiation
+	if len(m.Differentiation) > 0 {
+		sb.WriteString("### Differentiation\n\n")
+		for _, diff := range m.Differentiation {
+			sb.WriteString(fmt.Sprintf("- %s\n", diff))
+		}
+		sb.WriteString("\n")
+	}
+
+	// Market Risks
+	if len(m.MarketRisks) > 0 {
+		sb.WriteString("### Market Risks\n\n")
+		for _, risk := range m.MarketRisks {
+			sb.WriteString(fmt.Sprintf("- %s\n", risk))
+		}
+		sb.WriteString("\n")
+	}
+
+	sb.WriteString("---\n\n")
+	return sb.String()
+}
+
+func (d *Document) generateSolution(opts MarkdownOptions) string {
+	var sb strings.Builder
+	sb.WriteString("## Solution\n\n")
+
+	s := d.Solution
+
+	// Solution Options
+	if len(s.SolutionOptions) > 0 {
+		sb.WriteString("### Solution Options\n\n")
+		sb.WriteString("| ID | Name | Description | Effort | Selected |\n")
+		sb.WriteString("|----|------|-------------|--------|----------|\n")
+		for _, opt := range s.SolutionOptions {
+			desc := opt.Description
+			if desc == "" {
+				desc = "-"
+			}
+			effort := opt.EstimatedEffort
+			if effort == "" {
+				effort = "-"
+			}
+			selected := ""
+			if opt.ID == s.SelectedSolutionID {
+				if opts.UseTextIcons {
+					selected = "[*] Selected"
+				} else {
+					selected = "✅ Selected"
+				}
+			}
+			sb.WriteString(fmt.Sprintf("| %s | %s | %s | %s | %s |\n",
+				opt.ID, opt.Name, desc, effort, selected))
+		}
+		sb.WriteString("\n")
+
+		// Detailed benefits/tradeoffs/risks for each option
+		for _, opt := range s.SolutionOptions {
+			if len(opt.Benefits) > 0 || len(opt.Tradeoffs) > 0 || len(opt.Risks) > 0 {
+				isSelected := opt.ID == s.SelectedSolutionID
+				selectedMarker := ""
+				if isSelected {
+					if opts.UseTextIcons {
+						selectedMarker = " [*] *Selected*"
+					} else {
+						selectedMarker = " ✅ *Selected*"
+					}
+				}
+				sb.WriteString(fmt.Sprintf("#### %s%s\n\n", opt.Name, selectedMarker))
+
+				if len(opt.Benefits) > 0 {
+					sb.WriteString("**Benefits:**\n\n")
+					for _, b := range opt.Benefits {
+						sb.WriteString(fmt.Sprintf("- %s\n", b))
+					}
+					sb.WriteString("\n")
+				}
+
+				if len(opt.Tradeoffs) > 0 {
+					sb.WriteString("**Tradeoffs:**\n\n")
+					for _, t := range opt.Tradeoffs {
+						sb.WriteString(fmt.Sprintf("- %s\n", t))
+					}
+					sb.WriteString("\n")
+				}
+
+				if len(opt.Risks) > 0 {
+					sb.WriteString("**Risks:**\n\n")
+					for _, r := range opt.Risks {
+						sb.WriteString(fmt.Sprintf("- %s\n", r))
+					}
+					sb.WriteString("\n")
+				}
+
+				if len(opt.ProblemsAddressed) > 0 {
+					sb.WriteString(fmt.Sprintf("**Problems Addressed:** %s\n\n", strings.Join(opt.ProblemsAddressed, ", ")))
+				}
+			}
+		}
+	}
+
+	// Solution Rationale
+	if s.SolutionRationale != "" {
+		sb.WriteString("### Solution Rationale\n\n")
+		sb.WriteString(s.SolutionRationale + "\n\n")
+	}
+
+	// Confidence
+	if s.Confidence > 0 {
+		sb.WriteString(fmt.Sprintf("**Confidence:** %.0f%%\n\n", s.Confidence*100))
+	}
+
+	sb.WriteString("---\n\n")
+	return sb.String()
+}
+
+func (d *Document) generateDecisions() string {
+	var sb strings.Builder
+	sb.WriteString("## Decisions\n\n")
+
+	sb.WriteString("| ID | Decision | Rationale | Status | Date | Made By |\n")
+	sb.WriteString("|----|----------|-----------|--------|------|--------|\n")
+	for _, rec := range d.Decisions.Records {
+		rationale := rec.Rationale
+		if rationale == "" {
+			rationale = "-"
+		}
+		status := string(rec.Status)
+		if status == "" {
+			status = "-"
+		}
+		date := "-"
+		if !rec.Date.IsZero() {
+			date = rec.Date.Format("2006-01-02")
+		}
+		madeBy := rec.MadeBy
+		if madeBy == "" {
+			madeBy = "-"
+		}
+		sb.WriteString(fmt.Sprintf("| %s | %s | %s | %s | %s | %s |\n",
+			rec.ID, rec.Decision, rationale, status, date, madeBy))
+	}
+	sb.WriteString("\n")
+
+	// Show alternatives considered for each decision
+	for _, rec := range d.Decisions.Records {
+		if len(rec.AlternativesConsidered) > 0 {
+			sb.WriteString(fmt.Sprintf("**%s - Alternatives Considered:**\n\n", rec.ID))
+			for _, alt := range rec.AlternativesConsidered {
+				sb.WriteString(fmt.Sprintf("- %s\n", alt))
+			}
+			sb.WriteString("\n")
+		}
+	}
+
+	sb.WriteString("---\n\n")
+	return sb.String()
+}
+
+func (d *Document) generateReviews(opts MarkdownOptions) string {
+	var sb strings.Builder
+	sb.WriteString("## Reviews\n\n")
+
+	r := d.Reviews
+
+	// Review Board Summary
+	if r.ReviewBoardSummary != "" {
+		sb.WriteString("### Review Board Summary\n\n")
+		sb.WriteString(r.ReviewBoardSummary + "\n\n")
+	}
+
+	// Decision Badge
+	if r.Decision != "" {
+		var badge string
+		if opts.UseTextIcons {
+			switch r.Decision {
+			case ReviewApprove:
+				badge = "[APPROVED]"
+			case ReviewRevise:
+				badge = "[REVISE]"
+			case ReviewReject:
+				badge = "[REJECTED]"
+			case ReviewHumanReview:
+				badge = "[HUMAN REVIEW]"
+			default:
+				badge = fmt.Sprintf("[%s]", strings.ToUpper(string(r.Decision)))
+			}
+		} else {
+			switch r.Decision {
+			case ReviewApprove:
+				badge = "✅ Approved"
+			case ReviewRevise:
+				badge = "🔄 Revise"
+			case ReviewReject:
+				badge = "❌ Rejected"
+			case ReviewHumanReview:
+				badge = "👤 Human Review"
+			default:
+				badge = string(r.Decision)
+			}
+		}
+		sb.WriteString(fmt.Sprintf("**Decision:** %s\n\n", badge))
+	}
+
+	// Quality Scores
+	if r.QualityScores != nil {
+		sb.WriteString("### Quality Scores\n\n")
+		sb.WriteString("| Dimension | Score |\n")
+		sb.WriteString("|-----------|-------|\n")
+		qs := r.QualityScores
+		sb.WriteString(fmt.Sprintf("| Problem Definition | %.1f |\n", qs.ProblemDefinition))
+		sb.WriteString(fmt.Sprintf("| User Understanding | %.1f |\n", qs.UserUnderstanding))
+		sb.WriteString(fmt.Sprintf("| Market Awareness | %.1f |\n", qs.MarketAwareness))
+		sb.WriteString(fmt.Sprintf("| Solution Fit | %.1f |\n", qs.SolutionFit))
+		sb.WriteString(fmt.Sprintf("| Scope Discipline | %.1f |\n", qs.ScopeDiscipline))
+		sb.WriteString(fmt.Sprintf("| Requirements Quality | %.1f |\n", qs.RequirementsQuality))
+		sb.WriteString(fmt.Sprintf("| UX Coverage | %.1f |\n", qs.UXCoverage))
+		sb.WriteString(fmt.Sprintf("| Technical Feasibility | %.1f |\n", qs.TechnicalFeasibility))
+		sb.WriteString(fmt.Sprintf("| Metrics Quality | %.1f |\n", qs.MetricsQuality))
+		sb.WriteString(fmt.Sprintf("| Risk Management | %.1f |\n", qs.RiskManagement))
+		sb.WriteString(fmt.Sprintf("| **Overall Score** | **%.1f** |\n", qs.OverallScore))
+		sb.WriteString("\n")
+	}
+
+	// Blockers
+	if len(r.Blockers) > 0 {
+		sb.WriteString("### Blockers\n\n")
+		for _, b := range r.Blockers {
+			sb.WriteString(fmt.Sprintf("- **%s** (%s): %s\n", b.ID, b.Category, b.Description))
+		}
+		sb.WriteString("\n")
+	}
+
+	// Revision Triggers
+	if len(r.RevisionTriggers) > 0 {
+		sb.WriteString("### Revision Triggers\n\n")
+		sb.WriteString("| Issue ID | Category | Severity | Description | Recommended Owner |\n")
+		sb.WriteString("|----------|----------|----------|-------------|-------------------|\n")
+		for _, rt := range r.RevisionTriggers {
+			owner := rt.RecommendedOwner
+			if owner == "" {
+				owner = "-"
+			}
+			sb.WriteString(fmt.Sprintf("| %s | %s | %s | %s | %s |\n",
+				rt.IssueID, rt.Category, rt.Severity, rt.Description, owner))
+		}
+		sb.WriteString("\n")
+	}
+
+	sb.WriteString("---\n\n")
+	return sb.String()
+}
+
+func (d *Document) generateRevisionHistory() string {
+	var sb strings.Builder
+	sb.WriteString("## Revision History\n\n")
+
+	sb.WriteString("| Version | Date | Author | Trigger | Changes |\n")
+	sb.WriteString("|---------|------|--------|---------|----------|\n")
+	for _, rev := range d.RevisionHistory {
+		date := "-"
+		if !rev.Date.IsZero() {
+			date = rev.Date.Format("2006-01-02")
+		}
+		author := rev.Author
+		if author == "" {
+			author = "-"
+		}
+		trigger := string(rev.Trigger)
+		if trigger == "" {
+			trigger = "-"
+		}
+		changes := "-"
+		if len(rev.Changes) > 0 {
+			changes = strings.Join(rev.Changes, "; ")
+		}
+		sb.WriteString(fmt.Sprintf("| %s | %s | %s | %s | %s |\n",
+			rev.Version, date, author, trigger, changes))
+	}
+	sb.WriteString("\n---\n\n")
+
+	return sb.String()
+}
+
+func (d *Document) generateNonGoals() string {
+	var sb strings.Builder
+	sb.WriteString("## Non-Goals\n\n")
+
+	sb.WriteString("| ID | Title | Description | Rationale | Future Phase |\n")
+	sb.WriteString("|----|-------|-------------|-----------|-------------|\n")
+	for _, ng := range d.NonGoals {
+		desc := ng.Description
+		if desc == "" {
+			desc = "-"
+		}
+		rationale := ng.Rationale
+		if rationale == "" {
+			rationale = "-"
+		}
+		futurePhase := ng.FuturePhase
+		if futurePhase == "" {
+			futurePhase = "-"
+		}
+		sb.WriteString(fmt.Sprintf("| %s | %s | %s | %s | %s |\n",
+			ng.ID, ng.Title, desc, rationale, futurePhase))
+	}
+	sb.WriteString("\n---\n\n")
+
+	return sb.String()
+}
+
+func (d *Document) generateSuccessMetrics() string {
+	var sb strings.Builder
+	sb.WriteString("## Success Metrics\n\n")
+
+	sm := d.SuccessMetrics
+
+	// North Star Metrics
+	if len(sm.NorthStar) > 0 {
+		sb.WriteString("### North Star Metrics\n\n")
+		sb.WriteString("*Primary metrics that define success.*\n\n")
+		sb.WriteString("| ID | Name | Description | Baseline | Target | Measurement Method |\n")
+		sb.WriteString("|----|------|-------------|----------|--------|--------------------|\n")
+		for _, m := range sm.NorthStar {
+			desc := m.Description
+			if desc == "" {
+				desc = "-"
+			}
+			baseline := m.Baseline
+			if baseline == "" {
+				baseline = "-"
+			}
+			method := m.MeasurementMethod
+			if method == "" {
+				method = "-"
+			}
+			sb.WriteString(fmt.Sprintf("| %s | %s | %s | %s | %s | %s |\n",
+				m.ID, m.Name, desc, baseline, m.Target, method))
+		}
+		sb.WriteString("\n")
+	}
+
+	// Supporting Metrics
+	if len(sm.Supporting) > 0 {
+		sb.WriteString("### Supporting Metrics\n\n")
+		sb.WriteString("*Metrics that support the north star metrics.*\n\n")
+		sb.WriteString("| ID | Name | Description | Baseline | Target | Measurement Method |\n")
+		sb.WriteString("|----|------|-------------|----------|--------|--------------------|\n")
+		for _, m := range sm.Supporting {
+			desc := m.Description
+			if desc == "" {
+				desc = "-"
+			}
+			baseline := m.Baseline
+			if baseline == "" {
+				baseline = "-"
+			}
+			method := m.MeasurementMethod
+			if method == "" {
+				method = "-"
+			}
+			sb.WriteString(fmt.Sprintf("| %s | %s | %s | %s | %s | %s |\n",
+				m.ID, m.Name, desc, baseline, m.Target, method))
+		}
+		sb.WriteString("\n")
+	}
+
+	// Guardrail Metrics
+	if len(sm.Guardrail) > 0 {
+		sb.WriteString("### Guardrail Metrics\n\n")
+		sb.WriteString("*Metrics that should not degrade.*\n\n")
+		sb.WriteString("| ID | Name | Description | Baseline | Target | Measurement Method |\n")
+		sb.WriteString("|----|------|-------------|----------|--------|--------------------|\n")
+		for _, m := range sm.Guardrail {
+			desc := m.Description
+			if desc == "" {
+				desc = "-"
+			}
+			baseline := m.Baseline
+			if baseline == "" {
+				baseline = "-"
+			}
+			method := m.MeasurementMethod
+			if method == "" {
+				method = "-"
+			}
+			sb.WriteString(fmt.Sprintf("| %s | %s | %s | %s | %s | %s |\n",
+				m.ID, m.Name, desc, baseline, m.Target, method))
+		}
+		sb.WriteString("\n")
+	}
+
+	sb.WriteString("---\n\n")
 	return sb.String()
 }
 
