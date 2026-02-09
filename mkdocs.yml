@@ -94,6 +94,8 @@ nav:
   - Examples:
       - PRD Examples: examples/prd-examples.md
       - Integration Examples: examples/integration.md
+  - Workflows:
+      - Merging Modular Files: merge.md
   - API Reference: api/reference.md
   - Releases:
       - v0.8.0: releases/v0.8.0.md
