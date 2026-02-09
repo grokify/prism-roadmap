@@ -299,6 +299,14 @@ Defines what the product should do and for whom.
 | `relatedDocuments` | No | Links to related PRDs, TRDs, design docs |
 | `risks` | No | Product and technical risks |
 | `glossary` | No | Term definitions |
+| `problem` | No | Extended problem definition with evidence and root causes |
+| `market` | No | Market analysis with alternatives and differentiation |
+| `solution` | No | Solution options with selection rationale |
+| `decisions` | No | Decision records with alternatives considered |
+| `reviews` | No | Review outcomes with quality scores |
+| `revisionHistory` | No | Document revision history |
+| `nonGoals` | No | Structured non-goals with rationale |
+| `successMetrics` | No | Success metrics organized by type (north star, supporting, guardrail) |
 
 ### TRD - Technical Requirements Document
 
@@ -680,7 +688,7 @@ The completeness check evaluates:
 | User Stories | 10% | Acceptance criteria coverage, persona/phase linkage |
 | Requirements | 10% | Functional/non-functional count, essential NFR categories |
 | Roadmap | 10% | Phases with deliverables, success criteria, goals |
-| Optional sections | 30% | Assumptions, in/out of scope, tech architecture, UX, risks, glossary, related docs |
+| Optional sections | 30% | 16 optional sections including assumptions, scope, architecture, risks, problem, market, solution, decisions, reviews, non-goals, success metrics |
 
 ### Example Output
 
@@ -689,9 +697,9 @@ The completeness check evaluates:
 PRD COMPLETENESS REPORT
 =============================================================
 
-Overall Score: 90.8% (Grade: A)
+Overall Score: 85.5% (Grade: B)
 Required Sections: 7/7 complete
-Optional Sections: 5/8 complete
+Optional Sections: 8/16 complete
 
 -------------------------------------------------------------
 SECTION BREAKDOWN
@@ -715,6 +723,14 @@ Optional Sections:
   [+] Risks                     100.0% (complete)
   [+] Glossary                  100.0% (complete)
   [ ] Related Documents           0.0% (missing)
+  [+] Problem Definition        100.0% (complete)
+  [ ] Market Analysis             0.0% (missing)
+  [ ] Solution                    0.0% (missing)
+  [ ] Decisions                   0.0% (missing)
+  [ ] Reviews                     0.0% (missing)
+  [ ] Revision History            0.0% (missing)
+  [ ] Non-Goals                   0.0% (missing)
+  [ ] Success Metrics             0.0% (missing)
 
 -------------------------------------------------------------
 RECOMMENDATIONS

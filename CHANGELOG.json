@@ -7,6 +7,47 @@
   "maintainers": ["grokify", "johncwang@gmail.com"],
   "releases": [
     {
+      "version": "v0.8.0",
+      "date": "2026-02-08",
+      "highlights": [
+        { "description": "Add markdown rendering for 8 extended PRD sections (Problem, Market, Solution, Decisions, Reviews, RevisionHistory, NonGoals, SuccessMetrics)" },
+        { "description": "Add structured `NonGoals` and `SuccessMetrics` fields to PRD Document type" },
+        { "description": "Add completeness scoring for all 8 new optional sections" }
+      ],
+      "added": [
+        { "description": "Add `generateProblem()` rendering for problem statement, evidence table, root causes, affected segments" },
+        { "description": "Add `generateMarket()` rendering for alternatives table, strengths/weaknesses, differentiation, market risks" },
+        { "description": "Add `generateSolution()` rendering for solution options table with selection indicator, benefits/tradeoffs/risks" },
+        { "description": "Add `generateDecisions()` rendering for decision records table with alternatives considered" },
+        { "description": "Add `generateReviews()` rendering for review decision badge, quality scores, blockers, revision triggers" },
+        { "description": "Add `generateRevisionHistory()` rendering for version history table" },
+        { "description": "Add `generateNonGoals()` rendering for structured non-goals table" },
+        { "description": "Add `generateSuccessMetrics()` rendering for north star, supporting, and guardrail metrics" },
+        { "description": "Add `SuccessMetrics` type with `NorthStar`, `Supporting`, and `Guardrail` metric arrays" },
+        { "description": "Add `Metric` type with ID, name, description, baseline, target, and measurement method" },
+        { "description": "Add `NonGoals` field to PRD Document for structured non-goals with rationale" },
+        { "description": "Add `SuccessMetrics` field to PRD Document for organized success metrics" },
+        { "description": "Add `checkProblem()` completeness function for problem definition scoring" },
+        { "description": "Add `checkMarket()` completeness function for market analysis scoring" },
+        { "description": "Add `checkSolution()` completeness function for solution section scoring" },
+        { "description": "Add `checkDecisions()` completeness function for decisions scoring" },
+        { "description": "Add `checkReviews()` completeness function for reviews scoring" },
+        { "description": "Add `checkRevisionHistory()` completeness function for revision history scoring" },
+        { "description": "Add `checkNonGoals()` completeness function for non-goals scoring" },
+        { "description": "Add `checkSuccessMetrics()` completeness function for success metrics scoring" },
+        { "description": "Add TOC entries for all 8 new sections in `generateTableOfContents()`" }
+      ],
+      "changed": [
+        { "description": "Update `OptionalTotal` from 8 to 16 sections in completeness scoring" },
+        { "description": "Regenerate PRD JSON schema with `nonGoals` and `successMetrics` fields" }
+      ],
+      "documentation": [
+        { "description": "Add v0.8.0 release notes with extended section rendering examples" },
+        { "description": "Update README PRD section table with new optional sections" },
+        { "description": "Update PRD documentation with extended sections" }
+      ]
+    },
+    {
       "version": "v0.7.0",
       "date": "2026-02-02",
       "highlights": [

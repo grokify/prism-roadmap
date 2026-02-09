@@ -167,6 +167,59 @@ type Risk struct {
 }
 ```
 
+### Non-Goals
+
+```go
+type NonGoal struct {
+    ID          string   `json:"id"`
+    Title       string   `json:"title"`
+    Description string   `json:"description,omitempty"`
+    Rationale   string   `json:"rationale,omitempty"`
+    FuturePhase string   `json:"futurePhase,omitempty"`
+    Tags        []string `json:"tags,omitempty"`
+}
+```
+
+### Success Metrics
+
+```go
+type SuccessMetrics struct {
+    NorthStar  []Metric `json:"northStar"`
+    Supporting []Metric `json:"supporting,omitempty"`
+    Guardrail  []Metric `json:"guardrail,omitempty"`
+}
+
+type Metric struct {
+    ID                string `json:"id"`
+    Name              string `json:"name"`
+    Description       string `json:"description,omitempty"`
+    Baseline          string `json:"baseline,omitempty"`
+    Target            string `json:"target"`
+    MeasurementMethod string `json:"measurementMethod,omitempty"`
+}
+```
+
+### Market Analysis
+
+```go
+type MarketDefinition struct {
+    Alternatives    []Alternative `json:"alternatives,omitempty"`
+    Differentiation []string      `json:"differentiation,omitempty"`
+    MarketRisks     []string      `json:"marketRisks,omitempty"`
+}
+```
+
+### Solution Definition
+
+```go
+type SolutionDefinition struct {
+    SolutionOptions    []SolutionOption `json:"solutionOptions,omitempty"`
+    SelectedSolutionID string           `json:"selectedSolutionId,omitempty"`
+    SolutionRationale  string           `json:"solutionRationale,omitempty"`
+    Confidence         float64          `json:"confidence,omitempty"`
+}
+```
+
 ## Creating a PRD
 
 ### Minimal PRD
