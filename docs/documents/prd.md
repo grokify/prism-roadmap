@@ -108,7 +108,8 @@ type Persona struct {
 ```go
 type Requirements struct {
     Functional    []FunctionalRequirement    `json:"functional"`
-    NonFunctional []NonFunctionalRequirement `json:"non_functional"`
+    NonFunctional []NonFunctionalRequirement `json:"nonFunctional"`
+    Compliance    []ComplianceRequirement    `json:"compliance,omitempty"`
 }
 
 type FunctionalRequirement struct {
@@ -198,6 +199,33 @@ type Metric struct {
     MeasurementMethod string `json:"measurementMethod,omitempty"`
 }
 ```
+
+### Compliance Requirements
+
+```go
+type ComplianceRequirement struct {
+    ID                    string             `json:"id"`
+    Title                 string             `json:"title"`
+    Description           string             `json:"description"`
+    Category              ComplianceCategory `json:"category"`
+    Standard              string             `json:"standard"`
+    ControlReference      string             `json:"controlReference,omitempty"`
+    GeographicScope       []string           `json:"geographicScope,omitempty"`
+    EffectiveDate         string             `json:"effectiveDate,omitempty"`
+    Priority              MoSCoW             `json:"priority"`
+    PhaseID               string             `json:"phaseId"`
+    Status                ComplianceStatus   `json:"status,omitempty"`
+    AuditFrequency        string             `json:"auditFrequency,omitempty"`
+    EvidenceRequirements  []string           `json:"evidenceRequirements,omitempty"`
+    CertificationRequired bool               `json:"certificationRequired,omitempty"`
+    ThirdPartyAssessment  string             `json:"thirdPartyAssessment,omitempty"`
+    Penalties             string             `json:"penalties,omitempty"`
+}
+```
+
+**Compliance Categories:** `data_privacy`, `security`, `healthcare`, `financial`, `accessibility`, `government`, `industry`
+
+**Compliance Status:** `not_started`, `in_progress`, `compliant`, `non_compliant`
 
 ### Market Analysis
 
