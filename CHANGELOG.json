@@ -7,6 +7,36 @@
   "maintainers": ["grokify", "johncwang@gmail.com"],
   "releases": [
     {
+      "version": "v0.9.0",
+      "date": "2026-02-14",
+      "highlights": [
+        { "description": "Add compliance requirements support for regulatory standards tracking (GDPR, SOC2, HIPAA, PCI-DSS, WCAG, FedRAMP)", "commit": "25a76db" },
+        { "description": "Add requirements-by-phase view consolidating all requirements for execution planning", "commit": "531117f" },
+        { "description": "Add NFR category display names for improved rendering", "commit": "25a76db" }
+      ],
+      "added": [
+        { "description": "Add `ComplianceRequirement` type with fields for standard, control reference, geographic scope, effective date, audit frequency, evidence requirements, certification, and penalties", "commit": "25a76db" },
+        { "description": "Add `ComplianceCategory` enum: `data_privacy`, `security`, `healthcare`, `financial`, `accessibility`, `government`, `industry`", "commit": "25a76db" },
+        { "description": "Add `ComplianceStatus` enum: `not_started`, `in_progress`, `compliant`, `non_compliant`", "commit": "25a76db" },
+        { "description": "Add `ComplianceCategoryDisplayNames` and `NFRCategoryDisplayNames` maps for human-readable category names", "commit": "25a76db" },
+        { "description": "Add compliance requirement ID uniqueness and tag validation", "commit": "25a76db" },
+        { "description": "Add compliance requirements scoring in `scoreRequirementsQuality()` with bonus for multiple categories and evidence requirements", "commit": "2d2dbf7" },
+        { "description": "Add compliance requirements completeness check with optional bonus scoring", "commit": "2d2dbf7" },
+        { "description": "Add compliance requirements to tag-based filtering", "commit": "2d2dbf7" },
+        { "description": "Add `generateComplianceRequirements()` rendering grouped by category", "commit": "531117f" },
+        { "description": "Add `generateRequirementsByPhase()` consolidating all requirement types by roadmap phase", "commit": "531117f" },
+        { "description": "Add natural sorting for requirement IDs (FR-2 sorts before FR-10)", "commit": "531117f" },
+        { "description": "Add priority-based sorting for requirements (Must → Should → Could → Won't)", "commit": "531117f" },
+        { "description": "Add `HasSection()` support for `SectionComplianceReqs` and `SectionRequirementsByPhase`", "commit": "531117f" },
+        { "description": "Add `hasRequirementsWithPhases()` helper to detect phase-assigned requirements", "commit": "531117f" },
+        { "description": "Add `SectionComplianceReqs` and `SectionRequirementsByPhase` to all PRD type templates", "commit": "531117f" }
+      ],
+      "changed": [
+        { "description": "Update `Requirements` struct to include `Compliance` field", "commit": "25a76db" },
+        { "description": "Update all section ordering templates (default, strategy, feature, technical) with compliance requirements", "commit": "531117f" }
+      ]
+    },
+    {
       "version": "v0.8.0",
       "date": "2026-02-08",
       "highlights": [

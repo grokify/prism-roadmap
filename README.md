@@ -308,6 +308,7 @@ Defines what the product should do and for whom.
 | `userStories` | Yes | User stories with acceptance criteria |
 | `requirements.functional` | Yes | Functional requirements (MoSCoW priority) |
 | `requirements.nonFunctional` | Yes | NFRs (performance, security, etc.) |
+| `requirements.compliance` | No | Compliance requirements (GDPR, SOC2, HIPAA, etc.) |
 | `roadmap` | Yes | Phases with deliverables and success criteria |
 | `assumptions` | No | Assumptions, constraints, dependencies |
 | `inScope` | No | Explicitly included items |
@@ -540,6 +541,41 @@ Use the `→` notation to distinguish rollout targets:
 | `observability` | Logging, metrics, tracing | 100% trace coverage |
 | `compliance` | Regulatory requirements | GDPR, HIPAA |
 
+### Compliance Requirements
+
+For tracking regulatory and standards compliance:
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `id` | Yes | Unique identifier (e.g., "CR-001") |
+| `title` | Yes | Requirement title |
+| `description` | Yes | Detailed description |
+| `category` | Yes | `data_privacy`, `security`, `healthcare`, `financial`, `accessibility`, `government`, `industry` |
+| `standard` | Yes | Standard name (GDPR, SOC2, HIPAA, PCI-DSS, WCAG, FedRAMP) |
+| `controlReference` | No | Specific control reference (e.g., "GDPR Article 17") |
+| `geographicScope` | No | Applicable regions (EU, US, California, Global) |
+| `effectiveDate` | No | When compliance is required |
+| `priority` | Yes | MoSCoW priority |
+| `phaseId` | Yes | Target roadmap phase |
+| `status` | No | `not_started`, `in_progress`, `compliant`, `non_compliant` |
+| `auditFrequency` | No | `annual`, `quarterly`, `continuous` |
+| `evidenceRequirements` | No | Documentation needed for compliance |
+| `certificationRequired` | No | Whether third-party certification is required |
+| `thirdPartyAssessment` | No | Assessor type or name |
+| `penalties` | No | Business risk of non-compliance |
+
+**Compliance Categories:**
+
+| Category | Description | Example Standards |
+|----------|-------------|-------------------|
+| `data_privacy` | Data protection regulations | GDPR, CCPA |
+| `security` | Security certifications | SOC2, ISO 27001 |
+| `healthcare` | Healthcare regulations | HIPAA, HITRUST |
+| `financial` | Financial regulations | PCI-DSS, SOX |
+| `accessibility` | Accessibility standards | WCAG, ADA |
+| `government` | Government certifications | FedRAMP, StateRAMP |
+| `industry` | Industry-specific standards | Varies by sector |
+
 ### Technical Architecture (Platform PRDs)
 
 For platform and infrastructure PRDs, the `technicalArchitecture` section supports microservices documentation:
@@ -705,7 +741,7 @@ The completeness check evaluates:
 | User Stories | 10% | Acceptance criteria coverage, persona/phase linkage |
 | Requirements | 10% | Functional/non-functional count, essential NFR categories |
 | Roadmap | 10% | Phases with deliverables, success criteria, goals |
-| Optional sections | 30% | 16 optional sections including assumptions, scope, architecture, risks, problem, market, solution, decisions, reviews, non-goals, success metrics |
+| Optional sections | 30% | 18 optional sections including assumptions, scope, architecture, risks, problem, market, solution, decisions, reviews, non-goals, success metrics, compliance requirements, requirements by phase |
 
 ### Example Output
 
@@ -716,7 +752,7 @@ PRD COMPLETENESS REPORT
 
 Overall Score: 85.5% (Grade: B)
 Required Sections: 7/7 complete
-Optional Sections: 8/16 complete
+Optional Sections: 8/18 complete
 
 -------------------------------------------------------------
 SECTION BREAKDOWN
