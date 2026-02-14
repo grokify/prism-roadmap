@@ -496,6 +496,34 @@ func scoreRequirementsQuality(doc *Document) CategoryScore {
 		}
 	}
 
+	// Check compliance requirements
+	if len(doc.Requirements.Compliance) > 0 {
+		points += 1.5
+		evidence = append(evidence, fmt.Sprintf("%d compliance requirements", len(doc.Requirements.Compliance)))
+
+		// Check for compliance coverage
+		complianceCategories := make(map[ComplianceCategory]bool)
+		hasEvidenceReqs := false
+		for _, cr := range doc.Requirements.Compliance {
+			complianceCategories[cr.Category] = true
+			if len(cr.EvidenceRequirements) > 0 {
+				hasEvidenceReqs = true
+			}
+		}
+
+		// Bonus for multiple compliance categories
+		if len(complianceCategories) >= 2 {
+			points += 0.5
+			evidence = append(evidence, "Multiple compliance categories covered")
+		}
+
+		// Bonus for evidence requirements
+		if hasEvidenceReqs {
+			points += 0.5
+			evidence = append(evidence, "Evidence requirements documented")
+		}
+	}
+
 	score.Score = minFloat(points, 10.0)
 	score.Evidence = strings.Join(evidence, "; ")
 	score.Justification = generateJustification("requirements_quality", score.Score)

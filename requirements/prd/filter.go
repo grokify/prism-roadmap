@@ -39,6 +39,7 @@ func (d Document) filterByTagsInternal(tags []string, matchFunc tagMatchFunc) Do
 	filtered.Requirements = Requirements{
 		Functional:    filterSliceByTagsFunc(d.Requirements.Functional, tags, func(fr FunctionalRequirement) []string { return fr.Tags }, matchFunc),
 		NonFunctional: filterSliceByTagsFunc(d.Requirements.NonFunctional, tags, func(nfr NonFunctionalRequirement) []string { return nfr.Tags }, matchFunc),
+		Compliance:    filterSliceByTagsFunc(d.Requirements.Compliance, tags, func(cr ComplianceRequirement) []string { return cr.Tags }, matchFunc),
 	}
 
 	// Filter Roadmap

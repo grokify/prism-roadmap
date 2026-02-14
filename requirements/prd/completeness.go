@@ -558,6 +558,7 @@ func (d *Document) checkRequirements() SectionScore {
 
 	frCount := len(d.Requirements.Functional)
 	nfrCount := len(d.Requirements.NonFunctional)
+	crCount := len(d.Requirements.Compliance)
 
 	// Functional requirements
 	if frCount >= 10 {
@@ -604,6 +605,20 @@ func (d *Document) checkRequirements() SectionScore {
 		score.Issues = append(score.Issues, fmt.Sprintf("Missing NFR categories: %s", strings.Join(missingEssential, ", ")))
 	} else {
 		score.Issues = append(score.Issues, "Missing essential NFR categories: performance, security, reliability")
+	}
+
+	// Compliance requirements (optional bonus - doesn't reduce max score if missing)
+	if crCount >= 3 {
+		// Bonus for comprehensive compliance coverage
+		points += 1
+		maxPoints += 1
+	} else if crCount > 0 {
+		// Small bonus for having some compliance requirements
+		points += 0.5
+		maxPoints += 0.5
+	} else {
+		// Not having compliance requirements is optional, just a suggestion
+		score.Suggestions = append(score.Suggestions, "Consider adding compliance requirements for regulatory standards (GDPR, SOC2, HIPAA, etc.)")
 	}
 
 	score.Score = (points / maxPoints) * 100
