@@ -171,6 +171,11 @@ func (r *ValidationResult) validateIDs(doc *Document) {
 		checkID(nfr.ID, fmt.Sprintf("requirements.non_functional[%d].id", i))
 	}
 
+	// Check compliance requirement IDs
+	for i, cr := range doc.Requirements.Compliance {
+		checkID(cr.ID, fmt.Sprintf("requirements.compliance[%d].id", i))
+	}
+
 	// Check roadmap phase IDs
 	for i, phase := range doc.Roadmap.Phases {
 		checkID(phase.ID, fmt.Sprintf("roadmap.phases[%d].id", i))
@@ -342,6 +347,11 @@ func (r *ValidationResult) validateTags(doc *Document) {
 	// Non-functional requirement tags
 	for i, nfr := range doc.Requirements.NonFunctional {
 		checkTags(nfr.Tags, fmt.Sprintf("requirements.non_functional[%d].tags", i))
+	}
+
+	// Compliance requirement tags
+	for i, cr := range doc.Requirements.Compliance {
+		checkTags(cr.Tags, fmt.Sprintf("requirements.compliance[%d].tags", i))
 	}
 
 	// Roadmap phase and deliverable tags

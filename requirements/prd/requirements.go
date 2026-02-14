@@ -1,9 +1,67 @@
 package prd
 
-// Requirements contains both functional and non-functional requirements.
+// Requirements contains functional, non-functional, and compliance requirements.
 type Requirements struct {
 	Functional    []FunctionalRequirement    `json:"functional"`
 	NonFunctional []NonFunctionalRequirement `json:"nonFunctional"`
+	Compliance    []ComplianceRequirement    `json:"compliance,omitempty"`
+}
+
+// ComplianceCategory represents categories of compliance requirements.
+type ComplianceCategory string
+
+const (
+	ComplianceDataPrivacy   ComplianceCategory = "data_privacy"  // GDPR, CCPA
+	ComplianceSecurity      ComplianceCategory = "security"      // SOC2, ISO 27001
+	ComplianceHealthcare    ComplianceCategory = "healthcare"    // HIPAA, HITRUST
+	ComplianceFinancial     ComplianceCategory = "financial"     // PCI-DSS, SOX
+	ComplianceAccessibility ComplianceCategory = "accessibility" // WCAG, ADA
+	ComplianceGovernment    ComplianceCategory = "government"    // FedRAMP, StateRAMP
+	ComplianceIndustry      ComplianceCategory = "industry"      // Industry-specific
+)
+
+// ComplianceCategoryDisplayNames maps category values to human-readable display names.
+var ComplianceCategoryDisplayNames = map[ComplianceCategory]string{
+	ComplianceDataPrivacy:   "Data Privacy",
+	ComplianceSecurity:      "Security",
+	ComplianceHealthcare:    "Healthcare",
+	ComplianceFinancial:     "Financial",
+	ComplianceAccessibility: "Accessibility",
+	ComplianceGovernment:    "Government",
+	ComplianceIndustry:      "Industry",
+}
+
+// ComplianceStatus represents the compliance state.
+type ComplianceStatus string
+
+const (
+	ComplianceNotStarted   ComplianceStatus = "not_started"
+	ComplianceInProgress   ComplianceStatus = "in_progress"
+	ComplianceCompliant    ComplianceStatus = "compliant"
+	ComplianceNonCompliant ComplianceStatus = "non_compliant"
+)
+
+// ComplianceRequirement represents a compliance or standards requirement.
+type ComplianceRequirement struct {
+	ID                    string             `json:"id"` // e.g., "CR-001"
+	Title                 string             `json:"title"`
+	Description           string             `json:"description"`
+	Category              ComplianceCategory `json:"category"`
+	Standard              string             `json:"standard"`                   // SOC2, GDPR, HIPAA, PCI-DSS
+	ControlReference      string             `json:"controlReference,omitempty"` // e.g., "GDPR Article 17"
+	GeographicScope       []string           `json:"geographicScope,omitempty"`  // EU, US, California, Global
+	EffectiveDate         string             `json:"effectiveDate,omitempty"`    // When compliance required
+	Priority              MoSCoW             `json:"priority"`
+	PhaseID               string             `json:"phaseId"`
+	Status                ComplianceStatus   `json:"status,omitempty"`
+	AuditFrequency        string             `json:"auditFrequency,omitempty"`       // annual, quarterly, continuous
+	EvidenceRequirements  []string           `json:"evidenceRequirements,omitempty"` // Documentation needed
+	CertificationRequired bool               `json:"certificationRequired,omitempty"`
+	ThirdPartyAssessment  string             `json:"thirdPartyAssessment,omitempty"` // Assessor type/name
+	Penalties             string             `json:"penalties,omitempty"`            // Business risk
+	Tags                  []string           `json:"tags,omitempty"`
+	Notes                 string             `json:"notes,omitempty"`
+	AppendixRefs          []string           `json:"appendixRefs,omitempty"`
 }
 
 // FunctionalRequirement represents a functional requirement.
@@ -48,6 +106,28 @@ const (
 	NFRInteroperability NFRCategory = "interoperability"
 	NFRLocalization     NFRCategory = "localization"
 )
+
+// NFRCategoryDisplayNames maps category values to human-readable display names.
+var NFRCategoryDisplayNames = map[NFRCategory]string{
+	NFRPerformance:      "Performance",
+	NFRScalability:      "Scalability",
+	NFRReliability:      "Reliability",
+	NFRAvailability:     "Availability",
+	NFRSecurity:         "Security",
+	NFRMultiTenancy:     "Multi-Tenancy",
+	NFRObservability:    "Observability",
+	NFRMaintainability:  "Maintainability",
+	NFRUsability:        "Usability",
+	NFRCompatibility:    "Compatibility",
+	NFRCompliance:       "Compliance",
+	NFRDisasterRecovery: "Disaster Recovery",
+	NFRCostEfficiency:   "Cost Efficiency",
+	NFRPortability:      "Portability",
+	NFRTestability:      "Testability",
+	NFRExtensibility:    "Extensibility",
+	NFRInteroperability: "Interoperability",
+	NFRLocalization:     "Localization",
+}
 
 // NonFunctionalRequirement represents a non-functional requirement.
 type NonFunctionalRequirement struct {
