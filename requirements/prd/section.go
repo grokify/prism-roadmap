@@ -5,33 +5,35 @@ type SectionID string
 
 // Section ID constants for all PRD sections.
 const (
-	SectionExecutiveSummary  SectionID = "executiveSummary"
-	SectionCurrentState      SectionID = "currentState"
-	SectionProblem           SectionID = "problem"
-	SectionMarket            SectionID = "market"
-	SectionSolution          SectionID = "solution"
-	SectionSuccessMetrics    SectionID = "successMetrics"
-	SectionObjectives        SectionID = "objectives"
-	SectionNonGoals          SectionID = "nonGoals"
-	SectionPersonas          SectionID = "personas"
-	SectionUserStories       SectionID = "userStories"
-	SectionFunctionalReqs    SectionID = "functionalRequirements"
-	SectionNonFunctionalReqs SectionID = "nonFunctionalRequirements"
-	SectionRoadmap           SectionID = "roadmap"
-	SectionTechArchitecture  SectionID = "technicalArchitecture"
-	SectionSecurityModel     SectionID = "securityModel"
-	SectionDecisions         SectionID = "decisions"
-	SectionRisks             SectionID = "risks"
-	SectionAssumptions       SectionID = "assumptions"
-	SectionInScope           SectionID = "inScope"
-	SectionOutOfScope        SectionID = "outOfScope"
-	SectionOpenItems         SectionID = "openItems"
-	SectionRelatedDocuments  SectionID = "relatedDocuments"
-	SectionAppendices        SectionID = "appendices"
-	SectionGlossary          SectionID = "glossary"
-	SectionReviews           SectionID = "reviews"
-	SectionRevisionHistory   SectionID = "revisionHistory"
-	SectionCustom            SectionID = "custom"
+	SectionExecutiveSummary    SectionID = "executiveSummary"
+	SectionCurrentState        SectionID = "currentState"
+	SectionProblem             SectionID = "problem"
+	SectionMarket              SectionID = "market"
+	SectionSolution            SectionID = "solution"
+	SectionSuccessMetrics      SectionID = "successMetrics"
+	SectionObjectives          SectionID = "objectives"
+	SectionNonGoals            SectionID = "nonGoals"
+	SectionPersonas            SectionID = "personas"
+	SectionUserStories         SectionID = "userStories"
+	SectionFunctionalReqs      SectionID = "functionalRequirements"
+	SectionNonFunctionalReqs   SectionID = "nonFunctionalRequirements"
+	SectionComplianceReqs      SectionID = "complianceRequirements"
+	SectionRequirementsByPhase SectionID = "requirementsByPhase"
+	SectionRoadmap             SectionID = "roadmap"
+	SectionTechArchitecture    SectionID = "technicalArchitecture"
+	SectionSecurityModel       SectionID = "securityModel"
+	SectionDecisions           SectionID = "decisions"
+	SectionRisks               SectionID = "risks"
+	SectionAssumptions         SectionID = "assumptions"
+	SectionInScope             SectionID = "inScope"
+	SectionOutOfScope          SectionID = "outOfScope"
+	SectionOpenItems           SectionID = "openItems"
+	SectionRelatedDocuments    SectionID = "relatedDocuments"
+	SectionAppendices          SectionID = "appendices"
+	SectionGlossary            SectionID = "glossary"
+	SectionReviews             SectionID = "reviews"
+	SectionRevisionHistory     SectionID = "revisionHistory"
+	SectionCustom              SectionID = "custom"
 )
 
 // PRDType determines the section ordering template for markdown generation.
@@ -47,62 +49,66 @@ const (
 
 // SectionDisplayNames maps section IDs to display names for TOC and headers.
 var SectionDisplayNames = map[SectionID]string{
-	SectionExecutiveSummary:  "Executive Summary",
-	SectionCurrentState:      "Current State",
-	SectionProblem:           "Problem Definition",
-	SectionMarket:            "Market Analysis",
-	SectionSolution:          "Solution",
-	SectionSuccessMetrics:    "Success Metrics",
-	SectionObjectives:        "Objectives and Goals",
-	SectionNonGoals:          "Non-Goals",
-	SectionPersonas:          "Personas",
-	SectionUserStories:       "User Stories",
-	SectionFunctionalReqs:    "Functional Requirements",
-	SectionNonFunctionalReqs: "Non-Functional Requirements",
-	SectionRoadmap:           "Roadmap",
-	SectionTechArchitecture:  "Technical Architecture",
-	SectionSecurityModel:     "Security Model",
-	SectionDecisions:         "Decisions",
-	SectionRisks:             "Risk Assessment",
-	SectionAssumptions:       "Assumptions and Constraints",
-	SectionInScope:           "In Scope",
-	SectionOutOfScope:        "Out of Scope",
-	SectionOpenItems:         "Open Items",
-	SectionRelatedDocuments:  "Related Documents",
-	SectionAppendices:        "Appendices",
-	SectionGlossary:          "Glossary",
-	SectionReviews:           "Reviews",
-	SectionRevisionHistory:   "Revision History",
+	SectionExecutiveSummary:    "Executive Summary",
+	SectionCurrentState:        "Current State",
+	SectionProblem:             "Problem Definition",
+	SectionMarket:              "Market Analysis",
+	SectionSolution:            "Solution",
+	SectionSuccessMetrics:      "Success Metrics",
+	SectionObjectives:          "Objectives and Goals",
+	SectionNonGoals:            "Non-Goals",
+	SectionPersonas:            "Personas",
+	SectionUserStories:         "User Stories",
+	SectionFunctionalReqs:      "Functional Requirements",
+	SectionNonFunctionalReqs:   "Non-Functional Requirements",
+	SectionComplianceReqs:      "Compliance Requirements",
+	SectionRequirementsByPhase: "Requirements by Phase",
+	SectionRoadmap:             "Roadmap",
+	SectionTechArchitecture:    "Technical Architecture",
+	SectionSecurityModel:       "Security Model",
+	SectionDecisions:           "Decisions",
+	SectionRisks:               "Risk Assessment",
+	SectionAssumptions:         "Assumptions and Constraints",
+	SectionInScope:             "In Scope",
+	SectionOutOfScope:          "Out of Scope",
+	SectionOpenItems:           "Open Items",
+	SectionRelatedDocuments:    "Related Documents",
+	SectionAppendices:          "Appendices",
+	SectionGlossary:            "Glossary",
+	SectionReviews:             "Reviews",
+	SectionRevisionHistory:     "Revision History",
 }
 
 // SectionAnchors maps section IDs to markdown anchors for TOC links.
 var SectionAnchors = map[SectionID]string{
-	SectionExecutiveSummary:  "executive-summary",
-	SectionCurrentState:      "current-state",
-	SectionProblem:           "problem-definition",
-	SectionMarket:            "market-analysis",
-	SectionSolution:          "solution",
-	SectionSuccessMetrics:    "success-metrics",
-	SectionObjectives:        "objectives-and-goals",
-	SectionNonGoals:          "non-goals",
-	SectionPersonas:          "personas",
-	SectionUserStories:       "user-stories",
-	SectionFunctionalReqs:    "functional-requirements",
-	SectionNonFunctionalReqs: "non-functional-requirements",
-	SectionRoadmap:           "roadmap",
-	SectionTechArchitecture:  "technical-architecture",
-	SectionSecurityModel:     "security-model",
-	SectionDecisions:         "decisions",
-	SectionRisks:             "risk-assessment",
-	SectionAssumptions:       "assumptions-and-constraints",
-	SectionInScope:           "in-scope",
-	SectionOutOfScope:        "out-of-scope",
-	SectionOpenItems:         "open-items",
-	SectionRelatedDocuments:  "related-documents",
-	SectionAppendices:        "appendices",
-	SectionGlossary:          "glossary",
-	SectionReviews:           "reviews",
-	SectionRevisionHistory:   "revision-history",
+	SectionExecutiveSummary:    "executive-summary",
+	SectionCurrentState:        "current-state",
+	SectionProblem:             "problem-definition",
+	SectionMarket:              "market-analysis",
+	SectionSolution:            "solution",
+	SectionSuccessMetrics:      "success-metrics",
+	SectionObjectives:          "objectives-and-goals",
+	SectionNonGoals:            "non-goals",
+	SectionPersonas:            "personas",
+	SectionUserStories:         "user-stories",
+	SectionFunctionalReqs:      "functional-requirements",
+	SectionNonFunctionalReqs:   "non-functional-requirements",
+	SectionComplianceReqs:      "compliance-requirements",
+	SectionRequirementsByPhase: "requirements-by-phase",
+	SectionRoadmap:             "roadmap",
+	SectionTechArchitecture:    "technical-architecture",
+	SectionSecurityModel:       "security-model",
+	SectionDecisions:           "decisions",
+	SectionRisks:               "risk-assessment",
+	SectionAssumptions:         "assumptions-and-constraints",
+	SectionInScope:             "in-scope",
+	SectionOutOfScope:          "out-of-scope",
+	SectionOpenItems:           "open-items",
+	SectionRelatedDocuments:    "related-documents",
+	SectionAppendices:          "appendices",
+	SectionGlossary:            "glossary",
+	SectionReviews:             "reviews",
+	SectionRevisionHistory:     "revision-history",
 }
 
 // DefaultSectionOrder is the current v0.8.0 order for backward compatibility.
@@ -113,6 +119,8 @@ var DefaultSectionOrder = []SectionID{
 	SectionUserStories,
 	SectionFunctionalReqs,
 	SectionNonFunctionalReqs,
+	SectionComplianceReqs,
+	SectionRequirementsByPhase,
 	SectionRoadmap,
 	SectionTechArchitecture,
 	SectionAssumptions,
@@ -151,6 +159,7 @@ var StrategySectionOrder = []SectionID{
 	SectionUserStories,
 	SectionFunctionalReqs,
 	SectionNonFunctionalReqs,
+	SectionComplianceReqs,
 	SectionTechArchitecture,
 	SectionSecurityModel,
 	SectionRoadmap,
@@ -179,6 +188,7 @@ var FeatureSectionOrder = []SectionID{
 	SectionUserStories,
 	SectionFunctionalReqs,
 	SectionNonFunctionalReqs,
+	SectionComplianceReqs,
 	SectionSolution,
 	SectionTechArchitecture,
 	SectionSecurityModel,
@@ -213,6 +223,7 @@ var TechnicalSectionOrder = []SectionID{
 	SectionSuccessMetrics,
 	SectionFunctionalReqs,
 	SectionNonFunctionalReqs,
+	SectionComplianceReqs,
 	SectionPersonas,
 	SectionUserStories,
 	SectionRoadmap,
@@ -249,33 +260,35 @@ func GetSectionOrder(prdType PRDType) []SectionID {
 // AllSectionIDs returns a set of all known section IDs.
 func AllSectionIDs() map[SectionID]bool {
 	return map[SectionID]bool{
-		SectionExecutiveSummary:  true,
-		SectionCurrentState:      true,
-		SectionProblem:           true,
-		SectionMarket:            true,
-		SectionSolution:          true,
-		SectionSuccessMetrics:    true,
-		SectionObjectives:        true,
-		SectionNonGoals:          true,
-		SectionPersonas:          true,
-		SectionUserStories:       true,
-		SectionFunctionalReqs:    true,
-		SectionNonFunctionalReqs: true,
-		SectionRoadmap:           true,
-		SectionTechArchitecture:  true,
-		SectionSecurityModel:     true,
-		SectionDecisions:         true,
-		SectionRisks:             true,
-		SectionAssumptions:       true,
-		SectionInScope:           true,
-		SectionOutOfScope:        true,
-		SectionOpenItems:         true,
-		SectionRelatedDocuments:  true,
-		SectionAppendices:        true,
-		SectionGlossary:          true,
-		SectionReviews:           true,
-		SectionRevisionHistory:   true,
-		SectionCustom:            true,
+		SectionExecutiveSummary:    true,
+		SectionCurrentState:        true,
+		SectionProblem:             true,
+		SectionMarket:              true,
+		SectionSolution:            true,
+		SectionSuccessMetrics:      true,
+		SectionObjectives:          true,
+		SectionNonGoals:            true,
+		SectionPersonas:            true,
+		SectionUserStories:         true,
+		SectionFunctionalReqs:      true,
+		SectionNonFunctionalReqs:   true,
+		SectionComplianceReqs:      true,
+		SectionRequirementsByPhase: true,
+		SectionRoadmap:             true,
+		SectionTechArchitecture:    true,
+		SectionSecurityModel:       true,
+		SectionDecisions:           true,
+		SectionRisks:               true,
+		SectionAssumptions:         true,
+		SectionInScope:             true,
+		SectionOutOfScope:          true,
+		SectionOpenItems:           true,
+		SectionRelatedDocuments:    true,
+		SectionAppendices:          true,
+		SectionGlossary:            true,
+		SectionReviews:             true,
+		SectionRevisionHistory:     true,
+		SectionCustom:              true,
 	}
 }
 

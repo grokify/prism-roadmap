@@ -346,6 +346,10 @@ func (d *Document) HasSection(id SectionID) bool {
 		return len(d.Requirements.Functional) > 0
 	case SectionNonFunctionalReqs:
 		return len(d.Requirements.NonFunctional) > 0
+	case SectionComplianceReqs:
+		return len(d.Requirements.Compliance) > 0
+	case SectionRequirementsByPhase:
+		return d.hasRequirementsWithPhases()
 	case SectionRoadmap:
 		return true // Always present
 	case SectionTechArchitecture:
@@ -421,4 +425,24 @@ func (d *Document) GetActiveSections() []SectionID {
 		}
 	}
 	return active
+}
+
+// hasRequirementsWithPhases returns true if any requirement has a phase assigned.
+func (d *Document) hasRequirementsWithPhases() bool {
+	for _, fr := range d.Requirements.Functional {
+		if fr.PhaseID != "" {
+			return true
+		}
+	}
+	for _, nfr := range d.Requirements.NonFunctional {
+		if nfr.PhaseID != "" {
+			return true
+		}
+	}
+	for _, cr := range d.Requirements.Compliance {
+		if cr.PhaseID != "" {
+			return true
+		}
+	}
+	return false
 }

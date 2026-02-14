@@ -104,6 +104,10 @@ func (d *Document) renderSection(id SectionID, opts MarkdownOptions) string {
 		return d.generateFunctionalRequirements(opts)
 	case SectionNonFunctionalReqs:
 		return d.generateNonFunctionalRequirements(opts)
+	case SectionComplianceReqs:
+		return d.generateComplianceRequirements(opts)
+	case SectionRequirementsByPhase:
+		return d.generateRequirementsByPhase(opts)
 	case SectionRoadmap:
 		return d.generateRoadmap(opts)
 	case SectionTechArchitecture:
@@ -540,6 +544,224 @@ func (d *Document) generateFunctionalRequirements(opts MarkdownOptions) string {
 	return sb.String()
 }
 
+// phaseRequirement represents a requirement of any type for phase-based grouping.
+type phaseRequirement struct {
+	ID       string
+	Title    string
+	Type     string // "Functional", "Non-Functional", "Compliance"
+	Category string
+	Priority string
+}
+
+// priorityOrder returns the sort order for MoSCoW priorities (lower = higher priority).
+func priorityOrder(p string) int {
+	switch MoSCoW(p) {
+	case MoSCoWMust:
+		return 0
+	case MoSCoWShould:
+		return 1
+	case MoSCoWCould:
+		return 2
+	case MoSCoWWont:
+		return 3
+	default:
+		return 4
+	}
+}
+
+// naturalLess compares two strings using natural sorting (FR-2 < FR-10).
+func naturalLess(a, b string) bool {
+	i, j := 0, 0
+	for i < len(a) && j < len(b) {
+		// Check if both are at digit sequences
+		if i < len(a) && j < len(b) && isDigit(a[i]) && isDigit(b[j]) {
+			// Extract numbers
+			numA, endA := extractNumber(a, i)
+			numB, endB := extractNumber(b, j)
+			if numA != numB {
+				return numA < numB
+			}
+			i, j = endA, endB
+		} else {
+			// Compare characters
+			if a[i] != b[j] {
+				return a[i] < b[j]
+			}
+			i++
+			j++
+		}
+	}
+	return len(a) < len(b)
+}
+
+func isDigit(c byte) bool {
+	return c >= '0' && c <= '9'
+}
+
+func extractNumber(s string, start int) (int, int) {
+	num := 0
+	i := start
+	for i < len(s) && isDigit(s[i]) {
+		num = num*10 + int(s[i]-'0')
+		i++
+	}
+	return num, i
+}
+
+// sortPhaseRequirements sorts requirements by priority, then ID (natural), then title.
+func sortPhaseRequirements(reqs []phaseRequirement) {
+	sort.Slice(reqs, func(i, j int) bool {
+		// First by priority
+		pi, pj := priorityOrder(reqs[i].Priority), priorityOrder(reqs[j].Priority)
+		if pi != pj {
+			return pi < pj
+		}
+		// Then by ID (natural sort)
+		if reqs[i].ID != reqs[j].ID {
+			return naturalLess(reqs[i].ID, reqs[j].ID)
+		}
+		// Finally by title
+		return reqs[i].Title < reqs[j].Title
+	})
+}
+
+// generateRequirementsByPhase generates a combined phase-based view of all requirements
+// (functional, non-functional, and compliance) for execution planning.
+func (d *Document) generateRequirementsByPhase(_ MarkdownOptions) string {
+	var sb strings.Builder
+
+	// Group all requirements by phase
+	phases := make(map[string][]phaseRequirement)
+	var noPhase []phaseRequirement
+
+	// Collect functional requirements
+	for _, fr := range d.Requirements.Functional {
+		req := phaseRequirement{
+			ID:       fr.ID,
+			Title:    fr.Title,
+			Type:     "Functional",
+			Category: fr.Category,
+			Priority: string(fr.Priority),
+		}
+		if fr.PhaseID == "" {
+			noPhase = append(noPhase, req)
+		} else {
+			phases[fr.PhaseID] = append(phases[fr.PhaseID], req)
+		}
+	}
+
+	// Collect non-functional requirements
+	for _, nfr := range d.Requirements.NonFunctional {
+		category := NFRCategoryDisplayNames[nfr.Category]
+		if category == "" {
+			category = string(nfr.Category)
+		}
+		req := phaseRequirement{
+			ID:       nfr.ID,
+			Title:    nfr.Title,
+			Type:     "Non-Functional",
+			Category: category,
+			Priority: string(nfr.Priority),
+		}
+		if nfr.PhaseID == "" {
+			noPhase = append(noPhase, req)
+		} else {
+			phases[nfr.PhaseID] = append(phases[nfr.PhaseID], req)
+		}
+	}
+
+	// Collect compliance requirements
+	for _, cr := range d.Requirements.Compliance {
+		category := ComplianceCategoryDisplayNames[cr.Category]
+		if category == "" {
+			category = string(cr.Category)
+		}
+		req := phaseRequirement{
+			ID:       cr.ID,
+			Title:    cr.Title,
+			Type:     "Compliance",
+			Category: category,
+			Priority: string(cr.Priority),
+		}
+		if cr.PhaseID == "" {
+			noPhase = append(noPhase, req)
+		} else {
+			phases[cr.PhaseID] = append(phases[cr.PhaseID], req)
+		}
+	}
+
+	sb.WriteString("## Requirements by Phase\n\n")
+	sb.WriteString("*All requirements grouped by target delivery phase for execution planning.*\n\n")
+
+	// Get phase order from roadmap for consistent ordering
+	phaseOrder := d.getPhaseOrder()
+
+	// Render requirements for each phase in roadmap order
+	for _, phaseID := range phaseOrder {
+		reqs, ok := phases[phaseID]
+		if !ok || len(reqs) == 0 {
+			continue
+		}
+
+		// Sort requirements by priority, then ID (natural), then title
+		sortPhaseRequirements(reqs)
+
+		// Get phase name if available
+		phaseName := d.getPhaseName(phaseID)
+		if phaseName != "" {
+			sb.WriteString(fmt.Sprintf("### %s: %s\n\n", phaseID, phaseName))
+		} else {
+			sb.WriteString(fmt.Sprintf("### %s\n\n", phaseID))
+		}
+
+		sb.WriteString("| ID | Title | Type | Category | Priority |\n")
+		sb.WriteString("|------|-----------------|--------------|----------|----------|\n")
+		for _, r := range reqs {
+			sb.WriteString(fmt.Sprintf("| %s | %s | %s | %s | %s |\n",
+				r.ID, r.Title, r.Type, r.Category, r.Priority))
+		}
+		sb.WriteString("\n")
+	}
+
+	// Render requirements without a phase assignment
+	if len(noPhase) > 0 {
+		// Sort unassigned requirements too
+		sortPhaseRequirements(noPhase)
+
+		sb.WriteString("### Unassigned\n\n")
+		sb.WriteString("*Requirements not yet assigned to a phase.*\n\n")
+		sb.WriteString("| ID | Title | Type | Category | Priority |\n")
+		sb.WriteString("|------|-----------------|--------------|----------|----------|\n")
+		for _, r := range noPhase {
+			sb.WriteString(fmt.Sprintf("| %s | %s | %s | %s | %s |\n",
+				r.ID, r.Title, r.Type, r.Category, r.Priority))
+		}
+		sb.WriteString("\n")
+	}
+
+	sb.WriteString("---\n\n")
+	return sb.String()
+}
+
+// getPhaseOrder returns the phase IDs in roadmap order.
+func (d *Document) getPhaseOrder() []string {
+	var order []string
+	for _, phase := range d.Roadmap.Phases {
+		order = append(order, phase.ID)
+	}
+	return order
+}
+
+// getPhaseName returns the name of a phase by ID, or empty string if not found.
+func (d *Document) getPhaseName(phaseID string) string {
+	for _, phase := range d.Roadmap.Phases {
+		if phase.ID == phaseID {
+			return phase.Name
+		}
+	}
+	return ""
+}
+
 func (d *Document) generateNonFunctionalRequirements(_ MarkdownOptions) string {
 	var sb strings.Builder
 
@@ -588,6 +810,54 @@ func (d *Document) generateNonFunctionalRequirements(_ MarkdownOptions) string {
 		for _, r := range reqs {
 			sb.WriteString(fmt.Sprintf("| %s | %s | %s | %s | %s |\n",
 				r.ID, r.Title, r.Target, r.Priority, r.PhaseID))
+		}
+		sb.WriteString("\n")
+	}
+
+	sb.WriteString("---\n\n")
+	return sb.String()
+}
+
+func (d *Document) generateComplianceRequirements(_ MarkdownOptions) string {
+	var sb strings.Builder
+
+	sb.WriteString("## Compliance Requirements\n\n")
+
+	// Group by category
+	complianceCategories := make(map[ComplianceCategory][]ComplianceRequirement)
+	for _, cr := range d.Requirements.Compliance {
+		complianceCategories[cr.Category] = append(complianceCategories[cr.Category], cr)
+	}
+
+	// Sort compliance category keys for consistent ordering
+	var complianceCategoryKeys []ComplianceCategory
+	for cat := range complianceCategories {
+		complianceCategoryKeys = append(complianceCategoryKeys, cat)
+	}
+	sort.Slice(complianceCategoryKeys, func(i, j int) bool {
+		return string(complianceCategoryKeys[i]) < string(complianceCategoryKeys[j])
+	})
+
+	for _, cat := range complianceCategoryKeys {
+		reqs := complianceCategories[cat]
+		catName := ComplianceCategoryDisplayNames[cat]
+		if catName == "" {
+			catName = string(cat)
+		}
+		sb.WriteString(fmt.Sprintf("### %s\n\n", catName))
+		sb.WriteString("| ID | Title | Standard | Control Ref | Scope | Priority | Phase |\n")
+		sb.WriteString("|----|-------|----------|-------------|-------|----------|-------|\n")
+		for _, r := range reqs {
+			scope := "-"
+			if len(r.GeographicScope) > 0 {
+				scope = strings.Join(r.GeographicScope, ", ")
+			}
+			controlRef := r.ControlReference
+			if controlRef == "" {
+				controlRef = "-"
+			}
+			sb.WriteString(fmt.Sprintf("| %s | %s | %s | %s | %s | %s | %s |\n",
+				r.ID, r.Title, r.Standard, controlRef, scope, r.Priority, r.PhaseID))
 		}
 		sb.WriteString("\n")
 	}
