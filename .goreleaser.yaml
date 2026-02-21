@@ -54,25 +54,6 @@ changelog:
       - Merge pull request
       - Merge branch
 
-brews:
-  - name: splan
-    repository:
-      owner: grokify
-      name: homebrew-tap
-      token: "{{ .Env.HOMEBREW_TAP_TOKEN }}"
-    directory: Formula
-    homepage: "https://github.com/grokify/structured-plan"
-    description: "CLI for structured planning documents (PRD, MRD, TRD, OKR, V2MOM)"
-    license: "MIT"
-    commit_author:
-      name: goreleaserbot
-      email: bot@goreleaser.com
-    commit_msg_template: "chore(formula): update {{ .ProjectName }} to {{ .Version }}"
-    install: |
-      bin.install "splan"
-    test: |
-      system "#{bin}/splan", "--version"
-
 release:
   github:
     owner: grokify
