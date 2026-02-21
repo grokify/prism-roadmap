@@ -15,7 +15,7 @@ const DefaultFilename = "PRD.json"
 
 // Load reads a Document from a JSON file.
 func Load(path string) (*Document, error) {
-	data, err := os.ReadFile(path)
+	data, err := os.ReadFile(filepath.Clean(path))
 	if err != nil {
 		return nil, fmt.Errorf("reading PRD file: %w", err)
 	}

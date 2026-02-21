@@ -1676,12 +1676,16 @@ func (d *Document) generateAppendices() string {
 }
 
 // indexToLetter converts a 0-based index to a letter (A, B, C, ..., Z, AA, AB, ...).
+// Supports indices 0-701 (A-ZZ).
 func indexToLetter(i int) string {
+	if i < 0 || i > 701 {
+		return "?"
+	}
 	if i < 26 {
-		return string(rune('A' + i))
+		return string('A' + byte(i))
 	}
 	// For indices >= 26, use AA, AB, etc.
-	return string(rune('A'+i/26-1)) + string(rune('A'+i%26))
+	return string('A'+byte(i/26-1)) + string('A'+byte(i%26))
 }
 
 func (d *Document) generateGlossary() string {
