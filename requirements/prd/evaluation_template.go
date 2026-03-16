@@ -3,7 +3,7 @@ package prd
 import (
 	"time"
 
-	"github.com/agentplexus/structured-evaluation/evaluation"
+	"github.com/plexusone/structured-evaluation/evaluation"
 )
 
 // EvaluationCategory defines metadata for a PRD evaluation category.

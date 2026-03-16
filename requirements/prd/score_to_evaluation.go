@@ -5,7 +5,7 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/agentplexus/structured-evaluation/evaluation"
+	"github.com/plexusone/structured-evaluation/evaluation"
 )
 
 // ScoreToEvaluationReport converts deterministic scoring results to an EvaluationReport.

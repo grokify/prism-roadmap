@@ -11,7 +11,6 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/agentplexus/structured-evaluation/evaluation"
 	"github.com/grokify/structured-plan/goals/okr"
 	okrrender "github.com/grokify/structured-plan/goals/okr/render"
 	okrmarp "github.com/grokify/structured-plan/goals/okr/render/marp"
@@ -23,6 +22,7 @@ import (
 	"github.com/grokify/structured-plan/requirements/prd/render/terminal"
 	"github.com/grokify/structured-plan/requirements/trd"
 	"github.com/grokify/structured-plan/schema"
+	"github.com/plexusone/structured-evaluation/evaluation"
 )
 
 // Set by GoReleaser ldflags
