@@ -8,7 +8,7 @@
   "releases": [
     {
       "version": "v0.9.0",
-      "date": "2026-02-14",
+      "date": "2026-03-16",
       "highlights": [
         { "description": "Add compliance requirements support for regulatory standards tracking (GDPR, SOC2, HIPAA, PCI-DSS, WCAG, FedRAMP)", "commit": "25a76db" },
         { "description": "Add requirements-by-phase view consolidating all requirements for execution planning", "commit": "531117f" },
