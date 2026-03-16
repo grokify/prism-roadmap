@@ -2,130 +2,134 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://grokify.github.io/structured-plan/</loc>
-         <lastmod>2026-02-09</lastmod>
+         <lastmod>2026-03-16</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/structured-plan/AI_EVALUATION_PROPOSAL/</loc>
-         <lastmod>2026-02-09</lastmod>
+         <lastmod>2026-03-16</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/structured-plan/merge/</loc>
-         <lastmod>2026-02-09</lastmod>
+         <lastmod>2026-03-16</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/structured-plan/api/reference/</loc>
-         <lastmod>2026-02-09</lastmod>
+         <lastmod>2026-03-16</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/structured-plan/documents/mrd/</loc>
-         <lastmod>2026-02-09</lastmod>
+         <lastmod>2026-03-16</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/structured-plan/documents/overview/</loc>
-         <lastmod>2026-02-09</lastmod>
+         <lastmod>2026-03-16</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/structured-plan/documents/prd/</loc>
-         <lastmod>2026-02-09</lastmod>
+         <lastmod>2026-03-16</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/structured-plan/documents/trd/</loc>
-         <lastmod>2026-02-09</lastmod>
+         <lastmod>2026-03-16</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/structured-plan/examples/integration/</loc>
-         <lastmod>2026-02-09</lastmod>
+         <lastmod>2026-03-16</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/structured-plan/examples/prd-examples/</loc>
-         <lastmod>2026-02-09</lastmod>
+         <lastmod>2026-03-16</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/structured-plan/features/completeness/</loc>
-         <lastmod>2026-02-09</lastmod>
+         <lastmod>2026-03-16</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/structured-plan/features/persona-library/</loc>
-         <lastmod>2026-02-09</lastmod>
+         <lastmod>2026-03-16</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/structured-plan/features/scoring/</loc>
-         <lastmod>2026-02-09</lastmod>
+         <lastmod>2026-03-16</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/structured-plan/getting-started/installation/</loc>
-         <lastmod>2026-02-09</lastmod>
+         <lastmod>2026-03-16</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/structured-plan/getting-started/quickstart/</loc>
-         <lastmod>2026-02-09</lastmod>
+         <lastmod>2026-03-16</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/structured-plan/goals/okr/</loc>
-         <lastmod>2026-02-09</lastmod>
+         <lastmod>2026-03-16</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/structured-plan/goals/overview/</loc>
-         <lastmod>2026-02-09</lastmod>
+         <lastmod>2026-03-16</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/structured-plan/goals/v2mom/</loc>
-         <lastmod>2026-02-09</lastmod>
+         <lastmod>2026-03-16</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/structured-plan/presentations/structured-plan-overview/</loc>
-         <lastmod>2026-02-09</lastmod>
+         <lastmod>2026-03-16</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/structured-plan/releases/v0.1.0/</loc>
-         <lastmod>2026-02-09</lastmod>
+         <lastmod>2026-03-16</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/structured-plan/releases/v0.2.0/</loc>
-         <lastmod>2026-02-09</lastmod>
+         <lastmod>2026-03-16</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/structured-plan/releases/v0.3.0/</loc>
-         <lastmod>2026-02-09</lastmod>
+         <lastmod>2026-03-16</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/structured-plan/releases/v0.4.0/</loc>
-         <lastmod>2026-02-09</lastmod>
+         <lastmod>2026-03-16</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/structured-plan/releases/v0.5.0/</loc>
-         <lastmod>2026-02-09</lastmod>
+         <lastmod>2026-03-16</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/structured-plan/releases/v0.6.0/</loc>
-         <lastmod>2026-02-09</lastmod>
+         <lastmod>2026-03-16</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/structured-plan/releases/v0.7.0/</loc>
-         <lastmod>2026-02-09</lastmod>
+         <lastmod>2026-03-16</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/structured-plan/releases/v0.8.0/</loc>
-         <lastmod>2026-02-09</lastmod>
+         <lastmod>2026-03-16</lastmod>
+    </url>
+    <url>
+         <loc>https://grokify.github.io/structured-plan/releases/v0.9.0/</loc>
+         <lastmod>2026-03-16</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/structured-plan/views/exec-view/</loc>
-         <lastmod>2026-02-09</lastmod>
+         <lastmod>2026-03-16</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/structured-plan/views/pm-view/</loc>
-         <lastmod>2026-02-09</lastmod>
+         <lastmod>2026-03-16</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/structured-plan/views/prfaq/</loc>
-         <lastmod>2026-02-09</lastmod>
+         <lastmod>2026-03-16</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/structured-plan/views/six-pager/</loc>
-         <lastmod>2026-02-09</lastmod>
+         <lastmod>2026-03-16</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/structured-plan/views/slides/</loc>
-         <lastmod>2026-02-09</lastmod>
+         <lastmod>2026-03-16</lastmod>
     </url>
 </urlset>
