@@ -7,6 +7,30 @@
   "maintainers": ["grokify", "johncwang@gmail.com"],
   "releases": [
     {
+      "version": "v0.10.0",
+      "date": "2026-04-26",
+      "highlights": [
+        { "description": "Add rollout status tracking for B2B SaaS deployments with phased rollout waves", "commit": "ec9511c" }
+      ],
+      "added": [
+        { "description": "Add `RolloutStatus` type with deployment and adoption tracking for B2B SaaS deliverables", "commit": "ec9511c" },
+        { "description": "Add `RolloutStage` enum: `not_started`, `rolling_out`, `deployed`, `adopted`, `paused`, `rolled_back`", "commit": "ec9511c" },
+        { "description": "Add `RolloutWave` type for phased rollout tracking (beta, GA waves)", "commit": "ec9511c" },
+        { "description": "Add `DeploymentPercent()` method returning percentage of customers with feature deployed", "commit": "ec9511c" },
+        { "description": "Add `AdoptionPercent()` method returning percentage of customers actively using feature", "commit": "ec9511c" },
+        { "description": "Add `AdoptionOfDeployed()` method for adoption relative to deployed customers", "commit": "ec9511c" },
+        { "description": "Add `IsFullyDeployed()` method to check if all customers have feature deployed", "commit": "ec9511c" },
+        { "description": "Add `Rollout` field to `Deliverable` for optional B2B deployment tracking", "commit": "ec9511c" },
+        { "description": "Add `ComplianceRequirement` type to PRD schema for regulatory standards tracking", "commit": "c2c8b15" }
+      ],
+      "tests": [
+        { "description": "Add comprehensive tests for `RolloutStatus` methods and `RolloutWave` tracking", "commit": "ec9511c" }
+      ],
+      "dependencies": [
+        { "description": "Update `github.com/invopop/jsonschema` from 0.13.0 to 0.14.0", "commit": "ee5cefc" }
+      ]
+    },
+    {
       "version": "v0.9.0",
       "date": "2026-03-16",
       "highlights": [
