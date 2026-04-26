@@ -406,6 +406,81 @@
       "additionalProperties": false,
       "type": "object"
     },
+    "ComplianceRequirement": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string"
+        },
+        "standard": {
+          "type": "string"
+        },
+        "controlReference": {
+          "type": "string"
+        },
+        "geographicScope": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "effectiveDate": {
+          "type": "string"
+        },
+        "priority": {
+          "type": "string"
+        },
+        "phaseId": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "auditFrequency": {
+          "type": "string"
+        },
+        "evidenceRequirements": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "certificationRequired": {
+          "type": "boolean"
+        },
+        "thirdPartyAssessment": {
+          "type": "string"
+        },
+        "penalties": {
+          "type": "string"
+        },
+        "tags": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "notes": {
+          "type": "string"
+        },
+        "appendixRefs": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
     "Constraint": {
       "properties": {
         "id": {
@@ -637,6 +712,9 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "rollout": {
+          "$ref": "#/$defs/RolloutStatus"
         }
       },
       "additionalProperties": false,
@@ -1311,6 +1389,15 @@
         },
         "semanticVersioning": {
           "type": "boolean"
+        },
+        "prdType": {
+          "type": "string"
+        },
+        "sectionOrder": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "additionalProperties": false,
@@ -2171,6 +2258,12 @@
             "$ref": "#/$defs/NonFunctionalRequirement"
           },
           "type": "array"
+        },
+        "compliance": {
+          "items": {
+            "$ref": "#/$defs/ComplianceRequirement"
+          },
+          "type": "array"
         }
       },
       "additionalProperties": false,
@@ -2283,6 +2376,66 @@
             "$ref": "#/$defs/Phase"
           },
           "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "RolloutStatus": {
+      "properties": {
+        "totalCustomers": {
+          "type": "integer"
+        },
+        "deployedCustomers": {
+          "type": "integer"
+        },
+        "adoptedCustomers": {
+          "type": "integer"
+        },
+        "status": {
+          "type": "string"
+        },
+        "startDate": {
+          "type": "string"
+        },
+        "targetDate": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "string"
+        },
+        "waves": {
+          "items": {
+            "$ref": "#/$defs/RolloutWave"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "RolloutWave": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "targetCustomers": {
+          "type": "integer"
+        },
+        "deployedCustomers": {
+          "type": "integer"
+        },
+        "startDate": {
+          "type": "string"
+        },
+        "endDate": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
         }
       },
       "additionalProperties": false,
