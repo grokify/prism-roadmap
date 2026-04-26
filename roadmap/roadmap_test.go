@@ -225,6 +225,131 @@ func TestMaxTitleLen(t *testing.T) {
 	}
 }
 
+func TestRolloutStatusDeploymentPercent(t *testing.T) {
+	tests := []struct {
+		name     string
+		rollout  *RolloutStatus
+		expected float64
+	}{
+		{"nil rollout", nil, 0},
+		{"zero total", &RolloutStatus{TotalCustomers: 0, DeployedCustomers: 5}, 0},
+		{"50 percent", &RolloutStatus{TotalCustomers: 100, DeployedCustomers: 50}, 50},
+		{"100 percent", &RolloutStatus{TotalCustomers: 50, DeployedCustomers: 50}, 100},
+		{"partial", &RolloutStatus{TotalCustomers: 80, DeployedCustomers: 45}, 56.25},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			result := tt.rollout.DeploymentPercent()
+			if result != tt.expected {
+				t.Errorf("DeploymentPercent() = %v, want %v", result, tt.expected)
+			}
+		})
+	}
+}
+
+func TestRolloutStatusAdoptionPercent(t *testing.T) {
+	tests := []struct {
+		name     string
+		rollout  *RolloutStatus
+		expected float64
+	}{
+		{"nil rollout", nil, 0},
+		{"zero total", &RolloutStatus{TotalCustomers: 0, AdoptedCustomers: 5}, 0},
+		{"30 percent", &RolloutStatus{TotalCustomers: 100, AdoptedCustomers: 30}, 30},
+		{"full adoption", &RolloutStatus{TotalCustomers: 50, AdoptedCustomers: 50}, 100},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			result := tt.rollout.AdoptionPercent()
+			if result != tt.expected {
+				t.Errorf("AdoptionPercent() = %v, want %v", result, tt.expected)
+			}
+		})
+	}
+}
+
+func TestRolloutStatusAdoptionOfDeployed(t *testing.T) {
+	tests := []struct {
+		name     string
+		rollout  *RolloutStatus
+		expected float64
+	}{
+		{"nil rollout", nil, 0},
+		{"zero deployed", &RolloutStatus{DeployedCustomers: 0, AdoptedCustomers: 5}, 0},
+		{"50 percent of deployed", &RolloutStatus{DeployedCustomers: 80, AdoptedCustomers: 40}, 50},
+		{"full adoption of deployed", &RolloutStatus{DeployedCustomers: 50, AdoptedCustomers: 50}, 100},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			result := tt.rollout.AdoptionOfDeployed()
+			if result != tt.expected {
+				t.Errorf("AdoptionOfDeployed() = %v, want %v", result, tt.expected)
+			}
+		})
+	}
+}
+
+func TestRolloutStatusIsFullyDeployed(t *testing.T) {
+	tests := []struct {
+		name     string
+		rollout  *RolloutStatus
+		expected bool
+	}{
+		{"nil rollout", nil, false},
+		{"not fully deployed", &RolloutStatus{TotalCustomers: 100, DeployedCustomers: 50}, false},
+		{"fully deployed", &RolloutStatus{TotalCustomers: 50, DeployedCustomers: 50}, true},
+		{"over deployed", &RolloutStatus{TotalCustomers: 50, DeployedCustomers: 55}, true},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			result := tt.rollout.IsFullyDeployed()
+			if result != tt.expected {
+				t.Errorf("IsFullyDeployed() = %v, want %v", result, tt.expected)
+			}
+		})
+	}
+}
+
+func TestDeliverableWithRollout(t *testing.T) {
+	d := Deliverable{
+		ID:     "feature-1",
+		Title:  "New Dashboard",
+		Type:   DeliverableFeature,
+		Status: DeliverableInProgress,
+		Rollout: &RolloutStatus{
+			TotalCustomers:    100,
+			DeployedCustomers: 75,
+			AdoptedCustomers:  45,
+			Status:            RolloutStageRollingOut,
+			Waves: []RolloutWave{
+				{ID: "wave-1", Name: "Beta", TargetCustomers: 10, DeployedCustomers: 10, Status: "completed"},
+				{ID: "wave-2", Name: "GA Wave 1", TargetCustomers: 40, DeployedCustomers: 40, Status: "completed"},
+				{ID: "wave-3", Name: "GA Wave 2", TargetCustomers: 50, DeployedCustomers: 25, Status: "in_progress"},
+			},
+		},
+	}
+
+	if d.Rollout.DeploymentPercent() != 75 {
+		t.Errorf("Expected 75%% deployed, got %v%%", d.Rollout.DeploymentPercent())
+	}
+
+	if d.Rollout.AdoptionPercent() != 45 {
+		t.Errorf("Expected 45%% adoption, got %v%%", d.Rollout.AdoptionPercent())
+	}
+
+	if d.Rollout.AdoptionOfDeployed() != 60 {
+		t.Errorf("Expected 60%% adoption of deployed, got %v%%", d.Rollout.AdoptionOfDeployed())
+	}
+
+	if len(d.Rollout.Waves) != 3 {
+		t.Errorf("Expected 3 waves, got %d", len(d.Rollout.Waves))
+	}
+}
+
 func createTestRoadmap() *Roadmap {
 	return &Roadmap{
 		Phases: []Phase{

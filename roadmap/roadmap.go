@@ -56,7 +56,79 @@ type Deliverable struct {
 	Description string            `json:"description"`
 	Type        DeliverableType   `json:"type"`
 	Status      DeliverableStatus `json:"status,omitempty"`
-	Tags        []string          `json:"tags,omitempty"` // For filtering by topic/domain
+	Tags        []string          `json:"tags,omitempty"`    // For filtering by topic/domain
+	Rollout     *RolloutStatus    `json:"rollout,omitempty"` // B2B deployment tracking
+}
+
+// RolloutStatus tracks deployment and adoption for B2B SaaS deliverables.
+// Deployment = feature is available to customer (rolled out).
+// Adoption = customer is actively using the feature.
+type RolloutStatus struct {
+	TotalCustomers    int           `json:"totalCustomers"`             // Total customers in rollout scope
+	DeployedCustomers int           `json:"deployedCustomers"`          // Customers with feature available
+	AdoptedCustomers  int           `json:"adoptedCustomers,omitempty"` // Customers actively using feature
+	Status            RolloutStage  `json:"status,omitempty"`           // Current rollout stage
+	StartDate         string        `json:"startDate,omitempty"`        // Rollout start date (ISO 8601)
+	TargetDate        string        `json:"targetDate,omitempty"`       // Target completion date
+	Notes             string        `json:"notes,omitempty"`            // Rollout notes
+	Waves             []RolloutWave `json:"waves,omitempty"`            // Phased rollout waves
+}
+
+// RolloutStage represents the current stage of a rollout.
+type RolloutStage string
+
+const (
+	RolloutStageNotStarted RolloutStage = "not_started"
+	RolloutStageRollingOut RolloutStage = "rolling_out"
+	RolloutStageDeployed   RolloutStage = "deployed" // 100% deployed, adoption ongoing
+	RolloutStageAdopted    RolloutStage = "adopted"  // Target adoption achieved
+	RolloutStagePaused     RolloutStage = "paused"   // Rollout paused
+	RolloutStageRolledBack RolloutStage = "rolled_back"
+)
+
+// RolloutWave represents a phased rollout wave (e.g., beta, GA waves).
+type RolloutWave struct {
+	ID                string `json:"id"`
+	Name              string `json:"name"`                        // e.g., "Beta", "Wave 1", "GA"
+	TargetCustomers   int    `json:"targetCustomers"`             // Customers in this wave
+	DeployedCustomers int    `json:"deployedCustomers,omitempty"` // Deployed in this wave
+	StartDate         string `json:"startDate,omitempty"`
+	EndDate           string `json:"endDate,omitempty"`
+	Status            string `json:"status,omitempty"` // planned, in_progress, completed
+}
+
+// DeploymentPercent returns the percentage of customers with the feature deployed.
+func (r *RolloutStatus) DeploymentPercent() float64 {
+	if r == nil || r.TotalCustomers == 0 {
+		return 0
+	}
+	return float64(r.DeployedCustomers) / float64(r.TotalCustomers) * 100
+}
+
+// AdoptionPercent returns the percentage of customers actively using the feature.
+// This is relative to total customers, not deployed customers.
+func (r *RolloutStatus) AdoptionPercent() float64 {
+	if r == nil || r.TotalCustomers == 0 {
+		return 0
+	}
+	return float64(r.AdoptedCustomers) / float64(r.TotalCustomers) * 100
+}
+
+// AdoptionOfDeployed returns adoption as a percentage of deployed customers.
+// This measures adoption among customers who have access to the feature.
+func (r *RolloutStatus) AdoptionOfDeployed() float64 {
+	if r == nil || r.DeployedCustomers == 0 {
+		return 0
+	}
+	return float64(r.AdoptedCustomers) / float64(r.DeployedCustomers) * 100
+}
+
+// IsFullyDeployed returns true if all customers have the feature deployed.
+func (r *RolloutStatus) IsFullyDeployed() bool {
+	if r == nil {
+		return false
+	}
+	return r.DeployedCustomers >= r.TotalCustomers
 }
 
 // DeliverableType represents types of deliverables.
