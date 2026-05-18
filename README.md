@@ -8,22 +8,22 @@
 [![Visualization][viz-svg]][viz-url]
 [![License][license-svg]][license-url]
 
- [go-ci-svg]: https://github.com/grokify/structured-plan/actions/workflows/go-ci.yaml/badge.svg?branch=main
- [go-ci-url]: https://github.com/grokify/structured-plan/actions/workflows/go-ci.yaml
- [go-lint-svg]: https://github.com/grokify/structured-plan/actions/workflows/go-lint.yaml/badge.svg?branch=main
- [go-lint-url]: https://github.com/grokify/structured-plan/actions/workflows/go-lint.yaml
- [go-sast-svg]: https://github.com/grokify/structured-plan/actions/workflows/go-sast-codeql.yaml/badge.svg?branch=main
- [go-sast-url]: https://github.com/grokify/structured-plan/actions/workflows/go-sast-codeql.yaml
- [goreport-svg]: https://goreportcard.com/badge/github.com/grokify/structured-plan
- [goreport-url]: https://goreportcard.com/report/github.com/grokify/structured-plan
- [docs-godoc-svg]: https://pkg.go.dev/badge/github.com/grokify/structured-plan
- [docs-godoc-url]: https://pkg.go.dev/github.com/grokify/structured-plan
+ [go-ci-svg]: https://github.com/grokify/prism-execution/actions/workflows/go-ci.yaml/badge.svg?branch=main
+ [go-ci-url]: https://github.com/grokify/prism-execution/actions/workflows/go-ci.yaml
+ [go-lint-svg]: https://github.com/grokify/prism-execution/actions/workflows/go-lint.yaml/badge.svg?branch=main
+ [go-lint-url]: https://github.com/grokify/prism-execution/actions/workflows/go-lint.yaml
+ [go-sast-svg]: https://github.com/grokify/prism-execution/actions/workflows/go-sast-codeql.yaml/badge.svg?branch=main
+ [go-sast-url]: https://github.com/grokify/prism-execution/actions/workflows/go-sast-codeql.yaml
+ [goreport-svg]: https://goreportcard.com/badge/github.com/grokify/prism-execution
+ [goreport-url]: https://goreportcard.com/report/github.com/grokify/prism-execution
+ [docs-godoc-svg]: https://pkg.go.dev/badge/github.com/grokify/prism-execution
+ [docs-godoc-url]: https://pkg.go.dev/github.com/grokify/prism-execution
  [viz-svg]: https://img.shields.io/badge/visualizaton-Go-blue.svg
  [viz-url]: https://mango-dune-07a8b7110.1.azurestaticapps.net/?repo=grokify%2Fstructured-plan
  [loc-svg]: https://tokei.rs/b1/github/grokify/structured-plan
- [repo-url]: https://github.com/grokify/structured-plan
+ [repo-url]: https://github.com/grokify/prism-execution
  [license-svg]: https://img.shields.io/badge/license-MIT-blue.svg
- [license-url]: https://github.com/grokify/structured-plan/blob/master/LICENSE
+ [license-url]: https://github.com/grokify/prism-execution/blob/master/LICENSE
 
 A unified planning system with Go data types, JSON serialization, and markdown generation. Supports requirements documents, goal frameworks, and roadmaps.
 
@@ -69,12 +69,12 @@ brew install grokify/tap/splan
 ### Go Install
 
 ```bash
-go install github.com/grokify/structured-plan/cmd/splan@latest
+go install github.com/grokify/prism-execution/cmd/splan@latest
 ```
 
 ### Download Binary
 
-Pre-built binaries for Linux, macOS, and Windows are available on the [releases page](https://github.com/grokify/structured-plan/releases).
+Pre-built binaries for Linux, macOS, and Windows are available on the [releases page](https://github.com/grokify/prism-execution/releases).
 
 ## CLI Usage
 
@@ -163,9 +163,9 @@ import (
     "encoding/json"
     "os"
 
-    "github.com/grokify/structured-plan/requirements/prd"
-    "github.com/grokify/structured-plan/requirements/mrd"
-    "github.com/grokify/structured-plan/requirements/trd"
+    "github.com/grokify/prism-execution/requirements/prd"
+    "github.com/grokify/prism-execution/requirements/mrd"
+    "github.com/grokify/prism-execution/requirements/trd"
 )
 
 func main() {
@@ -204,9 +204,9 @@ The `goals` package provides a framework-agnostic interface for both OKR and V2M
 
 ```go
 import (
-    "github.com/grokify/structured-plan/goals"
-    "github.com/grokify/structured-plan/goals/okr"
-    "github.com/grokify/structured-plan/goals/v2mom"
+    "github.com/grokify/prism-execution/goals"
+    "github.com/grokify/prism-execution/goals/okr"
+    "github.com/grokify/prism-execution/goals/v2mom"
 )
 
 // Create OKR-based goals
@@ -248,8 +248,8 @@ PRDs support framework-agnostic goals via the `ProductGoals` field:
 
 ```go
 import (
-    "github.com/grokify/structured-plan/requirements/prd"
-    "github.com/grokify/structured-plan/goals"
+    "github.com/grokify/prism-execution/requirements/prd"
+    "github.com/grokify/prism-execution/goals"
 )
 
 doc := prd.Document{
@@ -266,7 +266,7 @@ table := doc.ToSwimlaneTableWithGoals(opts)  // Uses "Objectives" or "Methods"
 The library integrates with `structured-evaluation` for standardized quality reports:
 
 ```go
-import "github.com/grokify/structured-plan/prd"
+import "github.com/grokify/prism-execution/prd"
 
 // Load and score a PRD
 doc, _ := prd.Load("my-product.prd.json")
