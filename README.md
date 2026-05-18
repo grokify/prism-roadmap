@@ -23,7 +23,7 @@
  [loc-svg]: https://tokei.rs/b1/github/grokify/prism-execution
  [repo-url]: https://github.com/grokify/prism-execution
  [license-svg]: https://img.shields.io/badge/license-MIT-blue.svg
- [license-url]: https://github.com/grokify/prism-execution/blob/master/LICENSE
+ [license-url]: https://github.com/grokify/prism-execution/blob/main/LICENSE
 
 A unified planning system with Go data types, JSON serialization, and markdown generation. Supports requirements documents, goal frameworks, and roadmaps.
 
