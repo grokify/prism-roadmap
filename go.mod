@@ -2,7 +2,10 @@ module github.com/grokify/prism-execution
 
 go 1.24
 
+replace github.com/grokify/prism-core => ../prism-core
+
 require (
+	github.com/grokify/prism-core v0.0.0
 	github.com/grokify/structureddocs v0.1.0
 	github.com/invopop/jsonschema v0.14.0
 	github.com/plexusone/structured-evaluation v0.3.1
