@@ -1,4 +1,4 @@
-# Structured Plan
+# PRISM Execution
 
 [![Go CI][go-ci-svg]][go-ci-url]
 [![Go Lint][go-lint-svg]][go-lint-url]
@@ -18,9 +18,9 @@
  [goreport-url]: https://goreportcard.com/report/github.com/grokify/prism-execution
  [docs-godoc-svg]: https://pkg.go.dev/badge/github.com/grokify/prism-execution
  [docs-godoc-url]: https://pkg.go.dev/github.com/grokify/prism-execution
- [viz-svg]: https://img.shields.io/badge/visualizaton-Go-blue.svg
- [viz-url]: https://mango-dune-07a8b7110.1.azurestaticapps.net/?repo=grokify%2Fstructured-plan
- [loc-svg]: https://tokei.rs/b1/github/grokify/structured-plan
+ [viz-svg]: https://img.shields.io/badge/visualization-Go-blue.svg
+ [viz-url]: https://mango-dune-07a8b7110.1.azurestaticapps.net/?repo=grokify%2Fprism-execution
+ [loc-svg]: https://tokei.rs/b1/github/grokify/prism-execution
  [repo-url]: https://github.com/grokify/prism-execution
  [license-svg]: https://img.shields.io/badge/license-MIT-blue.svg
  [license-url]: https://github.com/grokify/prism-execution/blob/master/LICENSE
