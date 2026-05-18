@@ -1,6 +1,6 @@
 # Document Types Overview
 
-Structured Requirements supports three core document types, each serving a different purpose in the product development lifecycle.
+PRISM Execution supports three core document types, each serving a different purpose in the product development lifecycle.
 
 ## Document Comparison
 
@@ -73,9 +73,9 @@ graph LR
 
 ```go
 import (
-    "github.com/grokify/structured-plan/prd"  // Product requirements
-    "github.com/grokify/structured-plan/mrd"  // Market requirements
-    "github.com/grokify/structured-plan/trd"  // Technical requirements
+    "github.com/grokify/prism-execution/requirements/prd"  // Product requirements
+    "github.com/grokify/prism-execution/requirements/mrd"  // Market requirements
+    "github.com/grokify/prism-execution/requirements/trd"  // Technical requirements
 )
 ```
 

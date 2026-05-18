@@ -14,7 +14,7 @@ Unlike scoring (which evaluates quality), completeness checks:
 ## Quick Start
 
 ```go
-import "github.com/grokify/structured-plan/prd"
+import "github.com/grokify/prism-execution/requirements/prd"
 
 report := prd.CheckCompleteness(doc)
 

@@ -23,7 +23,7 @@ graph TD
 ## V2MOM Types
 
 ```go
-import "github.com/grokify/structured-goals/v2mom"
+import "github.com/grokify/prism-execution/goals/v2mom"
 
 type V2MOM struct {
     Schema    string     `json:"$schema,omitempty"`
@@ -202,7 +202,7 @@ warnings := v2mom.Warnings(errs)
 
 ```json
 {
-  "$schema": "https://github.com/grokify/structured-goals/schema/v2mom.schema.json",
+  "$schema": "https://github.com/grokify/prism-execution/goals/schema/v2mom.schema.json",
   "metadata": {
     "name": "FY2025 Product Strategy",
     "fiscalYear": "FY2025",

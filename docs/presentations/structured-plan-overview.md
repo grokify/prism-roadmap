@@ -2,10 +2,10 @@
 marp: true
 theme: default
 paginate: true
-title: Structured Plan - Unified Planning Artifacts
+title: PRISM Execution - Unified Planning Artifacts
 ---
 
-# Structured Plan
+# PRISM Execution
 
 ## Unified Planning Artifacts for the Entire Organization
 
@@ -124,7 +124,7 @@ PRD is one deliverable in the Portfolio Roadmap
 # Unified Type System
 
 ```
-structured-plan/
+prism-execution/
 ├── goals/
 │   ├── okr/        # Objective, KeyResult, PhaseTarget
 │   └── v2mom/      # V2MOM, Method, Measure, Obstacle
@@ -204,13 +204,13 @@ splan validate --check-alignment portfolio.json prd-*.json
 
 ---
 
-# Roadmap for Structured Plan
+# Roadmap for PRISM Execution
 
 | Phase | Deliverables |
 |-------|--------------|
 | **Phase 1** | Restructure packages (requirements/, roadmap/, goals/) |
-| **Phase 2** | Rename repo to structured-plan |
-| **Phase 3** | Consolidate OKR/V2MOM from structured-goals |
+| **Phase 2** | Rename repo to prism-execution |
+| **Phase 3** | Consolidate OKR/V2MOM goals frameworks |
 | **Phase 4** | Cross-level alignment validation |
 
 ---
@@ -227,6 +227,6 @@ splan validate --check-alignment portfolio.json prd-*.json
 
 # Questions?
 
-GitHub: `github.com/grokify/structured-plan`
+GitHub: `github.com/grokify/prism-execution`
 
 <!-- TODO: Update URL when repo is renamed -->

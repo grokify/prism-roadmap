@@ -7,7 +7,7 @@
 ## Install the Library
 
 ```bash
-go get github.com/grokify/structured-plan
+go get github.com/grokify/prism-execution
 ```
 
 ## Install the CLI (Optional)
@@ -15,7 +15,7 @@ go get github.com/grokify/structured-plan
 The `srequirements` CLI tool provides commands for creating and validating documents:
 
 ```bash
-go install github.com/grokify/structured-plan/cmd/srequirements@latest
+go install github.com/grokify/prism-execution/cmd/srequirements@latest
 ```
 
 ## Verify Installation
@@ -25,7 +25,7 @@ package main
 
 import (
     "fmt"
-    "github.com/grokify/structured-plan/prd"
+    "github.com/grokify/prism-execution/requirements/prd"
 )
 
 func main() {
@@ -37,7 +37,7 @@ func main() {
 ## Package Structure
 
 ```
-github.com/grokify/structured-plan/
+github.com/grokify/prism-execution/
 ├── prd/          # Product Requirements Document
 ├── mrd/          # Market Requirements Document
 ├── trd/          # Technical Requirements Document
@@ -48,9 +48,9 @@ github.com/grokify/structured-plan/
 
 ```go
 import (
-    "github.com/grokify/structured-plan/prd"
-    "github.com/grokify/structured-plan/mrd"
-    "github.com/grokify/structured-plan/trd"
+    "github.com/grokify/prism-execution/requirements/prd"
+    "github.com/grokify/prism-execution/requirements/mrd"
+    "github.com/grokify/prism-execution/requirements/trd"
 )
 ```
 
@@ -59,7 +59,7 @@ import (
 To use V2MOM and OKR integration, also install:
 
 ```bash
-go get github.com/grokify/structured-goals
+go get github.com/grokify/prism-execution/goals
 ```
 
-The PRD package automatically includes goals types when structured-goals is available.
+The PRD package automatically includes goals types when prism-execution/goals is available.

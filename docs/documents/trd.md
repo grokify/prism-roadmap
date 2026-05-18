@@ -147,7 +147,7 @@ type Integration struct {
 ## Creating a TRD
 
 ```go
-import "github.com/grokify/structured-plan/trd"
+import "github.com/grokify/prism-execution/requirements/trd"
 
 doc := &trd.Document{
     Metadata: trd.Metadata{

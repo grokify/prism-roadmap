@@ -1,6 +1,6 @@
 # Integration Examples
 
-Examples of integrating structured-requirements with other tools and workflows.
+Examples of integrating prism-execution with other tools and workflows.
 
 ## CI/CD Integration
 
@@ -28,7 +28,7 @@ jobs:
           go-version: '1.21'
 
       - name: Install validator
-        run: go install github.com/grokify/structured-plan/cmd/srequirements@latest
+        run: go install github.com/grokify/prism-execution/cmd/srequirements@latest
 
       - name: Validate PRDs
         run: |
@@ -64,7 +64,7 @@ import (
     "encoding/json"
     "net/http"
 
-    "github.com/grokify/structured-plan/prd"
+    "github.com/grokify/prism-execution/requirements/prd"
 )
 
 func notifySlack(doc *prd.Document, webhookURL string) error {
@@ -104,7 +104,7 @@ Export PRD to Notion:
 package main
 
 import (
-    "github.com/grokify/structured-plan/prd"
+    "github.com/grokify/prism-execution/requirements/prd"
     // hypothetical notion client
     "github.com/example/notion-go"
 )

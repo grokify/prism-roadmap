@@ -36,7 +36,7 @@ OKRs use a 0.0-1.0 scoring scale:
 ## OKR Types
 
 ```go
-import "github.com/grokify/structured-goals/okr"
+import "github.com/grokify/prism-execution/goals/okr"
 
 type OKRDocument struct {
     Schema     string       `json:"$schema,omitempty"`

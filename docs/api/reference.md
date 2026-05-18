@@ -1,20 +1,25 @@
 # API Reference
 
-Complete API reference for structured-requirements packages.
+Complete API reference for PRISM Execution packages.
 
 ## Package Overview
 
 ```
-github.com/grokify/structured-plan/
-├── prd/    # Product Requirements Document
-├── mrd/    # Market Requirements Document
-├── trd/    # Technical Requirements Document
+github.com/grokify/prism-execution/
+├── requirements/
+│   ├── prd/    # Product Requirements Document
+│   ├── mrd/    # Market Requirements Document
+│   └── trd/    # Technical Requirements Document
+├── goals/
+│   ├── okr/    # Objectives and Key Results
+│   └── v2mom/  # Vision, Values, Methods, Obstacles, Measures
+└── roadmap/    # Roadmap with phases and deliverables
 ```
 
 ## PRD Package
 
 ```go
-import "github.com/grokify/structured-plan/prd"
+import "github.com/grokify/prism-execution/requirements/prd"
 ```
 
 ### Document Operations
@@ -164,7 +169,7 @@ Generates markdown output for PR/FAQ.
 ### Slide Renderers
 
 ```go
-import "github.com/grokify/structured-plan/prd/render/marp"
+import "github.com/grokify/prism-execution/requirements/prd/render/marp"
 ```
 
 #### NewPRDRenderer
@@ -446,7 +451,7 @@ const (
 ## MRD Package
 
 ```go
-import "github.com/grokify/structured-plan/mrd"
+import "github.com/grokify/prism-execution/requirements/mrd"
 ```
 
 See [MRD Documentation](../documents/mrd.md) for types and functions.
@@ -454,17 +459,17 @@ See [MRD Documentation](../documents/mrd.md) for types and functions.
 ## TRD Package
 
 ```go
-import "github.com/grokify/structured-plan/trd"
+import "github.com/grokify/prism-execution/requirements/trd"
 ```
 
 See [TRD Documentation](../documents/trd.md) for types and functions.
 
-## Structured Goals Package
+## Goals Package
 
 ```go
 import (
-    "github.com/grokify/structured-goals/v2mom"
-    "github.com/grokify/structured-goals/okr"
+    "github.com/grokify/prism-execution/goals/v2mom"
+    "github.com/grokify/prism-execution/goals/okr"
 )
 ```
 

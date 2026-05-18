@@ -9,7 +9,7 @@ The smallest valid PRD:
 ```go
 package main
 
-import "github.com/grokify/structured-plan/prd"
+import "github.com/grokify/prism-execution/requirements/prd"
 
 func main() {
     doc := prd.New("PRD-001", "My Product",

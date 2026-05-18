@@ -1,6 +1,6 @@
 # Quick Start
 
-This guide walks you through creating your first PRD with structured-requirements.
+This guide walks you through creating your first PRD with prism-execution.
 
 ## Create a PRD
 
@@ -8,7 +8,7 @@ This guide walks you through creating your first PRD with structured-requirement
 package main
 
 import (
-    "github.com/grokify/structured-plan/prd"
+    "github.com/grokify/prism-execution/requirements/prd"
 )
 
 func main() {
@@ -129,7 +129,7 @@ fmt.Printf("Loaded: %s (v%s)\n", doc.Metadata.Title, doc.Metadata.Version)
 
 ```go
 import (
-    "github.com/grokify/structured-goals/okr"
+    "github.com/grokify/prism-execution/goals/okr"
 )
 
 // Create OKR alignment

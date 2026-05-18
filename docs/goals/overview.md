@@ -1,6 +1,6 @@
 # Goals Integration Overview
 
-Structured Requirements supports alignment with strategic goal frameworks through the `structured-goals` package.
+PRISM Execution supports alignment with strategic goal frameworks.
 
 ## Supported Frameworks
 
@@ -154,15 +154,14 @@ AlignedObjectives: map[string]string{
 ## Installation
 
 ```bash
-# For goals support
-go get github.com/grokify/structured-goals
+go get github.com/grokify/prism-execution
 ```
 
 ```go
 import (
-    "github.com/grokify/structured-plan/prd"
-    "github.com/grokify/structured-goals/v2mom"
-    "github.com/grokify/structured-goals/okr"
+    "github.com/grokify/prism-execution/requirements/prd"
+    "github.com/grokify/prism-execution/goals/v2mom"
+    "github.com/grokify/prism-execution/goals/okr"
 )
 ```
 

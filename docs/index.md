@@ -1,10 +1,10 @@
-# Structured Requirements
+# PRISM Execution
 
-A Go library for creating, validating, and transforming structured requirements documents.
+A Go library for creating, validating, and transforming structured planning documents. Part of the [PRISM ecosystem](https://github.com/grokify/prism).
 
 ## Overview
 
-Structured Requirements provides typed data structures and utilities for three core document types used in product development:
+PRISM Execution provides typed data structures and utilities for planning documents used in product development:
 
 | Document | Purpose | Primary Audience |
 |----------|---------|------------------|
@@ -14,7 +14,7 @@ Structured Requirements provides typed data structures and utilities for three c
 
 ## Key Features
 
-- **Structured JSON format** - Machine-readable documents with defined schemas
+- **JSON format** - Machine-readable documents with defined schemas
 - **Multiple output views** - PM View, Executive View, Amazon 6-Pager, PR/FAQ
 - **Goals alignment** - Integrate with V2MOM and OKR frameworks
 - **Scoring & validation** - Automated quality assessment
@@ -47,7 +47,7 @@ package main
 
 import (
     "fmt"
-    "github.com/grokify/structured-plan/prd"
+    "github.com/grokify/prism-execution/requirements/prd"
 )
 
 func main() {
@@ -73,12 +73,12 @@ func main() {
 ## Installation
 
 ```bash
-go get github.com/grokify/structured-plan
+go get github.com/grokify/prism-execution
 ```
 
 ## Document Relationships
 
-Structured Requirements documents can reference each other and align with strategic goals:
+Planning documents can reference each other and align with strategic goals:
 
 ```mermaid
 graph LR
