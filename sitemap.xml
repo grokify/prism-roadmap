@@ -1,139 +1,143 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-         <loc>https://grokify.github.io/structured-plan/</loc>
-         <lastmod>2026-04-26</lastmod>
+         <loc>https://grokify.github.io/prism-execution/</loc>
+         <lastmod>2026-05-18</lastmod>
     </url>
     <url>
-         <loc>https://grokify.github.io/structured-plan/AI_EVALUATION_PROPOSAL/</loc>
-         <lastmod>2026-04-26</lastmod>
+         <loc>https://grokify.github.io/prism-execution/AI_EVALUATION_PROPOSAL/</loc>
+         <lastmod>2026-05-18</lastmod>
     </url>
     <url>
-         <loc>https://grokify.github.io/structured-plan/merge/</loc>
-         <lastmod>2026-04-26</lastmod>
+         <loc>https://grokify.github.io/prism-execution/merge/</loc>
+         <lastmod>2026-05-18</lastmod>
     </url>
     <url>
-         <loc>https://grokify.github.io/structured-plan/api/reference/</loc>
-         <lastmod>2026-04-26</lastmod>
+         <loc>https://grokify.github.io/prism-execution/api/reference/</loc>
+         <lastmod>2026-05-18</lastmod>
     </url>
     <url>
-         <loc>https://grokify.github.io/structured-plan/documents/mrd/</loc>
-         <lastmod>2026-04-26</lastmod>
+         <loc>https://grokify.github.io/prism-execution/documents/mrd/</loc>
+         <lastmod>2026-05-18</lastmod>
     </url>
     <url>
-         <loc>https://grokify.github.io/structured-plan/documents/overview/</loc>
-         <lastmod>2026-04-26</lastmod>
+         <loc>https://grokify.github.io/prism-execution/documents/overview/</loc>
+         <lastmod>2026-05-18</lastmod>
     </url>
     <url>
-         <loc>https://grokify.github.io/structured-plan/documents/prd/</loc>
-         <lastmod>2026-04-26</lastmod>
+         <loc>https://grokify.github.io/prism-execution/documents/prd/</loc>
+         <lastmod>2026-05-18</lastmod>
     </url>
     <url>
-         <loc>https://grokify.github.io/structured-plan/documents/trd/</loc>
-         <lastmod>2026-04-26</lastmod>
+         <loc>https://grokify.github.io/prism-execution/documents/trd/</loc>
+         <lastmod>2026-05-18</lastmod>
     </url>
     <url>
-         <loc>https://grokify.github.io/structured-plan/examples/integration/</loc>
-         <lastmod>2026-04-26</lastmod>
+         <loc>https://grokify.github.io/prism-execution/examples/integration/</loc>
+         <lastmod>2026-05-18</lastmod>
     </url>
     <url>
-         <loc>https://grokify.github.io/structured-plan/examples/prd-examples/</loc>
-         <lastmod>2026-04-26</lastmod>
+         <loc>https://grokify.github.io/prism-execution/examples/prd-examples/</loc>
+         <lastmod>2026-05-18</lastmod>
     </url>
     <url>
-         <loc>https://grokify.github.io/structured-plan/features/completeness/</loc>
-         <lastmod>2026-04-26</lastmod>
+         <loc>https://grokify.github.io/prism-execution/features/completeness/</loc>
+         <lastmod>2026-05-18</lastmod>
     </url>
     <url>
-         <loc>https://grokify.github.io/structured-plan/features/persona-library/</loc>
-         <lastmod>2026-04-26</lastmod>
+         <loc>https://grokify.github.io/prism-execution/features/persona-library/</loc>
+         <lastmod>2026-05-18</lastmod>
     </url>
     <url>
-         <loc>https://grokify.github.io/structured-plan/features/scoring/</loc>
-         <lastmod>2026-04-26</lastmod>
+         <loc>https://grokify.github.io/prism-execution/features/scoring/</loc>
+         <lastmod>2026-05-18</lastmod>
     </url>
     <url>
-         <loc>https://grokify.github.io/structured-plan/getting-started/installation/</loc>
-         <lastmod>2026-04-26</lastmod>
+         <loc>https://grokify.github.io/prism-execution/getting-started/installation/</loc>
+         <lastmod>2026-05-18</lastmod>
     </url>
     <url>
-         <loc>https://grokify.github.io/structured-plan/getting-started/quickstart/</loc>
-         <lastmod>2026-04-26</lastmod>
+         <loc>https://grokify.github.io/prism-execution/getting-started/quickstart/</loc>
+         <lastmod>2026-05-18</lastmod>
     </url>
     <url>
-         <loc>https://grokify.github.io/structured-plan/goals/okr/</loc>
-         <lastmod>2026-04-26</lastmod>
+         <loc>https://grokify.github.io/prism-execution/goals/okr/</loc>
+         <lastmod>2026-05-18</lastmod>
     </url>
     <url>
-         <loc>https://grokify.github.io/structured-plan/goals/overview/</loc>
-         <lastmod>2026-04-26</lastmod>
+         <loc>https://grokify.github.io/prism-execution/goals/overview/</loc>
+         <lastmod>2026-05-18</lastmod>
     </url>
     <url>
-         <loc>https://grokify.github.io/structured-plan/goals/v2mom/</loc>
-         <lastmod>2026-04-26</lastmod>
+         <loc>https://grokify.github.io/prism-execution/goals/v2mom/</loc>
+         <lastmod>2026-05-18</lastmod>
     </url>
     <url>
-         <loc>https://grokify.github.io/structured-plan/presentations/structured-plan-overview/</loc>
-         <lastmod>2026-04-26</lastmod>
+         <loc>https://grokify.github.io/prism-execution/presentations/structured-plan-overview/</loc>
+         <lastmod>2026-05-18</lastmod>
     </url>
     <url>
-         <loc>https://grokify.github.io/structured-plan/releases/v0.1.0/</loc>
-         <lastmod>2026-04-26</lastmod>
+         <loc>https://grokify.github.io/prism-execution/releases/v0.1.0/</loc>
+         <lastmod>2026-05-18</lastmod>
     </url>
     <url>
-         <loc>https://grokify.github.io/structured-plan/releases/v0.10.0/</loc>
-         <lastmod>2026-04-26</lastmod>
+         <loc>https://grokify.github.io/prism-execution/releases/v0.10.0/</loc>
+         <lastmod>2026-05-18</lastmod>
     </url>
     <url>
-         <loc>https://grokify.github.io/structured-plan/releases/v0.2.0/</loc>
-         <lastmod>2026-04-26</lastmod>
+         <loc>https://grokify.github.io/prism-execution/releases/v0.11.0/</loc>
+         <lastmod>2026-05-18</lastmod>
     </url>
     <url>
-         <loc>https://grokify.github.io/structured-plan/releases/v0.3.0/</loc>
-         <lastmod>2026-04-26</lastmod>
+         <loc>https://grokify.github.io/prism-execution/releases/v0.2.0/</loc>
+         <lastmod>2026-05-18</lastmod>
     </url>
     <url>
-         <loc>https://grokify.github.io/structured-plan/releases/v0.4.0/</loc>
-         <lastmod>2026-04-26</lastmod>
+         <loc>https://grokify.github.io/prism-execution/releases/v0.3.0/</loc>
+         <lastmod>2026-05-18</lastmod>
     </url>
     <url>
-         <loc>https://grokify.github.io/structured-plan/releases/v0.5.0/</loc>
-         <lastmod>2026-04-26</lastmod>
+         <loc>https://grokify.github.io/prism-execution/releases/v0.4.0/</loc>
+         <lastmod>2026-05-18</lastmod>
     </url>
     <url>
-         <loc>https://grokify.github.io/structured-plan/releases/v0.6.0/</loc>
-         <lastmod>2026-04-26</lastmod>
+         <loc>https://grokify.github.io/prism-execution/releases/v0.5.0/</loc>
+         <lastmod>2026-05-18</lastmod>
     </url>
     <url>
-         <loc>https://grokify.github.io/structured-plan/releases/v0.7.0/</loc>
-         <lastmod>2026-04-26</lastmod>
+         <loc>https://grokify.github.io/prism-execution/releases/v0.6.0/</loc>
+         <lastmod>2026-05-18</lastmod>
     </url>
     <url>
-         <loc>https://grokify.github.io/structured-plan/releases/v0.8.0/</loc>
-         <lastmod>2026-04-26</lastmod>
+         <loc>https://grokify.github.io/prism-execution/releases/v0.7.0/</loc>
+         <lastmod>2026-05-18</lastmod>
     </url>
     <url>
-         <loc>https://grokify.github.io/structured-plan/releases/v0.9.0/</loc>
-         <lastmod>2026-04-26</lastmod>
+         <loc>https://grokify.github.io/prism-execution/releases/v0.8.0/</loc>
+         <lastmod>2026-05-18</lastmod>
     </url>
     <url>
-         <loc>https://grokify.github.io/structured-plan/views/exec-view/</loc>
-         <lastmod>2026-04-26</lastmod>
+         <loc>https://grokify.github.io/prism-execution/releases/v0.9.0/</loc>
+         <lastmod>2026-05-18</lastmod>
     </url>
     <url>
-         <loc>https://grokify.github.io/structured-plan/views/pm-view/</loc>
-         <lastmod>2026-04-26</lastmod>
+         <loc>https://grokify.github.io/prism-execution/views/exec-view/</loc>
+         <lastmod>2026-05-18</lastmod>
     </url>
     <url>
-         <loc>https://grokify.github.io/structured-plan/views/prfaq/</loc>
-         <lastmod>2026-04-26</lastmod>
+         <loc>https://grokify.github.io/prism-execution/views/pm-view/</loc>
+         <lastmod>2026-05-18</lastmod>
     </url>
     <url>
-         <loc>https://grokify.github.io/structured-plan/views/six-pager/</loc>
-         <lastmod>2026-04-26</lastmod>
+         <loc>https://grokify.github.io/prism-execution/views/prfaq/</loc>
+         <lastmod>2026-05-18</lastmod>
     </url>
     <url>
-         <loc>https://grokify.github.io/structured-plan/views/slides/</loc>
-         <lastmod>2026-04-26</lastmod>
+         <loc>https://grokify.github.io/prism-execution/views/six-pager/</loc>
+         <lastmod>2026-05-18</lastmod>
+    </url>
+    <url>
+         <loc>https://grokify.github.io/prism-execution/views/slides/</loc>
+         <lastmod>2026-05-18</lastmod>
     </url>
 </urlset>
