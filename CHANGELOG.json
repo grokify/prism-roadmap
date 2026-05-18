@@ -1,11 +1,30 @@
 {
   "irVersion": "1.0",
-  "project": "structured-plan",
-  "repository": "https://github.com/grokify/structured-plan",
+  "project": "prism-execution",
+  "repository": "https://github.com/grokify/prism-execution",
   "versioning": "semver",
   "commitConvention": "conventional",
   "maintainers": ["grokify", "johncwang@gmail.com"],
   "releases": [
+    {
+      "version": "v0.11.0",
+      "date": "2026-05-17",
+      "highlights": [
+        { "description": "Repository renamed from grokify/structured-plan to grokify/prism-execution" },
+        { "description": "Part of PRISM ecosystem consolidation with prism-capability and prism-intelligence" }
+      ],
+      "breaking": [
+        { "description": "Go module path changed from github.com/grokify/structured-plan to github.com/grokify/prism-execution", "commit": "d658dbc" }
+      ],
+      "changed": [
+        { "description": "All import paths updated to github.com/grokify/prism-execution", "commit": "d658dbc" },
+        { "description": "JSON Schema $id URLs updated to prism-execution", "commit": "2963d76" },
+        { "description": "README badges and installation instructions updated", "commit": "03a7253" }
+      ],
+      "documentation": [
+        { "description": "Updated README with new repository URLs and installation commands", "commit": "03a7253" }
+      ]
+    },
     {
       "version": "v0.10.0",
       "date": "2026-04-26",
