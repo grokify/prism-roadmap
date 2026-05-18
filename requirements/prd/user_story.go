@@ -1,17 +1,30 @@
 package prd
 
+import core "github.com/grokify/prism-core"
+
 // Note: Priority type and constants are now defined in common/
 // and aliased in document.go for backward compatibility.
 
 // MoSCoW represents the MoSCoW prioritization method.
 type MoSCoW string
 
+// MoSCoW constants imported from prism-core.
 const (
-	MoSCoWMust   MoSCoW = "must"
-	MoSCoWShould MoSCoW = "should"
-	MoSCoWCould  MoSCoW = "could"
-	MoSCoWWont   MoSCoW = "wont"
+	MoSCoWMust   MoSCoW = MoSCoW(core.MoSCoWMust)
+	MoSCoWShould MoSCoW = MoSCoW(core.MoSCoWShould)
+	MoSCoWCould  MoSCoW = MoSCoW(core.MoSCoWCould)
+	MoSCoWWont   MoSCoW = MoSCoW(core.MoSCoWWont)
 )
+
+// ValidMoSCoW checks if a MoSCoW value is valid.
+func ValidMoSCoW(moscow MoSCoW) bool {
+	return core.ValidMoSCoW(string(moscow))
+}
+
+// MoSCoWWeight returns a numeric weight for sorting MoSCoW priorities.
+func MoSCoWWeight(moscow MoSCoW) int {
+	return core.MoSCoWWeight(string(moscow))
+}
 
 // UserStory represents a user story with acceptance criteria.
 type UserStory struct {
