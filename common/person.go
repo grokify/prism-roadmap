@@ -2,18 +2,17 @@
 package common
 
 import (
-	"fmt"
 	"time"
+
+	core "github.com/grokify/prism-core"
 )
 
-// Person represents an individual contributor.
-type Person struct {
-	Name  string `json:"name"`
-	Email string `json:"email,omitempty"`
-	Role  string `json:"role,omitempty"`
-}
+// Person is an alias for core.Person.
+// Represents an individual contributor.
+type Person = core.Person
 
 // Approver represents a person with approval authority.
+// Note: Uses *time.Time for ApprovedAt to support omitempty in JSON.
 type Approver struct {
 	Person
 	ApprovedAt *time.Time `json:"approvedAt,omitempty"`
@@ -22,42 +21,13 @@ type Approver struct {
 }
 
 // FormatPersonMarkdown formats a Person for markdown display.
-// Output formats:
-//   - "Name" (name only)
-//   - "[Name](mailto:email)" (name + email)
-//   - "Name (Role)" (name + role)
-//   - "[Name](mailto:email) (Role)" (all fields)
+// Delegates to core.FormatPersonMarkdown.
 func FormatPersonMarkdown(p Person) string {
-	var result string
-
-	if p.Email != "" {
-		result = fmt.Sprintf("[%s](mailto:%s)", p.Name, p.Email)
-	} else {
-		result = p.Name
-	}
-
-	if p.Role != "" {
-		result += fmt.Sprintf(" (%s)", p.Role)
-	}
-
-	return result
+	return core.FormatPersonMarkdown(p)
 }
 
 // FormatPeopleMarkdown formats a slice of Person for markdown display.
-// Returns a comma-separated list of formatted persons.
+// Delegates to core.FormatPeopleMarkdown.
 func FormatPeopleMarkdown(people []Person) string {
-	if len(people) == 0 {
-		return ""
-	}
-
-	formatted := make([]string, len(people))
-	for i, p := range people {
-		formatted[i] = FormatPersonMarkdown(p)
-	}
-
-	result := formatted[0]
-	for i := 1; i < len(formatted); i++ {
-		result += ", " + formatted[i]
-	}
-	return result
+	return core.FormatPeopleMarkdown(people)
 }
