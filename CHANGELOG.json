@@ -22,7 +22,8 @@
         { "description": "README badges and installation instructions updated", "commit": "03a7253" }
       ],
       "documentation": [
-        { "description": "Updated README with new repository URLs and installation commands", "commit": "03a7253" }
+        { "description": "Updated README with new repository URLs and installation commands", "commit": "03a7253" },
+        { "description": "Updated all documentation files for prism-execution rename", "commit": "86a446f" }
       ]
     },
     {
