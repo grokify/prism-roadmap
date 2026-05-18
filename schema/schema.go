@@ -24,19 +24,19 @@ func PRDSchemaBytes() []byte {
 // SchemaID constants for referencing schemas.
 const (
 	// PRDSchemaID is the canonical ID for the PRD schema.
-	PRDSchemaID = "https://github.com/grokify/structured-plan/schema/prd.schema.json"
+	PRDSchemaID = "https://github.com/grokify/prism-execution/schema/prd.schema.json"
 
 	// MRDSchemaID is the canonical ID for the MRD schema (placeholder).
-	MRDSchemaID = "https://github.com/grokify/structured-plan/schema/mrd.schema.json"
+	MRDSchemaID = "https://github.com/grokify/prism-execution/schema/mrd.schema.json"
 
 	// TRDSchemaID is the canonical ID for the TRD schema (placeholder).
-	TRDSchemaID = "https://github.com/grokify/structured-plan/schema/trd.schema.json"
+	TRDSchemaID = "https://github.com/grokify/prism-execution/schema/trd.schema.json"
 
 	// OKRSchemaID is the canonical ID for the OKR schema.
-	OKRSchemaID = "https://github.com/grokify/structured-plan/schema/okr.schema.json"
+	OKRSchemaID = "https://github.com/grokify/prism-execution/schema/okr.schema.json"
 
 	// V2MOMSchemaID is the canonical ID for the V2MOM schema.
-	V2MOMSchemaID = "https://github.com/grokify/structured-plan/schema/v2mom.schema.json"
+	V2MOMSchemaID = "https://github.com/grokify/prism-execution/schema/v2mom.schema.json"
 )
 
 // OKR Schema
