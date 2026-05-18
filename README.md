@@ -27,6 +27,25 @@
 
 A unified planning system with Go data types, JSON serialization, and markdown generation. Supports requirements documents, goal frameworks, and roadmaps.
 
+## PRISM Ecosystem
+
+This project is part of the [PRISM ecosystem](https://github.com/grokify/prism):
+
+| Project | Purpose |
+|---------|---------|
+| [prism-core](https://github.com/grokify/prism-core) | Shared primitives (Person, Status, Priority, Risk, Domain) |
+| [prism-capability](https://github.com/grokify/prism-capability) | Define what capabilities exist |
+| [prism-intelligence](https://github.com/grokify/prism-intelligence) | Measure maturity with SLIs/SLOs |
+| **prism-execution** | Plan and track improvement (this project) |
+
+```
+prism-core (shared types)
+         │
+         ├── prism-capability ── "What we need"
+         ├── prism-intelligence ── "How we measure"
+         └── prism-execution ── "How we act"
+```
+
 ## Overview
 
 This library provides comprehensive, machine-readable formats for planning documents:

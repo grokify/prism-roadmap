@@ -7,6 +7,25 @@
   "maintainers": ["grokify", "johncwang@gmail.com"],
   "releases": [
     {
+      "version": "v0.12.0",
+      "date": "2026-05-18",
+      "highlights": [
+        { "description": "Integrate prism-core v0.1.0 for shared types across PRISM ecosystem" }
+      ],
+      "changed": [
+        { "description": "Import Person type from prism-core instead of local definition", "commit": "0beb118" },
+        { "description": "Import DocumentStatus and Priority types from prism-core", "commit": "ba5a5cc" },
+        { "description": "Import Risk types (RiskImpact, RiskProbability, RiskStatus) from prism-core", "commit": "bc20f6b" },
+        { "description": "Import MoSCoW constants from prism-core", "commit": "ea7e732" }
+      ],
+      "dependencies": [
+        { "description": "Add github.com/grokify/prism-core v0.1.0", "commit": "87a2b50" }
+      ],
+      "documentation": [
+        { "description": "Add v0.12.0 release notes documenting prism-core integration" }
+      ]
+    },
+    {
       "version": "v0.11.0",
       "date": "2026-05-17",
       "highlights": [
