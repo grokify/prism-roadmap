@@ -10,8 +10,8 @@ import (
 
 	sdmarp "github.com/grokify/structureddocs/marp"
 
-	"github.com/grokify/structured-plan/goals/v2mom"
-	"github.com/grokify/structured-plan/goals/v2mom/render"
+	"github.com/grokify/prism-execution/goals/v2mom"
+	"github.com/grokify/prism-execution/goals/v2mom/render"
 )
 
 // Renderer implements the render.Renderer interface for Marp output.

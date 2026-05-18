@@ -11,17 +11,17 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/grokify/structured-plan/goals/okr"
-	okrrender "github.com/grokify/structured-plan/goals/okr/render"
-	okrmarp "github.com/grokify/structured-plan/goals/okr/render/marp"
-	"github.com/grokify/structured-plan/goals/v2mom"
-	v2momrender "github.com/grokify/structured-plan/goals/v2mom/render"
-	v2mommarp "github.com/grokify/structured-plan/goals/v2mom/render/marp"
-	"github.com/grokify/structured-plan/requirements/mrd"
-	"github.com/grokify/structured-plan/requirements/prd"
-	"github.com/grokify/structured-plan/requirements/prd/render/terminal"
-	"github.com/grokify/structured-plan/requirements/trd"
-	"github.com/grokify/structured-plan/schema"
+	"github.com/grokify/prism-execution/goals/okr"
+	okrrender "github.com/grokify/prism-execution/goals/okr/render"
+	okrmarp "github.com/grokify/prism-execution/goals/okr/render/marp"
+	"github.com/grokify/prism-execution/goals/v2mom"
+	v2momrender "github.com/grokify/prism-execution/goals/v2mom/render"
+	v2mommarp "github.com/grokify/prism-execution/goals/v2mom/render/marp"
+	"github.com/grokify/prism-execution/requirements/mrd"
+	"github.com/grokify/prism-execution/requirements/prd"
+	"github.com/grokify/prism-execution/requirements/prd/render/terminal"
+	"github.com/grokify/prism-execution/requirements/trd"
+	"github.com/grokify/prism-execution/schema"
 	"github.com/plexusone/structured-evaluation/evaluation"
 )
 

@@ -4,7 +4,7 @@ package trd
 import (
 	"time"
 
-	"github.com/grokify/structured-plan/common"
+	"github.com/grokify/prism-execution/common"
 )
 
 // Person is an alias for common.Person for backwards compatibility.

@@ -10,8 +10,8 @@
 package goals
 
 import (
-	"github.com/grokify/structured-plan/goals/okr"
-	"github.com/grokify/structured-plan/goals/v2mom"
+	"github.com/grokify/prism-execution/goals/okr"
+	"github.com/grokify/prism-execution/goals/v2mom"
 )
 
 // Framework identifies the goal-setting framework in use.

@@ -11,8 +11,8 @@ import (
 
 	sdmarp "github.com/grokify/structureddocs/marp"
 
-	"github.com/grokify/structured-plan/requirements/prd"
-	"github.com/grokify/structured-plan/requirements/prd/render"
+	"github.com/grokify/prism-execution/requirements/prd"
+	"github.com/grokify/prism-execution/requirements/prd/render"
 )
 
 // PRDGoalsRenderer renders PRD documents with expanded goals alignment slides.

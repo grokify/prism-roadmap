@@ -5,7 +5,7 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/grokify/structured-plan/common"
+	"github.com/grokify/prism-execution/common"
 )
 
 // MarkdownOptions configures markdown generation.

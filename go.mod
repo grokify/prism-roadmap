@@ -1,4 +1,4 @@
-module github.com/grokify/structured-plan
+module github.com/grokify/prism-execution
 
 go 1.24
 
