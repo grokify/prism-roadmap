@@ -1557,6 +1557,7 @@ func init() {
 	mrdCmd.AddCommand(mrdValidateCmd)
 }
 
+//nolint:dupl // Similar pattern for TRD but different types
 func runMRDGenerate(cmd *cobra.Command, args []string) error {
 	inputFile := args[0]
 
@@ -1714,6 +1715,7 @@ func init() {
 	trdCmd.AddCommand(trdValidateCmd)
 }
 
+//nolint:dupl // Similar pattern for MRD but different types
 func runTRDGenerate(cmd *cobra.Command, args []string) error {
 	inputFile := args[0]
 
