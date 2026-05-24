@@ -15,8 +15,8 @@ github.com/invopop/jsonschema v0.14.0 h1:MHQqLhvpNUZfw+hM3AZDYK7jxO8FZoQeQM77g8i
 github.com/invopop/jsonschema v0.14.0/go.mod h1:ygm6C2EaVNMBDPpaPlnOA2pFAxBnxGjFlMZABxm9n2I=
 github.com/pb33f/ordered-map/v2 v2.3.1 h1:5319HDO0aw4DA4gzi+zv4FXU9UlSs3xGZ40wcP1nBjY=
 github.com/pb33f/ordered-map/v2 v2.3.1/go.mod h1:qxFQgd0PkVUtOMCkTapqotNgzRhMPL7VvaHKbd1HnmQ=
-github.com/plexusone/structured-evaluation v0.4.0 h1:xRBCTtNV+JEqgYEC9oET6yoo8Su3tNEejKybbz5OPnA=
-github.com/plexusone/structured-evaluation v0.4.0/go.mod h1:aqkP0xYPPXNg1ZB7MkDqFcWbrXLahrpRtAoYCav72bg=
+github.com/plexusone/structured-evaluation v0.5.0 h1:4FfvmmyNbNDtLVG+mb5SV1r/qVPlSBgzg+hSMj5+m/s=
+github.com/plexusone/structured-evaluation v0.5.0/go.mod h1:aqkP0xYPPXNg1ZB7MkDqFcWbrXLahrpRtAoYCav72bg=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/russross/blackfriday/v2 v2.1.0/go.mod h1:+Rmxgy9KzJVeS9/2gXHxylqXiyQDYRxCVz55jmeOWTM=

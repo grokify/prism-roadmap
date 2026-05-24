@@ -6,7 +6,7 @@ require (
 	github.com/grokify/prism-core v0.1.0
 	github.com/grokify/structureddocs v0.1.0
 	github.com/invopop/jsonschema v0.14.0
-	github.com/plexusone/structured-evaluation v0.4.0
+	github.com/plexusone/structured-evaluation v0.5.0
 	github.com/spf13/cobra v1.10.2
 )
 
