@@ -1,8 +1,8 @@
-site_name: PRISM Execution
+site_name: PRISM Roadmap
 site_description: Go library for structured planning documents (PRD, MRD, TRD) with goals alignment
-site_url: https://grokify.github.io/prism-execution/
-repo_url: https://github.com/grokify/prism-execution
-repo_name: grokify/prism-execution
+site_url: https://grokify.github.io/prism-roadmap/
+repo_url: https://github.com/grokify/prism-roadmap
+repo_name: grokify/prism-roadmap
 edit_uri: edit/main/docs/
 
 theme:
@@ -65,7 +65,7 @@ markdown_extensions:
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/grokify/prism-execution
+      link: https://github.com/grokify/prism-roadmap
 
 nav:
   - Home: index.md
