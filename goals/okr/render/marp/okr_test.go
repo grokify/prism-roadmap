@@ -4,8 +4,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/grokify/prism-execution/goals/okr"
-	"github.com/grokify/prism-execution/goals/okr/render"
+	"github.com/grokify/prism-roadmap/goals/okr"
+	"github.com/grokify/prism-roadmap/goals/okr/render"
 )
 
 func TestRenderer_Format(t *testing.T) {

@@ -8,9 +8,9 @@ import (
 
 	"github.com/invopop/jsonschema"
 
-	"github.com/grokify/prism-execution/goals/okr"
-	"github.com/grokify/prism-execution/goals/v2mom"
-	"github.com/grokify/prism-execution/requirements/prd"
+	"github.com/grokify/prism-roadmap/goals/okr"
+	"github.com/grokify/prism-roadmap/goals/v2mom"
+	"github.com/grokify/prism-roadmap/requirements/prd"
 )
 
 // Generator creates JSON Schema files from Go types.

@@ -3,7 +3,7 @@
 package render
 
 import (
-	"github.com/grokify/prism-execution/goals/v2mom"
+	"github.com/grokify/prism-roadmap/goals/v2mom"
 )
 
 // Renderer defines the interface for output format renderers.

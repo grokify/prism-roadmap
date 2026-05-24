@@ -2,7 +2,7 @@
 // to various output formats including Marp slides.
 package render
 
-import "github.com/grokify/prism-execution/goals/okr"
+import "github.com/grokify/prism-roadmap/goals/okr"
 
 // Renderer defines the interface for output format renderers.
 type Renderer interface {

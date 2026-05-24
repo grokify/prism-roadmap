@@ -11,8 +11,8 @@ import (
 
 	sdmarp "github.com/grokify/structureddocs/marp"
 
-	"github.com/grokify/prism-execution/requirements/prd"
-	"github.com/grokify/prism-execution/requirements/prd/render"
+	"github.com/grokify/prism-roadmap/requirements/prd"
+	"github.com/grokify/prism-roadmap/requirements/prd/render"
 )
 
 // PRDRenderer implements the render.Renderer interface for PRD Marp output.

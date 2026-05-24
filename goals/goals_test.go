@@ -3,8 +3,8 @@ package goals
 import (
 	"testing"
 
-	"github.com/grokify/prism-execution/goals/okr"
-	"github.com/grokify/prism-execution/goals/v2mom"
+	"github.com/grokify/prism-roadmap/goals/okr"
+	"github.com/grokify/prism-roadmap/goals/v2mom"
 )
 
 func TestNewOKR(t *testing.T) {

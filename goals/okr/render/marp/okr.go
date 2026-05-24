@@ -10,8 +10,8 @@ import (
 
 	sdmarp "github.com/grokify/structureddocs/marp"
 
-	"github.com/grokify/prism-execution/goals/okr"
-	"github.com/grokify/prism-execution/goals/okr/render"
+	"github.com/grokify/prism-roadmap/goals/okr"
+	"github.com/grokify/prism-roadmap/goals/okr/render"
 )
 
 // Renderer implements the render.Renderer interface for OKR Marp output.

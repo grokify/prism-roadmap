@@ -4,9 +4,9 @@ package prd
 import (
 	"time"
 
-	"github.com/grokify/prism-execution/common"
-	"github.com/grokify/prism-execution/goals"
-	"github.com/grokify/prism-execution/goals/okr"
+	"github.com/grokify/prism-roadmap/common"
+	"github.com/grokify/prism-roadmap/goals"
+	"github.com/grokify/prism-roadmap/goals/okr"
 )
 
 // Person is an alias for common.Person for backwards compatibility.

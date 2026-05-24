@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/grokify/prism-execution/roadmap"
+	"github.com/grokify/prism-roadmap/roadmap"
 )
 
 func TestToSwimlaneTable(t *testing.T) {

@@ -10,8 +10,8 @@
 package goals
 
 import (
-	"github.com/grokify/prism-execution/goals/okr"
-	"github.com/grokify/prism-execution/goals/v2mom"
+	"github.com/grokify/prism-roadmap/goals/okr"
+	"github.com/grokify/prism-roadmap/goals/v2mom"
 )
 
 // Framework identifies the goal-setting framework in use.
