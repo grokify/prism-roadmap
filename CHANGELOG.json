@@ -7,6 +7,39 @@
   "maintainers": ["grokify", "johncwang@gmail.com"],
   "releases": [
     {
+      "version": "v0.13.0",
+      "date": "2026-05-24",
+      "highlights": [
+        { "description": "BREAKING: Repository renamed from grokify/prism-execution to grokify/prism-roadmap" },
+        { "description": "Add cascading goals framework specification supporting OKR and V2MOM methodologies" },
+        { "description": "Refactor CLI commands to reusable cli/ package" }
+      ],
+      "breaking": [
+        { "description": "Go module path changed from github.com/grokify/prism-execution to github.com/grokify/prism-roadmap", "commit": "4bf42bf" }
+      ],
+      "added": [
+        { "description": "Add cascading goals PRD with user stories, functional requirements, and data model changes", "commit": "7ba41c6" },
+        { "description": "Add cascading goals TRD with package structure, interfaces, and implementation details", "commit": "7ba41c6" },
+        { "description": "Add cascading goals ROADMAP with 3-phase implementation plan", "commit": "7ba41c6" }
+      ],
+      "changed": [
+        { "description": "All import paths updated to github.com/grokify/prism-roadmap", "commit": "dc360c2" }
+      ],
+      "refactored": [
+        { "description": "Extract CLI commands from cmd/splan/main.go to cli/ package for reusability", "commit": "3dc51d0" }
+      ],
+      "documentation": [
+        { "description": "Update README with new repository URLs and installation commands", "commit": "2d3a2b6" },
+        { "description": "Update all documentation files for prism-roadmap rename", "commit": "d4e638a" },
+        { "description": "Update MkDocs configuration for prism-roadmap site", "commit": "56fddef" },
+        { "description": "Update CHANGELOG for name change", "commit": "636fdf0" }
+      ],
+      "dependencies": [
+        { "description": "Update structured-evaluation to v0.4.0", "commit": "4bf42bf" },
+        { "description": "Update go.mod dependencies", "commit": "1b66d4f" }
+      ]
+    },
+    {
       "version": "v0.12.0",
       "date": "2026-05-18",
       "highlights": [

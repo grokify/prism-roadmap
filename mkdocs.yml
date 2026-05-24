@@ -97,7 +97,13 @@ nav:
   - Workflows:
       - Merging Modular Files: merge.md
   - API Reference: api/reference.md
+  - Specifications:
+      - Cascading Goals:
+          - PRD: specs/cascading-goals/PRD.md
+          - TRD: specs/cascading-goals/TRD.md
+          - Roadmap: specs/cascading-goals/ROADMAP.md
   - Releases:
+      - v0.13.0: releases/v0.13.0.md
       - v0.12.0: releases/v0.12.0.md
       - v0.11.0: releases/v0.11.0.md
       - v0.10.0: releases/v0.10.0.md
