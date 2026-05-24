@@ -1,4 +1,4 @@
-# PRISM Execution
+# PRISM Roadmap
 
 [![Go CI][go-ci-svg]][go-ci-url]
 [![Go Lint][go-lint-svg]][go-lint-url]
@@ -9,24 +9,24 @@
 [![Visualization][viz-svg]][viz-url]
 [![License][license-svg]][license-url]
 
- [go-ci-svg]: https://github.com/grokify/prism-execution/actions/workflows/go-ci.yaml/badge.svg?branch=main
- [go-ci-url]: https://github.com/grokify/prism-execution/actions/workflows/go-ci.yaml
- [go-lint-svg]: https://github.com/grokify/prism-execution/actions/workflows/go-lint.yaml/badge.svg?branch=main
- [go-lint-url]: https://github.com/grokify/prism-execution/actions/workflows/go-lint.yaml
- [go-sast-svg]: https://github.com/grokify/prism-execution/actions/workflows/go-sast-codeql.yaml/badge.svg?branch=main
- [go-sast-url]: https://github.com/grokify/prism-execution/actions/workflows/go-sast-codeql.yaml
- [goreport-svg]: https://goreportcard.com/badge/github.com/grokify/prism-execution
- [goreport-url]: https://goreportcard.com/report/github.com/grokify/prism-execution
- [docs-godoc-svg]: https://pkg.go.dev/badge/github.com/grokify/prism-execution
- [docs-godoc-url]: https://pkg.go.dev/github.com/grokify/prism-execution
+ [go-ci-svg]: https://github.com/grokify/prism-roadmap/actions/workflows/go-ci.yaml/badge.svg?branch=main
+ [go-ci-url]: https://github.com/grokify/prism-roadmap/actions/workflows/go-ci.yaml
+ [go-lint-svg]: https://github.com/grokify/prism-roadmap/actions/workflows/go-lint.yaml/badge.svg?branch=main
+ [go-lint-url]: https://github.com/grokify/prism-roadmap/actions/workflows/go-lint.yaml
+ [go-sast-svg]: https://github.com/grokify/prism-roadmap/actions/workflows/go-sast-codeql.yaml/badge.svg?branch=main
+ [go-sast-url]: https://github.com/grokify/prism-roadmap/actions/workflows/go-sast-codeql.yaml
+ [goreport-svg]: https://goreportcard.com/badge/github.com/grokify/prism-roadmap
+ [goreport-url]: https://goreportcard.com/report/github.com/grokify/prism-roadmap
+ [docs-godoc-svg]: https://pkg.go.dev/badge/github.com/grokify/prism-roadmap
+ [docs-godoc-url]: https://pkg.go.dev/github.com/grokify/prism-roadmap
  [docs-mkdoc-svg]: https://img.shields.io/badge/Go-dev%20guide-blue.svg
- [docs-mkdoc-url]: https://grokify.github.io/prism-execution/
+ [docs-mkdoc-url]: https://grokify.github.io/prism-roadmap/
  [viz-svg]: https://img.shields.io/badge/visualization-Go-blue.svg
- [viz-url]: https://mango-dune-07a8b7110.1.azurestaticapps.net/?repo=grokify%2Fprism-execution
- [loc-svg]: https://tokei.rs/b1/github/grokify/prism-execution
- [repo-url]: https://github.com/grokify/prism-execution
+ [viz-url]: https://mango-dune-07a8b7110.1.azurestaticapps.net/?repo=grokify%2Fprism-roadmap
+ [loc-svg]: https://tokei.rs/b1/github/grokify/prism-roadmap
+ [repo-url]: https://github.com/grokify/prism-roadmap
  [license-svg]: https://img.shields.io/badge/license-MIT-blue.svg
- [license-url]: https://github.com/grokify/prism-execution/blob/main/LICENSE
+ [license-url]: https://github.com/grokify/prism-roadmap/blob/main/LICENSE
 
 A unified planning system with Go data types, JSON serialization, and markdown generation. Supports requirements documents, goal frameworks, and roadmaps.
 
@@ -39,14 +39,14 @@ This project is part of the [PRISM ecosystem](https://github.com/grokify/prism):
 | [prism-core](https://github.com/grokify/prism-core) | Shared primitives (Person, Status, Priority, Risk, Domain) |
 | [prism-capability](https://github.com/grokify/prism-capability) | Define what capabilities exist |
 | [prism-intelligence](https://github.com/grokify/prism-intelligence) | Measure maturity with SLIs/SLOs |
-| **prism-execution** | Plan and track improvement (this project) |
+| **prism-roadmap** | Roadmaps, requirements, and goal frameworks (this project) |
 
 ```
 prism-core (shared types)
          │
          ├── prism-capability ── "What we need"
          ├── prism-intelligence ── "How we measure"
-         └── prism-execution ── "How we act"
+         └── prism-roadmap ── "What we build"
 ```
 
 ## Overview
@@ -91,12 +91,12 @@ brew install grokify/tap/splan
 ### Go Install
 
 ```bash
-go install github.com/grokify/prism-execution/cmd/splan@latest
+go install github.com/grokify/prism-roadmap/cmd/splan@latest
 ```
 
 ### Download Binary
 
-Pre-built binaries for Linux, macOS, and Windows are available on the [releases page](https://github.com/grokify/prism-execution/releases).
+Pre-built binaries for Linux, macOS, and Windows are available on the [releases page](https://github.com/grokify/prism-roadmap/releases).
 
 ## CLI Usage
 
@@ -185,9 +185,9 @@ import (
     "encoding/json"
     "os"
 
-    "github.com/grokify/prism-execution/requirements/prd"
-    "github.com/grokify/prism-execution/requirements/mrd"
-    "github.com/grokify/prism-execution/requirements/trd"
+    "github.com/grokify/prism-roadmap/requirements/prd"
+    "github.com/grokify/prism-roadmap/requirements/mrd"
+    "github.com/grokify/prism-roadmap/requirements/trd"
 )
 
 func main() {
@@ -226,9 +226,9 @@ The `goals` package provides a framework-agnostic interface for both OKR and V2M
 
 ```go
 import (
-    "github.com/grokify/prism-execution/goals"
-    "github.com/grokify/prism-execution/goals/okr"
-    "github.com/grokify/prism-execution/goals/v2mom"
+    "github.com/grokify/prism-roadmap/goals"
+    "github.com/grokify/prism-roadmap/goals/okr"
+    "github.com/grokify/prism-roadmap/goals/v2mom"
 )
 
 // Create OKR-based goals
@@ -270,8 +270,8 @@ PRDs support framework-agnostic goals via the `ProductGoals` field:
 
 ```go
 import (
-    "github.com/grokify/prism-execution/requirements/prd"
-    "github.com/grokify/prism-execution/goals"
+    "github.com/grokify/prism-roadmap/requirements/prd"
+    "github.com/grokify/prism-roadmap/goals"
 )
 
 doc := prd.Document{
@@ -288,7 +288,7 @@ table := doc.ToSwimlaneTableWithGoals(opts)  // Uses "Objectives" or "Methods"
 The library integrates with `structured-evaluation` for standardized quality reports:
 
 ```go
-import "github.com/grokify/prism-execution/prd"
+import "github.com/grokify/prism-roadmap/prd"
 
 // Load and score a PRD
 doc, _ := prd.Load("my-product.prd.json")
