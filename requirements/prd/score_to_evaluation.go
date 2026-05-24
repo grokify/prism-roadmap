@@ -30,18 +30,20 @@ func ScoreToEvaluationReport(doc *Document, filename string) *evaluation.Evaluat
 	report.Metadata.GeneratedAt = time.Now().UTC()
 	report.Metadata.GeneratedBy = "srequirements (deterministic)"
 
-	// Convert category scores
+	// Convert category scores to categorical results
 	for _, cs := range result.CategoryScores {
-		evalCategory := evaluation.CategoryScore{
-			Category:      cs.Category,
-			Score:         cs.Score,
-			MaxScore:      cs.MaxScore,
-			Weight:        cs.Weight,
-			Justification: cs.Justification,
-			Evidence:      cs.Evidence,
+		// Convert numeric score to categorical (pass/partial/fail)
+		score := numericToScoreValue(cs.Score, cs.MaxScore)
+		cr := evaluation.NewCategoryResultWithNumeric(
+			cs.Category,
+			score,
+			cs.Score,
+			cs.Justification,
+		)
+		if cs.Evidence != "" {
+			cr.AddEvidence(cs.Evidence)
 		}
-		evalCategory.ComputeStatus()
-		report.Categories = append(report.Categories, evalCategory)
+		report.AddCategoryResult(*cr)
 	}
 
 	// Convert revision triggers to findings
@@ -60,14 +62,27 @@ func ScoreToEvaluationReport(doc *Document, filename string) *evaluation.Evaluat
 		report.Findings = append(report.Findings, finding)
 	}
 
-	// Set weighted score
-	report.WeightedScore = result.WeightedScore
-
 	// Finalize the report (computes decision, next steps, summary)
 	rerunCommand := fmt.Sprintf("srequirements prd score %s", filename)
-	report.Finalize(rerunCommand)
+	report.Finalize(nil, rerunCommand)
 
 	return report
+}
+
+// numericToScoreValue converts a numeric score to a categorical ScoreValue.
+func numericToScoreValue(score, maxScore float64) evaluation.ScoreValue {
+	if maxScore <= 0 {
+		return evaluation.ScoreFail
+	}
+	ratio := score / maxScore
+	switch {
+	case ratio >= 0.8:
+		return evaluation.ScorePass
+	case ratio >= 0.5:
+		return evaluation.ScorePartial
+	default:
+		return evaluation.ScoreFail
+	}
 }
 
 func severityFromString(s string) evaluation.Severity {

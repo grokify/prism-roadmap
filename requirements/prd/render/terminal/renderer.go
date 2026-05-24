@@ -40,7 +40,10 @@ func (r *Renderer) Render(report *evaluation.EvaluationReport) error {
 		b.WriteString(paddedLine(fmt.Sprintf("Title:    %s", truncate(report.Metadata.DocumentTitle, 60))))
 		b.WriteString("\n")
 	}
-	b.WriteString(paddedLine(fmt.Sprintf("Score:    %.1f / 10.0", report.WeightedScore)))
+	// Show pass/partial/fail counts instead of numeric score
+	resultCounts := evaluation.CountResults(report.Categories)
+	b.WriteString(paddedLine(fmt.Sprintf("Results:  %d Pass, %d Partial, %d Fail",
+		resultCounts.Pass, resultCounts.Partial, resultCounts.Fail)))
 	b.WriteString("\n")
 
 	// Decision with finding counts
@@ -132,19 +135,24 @@ func (r *Renderer) Render(report *evaluation.EvaluationReport) error {
 	return err
 }
 
-func formatCategoryLine(cs evaluation.CategoryScore) string {
-	name := categoryDisplayName(cs.Category)
+func formatCategoryLine(cr evaluation.CategoryResult) string {
+	name := categoryDisplayName(cr.Category)
 	if len(name) > 24 {
 		name = name[:21] + "..."
 	}
 
-	icon := cs.Status.Icon()
-	statusText := string(cs.Status)
+	icon := cr.Score.Icon()
+	scoreText := string(cr.Score)
 
-	justification := truncate(cs.Justification, 28)
+	reasoning := truncate(cr.Reasoning, 28)
 
-	return fmt.Sprintf("  %-24s %s %-4s %4.1f/%.0f  %s",
-		name, icon, statusText, cs.Score, cs.MaxScore, justification)
+	// Show numeric score if available, otherwise just categorical
+	if cr.HasNumericScore() {
+		return fmt.Sprintf("  %-24s %s %-7s %.1f  %s",
+			name, icon, scoreText, cr.GetNumericScore(), reasoning)
+	}
+	return fmt.Sprintf("  %-24s %s %-7s       %s",
+		name, icon, scoreText, reasoning)
 }
 
 func categoryDisplayName(category string) string {
@@ -171,18 +179,21 @@ func categoryDisplayName(category string) string {
 }
 
 func finalMessage(report *evaluation.EvaluationReport) string {
+	counts := evaluation.CountResults(report.Categories)
+	summary := fmt.Sprintf("%d/%d pass", counts.Pass, counts.Total)
+
 	switch report.Decision.Status {
 	case evaluation.DecisionPass:
-		return fmt.Sprintf("✅ %s PASSED (%.1f/10)", strings.ToUpper(report.ReviewType), report.WeightedScore)
+		return fmt.Sprintf("✅ %s PASSED (%s)", strings.ToUpper(report.ReviewType), summary)
 	case evaluation.DecisionConditional:
-		return fmt.Sprintf("⚠️ %s CONDITIONAL (%.1f/10)", strings.ToUpper(report.ReviewType), report.WeightedScore)
+		return fmt.Sprintf("⚠️ %s CONDITIONAL (%s)", strings.ToUpper(report.ReviewType), summary)
 	case evaluation.DecisionFail:
 		return fmt.Sprintf("❌ %s BLOCKED - %d issues to resolve",
 			strings.ToUpper(report.ReviewType), report.Decision.FindingCounts.BlockingCount())
 	case evaluation.DecisionHumanReview:
-		return fmt.Sprintf("👤 %s NEEDS HUMAN REVIEW (%.1f/10)", strings.ToUpper(report.ReviewType), report.WeightedScore)
+		return fmt.Sprintf("👤 %s NEEDS HUMAN REVIEW (%s)", strings.ToUpper(report.ReviewType), summary)
 	default:
-		return fmt.Sprintf("📋 %s: %.1f/10", strings.ToUpper(report.ReviewType), report.WeightedScore)
+		return fmt.Sprintf("📋 %s: %s", strings.ToUpper(report.ReviewType), summary)
 	}
 }
 

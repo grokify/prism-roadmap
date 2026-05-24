@@ -1439,22 +1439,22 @@ func formatEvaluationReportMarkdown(report *evaluation.EvaluationReport) string 
 	if report.Metadata.DocumentTitle != "" {
 		b.WriteString(fmt.Sprintf("**Title**: %s\n", report.Metadata.DocumentTitle))
 	}
-	b.WriteString(fmt.Sprintf("**Score**: %.1f / 10.0\n", report.WeightedScore))
+	counts := evaluation.CountResults(report.Categories)
+	b.WriteString(fmt.Sprintf("**Results**: %d Pass, %d Partial, %d Fail\n", counts.Pass, counts.Partial, counts.Fail))
 	b.WriteString(fmt.Sprintf("**Decision**: %s\n\n", strings.ToUpper(string(report.Decision.Status))))
 
 	// Category scores table
 	b.WriteString("## Category Scores\n\n")
-	b.WriteString("| Category | Score | Weight | Status |\n")
-	b.WriteString("|----------|-------|--------|--------|\n")
-	for _, cs := range report.Categories {
-		status := "✅"
-		if cs.Status == evaluation.ScoreStatusWarn {
-			status = "⚠️"
-		} else if cs.Status == evaluation.ScoreStatusFail {
-			status = "❌"
+	b.WriteString("| Category | Score | Status |\n")
+	b.WriteString("|----------|-------|--------|\n")
+	for _, cr := range report.Categories {
+		icon := cr.Score.Icon()
+		scoreDisplay := string(cr.Score)
+		if cr.HasNumericScore() {
+			scoreDisplay = fmt.Sprintf("%.1f (%s)", cr.GetNumericScore(), cr.Score)
 		}
-		b.WriteString(fmt.Sprintf("| %s | %.1f | %.0f%% | %s |\n",
-			cs.Category, cs.Score, cs.Weight*100, status))
+		b.WriteString(fmt.Sprintf("| %s | %s | %s |\n",
+			cr.Category, scoreDisplay, icon))
 	}
 	b.WriteString("\n")
 

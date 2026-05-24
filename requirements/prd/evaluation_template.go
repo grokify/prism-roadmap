@@ -94,7 +94,7 @@ func StandardCategories() []EvaluationCategory {
 
 // GenerateEvaluationTemplate creates an EvaluationReport template from a PRD document.
 // The template includes all standard categories plus custom sections.
-// Scores are initialized to zero - they will be filled in by the LLM judge.
+// Scores are initialized as partial - they will be filled in by the LLM judge.
 func GenerateEvaluationTemplate(doc *Document, filename string) *evaluation.EvaluationReport {
 	report := evaluation.NewEvaluationReport("prd", filename)
 
@@ -111,29 +111,24 @@ func GenerateEvaluationTemplate(doc *Document, filename string) *evaluation.Eval
 	report.Metadata.GeneratedAt = time.Now().UTC()
 	report.Metadata.GeneratedBy = "structured-requirements"
 
-	// Add standard categories
+	// Add standard categories (to be scored by LLM judge)
 	for _, cat := range StandardCategories() {
-		report.AddCategory(evaluation.CategoryScore{
-			Category:      cat.ID,
-			Score:         0, // To be filled by LLM judge
-			MaxScore:      10.0,
-			Weight:        cat.Weight,
-			Status:        evaluation.CategoryPending,
-			Justification: "", // To be filled by LLM judge
-		})
+		cr := evaluation.NewCategoryResult(
+			cat.ID,
+			evaluation.ScorePartial, // Placeholder, to be filled by LLM judge
+			"",                      // Reasoning to be filled by LLM judge
+		)
+		report.AddCategoryResult(*cr)
 	}
 
 	// Add custom sections as categories
 	for _, section := range doc.CustomSections {
-		// Custom sections get a default weight, can be adjusted
-		report.AddCategory(evaluation.CategoryScore{
-			Category:      "custom:" + section.ID,
-			Score:         0,
-			MaxScore:      10.0,
-			Weight:        0.05, // Default weight for custom sections
-			Status:        evaluation.CategoryPending,
-			Justification: "",
-		})
+		cr := evaluation.NewCategoryResult(
+			"custom:"+section.ID,
+			evaluation.ScorePartial, // Placeholder, to be filled by LLM judge
+			"",                      // Reasoning to be filled by LLM judge
+		)
+		report.AddCategoryResult(*cr)
 	}
 
 	// Set default pass criteria
@@ -143,17 +138,14 @@ func GenerateEvaluationTemplate(doc *Document, filename string) *evaluation.Eval
 }
 
 // GenerateEvaluationTemplateWithWeights creates a template with custom category weights.
-func GenerateEvaluationTemplateWithWeights(doc *Document, filename string, weights map[string]float64) *evaluation.EvaluationReport {
-	report := GenerateEvaluationTemplate(doc, filename)
-
-	// Override weights if provided
-	for i, cat := range report.Categories {
-		if w, ok := weights[cat.Category]; ok {
-			report.Categories[i].Weight = w
-		}
-	}
-
-	return report
+// Note: Weights are stored in the EvaluationCategory metadata, not in CategoryResult.
+// The new evaluation model uses categorical scores (pass/partial/fail) rather than
+// weighted numeric scores.
+func GenerateEvaluationTemplateWithWeights(doc *Document, filename string, _ map[string]float64) *evaluation.EvaluationReport {
+	// Weights are no longer stored in CategoryResult in the new API.
+	// The evaluation model now uses categorical scoring (pass/partial/fail).
+	// Return the standard template.
+	return GenerateEvaluationTemplate(doc, filename)
 }
 
 // CategoryDescriptions returns a map of category IDs to descriptions.
