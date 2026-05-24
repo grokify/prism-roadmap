@@ -18,9 +18,9 @@ The slides package converts PRD documents into Marp-compatible markdown that can
 
 ```go
 import (
-    "github.com/grokify/prism-execution/requirements/prd"
-    "github.com/grokify/prism-execution/requirements/prd/render"
-    "github.com/grokify/prism-execution/requirements/prd/render/marp"
+    "github.com/grokify/prism-roadmap/requirements/prd"
+    "github.com/grokify/prism-roadmap/requirements/prd/render"
+    "github.com/grokify/prism-roadmap/requirements/prd/render/marp"
 )
 
 // Load PRD
@@ -49,13 +49,13 @@ renderer := marp.NewPRDGoalsRenderer()
 slides, err := renderer.Render(doc, nil)
 ```
 
-### OKR Slides (from prism-execution/goals)
+### OKR Slides (from prism-roadmap/goals)
 
 ```go
 import (
-    "github.com/grokify/prism-execution/goals/okr"
-    "github.com/grokify/prism-execution/goals/okr/render"
-    okrmarp "github.com/grokify/prism-execution/goals/okr/render/marp"
+    "github.com/grokify/prism-roadmap/goals/okr"
+    "github.com/grokify/prism-roadmap/goals/okr/render"
+    okrmarp "github.com/grokify/prism-roadmap/goals/okr/render/marp"
 )
 
 // Load OKR
@@ -89,7 +89,7 @@ slides, _ := renderer.Render(doc, opts)
 ### OKR Options
 
 ```go
-import okrrender "github.com/grokify/prism-execution/goals/okr/render"
+import okrrender "github.com/grokify/prism-roadmap/goals/okr/render"
 
 opts := &okrrender.Options{
     Theme:            "default",  // "default", "corporate", "minimal"
@@ -211,9 +211,9 @@ import (
     "log"
     "os"
 
-    "github.com/grokify/prism-execution/requirements/prd"
-    "github.com/grokify/prism-execution/requirements/prd/render"
-    "github.com/grokify/prism-execution/requirements/prd/render/marp"
+    "github.com/grokify/prism-roadmap/requirements/prd"
+    "github.com/grokify/prism-roadmap/requirements/prd/render"
+    "github.com/grokify/prism-roadmap/requirements/prd/render/marp"
 )
 
 func main() {

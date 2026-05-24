@@ -30,7 +30,7 @@ type ExecView struct {
 ## Generate Executive View
 
 ```go
-import "github.com/grokify/prism-execution/requirements/prd"
+import "github.com/grokify/prism-roadmap/requirements/prd"
 
 // Score the PRD first
 scores := prd.Score(doc)

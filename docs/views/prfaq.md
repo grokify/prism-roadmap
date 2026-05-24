@@ -25,7 +25,7 @@ graph LR
 ## Generate PR/FAQ
 
 ```go
-import "github.com/grokify/prism-execution/requirements/prd"
+import "github.com/grokify/prism-roadmap/requirements/prd"
 
 prfaq := prd.GeneratePRFAQView(doc)
 

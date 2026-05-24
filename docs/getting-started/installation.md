@@ -7,7 +7,7 @@
 ## Install the Library
 
 ```bash
-go get github.com/grokify/prism-execution
+go get github.com/grokify/prism-roadmap
 ```
 
 ## Install the CLI (Optional)
@@ -15,7 +15,7 @@ go get github.com/grokify/prism-execution
 The `srequirements` CLI tool provides commands for creating and validating documents:
 
 ```bash
-go install github.com/grokify/prism-execution/cmd/srequirements@latest
+go install github.com/grokify/prism-roadmap/cmd/srequirements@latest
 ```
 
 ## Verify Installation
@@ -25,7 +25,7 @@ package main
 
 import (
     "fmt"
-    "github.com/grokify/prism-execution/requirements/prd"
+    "github.com/grokify/prism-roadmap/requirements/prd"
 )
 
 func main() {
@@ -37,7 +37,7 @@ func main() {
 ## Package Structure
 
 ```
-github.com/grokify/prism-execution/
+github.com/grokify/prism-roadmap/
 ├── prd/          # Product Requirements Document
 ├── mrd/          # Market Requirements Document
 ├── trd/          # Technical Requirements Document
@@ -48,9 +48,9 @@ github.com/grokify/prism-execution/
 
 ```go
 import (
-    "github.com/grokify/prism-execution/requirements/prd"
-    "github.com/grokify/prism-execution/requirements/mrd"
-    "github.com/grokify/prism-execution/requirements/trd"
+    "github.com/grokify/prism-roadmap/requirements/prd"
+    "github.com/grokify/prism-roadmap/requirements/mrd"
+    "github.com/grokify/prism-roadmap/requirements/trd"
 )
 ```
 
@@ -59,7 +59,7 @@ import (
 To use V2MOM and OKR integration, also install:
 
 ```bash
-go get github.com/grokify/prism-execution/goals
+go get github.com/grokify/prism-roadmap/goals
 ```
 
-The PRD package automatically includes goals types when prism-execution/goals is available.
+The PRD package automatically includes goals types when prism-roadmap/goals is available.

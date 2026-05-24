@@ -1,6 +1,6 @@
 # PRD (Product Requirements Document)
 
-The PRD is the core document type in prism-execution, defining what to build and why.
+The PRD is the core document type in prism-roadmap, defining what to build and why.
 
 ## Structure
 

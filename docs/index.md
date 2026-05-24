@@ -1,10 +1,10 @@
-# PRISM Execution
+# PRISM Roadmap
 
 A Go library for creating, validating, and transforming structured planning documents. Part of the [PRISM ecosystem](https://github.com/grokify/prism).
 
 ## Overview
 
-PRISM Execution provides typed data structures and utilities for planning documents used in product development:
+PRISM Roadmap provides typed data structures and utilities for planning documents used in product development:
 
 | Document | Purpose | Primary Audience |
 |----------|---------|------------------|
@@ -47,7 +47,7 @@ package main
 
 import (
     "fmt"
-    "github.com/grokify/prism-execution/requirements/prd"
+    "github.com/grokify/prism-roadmap/requirements/prd"
 )
 
 func main() {
@@ -73,7 +73,7 @@ func main() {
 ## Installation
 
 ```bash
-go get github.com/grokify/prism-execution
+go get github.com/grokify/prism-roadmap
 ```
 
 ## Document Relationships

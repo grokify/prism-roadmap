@@ -1,6 +1,6 @@
 # Quick Start
 
-This guide walks you through creating your first PRD with prism-execution.
+This guide walks you through creating your first PRD with prism-roadmap.
 
 ## Create a PRD
 
@@ -8,7 +8,7 @@ This guide walks you through creating your first PRD with prism-execution.
 package main
 
 import (
-    "github.com/grokify/prism-execution/requirements/prd"
+    "github.com/grokify/prism-roadmap/requirements/prd"
 )
 
 func main() {
@@ -129,7 +129,7 @@ fmt.Printf("Loaded: %s (v%s)\n", doc.Metadata.Title, doc.Metadata.Version)
 
 ```go
 import (
-    "github.com/grokify/prism-execution/goals/okr"
+    "github.com/grokify/prism-roadmap/goals/okr"
 )
 
 // Create OKR alignment

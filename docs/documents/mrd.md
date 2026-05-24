@@ -111,7 +111,7 @@ type Messaging struct {
 ## Creating an MRD
 
 ```go
-import "github.com/grokify/prism-execution/requirements/mrd"
+import "github.com/grokify/prism-roadmap/requirements/mrd"
 
 doc := &mrd.Document{
     Metadata: mrd.Metadata{

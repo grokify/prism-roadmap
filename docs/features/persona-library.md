@@ -12,7 +12,7 @@ The Persona Library allows you to maintain reusable persona definitions across m
 ## Quick Start
 
 ```go
-import "github.com/grokify/prism-execution/requirements/prd"
+import "github.com/grokify/prism-roadmap/requirements/prd"
 
 // Create a new library
 lib := prd.NewPersonaLibrary()
