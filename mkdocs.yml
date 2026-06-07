@@ -87,6 +87,16 @@ nav:
       - 6-Pager: views/six-pager.md
       - PR/FAQ: views/prfaq.md
       - Marp Slides: views/slides.md
+  - Strategic Canvases:
+      - Overview: canvas/overview.md
+      - Business Model Canvas: canvas/bmc.md
+      - Opportunity Solution Tree: canvas/ost.md
+      - Opportunity Canvas: canvas/opportunity.md
+      - Opportunity Assessment: canvas/opportunity-assessment.md
+      - OpportunitySpec: canvas/opportunity-spec.md
+      - Feature Canvas: canvas/feature.md
+      - Lean UX Canvas: canvas/leanux.md
+      - Prioritization (RICE & Kano): canvas/prioritization.md
   - Features:
       - Scoring & Validation: features/scoring.md
       - Persona Library: features/persona-library.md

@@ -68,6 +68,29 @@ This library provides comprehensive, machine-readable formats for planning docum
 
 - **Roadmap** - Standalone roadmaps with phases, deliverables, and swimlane visualization
 
+### Strategic Planning Canvases
+
+Visual canvas frameworks for strategic planning and opportunity assessment:
+
+| Canvas | Framework | Description |
+|--------|-----------|-------------|
+| **BMC** | Business Model Canvas (Osterwalder) | 9-block business model visualization |
+| **OST** | Opportunity Solution Tree (Torres) | Tree structure for outcome-driven discovery |
+| **Opportunity** | Opportunity Canvas (Patton) | 9-block opportunity assessment |
+| **OpportunityAssessment** | SVPG Opportunity Assessment (Cagan) | 10-question go/no-go evaluation |
+| **OpportunitySpec** | Merged Patton + Cagan | 12-box discovery + business case |
+| **Feature** | Feature Canvas (Efimov) | Feature definition and validation |
+| **Lean UX** | Lean UX Canvas (Gothelf) | Hypothesis-driven product design |
+
+The **OpportunitySpec** is designed for feature-level opportunities, combining Patton's discovery rigor with Cagan's business case validation. It includes a canonical template and LLM evaluation rubric in `templates/` and `rubrics/`.
+
+Each canvas supports multiple output formats:
+
+- **D2** - D2 diagram language for high-quality diagrams
+- **SVG** - Rendered vector graphics (via D2 CLI)
+- **Mermaid** - Mermaid diagram syntax for documentation
+- **Lit/JSON** - Structured data for web components
+
 The natural workflow from market to implementation:
 
 **MRD** (Market) → **PRD** (Product) → **TRD** (Technical)
@@ -282,6 +305,48 @@ doc := prd.Document{
 // Roadmap tables use correct terminology automatically
 table := doc.ToSwimlaneTableWithGoals(opts)  // Uses "Objectives" or "Methods"
 ```
+
+### Strategic Planning Canvases
+
+```go
+import (
+    "github.com/grokify/prism-roadmap/canvas"
+    "github.com/grokify/prism-roadmap/canvas/render"
+    "github.com/grokify/prism-roadmap/canvas/render/d2"
+)
+
+// Create an Opportunity Solution Tree
+ost := canvas.NewOpportunitySolutionTree("ost-1", "User Onboarding")
+ost.Outcome = canvas.OSTOutcome{
+    ID:          "O1",
+    Description: "Increase activation to 60%",
+    Opportunities: []canvas.OSTOpportunity{
+        {
+            ID:          "OP1",
+            Description: "Users don't understand value prop",
+            Solutions: []canvas.OSTSolution{
+                {ID: "S1", Description: "Interactive tutorial"},
+            },
+        },
+    },
+}
+
+// Wrap and render to D2
+c := canvas.NewOST(ost)
+d2Output, _ := render.Render(c, render.FormatD2, render.OSTOptions())
+
+// Create an Opportunity Canvas with grid layout (BMC-style)
+opp := canvas.NewOpportunityCanvas("opp-1", "Mobile App")
+opp.Users = []canvas.User{{ID: "u1", Name: "Mobile Users"}}
+opp.Problems = []canvas.Problem{{ID: "p1", Description: "Desktop-only access"}}
+opp.SolutionIdeas = []string{"Native app", "PWA"}
+
+// Render as grid (no arrows) or flow (with arrows)
+gridD2, _ := render.Render(canvas.NewOpportunity(opp), render.FormatD2, render.OpportunityGridOptions())
+flowD2, _ := render.Render(canvas.NewOpportunity(opp), render.FormatD2, render.OpportunityOptions())
+```
+
+See `examples/canvas/` for complete examples with rendered D2, SVG, Mermaid, and HTML outputs.
 
 ## Evaluation Integration
 
@@ -883,6 +948,24 @@ pandoc myproduct.md -o myproduct.pdf --pdf-engine=xelatex \
 ```
 
 Note: This requires fonts with emoji support (e.g., Noto Color Emoji, Apple Color Emoji).
+
+## Templates and Rubrics
+
+The `templates/` and `rubrics/` directories contain canonical assets for LLM-assisted document authoring and evaluation:
+
+### Templates
+
+| Template | Description |
+|----------|-------------|
+| `opportunity-spec.md` | OpportunitySpec 12-box canvas template |
+
+### Rubrics
+
+| Rubric | Description |
+|--------|-------------|
+| `opportunity-spec.rubric.yaml` | LLM-as-a-Judge evaluation criteria for OpportunitySpec |
+
+These assets are designed for integration with [multispec](https://github.com/plexusone/multispec) for structured document workflows.
 
 ## Examples
 
