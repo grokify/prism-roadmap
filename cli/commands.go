@@ -22,7 +22,7 @@ import (
 	"github.com/grokify/prism-roadmap/requirements/prd/render/terminal"
 	"github.com/grokify/prism-roadmap/requirements/trd"
 	"github.com/grokify/prism-roadmap/schema"
-	"github.com/plexusone/structured-evaluation/evaluation"
+	"github.com/plexusone/structured-evaluation/rubric"
 )
 
 // ============================================================================
@@ -1321,7 +1321,7 @@ func runPRDScore(cmd *cobra.Command, args []string) error {
 	}
 
 	// Generate evaluation report from deterministic scoring
-	report := prd.ScoreToEvaluationReport(&doc, inputFile)
+	report := prd.ScoreToRubric(&doc, inputFile)
 
 	switch strings.ToLower(prdScoreFlags.format) {
 	case "json":
@@ -1332,7 +1332,7 @@ func runPRDScore(cmd *cobra.Command, args []string) error {
 		fmt.Println(string(output))
 
 	case "markdown":
-		fmt.Print(formatEvaluationReportMarkdown(report))
+		fmt.Print(formatRubricMarkdown(report))
 
 	case "terminal", "":
 		renderer := terminal.New(os.Stdout)
@@ -1431,7 +1431,7 @@ func runPRDListSections(cmd *cobra.Command, args []string) error {
 	return nil
 }
 
-func formatEvaluationReportMarkdown(report *evaluation.EvaluationReport) string {
+func formatRubricMarkdown(report *rubric.Rubric) string {
 	var b strings.Builder
 
 	b.WriteString("# PRD Evaluation Report\n\n")
@@ -1439,7 +1439,7 @@ func formatEvaluationReportMarkdown(report *evaluation.EvaluationReport) string 
 	if report.Metadata.DocumentTitle != "" {
 		b.WriteString(fmt.Sprintf("**Title**: %s\n", report.Metadata.DocumentTitle))
 	}
-	counts := evaluation.CountResults(report.Categories)
+	counts := rubric.CountResults(report.Categories)
 	b.WriteString(fmt.Sprintf("**Results**: %d Pass, %d Partial, %d Fail\n", counts.Pass, counts.Partial, counts.Fail))
 	b.WriteString(fmt.Sprintf("**Decision**: %s\n\n", strings.ToUpper(string(report.Decision.Status))))
 
@@ -1461,8 +1461,8 @@ func formatEvaluationReportMarkdown(report *evaluation.EvaluationReport) string 
 	// Findings by severity
 	if len(report.Findings) > 0 {
 		b.WriteString("## Findings\n\n")
-		for _, sev := range evaluation.AllSeverities() {
-			sevFindings := []evaluation.Finding{}
+		for _, sev := range rubric.AllSeverities() {
+			sevFindings := []rubric.Finding{}
 			for _, f := range report.Findings {
 				if f.Severity == sev {
 					sevFindings = append(sevFindings, f)

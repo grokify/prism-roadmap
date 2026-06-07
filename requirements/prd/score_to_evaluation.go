@@ -5,17 +5,17 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/plexusone/structured-evaluation/evaluation"
+	"github.com/plexusone/structured-evaluation/rubric"
 )
 
-// ScoreToEvaluationReport converts deterministic scoring results to an EvaluationReport.
+// ScoreToRubric converts deterministic scoring results to an Rubric.
 // This allows the existing deterministic scoring to output in the standardized format
 // that can be combined with LLM-based evaluations.
-func ScoreToEvaluationReport(doc *Document, filename string) *evaluation.EvaluationReport {
+func ScoreToRubric(doc *Document, filename string) *rubric.Rubric {
 	// Get the deterministic scoring result
 	result := Score(doc)
 
-	report := evaluation.NewEvaluationReport("prd", filepath.Base(filename))
+	report := rubric.NewRubric("prd", filepath.Base(filename))
 
 	// Set metadata from document
 	if doc.Metadata.ID != "" {
@@ -34,7 +34,7 @@ func ScoreToEvaluationReport(doc *Document, filename string) *evaluation.Evaluat
 	for _, cs := range result.CategoryScores {
 		// Convert numeric score to categorical (pass/partial/fail)
 		score := numericToScoreValue(cs.Score, cs.MaxScore)
-		cr := evaluation.NewCategoryResultWithNumeric(
+		cr := rubric.NewCategoryResultWithNumeric(
 			cs.Category,
 			score,
 			cs.Score,
@@ -49,7 +49,7 @@ func ScoreToEvaluationReport(doc *Document, filename string) *evaluation.Evaluat
 	// Convert revision triggers to findings
 	for _, rt := range result.RevisionTriggers {
 		severity := severityFromString(rt.Severity)
-		finding := evaluation.Finding{
+		finding := rubric.Finding{
 			ID:             rt.IssueID,
 			Category:       rt.Category,
 			Severity:       severity,
@@ -70,31 +70,31 @@ func ScoreToEvaluationReport(doc *Document, filename string) *evaluation.Evaluat
 }
 
 // numericToScoreValue converts a numeric score to a categorical ScoreValue.
-func numericToScoreValue(score, maxScore float64) evaluation.ScoreValue {
+func numericToScoreValue(score, maxScore float64) rubric.ScoreValue {
 	if maxScore <= 0 {
-		return evaluation.ScoreFail
+		return rubric.ScoreFail
 	}
 	ratio := score / maxScore
 	switch {
 	case ratio >= 0.8:
-		return evaluation.ScorePass
+		return rubric.ScorePass
 	case ratio >= 0.5:
-		return evaluation.ScorePartial
+		return rubric.ScorePartial
 	default:
-		return evaluation.ScoreFail
+		return rubric.ScoreFail
 	}
 }
 
-func severityFromString(s string) evaluation.Severity {
+func severityFromString(s string) rubric.Severity {
 	switch s {
 	case "blocker":
-		return evaluation.SeverityCritical
+		return rubric.SeverityCritical
 	case "major":
-		return evaluation.SeverityHigh
+		return rubric.SeverityHigh
 	case "minor":
-		return evaluation.SeverityMedium
+		return rubric.SeverityMedium
 	default:
-		return evaluation.SeverityLow
+		return rubric.SeverityLow
 	}
 }
 

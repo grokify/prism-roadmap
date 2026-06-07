@@ -6,7 +6,7 @@ import (
 	"io"
 	"strings"
 
-	"github.com/plexusone/structured-evaluation/evaluation"
+	"github.com/plexusone/structured-evaluation/rubric"
 )
 
 const boxWidth = 78 // Inner width between border characters
@@ -22,7 +22,7 @@ func New(w io.Writer) *Renderer {
 }
 
 // Render outputs the evaluation report in box format.
-func (r *Renderer) Render(report *evaluation.EvaluationReport) error {
+func (r *Renderer) Render(report *rubric.Rubric) error {
 	var b strings.Builder
 
 	// Header
@@ -41,7 +41,7 @@ func (r *Renderer) Render(report *evaluation.EvaluationReport) error {
 		b.WriteString("\n")
 	}
 	// Show pass/partial/fail counts instead of numeric score
-	resultCounts := evaluation.CountResults(report.Categories)
+	resultCounts := rubric.CountResults(report.Categories)
 	b.WriteString(paddedLine(fmt.Sprintf("Results:  %d Pass, %d Partial, %d Fail",
 		resultCounts.Pass, resultCounts.Partial, resultCounts.Fail)))
 	b.WriteString("\n")
@@ -81,7 +81,7 @@ func (r *Renderer) Render(report *evaluation.EvaluationReport) error {
 		b.WriteString("\n")
 
 		// Group by severity
-		for _, sev := range evaluation.AllSeverities() {
+		for _, sev := range rubric.AllSeverities() {
 			for _, f := range report.Findings {
 				if f.Severity == sev {
 					b.WriteString(paddedLine(fmt.Sprintf("%s %-8s [%s]",
@@ -135,7 +135,7 @@ func (r *Renderer) Render(report *evaluation.EvaluationReport) error {
 	return err
 }
 
-func formatCategoryLine(cr evaluation.CategoryResult) string {
+func formatCategoryLine(cr rubric.CategoryResult) string {
 	name := categoryDisplayName(cr.Category)
 	if len(name) > 24 {
 		name = name[:21] + "..."
@@ -178,19 +178,19 @@ func categoryDisplayName(category string) string {
 	return category
 }
 
-func finalMessage(report *evaluation.EvaluationReport) string {
-	counts := evaluation.CountResults(report.Categories)
+func finalMessage(report *rubric.Rubric) string {
+	counts := rubric.CountResults(report.Categories)
 	summary := fmt.Sprintf("%d/%d pass", counts.Pass, counts.Total)
 
 	switch report.Decision.Status {
-	case evaluation.DecisionPass:
+	case rubric.DecisionPass:
 		return fmt.Sprintf("✅ %s PASSED (%s)", strings.ToUpper(report.ReviewType), summary)
-	case evaluation.DecisionConditional:
+	case rubric.DecisionConditional:
 		return fmt.Sprintf("⚠️ %s CONDITIONAL (%s)", strings.ToUpper(report.ReviewType), summary)
-	case evaluation.DecisionFail:
+	case rubric.DecisionFail:
 		return fmt.Sprintf("❌ %s BLOCKED - %d issues to resolve",
 			strings.ToUpper(report.ReviewType), report.Decision.FindingCounts.BlockingCount())
-	case evaluation.DecisionHumanReview:
+	case rubric.DecisionHumanReview:
 		return fmt.Sprintf("👤 %s NEEDS HUMAN REVIEW (%s)", strings.ToUpper(report.ReviewType), summary)
 	default:
 		return fmt.Sprintf("📋 %s: %s", strings.ToUpper(report.ReviewType), summary)
