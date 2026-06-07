@@ -7,6 +7,53 @@
   "maintainers": ["grokify", "johncwang@gmail.com"],
   "releases": [
     {
+      "version": "v0.14.0",
+      "date": "2026-06-07",
+      "highlights": [
+        { "description": "Add strategic planning canvas types (BMC, OST, Opportunity, Feature, Lean UX, Opportunity Assessment, OpportunitySpec)" },
+        { "description": "Add multi-format canvas rendering (D2, D2-to-SVG, Mermaid, Lit/JSON)" },
+        { "description": "Add RICE and Kano prioritization scoring models" },
+        { "description": "Migrate to priority-frameworks for Priority and MoSCoW types" }
+      ],
+      "added": [
+        { "description": "Add Business Model Canvas (BMC) with 9-block structure", "commit": "d6256c3" },
+        { "description": "Add Opportunity Solution Tree (OST) with tree structure for outcome-driven discovery", "commit": "d6256c3" },
+        { "description": "Add Opportunity Canvas (Patton) with 9-block opportunity assessment", "commit": "d6256c3" },
+        { "description": "Add Opportunity Assessment (Cagan/SVPG) with 10-question go/no-go evaluation", "commit": "d6256c3" },
+        { "description": "Add OpportunitySpec merging Patton + Cagan for feature-level opportunities", "commit": "d6256c3" },
+        { "description": "Add Feature Canvas (Efimov) for feature definition and validation", "commit": "d6256c3" },
+        { "description": "Add Lean UX Canvas (Gothelf) for hypothesis-driven product design", "commit": "d6256c3" },
+        { "description": "Add D2 renderer for canvas diagram generation", "commit": "d9dad74" },
+        { "description": "Add D2-to-SVG renderer (shells out to d2 CLI)", "commit": "d9dad74" },
+        { "description": "Add Mermaid renderer for documentation integration", "commit": "d9dad74" },
+        { "description": "Add Lit/JSON renderer for web component data", "commit": "d9dad74" },
+        { "description": "Add RICE scoring model (Reach, Impact, Confidence, Effort)", "commit": "67af1e8" },
+        { "description": "Add Kano model categorization (Basic, Performance, Excitement, Indifferent, Reverse)", "commit": "67af1e8" },
+        { "description": "Add canvas JSON schema definitions", "commit": "92135fb" },
+        { "description": "Add canvas markdown templates for LLM-assisted authoring", "commit": "649739d" },
+        { "description": "Add canvas evaluation rubrics for LLM-as-Judge", "commit": "b365ab4" },
+        { "description": "Add canvas example files and generator script", "commit": "9353b8b" }
+      ],
+      "changed": [
+        { "description": "Upgrade structured-evaluation to v0.7.0 with report validation and lint command", "commit": "727d9c6" },
+        { "description": "Migrate from evaluation package to rubric package (EvaluationReport → Rubric)", "commit": "ab48b15" }
+      ],
+      "refactored": [
+        { "description": "Migrate to priority-frameworks for Priority and MoSCoW types", "commit": "fccc76c" },
+        { "description": "Remove aha-go dependency", "commit": "73502fc" }
+      ],
+      "documentation": [
+        { "description": "Add canvas documentation for all 7 canvas types", "commit": "ae5639a" },
+        { "description": "Add canvas diagrams and rendered examples", "commit": "ae5639a" },
+        { "description": "Update README with Strategic Planning Canvases section", "commit": "1877666" },
+        { "description": "Update evaluation integration examples for rubric package rename", "commit": "4dbf7e8" }
+      ],
+      "dependencies": [
+        { "description": "Add github.com/grokify/priority-frameworks v0.2.0", "commit": "fccc76c" },
+        { "description": "Upgrade github.com/plexusone/structured-evaluation from v0.6.0 to v0.7.0", "commit": "727d9c6" }
+      ]
+    },
+    {
       "version": "v0.13.0",
       "date": "2026-05-24",
       "highlights": [
