@@ -353,16 +353,22 @@ See `examples/canvas/` for complete examples with rendered D2, SVG, Mermaid, and
 The library integrates with `structured-evaluation` for standardized quality reports:
 
 ```go
-import "github.com/grokify/prism-roadmap/prd"
+import "github.com/grokify/prism-roadmap/requirements/prd"
 
 // Load and score a PRD
 doc, _ := prd.Load("my-product.prd.json")
 
-// Convert deterministic scoring to EvaluationReport format
-report := prd.ScoreToEvaluationReport(doc, "my-product.prd.json")
+// Convert deterministic scoring to Rubric format
+report := prd.ScoreToRubric(doc, "my-product.prd.json")
 
 // Or generate a template for LLM judge evaluation
 template := prd.GenerateEvaluationTemplate(doc, "my-product.prd.json")
+
+// Validate the generated report (v0.7.0+)
+result := rubric.ValidateReport(report)
+if !result.Valid {
+    // Handle validation errors
+}
 ```
 
 **Standard Evaluation Categories:**
