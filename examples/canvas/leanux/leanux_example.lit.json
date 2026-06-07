@@ -1,0 +1,182 @@
+{
+  "component": "canvas-leanux",
+  "canvasType": "leanux",
+  "title": "Checkout Flow Redesign",
+  "data": {
+    "metadata": {
+      "id": "lux-checkout-flow",
+      "title": "Checkout Flow Redesign",
+      "version": "leanux/2.0",
+      "created": "0001-01-01T00:00:00Z",
+      "updated": "0001-01-01T00:00:00Z",
+      "authors": [
+        {
+          "name": "UX Team",
+          "email": "ux@example.com"
+        }
+      ],
+      "tags": [
+        "checkout",
+        "conversion",
+        "ux"
+      ]
+    },
+    "businessProblem": "Cart abandonment rate is 72%, significantly above industry average of 55%",
+    "businessOutcomes": [
+      {
+        "id": "bo-conversion",
+        "description": "Reduce cart abandonment to 55%",
+        "metric": "Cart abandonment rate",
+        "baseline": "72%",
+        "target": "55%",
+        "timeframe": "Q3 2024"
+      },
+      {
+        "id": "bo-revenue",
+        "description": "Increase checkout revenue by 20%",
+        "metric": "Revenue from completed checkouts",
+        "baseline": "$2M/month",
+        "target": "$2.4M/month"
+      }
+    ],
+    "users": [
+      {
+        "id": "user-shopper",
+        "name": "Casual Shoppers",
+        "description": "Browse and compare before purchasing",
+        "behaviors": [
+          "Multiple sessions before purchase",
+          "Price sensitive",
+          "Compare across sites"
+        ],
+        "needsGoals": [
+          "Easy comparison",
+          "Clear pricing",
+          "Quick checkout"
+        ],
+        "currentJourney": "Often abandon at shipping cost reveal"
+      },
+      {
+        "id": "user-returner",
+        "name": "Returning Customers",
+        "description": "Know what they want, expect fast checkout",
+        "behaviors": [
+          "Direct navigation",
+          "Saved payment methods",
+          "Mobile-first"
+        ],
+        "needsGoals": [
+          "One-click purchase",
+          "Remembered preferences",
+          "Fast confirmation"
+        ],
+        "currentJourney": "Frustrated by re-entering information"
+      }
+    ],
+    "userOutcomes": [
+      {
+        "id": "uo-speed",
+        "description": "Complete checkout in under 2 minutes",
+        "metric": "Time to complete checkout",
+        "baseline": "4.5 minutes",
+        "target": "\u003c 2 minutes"
+      },
+      {
+        "id": "uo-transparency",
+        "description": "Know total cost before final step",
+        "metric": "Users seeing full cost before payment",
+        "baseline": "45%",
+        "target": "100%"
+      }
+    ],
+    "solutions": [
+      {
+        "id": "sol-guest",
+        "description": "Streamlined guest checkout",
+        "type": "change",
+        "effort": "medium",
+        "confidence": "high",
+        "outcomes": [
+          "uo-speed"
+        ]
+      },
+      {
+        "id": "sol-progress",
+        "description": "Progress indicator with time estimate",
+        "type": "feature",
+        "effort": "small",
+        "confidence": "high",
+        "outcomes": [
+          "uo-speed"
+        ]
+      },
+      {
+        "id": "sol-shipping",
+        "description": "Upfront shipping calculator",
+        "type": "feature",
+        "effort": "medium",
+        "confidence": "high",
+        "outcomes": [
+          "uo-transparency"
+        ]
+      },
+      {
+        "id": "sol-express",
+        "description": "Express checkout for returning users",
+        "type": "feature",
+        "effort": "large",
+        "confidence": "medium",
+        "outcomes": [
+          "uo-speed"
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "id": "hyp-guest",
+        "weBelieve": "Offering prominent guest checkout option",
+        "willResultIn": "20% reduction in checkout abandonment",
+        "weWillKnow": "Comparing abandonment rates between guest vs account flows",
+        "validated": true,
+        "evidence": "A/B test showed 18% improvement",
+        "solutionRef": "sol-guest"
+      },
+      {
+        "id": "hyp-shipping",
+        "weBelieve": "Showing shipping costs on cart page",
+        "willResultIn": "Fewer abandonments at payment step",
+        "weWillKnow": "Drop-off rate at payment step decreases by 15%",
+        "solutionRef": "sol-shipping"
+      },
+      {
+        "id": "hyp-progress",
+        "weBelieve": "Adding progress indicator with time estimate",
+        "willResultIn": "Increased completion rate",
+        "weWillKnow": "Checkout completion improves by 10%",
+        "validated": false,
+        "evidence": "No significant difference in A/B test",
+        "solutionRef": "sol-progress"
+      }
+    ],
+    "riskiestAssumption": "Users abandon due to shipping cost surprise, not due to checkout complexity",
+    "experiment": {
+      "id": "exp-shipping-calc",
+      "name": "Shipping Calculator Test",
+      "description": "Add ZIP code-based shipping calculator to cart page",
+      "method": "A/B test",
+      "duration": "3 weeks",
+      "successCriteria": "15% reduction in payment step abandonment",
+      "status": "running",
+      "hypothesisRef": "hyp-shipping"
+    }
+  },
+  "layout": {
+    "rows": 3,
+    "columns": 3,
+    "direction": "down",
+    "grid": true
+  },
+  "theme": {
+    "name": "default"
+  }
+}

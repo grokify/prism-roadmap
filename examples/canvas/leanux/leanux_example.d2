@@ -1,0 +1,54 @@
+# Lean UX Canvas: Checkout Flow Redesign
+
+grid-rows: 3
+grid-columns: 3
+
+businessProblem: Business Problem {
+  problem: "Cart abandonment rate is 72%, significantly above industr..."
+}
+
+businessOutcomes: Business Outcomes {
+  bo_conversion: "Reduce cart abandonment to 55%"
+  bo_revenue: "Increase checkout revenue by 20%"
+}
+
+users: Users {
+  user_shopper: "Casual Shoppers"
+  user_returner: "Returning Customers"
+}
+
+userOutcomes: User Outcomes {
+  uo_speed: "Complete checkout in under 2 minutes"
+  uo_transparency: "Know total cost before final step"
+}
+
+solutions: Solutions {
+  sol_guest: "Streamlined guest checkout"
+  sol_progress: "Progress indicator with time estimate"
+  sol_shipping: "Upfront shipping calculator"
+  sol_express: "Express checkout for returning users"
+}
+
+hypotheses: Hypotheses {
+  hyp_guest: "We believe Offering prominent guest checkout option [validated]"
+  hyp_shipping: "We believe Showing shipping costs on cart page"
+  hyp_progress: "We believe Adding progress indicator with time e... [invalidated]"
+}
+
+riskiestAssumption: Riskiest Assumption {
+  assumption: "Users abandon due to shipping cost surprise, not due to c..."
+}
+
+experiment: Experiment {
+  description: "Add ZIP code-based shipping calculator to cart ..."
+  method: "A/B test"
+  status: "running"
+}
+
+# Flow
+businessProblem -> businessOutcomes
+users -> userOutcomes
+userOutcomes -> solutions
+solutions -> hypotheses
+hypotheses -> riskiestAssumption
+riskiestAssumption -> experiment

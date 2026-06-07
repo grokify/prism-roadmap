@@ -1,0 +1,145 @@
+{
+  "component": "canvas-ost",
+  "canvasType": "ost",
+  "title": "User Activation OST",
+  "data": {
+    "metadata": {
+      "id": "ost-user-activation",
+      "title": "User Activation OST",
+      "version": "ost/1.0",
+      "created": "0001-01-01T00:00:00Z",
+      "updated": "0001-01-01T00:00:00Z",
+      "authors": [
+        {
+          "name": "Growth Team",
+          "email": "growth@example.com"
+        }
+      ],
+      "tags": [
+        "activation",
+        "onboarding",
+        "growth"
+      ]
+    },
+    "outcome": {
+      "id": "outcome-activation",
+      "description": "Increase user activation rate to 60%",
+      "metric": "% of signups completing core action within 7 days",
+      "baseline": "35%",
+      "target": "60%",
+      "timeframe": "Q2 2024",
+      "opportunities": [
+        {
+          "id": "opp-value-unclear",
+          "description": "Users don't understand the value proposition",
+          "source": "User interviews",
+          "frequency": "Mentioned by 8/10 churned users",
+          "priority": 1,
+          "solutions": [
+            {
+              "id": "sol-tutorial",
+              "description": "Interactive onboarding tutorial",
+              "type": "feature",
+              "effort": "medium",
+              "impact": "high",
+              "status": "validated",
+              "experiments": [
+                {
+                  "id": "exp-tutorial-prototype",
+                  "hypothesis": "Interactive tutorial increases activation by 15%",
+                  "method": "prototype",
+                  "duration": "2 weeks",
+                  "participants": "50 users",
+                  "status": "completed",
+                  "result": "success",
+                  "learning": "Users prefer guided tours over videos"
+                }
+              ]
+            },
+            {
+              "id": "sol-personalization",
+              "description": "Personalized onboarding based on use case",
+              "type": "feature",
+              "effort": "large",
+              "impact": "high",
+              "status": "testing",
+              "experiments": [
+                {
+                  "id": "exp-persona-flow",
+                  "hypothesis": "Persona-based flows increase engagement 20%",
+                  "method": "A/B test",
+                  "duration": "3 weeks",
+                  "status": "running"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "opp-setup-complex",
+          "description": "Initial setup is too complex",
+          "source": "Analytics + support tickets",
+          "frequency": "40% drop-off at setup step",
+          "priority": 2,
+          "solutions": [
+            {
+              "id": "sol-wizard",
+              "description": "Step-by-step setup wizard",
+              "type": "improvement",
+              "effort": "small",
+              "impact": "medium",
+              "status": "proposed",
+              "experiments": [
+                {
+                  "id": "exp-wizard-mockup",
+                  "hypothesis": "Wizard reduces setup time by 50%",
+                  "method": "fake-door",
+                  "status": "planned"
+                }
+              ]
+            },
+            {
+              "id": "sol-templates",
+              "description": "Pre-built templates for common use cases",
+              "type": "feature",
+              "effort": "medium",
+              "impact": "medium",
+              "status": "proposed",
+              "experiments": []
+            }
+          ]
+        },
+        {
+          "id": "opp-no-quick-win",
+          "description": "Users don't experience quick win",
+          "source": "Cohort analysis",
+          "frequency": "Users who see value in day 1 have 3x retention",
+          "priority": 3,
+          "solutions": [
+            {
+              "id": "sol-sample-data",
+              "description": "Pre-populated sample data",
+              "type": "quick-win",
+              "effort": "small",
+              "impact": "medium",
+              "status": "building",
+              "experiments": []
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "layout": {
+    "direction": "down"
+  },
+  "theme": {
+    "name": "default",
+    "colors": {
+      "experiment": "#F3E5F5",
+      "opportunity": "#E3F2FD",
+      "outcome": "#E8F5E9",
+      "solution": "#FFF3E0"
+    }
+  }
+}

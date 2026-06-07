@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ost Canvas Example</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+            --border: #e2e8f0;
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+        }
+        .container { max-width: 1400px; margin: 0 auto; }
+        h1 { color: var(--primary); margin-bottom: 10px; }
+        .subtitle { color: #64748b; margin-bottom: 30px; }
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 10px;
+        }
+        .tab {
+            padding: 10px 20px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 8px 8px 0 0;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        .tab.active { background: var(--primary); color: white; border-color: var(--primary); }
+        .panel { display: none; }
+        .panel.active { display: block; }
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .mermaid { text-align: center; }
+        pre {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .data-card h3 { margin-top: 0; color: var(--primary); }
+        .data-card ul { margin: 0; padding-left: 20px; }
+        .data-card li { margin-bottom: 8px; }
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .badge-validated { background: #dcfce7; color: #166534; }
+        .badge-running { background: #fef3c7; color: #92400e; }
+        .badge-must { background: #fee2e2; color: #991b1b; }
+        .badge-should { background: #dbeafe; color: #1e40af; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ost Canvas</h1>
+        <p class="subtitle">Interactive canvas visualization with multiple rendering formats</p>
+
+        <div class="tabs">
+            <div class="tab active" onclick="showTab('diagram')">Diagram</div>
+            <div class="tab" onclick="showTab('data')">Data View</div>
+            <div class="tab" onclick="showTab('mermaid')">Mermaid Code</div>
+            <div class="tab" onclick="showTab('json')">JSON</div>
+        </div>
+
+        <div id="diagram" class="panel active">
+            <div class="card">
+                <div class="mermaid">
+graph TD
+    subgraph OST["User Activation OST"]
+    outcome_activation["Increase user activation rate to 60%"]
+    opp_value_unclear["Users don't understand the value prop..."]
+    outcome_activation --> opp_value_unclear
+    sol_tutorial["Interactive onboarding tutorial\n[validated]"]
+    opp_value_unclear --> sol_tutorial
+    exp_tutorial_prototype{{"Interactive tutorial increa...\n[completed]"}}
+    sol_tutorial --> exp_tutorial_prototype
+    sol_personalization["Personalized onboarding based on...\n[testing]"]
+    opp_value_unclear --> sol_personalization
+    exp_persona_flow{{"Persona-based flows increas...\n[running]"}}
+    sol_personalization --> exp_persona_flow
+    opp_setup_complex["Initial setup is too complex"]
+    outcome_activation --> opp_setup_complex
+    sol_wizard["Step-by-step setup wizard\n[proposed]"]
+    opp_setup_complex --> sol_wizard
+    exp_wizard_mockup{{"Wizard reduces setup time b...\n[planned]"}}
+    sol_wizard --> exp_wizard_mockup
+    sol_templates["Pre-built templates for common u...\n[proposed]"]
+    opp_setup_complex --> sol_templates
+    opp_no_quick_win["Users don't experience quick win"]
+    outcome_activation --> opp_no_quick_win
+    sol_sample_data["Pre-populated sample data\n[building]"]
+    opp_no_quick_win --> sol_sample_data
+    end
+    style OST fill:#f9f9f9
+    style outcome_activation fill:#E8F5E9
+
+                </div>
+            </div>
+        </div>
+
+        <div id="data" class="panel">
+            <div class="card">
+                <div id="data-view"></div>
+            </div>
+        </div>
+
+        <div id="mermaid" class="panel">
+            <div class="card">
+                <pre><code>graph TD
+    subgraph OST["User Activation OST"]
+    outcome_activation["Increase user activation rate to 60%"]
+    opp_value_unclear["Users don't understand the value prop..."]
+    outcome_activation --> opp_value_unclear
+    sol_tutorial["Interactive onboarding tutorial\n[validated]"]
+    opp_value_unclear --> sol_tutorial
+    exp_tutorial_prototype{{"Interactive tutorial increa...\n[completed]"}}
+    sol_tutorial --> exp_tutorial_prototype
+    sol_personalization["Personalized onboarding based on...\n[testing]"]
+    opp_value_unclear --> sol_personalization
+    exp_persona_flow{{"Persona-based flows increas...\n[running]"}}
+    sol_personalization --> exp_persona_flow
+    opp_setup_complex["Initial setup is too complex"]
+    outcome_activation --> opp_setup_complex
+    sol_wizard["Step-by-step setup wizard\n[proposed]"]
+    opp_setup_complex --> sol_wizard
+    exp_wizard_mockup{{"Wizard reduces setup time b...\n[planned]"}}
+    sol_wizard --> exp_wizard_mockup
+    sol_templates["Pre-built templates for common u...\n[proposed]"]
+    opp_setup_complex --> sol_templates
+    opp_no_quick_win["Users don't experience quick win"]
+    outcome_activation --> opp_no_quick_win
+    sol_sample_data["Pre-populated sample data\n[building]"]
+    opp_no_quick_win --> sol_sample_data
+    end
+    style OST fill:#f9f9f9
+    style outcome_activation fill:#E8F5E9
+</code></pre>
+            </div>
+        </div>
+
+        <div id="json" class="panel">
+            <div class="card">
+                <pre><code id="json-view"></code></pre>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'default' });
+
+        const canvasData = {
+  "component": "canvas-ost",
+  "canvasType": "ost",
+  "title": "User Activation OST",
+  "data": {
+    "metadata": {
+      "id": "ost-user-activation",
+      "title": "User Activation OST",
+      "version": "ost/1.0",
+      "created": "0001-01-01T00:00:00Z",
+      "updated": "0001-01-01T00:00:00Z",
+      "authors": [
+        {
+          "name": "Growth Team",
+          "email": "growth@example.com"
+        }
+      ],
+      "tags": [
+        "activation",
+        "onboarding",
+        "growth"
+      ]
+    },
+    "outcome": {
+      "id": "outcome-activation",
+      "description": "Increase user activation rate to 60%",
+      "metric": "% of signups completing core action within 7 days",
+      "baseline": "35%",
+      "target": "60%",
+      "timeframe": "Q2 2024",
+      "opportunities": [
+        {
+          "id": "opp-value-unclear",
+          "description": "Users don't understand the value proposition",
+          "source": "User interviews",
+          "frequency": "Mentioned by 8/10 churned users",
+          "priority": 1,
+          "solutions": [
+            {
+              "id": "sol-tutorial",
+              "description": "Interactive onboarding tutorial",
+              "type": "feature",
+              "effort": "medium",
+              "impact": "high",
+              "status": "validated",
+              "experiments": [
+                {
+                  "id": "exp-tutorial-prototype",
+                  "hypothesis": "Interactive tutorial increases activation by 15%",
+                  "method": "prototype",
+                  "duration": "2 weeks",
+                  "participants": "50 users",
+                  "status": "completed",
+                  "result": "success",
+                  "learning": "Users prefer guided tours over videos"
+                }
+              ]
+            },
+            {
+              "id": "sol-personalization",
+              "description": "Personalized onboarding based on use case",
+              "type": "feature",
+              "effort": "large",
+              "impact": "high",
+              "status": "testing",
+              "experiments": [
+                {
+                  "id": "exp-persona-flow",
+                  "hypothesis": "Persona-based flows increase engagement 20%",
+                  "method": "A/B test",
+                  "duration": "3 weeks",
+                  "status": "running"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "opp-setup-complex",
+          "description": "Initial setup is too complex",
+          "source": "Analytics + support tickets",
+          "frequency": "40% drop-off at setup step",
+          "priority": 2,
+          "solutions": [
+            {
+              "id": "sol-wizard",
+              "description": "Step-by-step setup wizard",
+              "type": "improvement",
+              "effort": "small",
+              "impact": "medium",
+              "status": "proposed",
+              "experiments": [
+                {
+                  "id": "exp-wizard-mockup",
+                  "hypothesis": "Wizard reduces setup time by 50%",
+                  "method": "fake-door",
+                  "status": "planned"
+                }
+              ]
+            },
+            {
+              "id": "sol-templates",
+              "description": "Pre-built templates for common use cases",
+              "type": "feature",
+              "effort": "medium",
+              "impact": "medium",
+              "status": "proposed",
+              "experiments": []
+            }
+          ]
+        },
+        {
+          "id": "opp-no-quick-win",
+          "description": "Users don't experience quick win",
+          "source": "Cohort analysis",
+          "frequency": "Users who see value in day 1 have 3x retention",
+          "priority": 3,
+          "solutions": [
+            {
+              "id": "sol-sample-data",
+              "description": "Pre-populated sample data",
+              "type": "quick-win",
+              "effort": "small",
+              "impact": "medium",
+              "status": "building",
+              "experiments": []
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "layout": {
+    "direction": "down"
+  },
+  "theme": {
+    "name": "default",
+    "colors": {
+      "experiment": "#F3E5F5",
+      "opportunity": "#E3F2FD",
+      "outcome": "#E8F5E9",
+      "solution": "#FFF3E0"
+    }
+  }
+};
+
+        function showTab(name) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById(name).classList.add('active');
+        }
+
+        // Render JSON
+        document.getElementById('json-view').textContent = JSON.stringify(canvasData, null, 2);
+
+        // Render data view
+        function renderDataView() {
+            const container = document.getElementById('data-view');
+            const data = canvasData.data;
+            if (!data) return;
+
+            let html = '<div class="grid">';
+
+            // Generic renderer based on canvas type
+            const type = canvasData.canvasType;
+
+            if (type === 'bmc' && data.metadata) {
+                html += renderSection('Customer Segments', data.customerSegments?.map(s => s.name + ': ' + (s.description || '')) || []);
+                html += renderSection('Value Propositions', data.valuePropositions?.map(v => v.description) || []);
+                html += renderSection('Key Resources', data.keyResources?.map(r => r.name + ' (' + r.type + ')') || []);
+                html += renderSection('Key Partners', data.keyPartnerships?.map(p => p.partner) || []);
+                html += renderSection('Revenue Streams', data.revenueStreams?.map(r => r.description) || []);
+                html += renderSection('Cost Structure', data.costStructure?.map(c => c.description) || []);
+            } else if (type === 'ost' && data.outcome) {
+                html += '<div class="data-card"><h3>Outcome</h3><p>' + data.outcome.description + '</p>';
+                if (data.outcome.metric) html += '<p><strong>Metric:</strong> ' + data.outcome.metric + '</p>';
+                if (data.outcome.target) html += '<p><strong>Target:</strong> ' + data.outcome.target + '</p>';
+                html += '</div>';
+                for (const opp of (data.outcome.opportunities || [])) {
+                    html += '<div class="data-card"><h3>Opportunity: ' + opp.description.slice(0, 50) + '</h3>';
+                    html += '<ul>';
+                    for (const sol of (opp.solutions || [])) {
+                        html += '<li>' + sol.description + ' <span class="badge badge-' + sol.status + '">' + sol.status + '</span></li>';
+                    }
+                    html += '</ul></div>';
+                }
+            } else if (type === 'opportunity') {
+                html += renderSection('Problems', data.problems?.map(p => p.description) || []);
+                html += renderSection('Users', data.users?.map(u => u.name + ': ' + (u.description || '')) || []);
+                html += '<div class="data-card"><h3>Value Proposition</h3><p>' + (data.valueProposition?.statement || '') + '</p></div>';
+                html += renderSection('User Value', data.userValue || []);
+                html += renderSection('Business Value', data.businessValue || []);
+            } else if (type === 'feature') {
+                html += '<div class="data-card" style="grid-column: 1 / -1"><h3>Idea Statement</h3><p>' + (data.ideaStatement || '') + '</p></div>';
+                html += renderSection('Situations', data.situations?.map(s => s.description) || []);
+                html += renderSection('Problems', data.problems?.map(p => p.description) || []);
+                html += renderSection('Value', data.value?.map(v => v.description) || []);
+                html += renderBadgedSection('Capabilities', data.capabilities?.map(c => ({text: c.description, badge: c.priority, class: 'badge-' + c.priority})) || []);
+                html += renderSection('Restrictions', data.restrictions || []);
+                html += renderSection('Limitations', data.limitations || []);
+            } else if (type === 'leanux') {
+                html += '<div class="data-card" style="grid-column: 1 / -1"><h3>Business Problem</h3><p>' + (data.businessProblem || '') + '</p></div>';
+                html += renderSection('Business Outcomes', data.businessOutcomes?.map(o => o.description + ' (' + o.target + ')') || []);
+                html += renderSection('Users', data.users?.map(u => u.name) || []);
+                html += renderSection('User Outcomes', data.userOutcomes?.map(o => o.description) || []);
+                html += renderSection('Solutions', data.solutions?.map(s => s.description) || []);
+                html += renderBadgedSection('Hypotheses', data.hypotheses?.map(h => ({
+                    text: h.weBelieve,
+                    badge: h.validated === true ? 'validated' : (h.validated === false ? 'invalidated' : 'untested'),
+                    class: 'badge-' + (h.validated === true ? 'validated' : 'running')
+                })) || []);
+            }
+
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        function renderSection(title, items) {
+            if (!items || items.length === 0) return '';
+            return '<div class="data-card"><h3>' + title + '</h3><ul>' +
+                items.map(i => '<li>' + i + '</li>').join('') + '</ul></div>';
+        }
+
+        function renderBadgedSection(title, items) {
+            if (!items || items.length === 0) return '';
+            return '<div class="data-card"><h3>' + title + '</h3><ul>' +
+                items.map(i => '<li>' + i.text + ' <span class="badge ' + i.class + '">' + i.badge + '</span></li>').join('') + '</ul></div>';
+        }
+
+        renderDataView();
+    </script>
+</body>
+</html>

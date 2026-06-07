@@ -1,0 +1,189 @@
+{
+  "component": "canvas-opportunity",
+  "canvasType": "opportunity",
+  "title": "Mobile App Opportunity",
+  "data": {
+    "metadata": {
+      "id": "opp-mobile-app",
+      "title": "Mobile App Opportunity",
+      "version": "opportunity/1.0",
+      "created": "0001-01-01T00:00:00Z",
+      "updated": "0001-01-01T00:00:00Z",
+      "authors": [
+        {
+          "name": "Product Strategy",
+          "email": "strategy@example.com"
+        }
+      ],
+      "tags": [
+        "mobile",
+        "expansion",
+        "b2c"
+      ]
+    },
+    "users": [
+      {
+        "id": "user-manager",
+        "name": "Team Managers",
+        "description": "Manage remote teams and need quick updates",
+        "goals": [
+          "Stay informed on team progress",
+          "Approve requests quickly"
+        ],
+        "context": "On the go, between meetings"
+      },
+      {
+        "id": "user-exec",
+        "name": "Executives",
+        "description": "Need high-level dashboards and alerts",
+        "goals": [
+          "Monitor KPIs",
+          "Make quick decisions"
+        ],
+        "context": "Travel frequently, limited desktop time"
+      }
+    ],
+    "problems": [
+      {
+        "id": "prob-desktop-only",
+        "description": "Users can only access the platform from desktop",
+        "frequency": "Daily pain point for 70% of users",
+        "severity": "high",
+        "evidence": "Top feature request in surveys"
+      },
+      {
+        "id": "prob-real-time",
+        "description": "Users miss time-sensitive notifications",
+        "frequency": "Multiple times per day",
+        "severity": "medium",
+        "evidence": "Support tickets about missed alerts"
+      }
+    ],
+    "solutionIdeas": [
+      "Native iOS and Android apps",
+      "Progressive Web App (PWA)",
+      "Mobile-optimized web experience"
+    ],
+    "currentSolutions": [
+      {
+        "id": "curr-email",
+        "name": "Email notifications",
+        "description": "Current alert system",
+        "strengths": [
+          "Works everywhere",
+          "Familiar"
+        ],
+        "weaknesses": [
+          "Cluttered inbox",
+          "No context",
+          "Can't take action"
+        ],
+        "type": "workaround"
+      },
+      {
+        "id": "curr-responsive",
+        "name": "Responsive web",
+        "description": "Mobile browser access",
+        "strengths": [
+          "Available now",
+          "Full features"
+        ],
+        "weaknesses": [
+          "Slow",
+          "Poor UX",
+          "No offline"
+        ],
+        "type": "internal"
+      }
+    ],
+    "userValue": [
+      "Access critical data anywhere",
+      "Respond to requests 10x faster",
+      "Never miss important updates"
+    ],
+    "adoptionStrategy": [
+      "In-app prompts to download mobile app",
+      "QR code in web dashboard",
+      "Email campaign to existing users"
+    ],
+    "userMetrics": [
+      "Mobile app downloads",
+      "Daily active mobile users",
+      "Time to complete key actions"
+    ],
+    "businessProblem": "Losing customers to mobile-first competitors; 40% of users cite lack of mobile access as top frustration",
+    "businessMetrics": [
+      "Mobile DAU/MAU ratio",
+      "Customer retention rate",
+      "Mobile-driven revenue"
+    ],
+    "budget": {
+      "timeEstimate": "6 months",
+      "teamSize": "4 engineers, 1 designer, 1 PM",
+      "costEstimate": "$800K",
+      "resourcesNeeded": "Mobile expertise, design system",
+      "constraints": "Must use existing backend APIs"
+    },
+    "valueProposition": {
+      "statement": "Native mobile app for on-the-go access and real-time notifications",
+      "differentiator": "Offline-first with intelligent sync",
+      "keyBenefits": [
+        "Instant notifications",
+        "Quick actions",
+        "Offline access"
+      ]
+    },
+    "businessValue": [
+      "Increase daily active users by 40%",
+      "Reduce churn from mobile-first competitors",
+      "New revenue from mobile-only tier"
+    ],
+    "assumptions": [
+      {
+        "id": "assum-demand",
+        "description": "Users will adopt mobile app within 30 days",
+        "validated": true,
+        "evidence": "Beta waitlist has 5000+ signups"
+      },
+      {
+        "id": "assum-features",
+        "description": "80% of use cases can be covered with 20% of features",
+        "validated": false,
+        "riskLevel": "high"
+      },
+      {
+        "id": "assum-offline",
+        "description": "Offline sync is technically feasible",
+        "validated": true,
+        "evidence": "POC completed successfully"
+      }
+    ],
+    "risks": [
+      {
+        "id": "risk-dev-time",
+        "description": "Development takes longer than expected",
+        "category": "technical",
+        "probability": "medium",
+        "impact": "high",
+        "mitigation": "Start with iOS only, MVP scope"
+      },
+      {
+        "id": "risk-adoption",
+        "description": "Users don't switch from web",
+        "category": "market",
+        "probability": "low",
+        "impact": "high",
+        "mitigation": "In-app prompts, exclusive features"
+      }
+    ]
+  },
+  "layout": {
+    "rows": 3,
+    "columns": 3,
+    "direction": "down",
+    "grid": true
+  },
+  "theme": {
+    "name": "default"
+  }
+}

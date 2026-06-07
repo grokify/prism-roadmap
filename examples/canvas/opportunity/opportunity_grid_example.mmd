@@ -1,0 +1,59 @@
+graph TB
+    subgraph OC["Mobile App Opportunity"]
+    direction LR
+    subgraph ROW1[" "]
+    direction LR
+    subgraph USERS["Users & Customers"]
+    user_manager["Team Managers"]
+    user_exec["Executives"]
+    end
+    subgraph PROBLEMS["Problems"]
+    prob_desktop_only["Users can only access the p..."]
+    prob_real_time["Users miss time-sensitive n..."]
+    end
+    subgraph SOLUTIONS["Solution Ideas"]
+    si1["Native iOS and Android apps"]
+    si2["Progressive Web App (PWA)"]
+    si3["Mobile-optimized web experi..."]
+    end
+    end
+    subgraph ROW2[" "]
+    direction LR
+    subgraph CURRENT["Solutions Today"]
+    curr_email["Email notifications"]
+    curr_responsive["Responsive web"]
+    end
+    subgraph UVAL["User Value"]
+    uv1["Access critical data anywhere"]
+    uv2["Respond to requests 10x faster"]
+    uv3["Never miss important updates"]
+    end
+    subgraph ADOPT["Adoption Strategy"]
+    as1["In-app prompts to download ..."]
+    as2["QR code in web dashboard"]
+    as3["Email campaign to existing ..."]
+    end
+    end
+    subgraph ROW3[" "]
+    direction LR
+    subgraph UMET["User Metrics"]
+    um1["Mobile app downloads"]
+    um2["Daily active mobile users"]
+    um3["Time to complete key actions"]
+    end
+    subgraph BPROB["Business Problem"]
+    bp["Losing customers to mobile-first..."]
+    end
+    subgraph BMET["Business Metrics"]
+    bm1["Mobile DAU/MAU ratio"]
+    bm2["Customer retention rate"]
+    bm3["Mobile-driven revenue"]
+    end
+    end
+    subgraph BUDGET["Budget"]
+    budget["Time: 6 months | Team: 4 engineers, 1 designer, 1 PM | Cost: $800K"]
+    end
+    end
+    style ROW1 fill:none,stroke:none
+    style ROW2 fill:none,stroke:none
+    style ROW3 fill:none,stroke:none

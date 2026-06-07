@@ -1,0 +1,84 @@
+# Opportunity Solution Tree: User Activation OST
+
+direction: down
+
+outcome_activation: {
+  label: "Increase user activation rate to 60%"
+  style.fill: "#E8F5E9"
+  metric: "% of signups completing core action within 7 days"
+}
+
+opp_value_unclear: {
+  label: "Users don't understand the value proposition"
+  style.fill: "#E3F2FD"
+}
+outcome_activation -> opp_value_unclear
+
+sol_tutorial: {
+  label: "Interactive onboarding tutorial"
+  style.fill: "#FFF3E0"
+  status: "validated"
+}
+opp_value_unclear -> sol_tutorial
+
+exp_tutorial_prototype: {
+  label: "Interactive tutorial increases activa..."
+  style.fill: "#F3E5F5"
+  status: "completed"
+}
+sol_tutorial -> exp_tutorial_prototype
+
+sol_personalization: {
+  label: "Personalized onboarding based on use case"
+  style.fill: "#FFF3E0"
+  status: "testing"
+}
+opp_value_unclear -> sol_personalization
+
+exp_persona_flow: {
+  label: "Persona-based flows increase engageme..."
+  style.fill: "#F3E5F5"
+  status: "running"
+}
+sol_personalization -> exp_persona_flow
+
+opp_setup_complex: {
+  label: "Initial setup is too complex"
+  style.fill: "#E3F2FD"
+}
+outcome_activation -> opp_setup_complex
+
+sol_wizard: {
+  label: "Step-by-step setup wizard"
+  style.fill: "#FFF3E0"
+  status: "proposed"
+}
+opp_setup_complex -> sol_wizard
+
+exp_wizard_mockup: {
+  label: "Wizard reduces setup time by 50%"
+  style.fill: "#F3E5F5"
+  status: "planned"
+}
+sol_wizard -> exp_wizard_mockup
+
+sol_templates: {
+  label: "Pre-built templates for common use cases"
+  style.fill: "#FFF3E0"
+  status: "proposed"
+}
+opp_setup_complex -> sol_templates
+
+opp_no_quick_win: {
+  label: "Users don't experience quick win"
+  style.fill: "#E3F2FD"
+}
+outcome_activation -> opp_no_quick_win
+
+sol_sample_data: {
+  label: "Pre-populated sample data"
+  style.fill: "#FFF3E0"
+  status: "building"
+}
+opp_no_quick_win -> sol_sample_data
+

@@ -1,0 +1,28 @@
+graph LR
+    subgraph BMC["SaaS Analytics Platform"]
+    direction TB
+    subgraph KP["Key Partners"]
+    kp_cloud["AWS"]
+    kp_data["Data Providers"]
+    end
+    subgraph KA["Key Activities"]
+    ka_development["Platform Development"]
+    ka_support["Customer Support"]
+    end
+    subgraph VP["Value Propositions"]
+    vp_insights["Real-time business insights"]
+    vp_integration["Seamless integrations"]
+    end
+    subgraph CR["Customer Relationships"]
+    cr_dedicated["dedicated"]
+    cr_self_service["self-service"]
+    end
+    subgraph CS["Customer Segments"]
+    cs_enterprise["Enterprise"]
+    cs_smb["SMB"]
+    end
+    KP --> KA
+    KA --> VP
+    VP --> CR
+    CR --> CS
+    end

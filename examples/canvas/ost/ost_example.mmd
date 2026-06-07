@@ -1,0 +1,28 @@
+graph TD
+    subgraph OST["User Activation OST"]
+    outcome_activation["Increase user activation rate to 60%"]
+    opp_value_unclear["Users don't understand the value prop..."]
+    outcome_activation --> opp_value_unclear
+    sol_tutorial["Interactive onboarding tutorial\n[validated]"]
+    opp_value_unclear --> sol_tutorial
+    exp_tutorial_prototype{{"Interactive tutorial increa...\n[completed]"}}
+    sol_tutorial --> exp_tutorial_prototype
+    sol_personalization["Personalized onboarding based on...\n[testing]"]
+    opp_value_unclear --> sol_personalization
+    exp_persona_flow{{"Persona-based flows increas...\n[running]"}}
+    sol_personalization --> exp_persona_flow
+    opp_setup_complex["Initial setup is too complex"]
+    outcome_activation --> opp_setup_complex
+    sol_wizard["Step-by-step setup wizard\n[proposed]"]
+    opp_setup_complex --> sol_wizard
+    exp_wizard_mockup{{"Wizard reduces setup time b...\n[planned]"}}
+    sol_wizard --> exp_wizard_mockup
+    sol_templates["Pre-built templates for common u...\n[proposed]"]
+    opp_setup_complex --> sol_templates
+    opp_no_quick_win["Users don't experience quick win"]
+    outcome_activation --> opp_no_quick_win
+    sol_sample_data["Pre-populated sample data\n[building]"]
+    opp_no_quick_win --> sol_sample_data
+    end
+    style OST fill:#f9f9f9
+    style outcome_activation fill:#E8F5E9

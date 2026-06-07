@@ -1,0 +1,30 @@
+graph TB
+    subgraph OC["Mobile App Opportunity"]
+    subgraph PS["Problem Space"]
+    prob_desktop_only["Users can only access the platfo..."]
+    prob_real_time["Users miss time-sensitive notifi..."]
+    user_manager(("Team Managers"))
+    user_exec(("Executives"))
+    end
+    VP["Native mobile app for on-the-go acces..."]
+    subgraph UV["User Value"]
+    uv1["Access critical data anywhere"]
+    uv2["Respond to requests 10x faster"]
+    uv3["Never miss important updates"]
+    end
+    subgraph BV["Business Value"]
+    bv1["Increase daily active users..."]
+    bv2["Reduce churn from mobile-fi..."]
+    bv3["New revenue from mobile-onl..."]
+    end
+    subgraph VAL["Validation"]
+    assum_demand(["Users will adopt mobile app..."])
+    assum_features["80% of use cases can be cov..."]
+    assum_offline(["Offline sync is technically..."])
+    end
+    PS --> VP
+    VP --> UV
+    VP --> BV
+    UV --> VAL
+    BV --> VAL
+    end

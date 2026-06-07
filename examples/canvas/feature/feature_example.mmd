@@ -1,0 +1,39 @@
+graph TB
+    subgraph FC["Export Reports Feature"]
+    IDEA["Enable users to export custom reports in multiple formats for external sharing and compliance"]
+    subgraph SIT["Situations"]
+    sit_board_meeting["Preparing materials for board me..."]
+    sit_audit["Providing data for external audits"]
+    sit_stakeholder["Sharing progress with external s..."]
+    end
+    subgraph PROB["Problems"]
+    prob_manual["Manual copy-paste to create exte..."]
+    prob_formatting["Reports lose formatting when copied"]
+    prob_no_pdf["No way to create professional PD..."]
+    end
+    subgraph VAL["Value"]
+    val_time["Save 2-4 hours per report"]
+    val_quality["Professional, branded reports"]
+    val_compliance["Audit-ready exports with timestamps"]
+    end
+    subgraph CAP["Capabilities"]
+    cap_format["Export to PDF, Excel, and C... [must]"]
+    cap_branding["Apply company branding to e... [must]"]
+    cap_schedule["Schedule automated exports [should]"]
+    cap_template["Save export templates [should]"]
+    cap_watermark["Add confidentiality watermarks [could]"]
+    end
+    subgraph CON["Constraints"]
+    r1["Must comply with data reten..."]
+    r2["Cannot export data user doe..."]
+    r3["Must include audit trail fo..."]
+    l1["PDF generation limited to 1..."]
+    l2["Excel export limited to 1M ..."]
+    l3["Custom fonts not supported ..."]
+    end
+    IDEA --> SIT
+    SIT --> PROB
+    PROB --> VAL
+    VAL --> CAP
+    CAP --> CON
+    end

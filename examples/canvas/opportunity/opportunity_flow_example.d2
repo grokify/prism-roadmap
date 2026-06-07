@@ -1,0 +1,57 @@
+# Opportunity Canvas (Flow): Mobile App Opportunity
+
+direction: down
+
+problems: Problems {
+  prob_desktop_only: "Users can only access the platform from desktop"
+  prob_real_time: "Users miss time-sensitive notifications"
+}
+
+users: Users {
+  user_manager: "Team Managers"
+  user_exec: "Executives"
+}
+
+currentSolutions: Current Solutions {
+  curr_email: "Email notifications"
+  curr_responsive: "Responsive web"
+}
+
+valueProposition: Value Proposition {
+  statement: "Native mobile app for on-the-go access and real-time noti..."
+}
+
+userValue: User Value {
+  uv1: "Access critical data anywhere"
+  uv2: "Respond to requests 10x faster"
+  uv3: "Never miss important updates"
+}
+
+businessValue: Business Value {
+  bv1: "Increase daily active users by 40%"
+  bv2: "Reduce churn from mobile-first compet..."
+  bv3: "New revenue from mobile-only tier"
+}
+
+assumptions: Assumptions {
+  assum_demand: "Users will adopt mobile app within 30... [validated]"
+  assum_features: "80% of use cases can be covered with ..."
+  assum_offline: "Offline sync is technically feasible [validated]"
+}
+
+risks: Risks {
+  risk_dev_time: "Development takes longer than expected"
+  risk_adoption: "Users don't switch from web"
+}
+
+budget: Budget {
+  time: "6 months"
+  cost: "\$800K"
+}
+
+# Flow
+problems -> valueProposition
+users -> valueProposition
+valueProposition -> userValue
+valueProposition -> businessValue
+assumptions -> risks

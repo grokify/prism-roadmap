@@ -1,0 +1,131 @@
+{
+  "type": "feature",
+  "feature": {
+    "metadata": {
+      "id": "feat-export-reports",
+      "title": "Export Reports Feature",
+      "version": "feature/1.0",
+      "authors": [
+        {"name": "Feature Team", "email": "features@example.com"}
+      ],
+      "tags": ["reporting", "export", "enterprise"]
+    },
+    "ideaStatement": "Enable users to export custom reports in multiple formats for external sharing and compliance",
+    "situations": [
+      {
+        "id": "sit-board-meeting",
+        "description": "Preparing materials for board meetings",
+        "actor": "Finance Manager",
+        "context": "Monthly/quarterly reporting cycle",
+        "trigger": "Board meeting scheduled",
+        "frequency": "Monthly"
+      },
+      {
+        "id": "sit-audit",
+        "description": "Providing data for external audits",
+        "actor": "Compliance Officer",
+        "context": "Annual audit process",
+        "trigger": "Audit request received",
+        "frequency": "Annually"
+      },
+      {
+        "id": "sit-stakeholder",
+        "description": "Sharing progress with external stakeholders",
+        "actor": "Project Manager",
+        "context": "Client or partner meetings",
+        "trigger": "Meeting preparation",
+        "frequency": "Weekly"
+      }
+    ],
+    "problems": [
+      {
+        "id": "prob-manual",
+        "description": "Manual copy-paste to create external reports",
+        "frequency": "Daily",
+        "severity": "high",
+        "evidence": "Support tickets and user interviews"
+      },
+      {
+        "id": "prob-formatting",
+        "description": "Reports lose formatting when copied",
+        "frequency": "Every report",
+        "severity": "medium",
+        "evidence": "User feedback sessions"
+      },
+      {
+        "id": "prob-no-pdf",
+        "description": "No way to create professional PDF reports",
+        "frequency": "Weekly",
+        "severity": "high",
+        "evidence": "Top feature request in surveys"
+      }
+    ],
+    "value": [
+      {
+        "id": "val-time",
+        "description": "Save 2-4 hours per report",
+        "beneficiary": "user",
+        "type": "functional",
+        "metric": "Time to create report",
+        "targetValue": "< 5 minutes"
+      },
+      {
+        "id": "val-quality",
+        "description": "Professional, branded reports",
+        "beneficiary": "both",
+        "type": "emotional",
+        "metric": "User satisfaction score"
+      },
+      {
+        "id": "val-compliance",
+        "description": "Audit-ready exports with timestamps",
+        "beneficiary": "business",
+        "type": "functional",
+        "metric": "Compliance audit pass rate"
+      }
+    ],
+    "capabilities": [
+      {
+        "id": "cap-format",
+        "description": "Export to PDF, Excel, and CSV formats",
+        "priority": "must",
+        "rationale": "Core user need"
+      },
+      {
+        "id": "cap-branding",
+        "description": "Apply company branding to exports",
+        "priority": "must",
+        "rationale": "Enterprise requirement"
+      },
+      {
+        "id": "cap-schedule",
+        "description": "Schedule automated exports",
+        "priority": "should",
+        "rationale": "Reduces manual work",
+        "dependencies": ["cap-format"]
+      },
+      {
+        "id": "cap-template",
+        "description": "Save export templates",
+        "priority": "should",
+        "rationale": "Consistency across reports"
+      },
+      {
+        "id": "cap-watermark",
+        "description": "Add confidentiality watermarks",
+        "priority": "could",
+        "rationale": "Security enhancement"
+      }
+    ],
+    "restrictions": [
+      "Must comply with data retention policies",
+      "Cannot export data user doesn't have access to",
+      "Must include audit trail for exports"
+    ],
+    "limitations": [
+      "PDF generation limited to 1000 pages",
+      "Excel export limited to 1M rows",
+      "Custom fonts not supported in PDF"
+    ]
+  }
+}

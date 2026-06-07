@@ -1,0 +1,75 @@
+# Business Model Canvas: SaaS Analytics Platform
+
+grid-rows: 3
+grid-columns: 5
+
+keyPartners: Key Partners {
+  style.fill: "#E3F2FD"
+  kp_cloud: "AWS"
+  kp_data: "Data Providers"
+}
+
+keyActivities: Key Activities {
+  style.fill: "#FFF3E0"
+  ka_development: "Platform Development"
+  ka_support: "Customer Support"
+}
+
+keyResources: Key Resources {
+  style.fill: "#FFF3E0"
+  kr_platform: "Analytics Platform"
+  kr_team: "Engineering Team"
+  kr_data: "Data Infrastructure"
+}
+
+valuePropositions: Value Propositions {
+  style.fill: "#E8F5E9"
+  vp_insights: "Real-time business insights"
+  vp_integration: "Seamless integrations"
+}
+
+customerRelations: Customer Relationships {
+  style.fill: "#FCE4EC"
+  cr_dedicated: "dedicated"
+  cr_self_service: "self-service"
+}
+
+channels: Channels {
+  style.fill: "#FCE4EC"
+  ch_direct: "Direct Sales"
+  ch_self_serve: "Self-Service"
+  ch_partners: "Partner Network"
+}
+
+customerSegments: Customer Segments {
+  style.fill: "#F3E5F5"
+  cs_enterprise: "Enterprise"
+  cs_smb: "SMB"
+}
+
+costStructure: Cost Structure {
+  style.fill: "#FFEBEE"
+  cost_infra: "Cloud infrastructure"
+  cost_personnel: "Personnel"
+  cost_marketing: "Sales & Marketing"
+}
+
+revenueStreams: Revenue Streams {
+  style.fill: "#E8F5E9"
+  rs_subscription: "Annual subscriptions"
+  rs_services: "Professional services"
+}
+
+# Connections
+keyPartners -> keyActivities
+keyActivities -> valuePropositions
+keyResources -> valuePropositions
+valuePropositions -> customerRelations
+valuePropositions -> channels
+customerRelations -> customerSegments
+channels -> customerSegments
+keyPartners -> costStructure
+keyActivities -> costStructure
+keyResources -> costStructure
+valuePropositions -> revenueStreams
+customerSegments -> revenueStreams

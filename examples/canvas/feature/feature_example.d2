@@ -1,0 +1,61 @@
+# Feature Canvas: Export Reports Feature
+
+grid-rows: 4
+grid-columns: 2
+
+ideaStatement: {
+  label: "Enable users to export custom reports in multiple formats for external sharing and compliance"
+  style.fill: "#E8F5E9"
+}
+
+situations: Situations {
+  style.fill: "#E3F2FD"
+  sit_board_meeting: "Preparing materials for board meetings"
+  sit_audit: "Providing data for external audits"
+  sit_stakeholder: "Sharing progress with external stakeholders"
+}
+
+problems: Problems {
+  style.fill: "#FFEBEE"
+  prob_manual: "Manual copy-paste to create external reports"
+  prob_formatting: "Reports lose formatting when copied"
+  prob_no_pdf: "No way to create professional PDF reports"
+}
+
+value: Value {
+  style.fill: "#E8F5E9"
+  val_time: "Save 2-4 hours per report"
+  val_quality: "Professional, branded reports"
+  val_compliance: "Audit-ready exports with timestamps"
+}
+
+capabilities: Capabilities {
+  style.fill: "#FFF3E0"
+  cap_format: "Export to PDF, Excel, and CSV formats [must]"
+  cap_branding: "Apply company branding to exports [must]"
+  cap_schedule: "Schedule automated exports [should]"
+  cap_template: "Save export templates [should]"
+  cap_watermark: "Add confidentiality watermarks [could]"
+}
+
+restrictions: Restrictions {
+  style.fill: "#FCE4EC"
+  r1: "Must comply with data retention policies"
+  r2: "Cannot export data user doesn't have access to"
+  r3: "Must include audit trail for exports"
+}
+
+limitations: Limitations {
+  style.fill: "#F3E5F5"
+  l1: "PDF generation limited to 1000 pages"
+  l2: "Excel export limited to 1M rows"
+  l3: "Custom fonts not supported in PDF"
+}
+
+# Flow
+ideaStatement -> situations
+situations -> problems
+problems -> value
+value -> capabilities
+capabilities -> restrictions
+capabilities -> limitations

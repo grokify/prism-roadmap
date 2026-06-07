@@ -1,0 +1,164 @@
+{
+  "type": "bmc",
+  "bmc": {
+    "metadata": {
+      "id": "bmc-saas-platform",
+      "title": "SaaS Analytics Platform",
+      "version": "bmc/1.0",
+      "authors": [
+        {"name": "Product Team", "email": "product@example.com"}
+      ],
+      "tags": ["saas", "analytics", "b2b"]
+    },
+    "customerSegments": [
+      {
+        "id": "cs-enterprise",
+        "name": "Enterprise",
+        "description": "Large organizations with 500+ employees",
+        "size": "$50B TAM",
+        "needs": ["Scalability", "Security", "Compliance"]
+      },
+      {
+        "id": "cs-smb",
+        "name": "SMB",
+        "description": "Small to medium businesses",
+        "size": "$20B TAM",
+        "needs": ["Ease of use", "Quick setup", "Affordable pricing"]
+      }
+    ],
+    "valuePropositions": [
+      {
+        "id": "vp-insights",
+        "description": "Real-time business insights",
+        "customerPains": ["Delayed reporting", "Manual data aggregation"],
+        "gainCreators": ["Automated dashboards", "AI-powered predictions"],
+        "segmentRefs": ["cs-enterprise", "cs-smb"]
+      },
+      {
+        "id": "vp-integration",
+        "description": "Seamless integrations",
+        "customerPains": ["Data silos", "Complex ETL processes"],
+        "gainCreators": ["200+ connectors", "No-code setup"],
+        "segmentRefs": ["cs-enterprise"]
+      }
+    ],
+    "channels": [
+      {
+        "id": "ch-direct",
+        "name": "Direct Sales",
+        "type": "direct",
+        "phase": "purchase",
+        "segmentRefs": ["cs-enterprise"]
+      },
+      {
+        "id": "ch-self-serve",
+        "name": "Self-Service",
+        "type": "owned",
+        "phase": "purchase",
+        "segmentRefs": ["cs-smb"]
+      },
+      {
+        "id": "ch-partners",
+        "name": "Partner Network",
+        "type": "partner",
+        "phase": "awareness",
+        "segmentRefs": ["cs-enterprise", "cs-smb"]
+      }
+    ],
+    "customerRelationships": [
+      {
+        "id": "cr-dedicated",
+        "type": "dedicated",
+        "description": "Dedicated account managers",
+        "segmentRefs": ["cs-enterprise"]
+      },
+      {
+        "id": "cr-self-service",
+        "type": "self-service",
+        "description": "Online portal and docs",
+        "segmentRefs": ["cs-smb"]
+      }
+    ],
+    "revenueStreams": [
+      {
+        "id": "rs-subscription",
+        "description": "Annual subscriptions",
+        "type": "subscription",
+        "pricingModel": "tiered",
+        "revenue": "80%"
+      },
+      {
+        "id": "rs-services",
+        "description": "Professional services",
+        "type": "usage fee",
+        "revenue": "20%"
+      }
+    ],
+    "keyResources": [
+      {
+        "id": "kr-platform",
+        "name": "Analytics Platform",
+        "type": "intellectual",
+        "critical": true
+      },
+      {
+        "id": "kr-team",
+        "name": "Engineering Team",
+        "type": "human",
+        "critical": true
+      },
+      {
+        "id": "kr-data",
+        "name": "Data Infrastructure",
+        "type": "physical"
+      }
+    ],
+    "keyActivities": [
+      {
+        "id": "ka-development",
+        "name": "Platform Development",
+        "category": "production",
+        "resources": ["kr-platform", "kr-team"]
+      },
+      {
+        "id": "ka-support",
+        "name": "Customer Support",
+        "category": "problem-solving"
+      }
+    ],
+    "keyPartnerships": [
+      {
+        "id": "kp-cloud",
+        "partner": "AWS",
+        "type": "buyer-supplier",
+        "motivation": "optimization"
+      },
+      {
+        "id": "kp-data",
+        "partner": "Data Providers",
+        "type": "strategic alliance",
+        "motivation": "acquisition"
+      }
+    ],
+    "costStructure": [
+      {
+        "id": "cost-infra",
+        "description": "Cloud infrastructure",
+        "type": "variable",
+        "amount": "30%"
+      },
+      {
+        "id": "cost-personnel",
+        "description": "Personnel",
+        "type": "fixed",
+        "amount": "50%"
+      },
+      {
+        "id": "cost-marketing",
+        "description": "Sales & Marketing",
+        "type": "variable",
+        "amount": "20%"
+      }
+    ]
+  }
+}

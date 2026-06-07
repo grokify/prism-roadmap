@@ -1,0 +1,35 @@
+graph TB
+    subgraph LUX["Checkout Flow Redesign"]
+    BP["Cart abandonment rate is 72%, signifi..."]
+    subgraph BO["Business Outcomes"]
+    bo_conversion["Reduce cart abandonment to 55%"]
+    bo_revenue["Increase checkout revenue by 20%"]
+    end
+    subgraph USR["Users"]
+    user_shopper(("Casual Shoppers"))
+    user_returner(("Returning Customers"))
+    end
+    subgraph UO["User Outcomes"]
+    uo_speed["Complete checkout in under 2 min..."]
+    uo_transparency["Know total cost before final step"]
+    end
+    subgraph SOL["Solutions"]
+    sol_guest["Streamlined guest checkout"]
+    sol_progress["Progress indicator with time est..."]
+    sol_shipping["Upfront shipping calculator"]
+    sol_express["Express checkout for returning u..."]
+    end
+    subgraph HYP["Hypotheses"]
+    hyp_guest(["Offering prominent guest ch..."])
+    hyp_shipping["Showing shipping costs on c..."]
+    hyp_progress["Adding progress indicator w..."]
+    end
+    RA{{"Users abandon due to shipping co..."}}
+    EXP["Add ZIP code-based shipping...\n[running]"]
+    BP --> BO
+    USR --> UO
+    UO --> SOL
+    SOL --> HYP
+    HYP --> RA
+    RA --> EXP
+    end
