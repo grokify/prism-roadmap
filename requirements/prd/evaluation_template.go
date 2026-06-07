@@ -3,7 +3,7 @@ package prd
 import (
 	"time"
 
-	"github.com/plexusone/structured-evaluation/evaluation"
+	"github.com/plexusone/structured-evaluation/rubric"
 )
 
 // EvaluationCategory defines metadata for a PRD evaluation category.
@@ -92,11 +92,11 @@ func StandardCategories() []EvaluationCategory {
 	}
 }
 
-// GenerateEvaluationTemplate creates an EvaluationReport template from a PRD document.
+// GenerateEvaluationTemplate creates an Rubric template from a PRD document.
 // The template includes all standard categories plus custom sections.
 // Scores are initialized as partial - they will be filled in by the LLM judge.
-func GenerateEvaluationTemplate(doc *Document, filename string) *evaluation.EvaluationReport {
-	report := evaluation.NewEvaluationReport("prd", filename)
+func GenerateEvaluationTemplate(doc *Document, filename string) *rubric.Rubric {
+	report := rubric.NewRubric("prd", filename)
 
 	// Set metadata from document
 	if doc.Metadata.ID != "" {
@@ -113,26 +113,26 @@ func GenerateEvaluationTemplate(doc *Document, filename string) *evaluation.Eval
 
 	// Add standard categories (to be scored by LLM judge)
 	for _, cat := range StandardCategories() {
-		cr := evaluation.NewCategoryResult(
+		cr := rubric.NewCategoryResult(
 			cat.ID,
-			evaluation.ScorePartial, // Placeholder, to be filled by LLM judge
-			"",                      // Reasoning to be filled by LLM judge
+			rubric.ScorePartial, // Placeholder, to be filled by LLM judge
+			"",                  // Reasoning to be filled by LLM judge
 		)
 		report.AddCategoryResult(*cr)
 	}
 
 	// Add custom sections as categories
 	for _, section := range doc.CustomSections {
-		cr := evaluation.NewCategoryResult(
+		cr := rubric.NewCategoryResult(
 			"custom:"+section.ID,
-			evaluation.ScorePartial, // Placeholder, to be filled by LLM judge
-			"",                      // Reasoning to be filled by LLM judge
+			rubric.ScorePartial, // Placeholder, to be filled by LLM judge
+			"",                  // Reasoning to be filled by LLM judge
 		)
 		report.AddCategoryResult(*cr)
 	}
 
 	// Set default pass criteria
-	report.PassCriteria = evaluation.DefaultPassCriteria()
+	report.PassCriteria = rubric.DefaultPassCriteria()
 
 	return report
 }
@@ -141,7 +141,7 @@ func GenerateEvaluationTemplate(doc *Document, filename string) *evaluation.Eval
 // Note: Weights are stored in the EvaluationCategory metadata, not in CategoryResult.
 // The new evaluation model uses categorical scores (pass/partial/fail) rather than
 // weighted numeric scores.
-func GenerateEvaluationTemplateWithWeights(doc *Document, filename string, _ map[string]float64) *evaluation.EvaluationReport {
+func GenerateEvaluationTemplateWithWeights(doc *Document, filename string, _ map[string]float64) *rubric.Rubric {
 	// Weights are no longer stored in CategoryResult in the new API.
 	// The evaluation model now uses categorical scoring (pass/partial/fail).
 	// Return the standard template.
