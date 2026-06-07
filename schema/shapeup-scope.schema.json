@@ -1,0 +1,173 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/grokify/prism-roadmap/schema/shapeup-scope.schema.json",
+  "$ref": "#/$defs/ShapeUpScope",
+  "$defs": {
+    "Metadata": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "created": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "authors": {
+          "items": {
+            "$ref": "#/$defs/Person"
+          },
+          "type": "array"
+        },
+        "tags": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "prdRef": {
+          "type": "string"
+        },
+        "featureRef": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "PRDReference": {
+      "properties": {
+        "prdId": {
+          "type": "string"
+        },
+        "featureIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "requirementIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "userStoryIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "personaIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Person": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "SUScope": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "hillPosition": {
+          "type": "integer"
+        },
+        "tasks": {
+          "items": {
+            "$ref": "#/$defs/SUTask"
+          },
+          "type": "array"
+        },
+        "status": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "SUTask": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "done": {
+          "type": "boolean"
+        },
+        "assignee": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "ShapeUpScope": {
+      "properties": {
+        "metadata": {
+          "$ref": "#/$defs/Metadata"
+        },
+        "betRef": {
+          "type": "string"
+        },
+        "scopes": {
+          "items": {
+            "$ref": "#/$defs/SUScope"
+          },
+          "type": "array"
+        },
+        "status": {
+          "type": "string"
+        },
+        "lastUpdated": {
+          "type": "string"
+        },
+        "prdRef": {
+          "$ref": "#/$defs/PRDReference"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    }
+  },
+  "title": "Shape Up Scope",
+  "description": "Schema for Shape Up Scope with hill chart tracking (Basecamp methodology)"
+}

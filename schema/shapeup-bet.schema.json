@@ -1,0 +1,179 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/grokify/prism-roadmap/schema/shapeup-bet.schema.json",
+  "$ref": "#/$defs/ShapeUpBet",
+  "$defs": {
+    "Metadata": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "created": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "authors": {
+          "items": {
+            "$ref": "#/$defs/Person"
+          },
+          "type": "array"
+        },
+        "tags": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "prdRef": {
+          "type": "string"
+        },
+        "featureRef": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "PRDReference": {
+      "properties": {
+        "prdId": {
+          "type": "string"
+        },
+        "featureIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "requirementIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "userStoryIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "personaIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Person": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "SUCycle": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "startDate": {
+          "type": "string"
+        },
+        "endDate": {
+          "type": "string"
+        },
+        "weeks": {
+          "type": "integer"
+        },
+        "coolDown": {
+          "type": "integer"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "SUTeam": {
+      "properties": {
+        "designer": {
+          "type": "string"
+        },
+        "programmers": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "lead": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "ShapeUpBet": {
+      "properties": {
+        "metadata": {
+          "$ref": "#/$defs/Metadata"
+        },
+        "pitchRef": {
+          "type": "string"
+        },
+        "pitchTitle": {
+          "type": "string"
+        },
+        "cycle": {
+          "$ref": "#/$defs/SUCycle"
+        },
+        "team": {
+          "$ref": "#/$defs/SUTeam"
+        },
+        "decision": {
+          "type": "string"
+        },
+        "rationale": {
+          "type": "string"
+        },
+        "decidedBy": {
+          "type": "string"
+        },
+        "decidedDate": {
+          "type": "string"
+        },
+        "deferredUntil": {
+          "type": "string"
+        },
+        "prdRef": {
+          "$ref": "#/$defs/PRDReference"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    }
+  },
+  "title": "Shape Up Bet",
+  "description": "Schema for Shape Up Bet decisions (Basecamp methodology)"
+}

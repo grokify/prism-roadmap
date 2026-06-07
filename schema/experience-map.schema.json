@@ -1,0 +1,215 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/grokify/prism-roadmap/schema/experience-map.schema.json",
+  "$ref": "#/$defs/ExperienceMap",
+  "$defs": {
+    "EMAction": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "actor": {
+          "type": "string"
+        },
+        "channel": {
+          "type": "string"
+        },
+        "pain": {
+          "type": "string"
+        },
+        "delight": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "EMPhase": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "order": {
+          "type": "integer"
+        },
+        "actions": {
+          "items": {
+            "$ref": "#/$defs/EMAction"
+          },
+          "type": "array"
+        },
+        "thinking": {
+          "type": "string"
+        },
+        "feeling": {
+          "type": "string"
+        },
+        "emotions": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "painPoints": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "opportunities": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "touchpoints": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "ExperienceMap": {
+      "properties": {
+        "metadata": {
+          "$ref": "#/$defs/Metadata"
+        },
+        "experience": {
+          "type": "string"
+        },
+        "personaRef": {
+          "type": "string"
+        },
+        "personaDescription": {
+          "type": "string"
+        },
+        "phases": {
+          "items": {
+            "$ref": "#/$defs/EMPhase"
+          },
+          "type": "array"
+        },
+        "topPainPoints": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "topOpportunities": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "prdRef": {
+          "$ref": "#/$defs/PRDReference"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Metadata": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "created": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "authors": {
+          "items": {
+            "$ref": "#/$defs/Person"
+          },
+          "type": "array"
+        },
+        "tags": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "prdRef": {
+          "type": "string"
+        },
+        "featureRef": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "PRDReference": {
+      "properties": {
+        "prdId": {
+          "type": "string"
+        },
+        "featureIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "requirementIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "userStoryIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "personaIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Person": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    }
+  },
+  "title": "Experience Map",
+  "description": "Schema for Experience Map (customer journey) from Continuous Discovery"
+}

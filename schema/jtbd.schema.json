@@ -1,0 +1,479 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/grokify/prism-roadmap/schema/jtbd.schema.json",
+  "$ref": "#/$defs/JTBDCanvas",
+  "$defs": {
+    "Force": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "strength": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string"
+        },
+        "quote": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "HiringSolution": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "whyHired": {
+          "type": "string"
+        },
+        "howUsed": {
+          "type": "string"
+        },
+        "limitations": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "workarounds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "satisfactionLevel": {
+          "type": "integer"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "JTBDCanvas": {
+      "properties": {
+        "metadata": {
+          "$ref": "#/$defs/Metadata"
+        },
+        "mainJob": {
+          "$ref": "#/$defs/JobStatement"
+        },
+        "relatedJobs": {
+          "items": {
+            "$ref": "#/$defs/JobStatement"
+          },
+          "type": "array"
+        },
+        "jobMap": {
+          "items": {
+            "$ref": "#/$defs/JobStage"
+          },
+          "type": "array"
+        },
+        "desiredOutcomes": {
+          "items": {
+            "$ref": "#/$defs/OutcomeExpectation"
+          },
+          "type": "array"
+        },
+        "undesiredOutcomes": {
+          "items": {
+            "$ref": "#/$defs/OutcomeExpectation"
+          },
+          "type": "array"
+        },
+        "circumstances": {
+          "items": {
+            "$ref": "#/$defs/JobCircumstance"
+          },
+          "type": "array"
+        },
+        "hiringSolutions": {
+          "items": {
+            "$ref": "#/$defs/HiringSolution"
+          },
+          "type": "array"
+        },
+        "firingSolutions": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "competingSolutions": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "pushForces": {
+          "items": {
+            "$ref": "#/$defs/Force"
+          },
+          "type": "array"
+        },
+        "pullForces": {
+          "items": {
+            "$ref": "#/$defs/Force"
+          },
+          "type": "array"
+        },
+        "anxieties": {
+          "items": {
+            "$ref": "#/$defs/Force"
+          },
+          "type": "array"
+        },
+        "habits": {
+          "items": {
+            "$ref": "#/$defs/Force"
+          },
+          "type": "array"
+        },
+        "opportunityScores": {
+          "items": {
+            "$ref": "#/$defs/OpportunityScore"
+          },
+          "type": "array"
+        },
+        "interviews": {
+          "items": {
+            "$ref": "#/$defs/JTBDInterview"
+          },
+          "type": "array"
+        },
+        "validationNotes": {
+          "type": "string"
+        },
+        "prdRef": {
+          "$ref": "#/$defs/PRDReference"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "JTBDInterview": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string"
+        },
+        "participantType": {
+          "type": "string"
+        },
+        "switchContext": {
+          "type": "string"
+        },
+        "firstThought": {
+          "type": "string"
+        },
+        "eventOne": {
+          "type": "string"
+        },
+        "eventTwo": {
+          "type": "string"
+        },
+        "activeSearch": {
+          "type": "string"
+        },
+        "decisionMade": {
+          "type": "string"
+        },
+        "purchaseDate": {
+          "type": "string"
+        },
+        "pushForces": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "pullForces": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "anxieties": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "habits": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "keyQuotes": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "insights": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "JobCircumstance": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "trigger": {
+          "type": "string"
+        },
+        "frequency": {
+          "type": "string"
+        },
+        "urgency": {
+          "type": "string"
+        },
+        "constraints": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "JobStage": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "stage": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "steps": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "painPoints": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "outcomes": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "JobStatement": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "statement": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "importance": {
+          "type": "string"
+        },
+        "satisfaction": {
+          "type": "string"
+        },
+        "frequency": {
+          "type": "string"
+        },
+        "context": {
+          "type": "string"
+        },
+        "parentJobId": {
+          "type": "string"
+        },
+        "childJobIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Metadata": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "created": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "authors": {
+          "items": {
+            "$ref": "#/$defs/Person"
+          },
+          "type": "array"
+        },
+        "tags": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "prdRef": {
+          "type": "string"
+        },
+        "featureRef": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "OpportunityScore": {
+      "properties": {
+        "outcomeRef": {
+          "type": "string"
+        },
+        "importance": {
+          "type": "number"
+        },
+        "satisfaction": {
+          "type": "number"
+        },
+        "opportunity": {
+          "type": "number"
+        },
+        "segment": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "OutcomeExpectation": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "statement": {
+          "type": "string"
+        },
+        "direction": {
+          "type": "string"
+        },
+        "metric": {
+          "type": "string"
+        },
+        "importance": {
+          "type": "integer"
+        },
+        "satisfaction": {
+          "type": "integer"
+        },
+        "opportunity": {
+          "type": "number"
+        },
+        "jobStageRef": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "PRDReference": {
+      "properties": {
+        "prdId": {
+          "type": "string"
+        },
+        "featureIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "requirementIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "userStoryIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "personaIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Person": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    }
+  },
+  "title": "Jobs-to-be-Done Canvas",
+  "description": "Schema for Jobs-to-be-Done canvas (Christensen, Ulwick methodology)"
+}

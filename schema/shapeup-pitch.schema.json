@@ -1,0 +1,293 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/grokify/prism-roadmap/schema/shapeup-pitch.schema.json",
+  "$ref": "#/$defs/ShapeUpPitch",
+  "$defs": {
+    "Metadata": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "created": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "authors": {
+          "items": {
+            "$ref": "#/$defs/Person"
+          },
+          "type": "array"
+        },
+        "tags": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "prdRef": {
+          "type": "string"
+        },
+        "featureRef": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "PRDReference": {
+      "properties": {
+        "prdId": {
+          "type": "string"
+        },
+        "featureIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "requirementIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "userStoryIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "personaIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Person": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "SUAppetite": {
+      "properties": {
+        "weeks": {
+          "type": "integer"
+        },
+        "size": {
+          "type": "string"
+        },
+        "rationale": {
+          "type": "string"
+        },
+        "tradeoffIfSmaller": {
+          "type": "string"
+        },
+        "expansionIfLarger": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "SUBreadboard": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "places": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "affordances": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "flow": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "SUProblem": {
+      "properties": {
+        "rawIdea": {
+          "type": "string"
+        },
+        "statement": {
+          "type": "string"
+        },
+        "whyNow": {
+          "type": "string"
+        },
+        "audience": {
+          "type": "string"
+        },
+        "evidence": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "currentWorkarounds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "SURabbitHole": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "whyDangerous": {
+          "type": "string"
+        },
+        "avoidance": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "SUSketch": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "imageRef": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "SUSolution": {
+      "properties": {
+        "approach": {
+          "type": "string"
+        },
+        "breadboards": {
+          "items": {
+            "$ref": "#/$defs/SUBreadboard"
+          },
+          "type": "array"
+        },
+        "fatMarkerSketches": {
+          "items": {
+            "$ref": "#/$defs/SUSketch"
+          },
+          "type": "array"
+        },
+        "mustInclude": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "niceToHave": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "technicalApproach": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "ShapeUpPitch": {
+      "properties": {
+        "metadata": {
+          "$ref": "#/$defs/Metadata"
+        },
+        "problem": {
+          "$ref": "#/$defs/SUProblem"
+        },
+        "appetite": {
+          "$ref": "#/$defs/SUAppetite"
+        },
+        "solution": {
+          "$ref": "#/$defs/SUSolution"
+        },
+        "rabbitHoles": {
+          "items": {
+            "$ref": "#/$defs/SURabbitHole"
+          },
+          "type": "array"
+        },
+        "noGos": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "bettingStatus": {
+          "type": "string"
+        },
+        "cycleRef": {
+          "type": "string"
+        },
+        "prdRef": {
+          "$ref": "#/$defs/PRDReference"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    }
+  },
+  "title": "Shape Up Pitch",
+  "description": "Schema for Shape Up Pitch canvas (Basecamp methodology)"
+}

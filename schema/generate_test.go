@@ -2,6 +2,7 @@ package schema
 
 import (
 	"encoding/json"
+	"os"
 	"testing"
 )
 
@@ -95,4 +96,232 @@ func TestGeneratorReflectsExtendedSections(t *testing.T) {
 			t.Errorf("generated schema missing extended section: %s", section)
 		}
 	}
+}
+
+func TestGenerateShapeUpPitchSchema(t *testing.T) {
+	gen := NewGenerator()
+
+	schema, err := gen.GenerateShapeUpPitchSchema()
+	if err != nil {
+		t.Fatalf("GenerateShapeUpPitchSchema failed: %v", err)
+	}
+
+	if schema == nil {
+		t.Fatal("schema is nil")
+	}
+
+	if schema.Title != "Shape Up Pitch" {
+		t.Errorf("expected title 'Shape Up Pitch', got %q", schema.Title)
+	}
+
+	if string(schema.ID) != ShapeUpPitchSchemaID {
+		t.Errorf("expected ID %q, got %q", ShapeUpPitchSchemaID, schema.ID)
+	}
+
+	// Verify JSON generation
+	data, err := gen.GenerateShapeUpPitchSchemaJSON()
+	if err != nil {
+		t.Fatalf("GenerateShapeUpPitchSchemaJSON failed: %v", err)
+	}
+
+	if len(data) == 0 {
+		t.Fatal("generated JSON is empty")
+	}
+
+	var parsed map[string]any
+	if err := json.Unmarshal(data, &parsed); err != nil {
+		t.Fatalf("generated JSON is invalid: %v", err)
+	}
+}
+
+func TestGenerateShapeUpBetSchema(t *testing.T) {
+	gen := NewGenerator()
+
+	schema, err := gen.GenerateShapeUpBetSchema()
+	if err != nil {
+		t.Fatalf("GenerateShapeUpBetSchema failed: %v", err)
+	}
+
+	if schema == nil {
+		t.Fatal("schema is nil")
+	}
+
+	if schema.Title != "Shape Up Bet" {
+		t.Errorf("expected title 'Shape Up Bet', got %q", schema.Title)
+	}
+}
+
+func TestGenerateShapeUpScopeSchema(t *testing.T) {
+	gen := NewGenerator()
+
+	schema, err := gen.GenerateShapeUpScopeSchema()
+	if err != nil {
+		t.Fatalf("GenerateShapeUpScopeSchema failed: %v", err)
+	}
+
+	if schema == nil {
+		t.Fatal("schema is nil")
+	}
+
+	if schema.Title != "Shape Up Scope" {
+		t.Errorf("expected title 'Shape Up Scope', got %q", schema.Title)
+	}
+}
+
+func TestGenerateDiscoverySnapshotSchema(t *testing.T) {
+	gen := NewGenerator()
+
+	schema, err := gen.GenerateDiscoverySnapshotSchema()
+	if err != nil {
+		t.Fatalf("GenerateDiscoverySnapshotSchema failed: %v", err)
+	}
+
+	if schema == nil {
+		t.Fatal("schema is nil")
+	}
+
+	if schema.Title != "Discovery Snapshot" {
+		t.Errorf("expected title 'Discovery Snapshot', got %q", schema.Title)
+	}
+}
+
+func TestGenerateAssumptionMapSchema(t *testing.T) {
+	gen := NewGenerator()
+
+	schema, err := gen.GenerateAssumptionMapSchema()
+	if err != nil {
+		t.Fatalf("GenerateAssumptionMapSchema failed: %v", err)
+	}
+
+	if schema == nil {
+		t.Fatal("schema is nil")
+	}
+
+	if schema.Title != "Assumption Map" {
+		t.Errorf("expected title 'Assumption Map', got %q", schema.Title)
+	}
+}
+
+func TestGenerateExperienceMapSchema(t *testing.T) {
+	gen := NewGenerator()
+
+	schema, err := gen.GenerateExperienceMapSchema()
+	if err != nil {
+		t.Fatalf("GenerateExperienceMapSchema failed: %v", err)
+	}
+
+	if schema == nil {
+		t.Fatal("schema is nil")
+	}
+
+	if schema.Title != "Experience Map" {
+		t.Errorf("expected title 'Experience Map', got %q", schema.Title)
+	}
+}
+
+func TestGenerateLeanStartupSchema(t *testing.T) {
+	gen := NewGenerator()
+
+	schema, err := gen.GenerateLeanStartupSchema()
+	if err != nil {
+		t.Fatalf("GenerateLeanStartupSchema failed: %v", err)
+	}
+
+	if schema == nil {
+		t.Fatal("schema is nil")
+	}
+
+	if schema.Title != "Lean Startup Canvas" {
+		t.Errorf("expected title 'Lean Startup Canvas', got %q", schema.Title)
+	}
+
+	if string(schema.ID) != LeanStartupSchemaID {
+		t.Errorf("expected ID %q, got %q", LeanStartupSchemaID, schema.ID)
+	}
+}
+
+func TestGenerateDesignThinkingSchema(t *testing.T) {
+	gen := NewGenerator()
+
+	schema, err := gen.GenerateDesignThinkingSchema()
+	if err != nil {
+		t.Fatalf("GenerateDesignThinkingSchema failed: %v", err)
+	}
+
+	if schema == nil {
+		t.Fatal("schema is nil")
+	}
+
+	if schema.Title != "Design Thinking Canvas" {
+		t.Errorf("expected title 'Design Thinking Canvas', got %q", schema.Title)
+	}
+
+	if string(schema.ID) != DesignThinkingSchemaID {
+		t.Errorf("expected ID %q, got %q", DesignThinkingSchemaID, schema.ID)
+	}
+}
+
+func TestGenerateJTBDSchema(t *testing.T) {
+	gen := NewGenerator()
+
+	schema, err := gen.GenerateJTBDSchema()
+	if err != nil {
+		t.Fatalf("GenerateJTBDSchema failed: %v", err)
+	}
+
+	if schema == nil {
+		t.Fatal("schema is nil")
+	}
+
+	if schema.Title != "Jobs-to-be-Done Canvas" {
+		t.Errorf("expected title 'Jobs-to-be-Done Canvas', got %q", schema.Title)
+	}
+
+	if string(schema.ID) != JTBDSchemaID {
+		t.Errorf("expected ID %q, got %q", JTBDSchemaID, schema.ID)
+	}
+}
+
+func TestGenerateCanvasSchemas(t *testing.T) {
+	gen := NewGenerator()
+
+	// Create temp directory for testing
+	tempDir := t.TempDir()
+
+	err := gen.GenerateCanvasSchemas(tempDir)
+	if err != nil {
+		t.Fatalf("GenerateCanvasSchemas failed: %v", err)
+	}
+
+	// Check that all schema files were created
+	expectedFiles := []string{
+		"shapeup-pitch.schema.json",
+		"shapeup-bet.schema.json",
+		"shapeup-scope.schema.json",
+		"discovery-snapshot.schema.json",
+		"assumption-map.schema.json",
+		"experience-map.schema.json",
+		"leanstartup.schema.json",
+		"designthinking.schema.json",
+		"jtbd.schema.json",
+	}
+
+	for _, fileName := range expectedFiles {
+		filePath := tempDir + "/" + fileName
+		data, err := readFile(filePath)
+		if err != nil {
+			t.Errorf("file %s does not exist: %v", fileName, err)
+			continue
+		}
+
+		// Verify it's valid JSON
+		var schema map[string]any
+		if err := json.Unmarshal(data, &schema); err != nil {
+			t.Errorf("file %s is not valid JSON: %v", fileName, err)
+		}
+	}
+}
+
+func readFile(path string) ([]byte, error) {
+	return os.ReadFile(path)
 }

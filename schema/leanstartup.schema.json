@@ -1,0 +1,422 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/grokify/prism-roadmap/schema/leanstartup.schema.json",
+  "$ref": "#/$defs/LeanStartupCanvas",
+  "$defs": {
+    "LSExperiment": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "buildDescription": {
+          "type": "string"
+        },
+        "buildCost": {
+          "type": "string"
+        },
+        "buildTime": {
+          "type": "string"
+        },
+        "buildStatus": {
+          "type": "string"
+        },
+        "buildOutput": {
+          "type": "string"
+        },
+        "measureMethod": {
+          "type": "string"
+        },
+        "measureMetrics": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "measureBaseline": {
+          "type": "string"
+        },
+        "measureTarget": {
+          "type": "string"
+        },
+        "measureActual": {
+          "type": "string"
+        },
+        "measureStatus": {
+          "type": "string"
+        },
+        "actionableMetric": {
+          "type": "boolean"
+        },
+        "learnHypothesis": {
+          "type": "string"
+        },
+        "learnInsight": {
+          "type": "string"
+        },
+        "learnValidated": {
+          "type": "boolean"
+        },
+        "learnDecision": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "mvpRef": {
+          "type": "string"
+        },
+        "startDate": {
+          "type": "string"
+        },
+        "endDate": {
+          "type": "string"
+        },
+        "owner": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "LSGrowthHypothesis": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "growthModel": {
+          "type": "string"
+        },
+        "statement": {
+          "type": "string"
+        },
+        "evidence": {
+          "type": "string"
+        },
+        "validated": {
+          "type": "boolean"
+        },
+        "confidence": {
+          "type": "string"
+        },
+        "nextStep": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "LSMetric": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "definition": {
+          "type": "string"
+        },
+        "current": {
+          "type": "string"
+        },
+        "target": {
+          "type": "string"
+        },
+        "baseline": {
+          "type": "string"
+        },
+        "trend": {
+          "type": "string"
+        },
+        "cohort": {
+          "type": "string"
+        },
+        "updateFreq": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "LSValueHypothesis": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "statement": {
+          "type": "string"
+        },
+        "evidence": {
+          "type": "string"
+        },
+        "validated": {
+          "type": "boolean"
+        },
+        "confidence": {
+          "type": "string"
+        },
+        "nextStep": {
+          "type": "string"
+        },
+        "customerRef": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "LeanStartupCanvas": {
+      "properties": {
+        "metadata": {
+          "$ref": "#/$defs/Metadata"
+        },
+        "vision": {
+          "type": "string"
+        },
+        "strategy": {
+          "type": "string"
+        },
+        "productMarketFit": {
+          "type": "string"
+        },
+        "targetCustomer": {
+          "type": "string"
+        },
+        "problemHypothesis": {
+          "type": "string"
+        },
+        "solutionHypothesis": {
+          "type": "string"
+        },
+        "valueHypothesis": {
+          "$ref": "#/$defs/LSValueHypothesis"
+        },
+        "growthHypothesis": {
+          "$ref": "#/$defs/LSGrowthHypothesis"
+        },
+        "mvps": {
+          "items": {
+            "$ref": "#/$defs/MVP"
+          },
+          "type": "array"
+        },
+        "experiments": {
+          "items": {
+            "$ref": "#/$defs/LSExperiment"
+          },
+          "type": "array"
+        },
+        "pivots": {
+          "items": {
+            "$ref": "#/$defs/Pivot"
+          },
+          "type": "array"
+        },
+        "currentPivot": {
+          "type": "string"
+        },
+        "metrics": {
+          "items": {
+            "$ref": "#/$defs/LSMetric"
+          },
+          "type": "array"
+        },
+        "learningGoals": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "prdRef": {
+          "$ref": "#/$defs/PRDReference"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "MVP": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "goal": {
+          "type": "string"
+        },
+        "audience": {
+          "type": "string"
+        },
+        "timeline": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "results": {
+          "type": "string"
+        },
+        "learnings": {
+          "type": "string"
+        },
+        "decision": {
+          "type": "string"
+        },
+        "nextMVP": {
+          "type": "string"
+        },
+        "iteration": {
+          "type": "integer"
+        },
+        "hypothesisRefs": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Metadata": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "created": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "authors": {
+          "items": {
+            "$ref": "#/$defs/Person"
+          },
+          "type": "array"
+        },
+        "tags": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "prdRef": {
+          "type": "string"
+        },
+        "featureRef": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "PRDReference": {
+      "properties": {
+        "prdId": {
+          "type": "string"
+        },
+        "featureIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "requirementIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "userStoryIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "personaIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Person": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Pivot": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string"
+        },
+        "fromState": {
+          "type": "string"
+        },
+        "toState": {
+          "type": "string"
+        },
+        "reason": {
+          "type": "string"
+        },
+        "evidence": {
+          "type": "string"
+        },
+        "experimentRefs": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "outcome": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    }
+  },
+  "title": "Lean Startup Canvas",
+  "description": "Schema for Lean Startup canvas (Eric Ries methodology)"
+}

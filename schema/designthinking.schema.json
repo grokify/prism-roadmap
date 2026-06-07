@@ -1,0 +1,563 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/grokify/prism-roadmap/schema/designthinking.schema.json",
+  "$ref": "#/$defs/DesignThinkingCanvas",
+  "$defs": {
+    "DTIdea": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string"
+        },
+        "sessionRef": {
+          "type": "string"
+        },
+        "votes": {
+          "type": "integer"
+        },
+        "feasibility": {
+          "type": "string"
+        },
+        "impact": {
+          "type": "string"
+        },
+        "selected": {
+          "type": "boolean"
+        },
+        "combinedWith": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "DTInsight": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "strength": {
+          "type": "string"
+        },
+        "sources": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "quoteRefs": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "DTInterview": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "participantType": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string"
+        },
+        "duration": {
+          "type": "string"
+        },
+        "keyQuotes": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "observations": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "insights": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "empathyMapRef": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "DTObservation": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "context": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "behaviors": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "surprises": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "questions": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "DTPrototype": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "fidelity": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "ideaRefs": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "iteration": {
+          "type": "integer"
+        },
+        "status": {
+          "type": "string"
+        },
+        "imageRef": {
+          "type": "string"
+        },
+        "testRefs": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "DTTest": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "prototypeRef": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string"
+        },
+        "participants": {
+          "type": "integer"
+        },
+        "method": {
+          "type": "string"
+        },
+        "questions": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "findings": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "positiveFeedback": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "negativeFeedback": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "suggestions": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "nextIteration": {
+          "type": "string"
+        },
+        "shouldContinue": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "DTUserNeed": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "user": {
+          "type": "string"
+        },
+        "need": {
+          "type": "string"
+        },
+        "insight": {
+          "type": "string"
+        },
+        "priority": {
+          "type": "string"
+        },
+        "validated": {
+          "type": "boolean"
+        },
+        "evidenceRefs": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "DesignThinkingCanvas": {
+      "properties": {
+        "metadata": {
+          "$ref": "#/$defs/Metadata"
+        },
+        "empathyMaps": {
+          "items": {
+            "$ref": "#/$defs/EmpathyMap"
+          },
+          "type": "array"
+        },
+        "interviews": {
+          "items": {
+            "$ref": "#/$defs/DTInterview"
+          },
+          "type": "array"
+        },
+        "observations": {
+          "items": {
+            "$ref": "#/$defs/DTObservation"
+          },
+          "type": "array"
+        },
+        "problemStatement": {
+          "type": "string"
+        },
+        "userNeeds": {
+          "items": {
+            "$ref": "#/$defs/DTUserNeed"
+          },
+          "type": "array"
+        },
+        "insights": {
+          "items": {
+            "$ref": "#/$defs/DTInsight"
+          },
+          "type": "array"
+        },
+        "howMightWe": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "ideationSessions": {
+          "items": {
+            "$ref": "#/$defs/IdeationSession"
+          },
+          "type": "array"
+        },
+        "ideas": {
+          "items": {
+            "$ref": "#/$defs/DTIdea"
+          },
+          "type": "array"
+        },
+        "selectedIdeas": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "prototypes": {
+          "items": {
+            "$ref": "#/$defs/DTPrototype"
+          },
+          "type": "array"
+        },
+        "tests": {
+          "items": {
+            "$ref": "#/$defs/DTTest"
+          },
+          "type": "array"
+        },
+        "iterationCount": {
+          "type": "integer"
+        },
+        "currentPhase": {
+          "type": "string"
+        },
+        "prdRef": {
+          "$ref": "#/$defs/PRDReference"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "EmpathyMap": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "personaName": {
+          "type": "string"
+        },
+        "goal": {
+          "type": "string"
+        },
+        "says": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "thinks": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "does": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "feels": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "sees": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "hears": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "pains": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "gains": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "source": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string"
+        },
+        "personaRef": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "IdeationSession": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string"
+        },
+        "method": {
+          "type": "string"
+        },
+        "hmwQuestion": {
+          "type": "string"
+        },
+        "participants": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "duration": {
+          "type": "string"
+        },
+        "ideaCount": {
+          "type": "integer"
+        },
+        "ideaRefs": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Metadata": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "created": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "authors": {
+          "items": {
+            "$ref": "#/$defs/Person"
+          },
+          "type": "array"
+        },
+        "tags": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "prdRef": {
+          "type": "string"
+        },
+        "featureRef": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "PRDReference": {
+      "properties": {
+        "prdId": {
+          "type": "string"
+        },
+        "featureIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "requirementIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "userStoryIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "personaIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Person": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    }
+  },
+  "title": "Design Thinking Canvas",
+  "description": "Schema for Design Thinking canvas (Stanford d.school methodology)"
+}

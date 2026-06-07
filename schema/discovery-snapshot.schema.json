@@ -1,0 +1,413 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/grokify/prism-roadmap/schema/discovery-snapshot.schema.json",
+  "$ref": "#/$defs/DiscoverySnapshot",
+  "$defs": {
+    "CDAssumption": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "importance": {
+          "type": "string"
+        },
+        "confidence": {
+          "type": "string"
+        },
+        "priority": {
+          "type": "integer"
+        },
+        "evidence": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "counterEvidence": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "validated": {
+          "type": "boolean"
+        },
+        "validationDate": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "CDAssumptionTest": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "assumption": {
+          "$ref": "#/$defs/CDAssumption"
+        },
+        "method": {
+          "type": "string"
+        },
+        "hypothesis": {
+          "type": "string"
+        },
+        "successCriteria": {
+          "type": "string"
+        },
+        "participants": {
+          "type": "string"
+        },
+        "sampleSize": {
+          "type": "integer"
+        },
+        "duration": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "startDate": {
+          "type": "string"
+        },
+        "endDate": {
+          "type": "string"
+        },
+        "result": {
+          "type": "string"
+        },
+        "data": {
+          "type": "string"
+        },
+        "learning": {
+          "type": "string"
+        },
+        "nextStep": {
+          "type": "string"
+        },
+        "pivotDescription": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "CDDecision": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "rationale": {
+          "type": "string"
+        },
+        "interviewRefs": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "testRefs": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "type": {
+          "type": "string"
+        },
+        "ostChanges": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "CDInterview": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string"
+        },
+        "participantType": {
+          "type": "string"
+        },
+        "participantId": {
+          "type": "string"
+        },
+        "segment": {
+          "type": "string"
+        },
+        "recruitSource": {
+          "type": "string"
+        },
+        "interviewType": {
+          "type": "string"
+        },
+        "duration": {
+          "type": "string"
+        },
+        "stories": {
+          "items": {
+            "$ref": "#/$defs/CDStory"
+          },
+          "type": "array"
+        },
+        "opportunitiesSurfaced": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "notes": {
+          "type": "string"
+        },
+        "quality": {
+          "type": "string"
+        },
+        "qualityNotes": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "CDOpportunityUpdate": {
+      "properties": {
+        "opportunityId": {
+          "type": "string"
+        },
+        "action": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "evidenceCount": {
+          "type": "integer"
+        },
+        "sources": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "priorityBefore": {
+          "type": "integer"
+        },
+        "priorityAfter": {
+          "type": "integer"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "CDStory": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "situation": {
+          "type": "string"
+        },
+        "behavior": {
+          "type": "string"
+        },
+        "outcome": {
+          "type": "string"
+        },
+        "emotions": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "painPoints": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "workaround": {
+          "type": "string"
+        },
+        "opportunityRefs": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "quotes": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "DiscoverySnapshot": {
+      "properties": {
+        "metadata": {
+          "$ref": "#/$defs/Metadata"
+        },
+        "week": {
+          "type": "string"
+        },
+        "startDate": {
+          "type": "string"
+        },
+        "endDate": {
+          "type": "string"
+        },
+        "interviews": {
+          "items": {
+            "$ref": "#/$defs/CDInterview"
+          },
+          "type": "array"
+        },
+        "opportunitiesDiscovered": {
+          "items": {
+            "$ref": "#/$defs/CDOpportunityUpdate"
+          },
+          "type": "array"
+        },
+        "assumptionTests": {
+          "items": {
+            "$ref": "#/$defs/CDAssumptionTest"
+          },
+          "type": "array"
+        },
+        "keyLearnings": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "decisions": {
+          "items": {
+            "$ref": "#/$defs/CDDecision"
+          },
+          "type": "array"
+        },
+        "ostRef": {
+          "type": "string"
+        },
+        "prdRef": {
+          "$ref": "#/$defs/PRDReference"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Metadata": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "created": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "authors": {
+          "items": {
+            "$ref": "#/$defs/Person"
+          },
+          "type": "array"
+        },
+        "tags": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "prdRef": {
+          "type": "string"
+        },
+        "featureRef": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "PRDReference": {
+      "properties": {
+        "prdId": {
+          "type": "string"
+        },
+        "featureIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "requirementIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "userStoryIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "personaIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Person": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    }
+  },
+  "title": "Discovery Snapshot",
+  "description": "Schema for weekly Continuous Discovery snapshot (Teresa Torres methodology)"
+}
