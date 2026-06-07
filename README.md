@@ -91,6 +91,26 @@ Each canvas supports multiple output formats:
 - **Mermaid** - Mermaid diagram syntax for documentation
 - **Lit/JSON** - Structured data for web components
 
+### Feature Prioritization
+
+Prioritization frameworks integrated with OpportunitySpec:
+
+| Framework | Type | Description |
+|-----------|------|-------------|
+| **RICE** | Quantitative | Score = (Reach × Impact × Confidence) / Effort |
+| **Kano** | Qualitative | Categories: Must-Be, Performance, Attractive, Indifferent, Reverse |
+
+```go
+import "github.com/grokify/prism-roadmap/prioritization"
+
+// RICE scoring
+rice := prioritization.NewRICEScore("feature-1", 1000, ImpactHigh, ConfidenceHigh, 2.0)
+rice.Calculate() // Score = 1000
+
+// Kano classification
+category := prioritization.ClassifyKano(KanoLike, KanoDislike) // Performance
+```
+
 The natural workflow from market to implementation:
 
 **MRD** (Market) → **PRD** (Product) → **TRD** (Technical)

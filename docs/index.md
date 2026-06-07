@@ -31,6 +31,8 @@ PRISM Roadmap provides typed data structures and utilities for planning document
 - **Goals alignment** - Integrate with V2MOM and OKR frameworks
 - **Scoring & validation** - Automated quality assessment
 - **Persona library** - Reusable persona definitions across documents
+- **Feature prioritization** - RICE scoring and Kano model classification
+- **Multi-format rendering** - D2, SVG, Mermaid, and Lit/JSON output for canvases
 
 ## Architecture
 
