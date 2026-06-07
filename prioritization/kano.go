@@ -91,11 +91,11 @@ func (k KanoCategory) Priority() int {
 type KanoResponse string
 
 const (
-	KanoLike      KanoResponse = "like"       // I like it
-	KanoExpect    KanoResponse = "expect"     // I expect it
-	KanoNeutral   KanoResponse = "neutral"    // I am neutral
-	KanoTolerate  KanoResponse = "tolerate"   // I can tolerate it
-	KanoDislike   KanoResponse = "dislike"    // I dislike it
+	KanoLike     KanoResponse = "like"     // I like it
+	KanoExpect   KanoResponse = "expect"   // I expect it
+	KanoNeutral  KanoResponse = "neutral"  // I am neutral
+	KanoTolerate KanoResponse = "tolerate" // I can tolerate it
+	KanoDislike  KanoResponse = "dislike"  // I dislike it
 )
 
 // KanoFeature represents a feature being evaluated with the Kano Model.
@@ -120,11 +120,11 @@ type KanoFeature struct {
 	DissatisfactionCoefficient float64 `json:"dissatisfactionCoefficient,omitempty"` // (O+M)/(A+O+M+I)*-1
 
 	// Response counts for aggregate analysis
-	MustBeCount      int `json:"mustBeCount,omitempty"`
-	PerformanceCount int `json:"performanceCount,omitempty"`
-	AttractiveCount  int `json:"attractiveCount,omitempty"`
-	IndifferentCount int `json:"indifferentCount,omitempty"`
-	ReverseCount     int `json:"reverseCount,omitempty"`
+	MustBeCount       int `json:"mustBeCount,omitempty"`
+	PerformanceCount  int `json:"performanceCount,omitempty"`
+	AttractiveCount   int `json:"attractiveCount,omitempty"`
+	IndifferentCount  int `json:"indifferentCount,omitempty"`
+	ReverseCount      int `json:"reverseCount,omitempty"`
 	QuestionableCount int `json:"questionableCount,omitempty"`
 
 	// Metadata
@@ -224,10 +224,10 @@ func (f *KanoFeature) IsComplete() bool {
 
 // KanoAnalysis represents a Kano analysis for multiple features.
 type KanoAnalysis struct {
-	Features    []KanoFeature `json:"features"`
-	Description string        `json:"description,omitempty"`
-	AnalyzedBy  string        `json:"analyzedBy,omitempty"`
-	AnalyzedDate string       `json:"analyzedDate,omitempty"`
+	Features     []KanoFeature `json:"features"`
+	Description  string        `json:"description,omitempty"`
+	AnalyzedBy   string        `json:"analyzedBy,omitempty"`
+	AnalyzedDate string        `json:"analyzedDate,omitempty"`
 }
 
 // NewKanoAnalysis creates a new Kano analysis.

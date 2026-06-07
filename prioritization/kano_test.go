@@ -6,10 +6,10 @@ import (
 
 func TestClassifyKano(t *testing.T) {
 	tests := []struct {
-		name           string
-		functional     KanoResponse
-		dysfunctional  KanoResponse
-		wantCategory   KanoCategory
+		name          string
+		functional    KanoResponse
+		dysfunctional KanoResponse
+		wantCategory  KanoCategory
 	}{
 		// Must-Be examples
 		{

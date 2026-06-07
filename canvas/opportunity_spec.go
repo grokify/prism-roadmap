@@ -468,14 +468,14 @@ func (s *OpportunitySpec) IsPerformance() bool {
 
 // PrioritizationSummary returns a summary of all prioritization data.
 type PrioritizationSummary struct {
-	FeatureID     string                        `json:"featureId"`
-	FeatureName   string                        `json:"featureName"`
-	RICEScore     float64                       `json:"riceScore,omitempty"`
-	RICEComplete  bool                          `json:"riceComplete"`
-	KanoCategory  prioritization.KanoCategory   `json:"kanoCategory,omitempty"`
-	KanoComplete  bool                          `json:"kanoComplete"`
-	Recommendation string                       `json:"recommendation,omitempty"`
-	Confidence    string                        `json:"confidence,omitempty"`
+	FeatureID      string                      `json:"featureId"`
+	FeatureName    string                      `json:"featureName"`
+	RICEScore      float64                     `json:"riceScore,omitempty"`
+	RICEComplete   bool                        `json:"riceComplete"`
+	KanoCategory   prioritization.KanoCategory `json:"kanoCategory,omitempty"`
+	KanoComplete   bool                        `json:"kanoComplete"`
+	Recommendation string                      `json:"recommendation,omitempty"`
+	Confidence     string                      `json:"confidence,omitempty"`
 }
 
 // GetPrioritizationSummary returns a summary of all prioritization data.

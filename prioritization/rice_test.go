@@ -6,17 +6,17 @@ import (
 
 func TestRICEScore_Calculate(t *testing.T) {
 	tests := []struct {
-		name       string
-		score      RICEScore
-		wantScore  float64
-		wantClose  bool // Allow for floating point comparison
+		name      string
+		score     RICEScore
+		wantScore float64
+		wantClose bool // Allow for floating point comparison
 	}{
 		{
 			name: "Standard calculation",
 			score: RICEScore{
 				FeatureID:  "feat-1",
 				Reach:      1000,
-				Impact:     ImpactHigh, // 2x
+				Impact:     ImpactHigh,     // 2x
 				Confidence: ConfidenceHigh, // 100%
 				Effort:     2,
 			},
@@ -27,7 +27,7 @@ func TestRICEScore_Calculate(t *testing.T) {
 			score: RICEScore{
 				FeatureID:  "feat-2",
 				Reach:      1000,
-				Impact:     ImpactHigh, // 2x
+				Impact:     ImpactHigh,    // 2x
 				Confidence: ConfidenceLow, // 50%
 				Effort:     2,
 			},
@@ -70,8 +70,8 @@ func TestRICEScore_Calculate(t *testing.T) {
 func TestRICEScoreSet_TopN(t *testing.T) {
 	set := NewRICEScoreSet()
 
-	set.Add(*NewRICEScore("low", 100, ImpactLow, ConfidenceLow, 5))     // Low score
-	set.Add(*NewRICEScore("high", 1000, ImpactHigh, ConfidenceHigh, 1)) // High score
+	set.Add(*NewRICEScore("low", 100, ImpactLow, ConfidenceLow, 5))       // Low score
+	set.Add(*NewRICEScore("high", 1000, ImpactHigh, ConfidenceHigh, 1))   // High score
 	set.Add(*NewRICEScore("mid", 500, ImpactMedium, ConfidenceMedium, 2)) // Mid score
 
 	top2 := set.TopN(2)
