@@ -1,6 +1,9 @@
 package common
 
-import core "github.com/grokify/prism-core"
+import (
+	pf "github.com/grokify/priority-frameworks"
+	core "github.com/grokify/prism-core"
+)
 
 // Status represents the document lifecycle status.
 // Used across PRD, MRD, and TRD documents.
@@ -15,22 +18,38 @@ const (
 )
 
 // Priority represents priority levels.
+// Now backed by priority-frameworks Severity framework.
 type Priority string
 
-// Priority constants imported from prism-core.
+// Priority constants using priority-frameworks.
 const (
-	PriorityCritical Priority = Priority(core.PriorityCritical)
-	PriorityHigh     Priority = Priority(core.PriorityHigh)
-	PriorityMedium   Priority = Priority(core.PriorityMedium)
-	PriorityLow      Priority = Priority(core.PriorityLow)
+	PriorityCritical Priority = "critical"
+	PriorityHigh     Priority = "high"
+	PriorityMedium   Priority = "medium"
+	PriorityLow      Priority = "low"
 )
 
 // ValidPriority checks if a priority value is valid.
 func ValidPriority(priority Priority) bool {
-	return core.ValidPriority(string(priority))
+	if priority == "" {
+		return true
+	}
+	f := pf.Severity()
+	return f.IndexOf(string(priority)) >= 0
 }
 
 // PriorityWeight returns a numeric weight for sorting priorities.
+// Higher weight = higher priority.
 func PriorityWeight(priority Priority) int {
-	return core.PriorityWeight(string(priority))
+	f := pf.Severity()
+	idx := f.IndexOf(string(priority))
+	if idx < 0 {
+		return 0
+	}
+	return len(f.Levels) - idx
+}
+
+// PriorityFramework returns the Severity priority framework.
+func PriorityFramework() *pf.Framework {
+	return pf.Severity()
 }

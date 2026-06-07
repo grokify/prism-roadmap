@@ -1,29 +1,42 @@
 package prd
 
-import core "github.com/grokify/prism-core"
-
-// Note: Priority type and constants are now defined in common/
-// and aliased in document.go for backward compatibility.
+import pf "github.com/grokify/priority-frameworks"
 
 // MoSCoW represents the MoSCoW prioritization method.
+// Now backed by priority-frameworks MoSCoW framework.
 type MoSCoW string
 
-// MoSCoW constants imported from prism-core.
+// MoSCoW constants using priority-frameworks.
 const (
-	MoSCoWMust   MoSCoW = MoSCoW(core.MoSCoWMust)
-	MoSCoWShould MoSCoW = MoSCoW(core.MoSCoWShould)
-	MoSCoWCould  MoSCoW = MoSCoW(core.MoSCoWCould)
-	MoSCoWWont   MoSCoW = MoSCoW(core.MoSCoWWont)
+	MoSCoWMust   MoSCoW = "must"
+	MoSCoWShould MoSCoW = "should"
+	MoSCoWCould  MoSCoW = "could"
+	MoSCoWWont   MoSCoW = "wont"
 )
 
 // ValidMoSCoW checks if a MoSCoW value is valid.
 func ValidMoSCoW(moscow MoSCoW) bool {
-	return core.ValidMoSCoW(string(moscow))
+	if moscow == "" {
+		return true
+	}
+	f := pf.MoSCoW()
+	return f.IndexOf(string(moscow)) >= 0
 }
 
 // MoSCoWWeight returns a numeric weight for sorting MoSCoW priorities.
+// Higher weight = higher priority.
 func MoSCoWWeight(moscow MoSCoW) int {
-	return core.MoSCoWWeight(string(moscow))
+	f := pf.MoSCoW()
+	idx := f.IndexOf(string(moscow))
+	if idx < 0 {
+		return 0
+	}
+	return len(f.Levels) - idx
+}
+
+// MoSCoWFramework returns the MoSCoW priority framework.
+func MoSCoWFramework() *pf.Framework {
+	return pf.MoSCoW()
 }
 
 // UserStory represents a user story with acceptance criteria.
