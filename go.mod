@@ -7,11 +7,9 @@ require (
 	github.com/grokify/prism-core v0.2.0
 	github.com/grokify/structureddocs v0.1.0
 	github.com/invopop/jsonschema v0.14.0
-	github.com/plexusone/structured-evaluation v0.6.0
+	github.com/plexusone/structured-evaluation v0.7.0
 	github.com/spf13/cobra v1.10.2
 )
-
-replace github.com/plexusone/structured-evaluation => /Users/johnwang/go/src/github.com/plexusone/structured-evaluation
 
 require (
 	github.com/bahlo/generic-list-go v0.2.0 // indirect
