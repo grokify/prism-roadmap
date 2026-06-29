@@ -24,9 +24,9 @@ func TestCalculateOpportunityScore(t *testing.T) {
 		satisfaction float64
 		expected     float64
 	}{
-		{"underserved", 9, 3, 15}, // 9 + max(9-3, 0) = 9 + 6 = 15
-		{"appropriately served", 7, 7, 7},  // 7 + max(7-7, 0) = 7 + 0 = 7
-		{"overserved", 5, 8, 5},    // 5 + max(5-8, 0) = 5 + 0 = 5
+		{"underserved", 9, 3, 15},                       // 9 + max(9-3, 0) = 9 + 6 = 15
+		{"appropriately served", 7, 7, 7},               // 7 + max(7-7, 0) = 7 + 0 = 7
+		{"overserved", 5, 8, 5},                         // 5 + max(5-8, 0) = 5 + 0 = 5
 		{"high importance low satisfaction", 10, 1, 19}, // 10 + 9 = 19
 		{"low importance high satisfaction", 2, 9, 2},   // 2 + 0 = 2
 	}
