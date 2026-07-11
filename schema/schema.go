@@ -94,6 +94,11 @@ const (
 
 	// JTBDSchemaID is the canonical ID for the JTBD schema.
 	JTBDSchemaID = "https://github.com/grokify/prism-roadmap/schema/jtbd.schema.json"
+
+	// Journey Roadmap schema ID
+
+	// JourneyRoadmapSchemaID is the canonical ID for the Journey Roadmap schema.
+	JourneyRoadmapSchemaID = "https://github.com/grokify/prism-roadmap/schema/journey-roadmap.schema.json"
 )
 
 // OKR Schema
@@ -164,3 +169,18 @@ func V2MOMSchemaBytes() []byte {
 //	var TRDSchemaJSON []byte
 //
 //	func TRDSchema() string { return string(TRDSchemaJSON) }
+
+// Journey Roadmap Schema
+
+//go:embed journey-roadmap.schema.json
+var JourneyRoadmapSchemaJSON []byte
+
+// JourneyRoadmapSchema returns the Journey Roadmap JSON Schema as a string.
+func JourneyRoadmapSchema() string {
+	return string(JourneyRoadmapSchemaJSON)
+}
+
+// JourneyRoadmapSchemaBytes returns the Journey Roadmap JSON Schema as a byte slice.
+func JourneyRoadmapSchemaBytes() []byte {
+	return JourneyRoadmapSchemaJSON
+}

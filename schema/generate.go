@@ -11,6 +11,7 @@ import (
 	"github.com/grokify/prism-roadmap/canvas"
 	"github.com/grokify/prism-roadmap/goals/okr"
 	"github.com/grokify/prism-roadmap/goals/v2mom"
+	"github.com/grokify/prism-roadmap/journey"
 	"github.com/grokify/prism-roadmap/requirements/prd"
 )
 
@@ -97,6 +98,12 @@ func (g *Generator) GenerateAll(dir string) error {
 	// Generate canvas schemas (Shape Up, Continuous Discovery)
 	if err := g.GenerateCanvasSchemas(dir); err != nil {
 		return fmt.Errorf("generating canvas schemas: %w", err)
+	}
+
+	// Generate Journey Roadmap schema
+	journeyPath := filepath.Join(dir, "journey-roadmap.schema.json")
+	if err := g.WriteJourneyRoadmapSchema(journeyPath); err != nil {
+		return fmt.Errorf("generating Journey Roadmap schema: %w", err)
 	}
 
 	// TODO: Add MRD and TRD schema generation when types are ready
@@ -515,4 +522,34 @@ func (g *Generator) GenerateJTBDSchemaJSON() ([]byte, error) {
 // WriteJTBDSchema generates and writes the JTBD schema to a file.
 func (g *Generator) WriteJTBDSchema(path string) error {
 	return g.writeSchema(path, g.GenerateJTBDSchemaJSON)
+}
+
+// Journey Roadmap Schema Generation
+
+// GenerateJourneyRoadmapSchema generates JSON Schema for the JourneyRoadmap type.
+func (g *Generator) GenerateJourneyRoadmapSchema() (*jsonschema.Schema, error) {
+	schema := g.Reflector.Reflect(&journey.JourneyRoadmap{})
+	if schema == nil {
+		return nil, fmt.Errorf("failed to generate schema for journey.JourneyRoadmap")
+	}
+
+	schema.ID = jsonschema.ID(JourneyRoadmapSchemaID)
+	schema.Title = "Journey Roadmap"
+	schema.Description = "Schema for capability evolution roadmaps that model how capabilities, outcomes, and business value evolve over time through transitions enabled by initiatives"
+
+	return schema, nil
+}
+
+// GenerateJourneyRoadmapSchemaJSON generates JSON Schema for JourneyRoadmap and returns it as JSON bytes.
+func (g *Generator) GenerateJourneyRoadmapSchemaJSON() ([]byte, error) {
+	schema, err := g.GenerateJourneyRoadmapSchema()
+	if err != nil {
+		return nil, err
+	}
+	return json.MarshalIndent(schema, "", "  ")
+}
+
+// WriteJourneyRoadmapSchema generates and writes the JourneyRoadmap schema to a file.
+func (g *Generator) WriteJourneyRoadmapSchema(path string) error {
+	return g.writeSchema(path, g.GenerateJourneyRoadmapSchemaJSON)
 }
