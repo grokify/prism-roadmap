@@ -7,6 +7,55 @@
   "maintainers": ["grokify", "johncwang@gmail.com"],
   "releases": [
     {
+      "version": "v0.15.0",
+      "date": "2026-07-11",
+      "highlights": [
+        { "description": "Add journey roadmap types for capability maturity evolution planning" },
+        { "description": "Add JSON Schema generation for journey roadmap types" },
+        { "description": "Consolidate TypeScript viewer into unified @grokify/prism npm package" }
+      ],
+      "added": [
+        { "description": "Add JourneyRoadmap type for capability evolution planning with periods, targets, and narratives", "commit": "0e7e4b4" },
+        { "description": "Add CapabilityJourney type for tracking capability maturity progression", "commit": "0e7e4b4" },
+        { "description": "Add CapabilityMaturityTarget type for period-specific maturity targets with confidence", "commit": "0e7e4b4" },
+        { "description": "Add Dependency type for cross-capability and external dependencies", "commit": "0e7e4b4" },
+        { "description": "Add Team type with hierarchy, capacity, and initiative assignments", "commit": "0e7e4b4" },
+        { "description": "Add Initiative type for work items driving capability improvements", "commit": "0e7e4b4" },
+        { "description": "Add JourneyNarrative and JourneyChapter types for executive storytelling", "commit": "0e7e4b4" },
+        { "description": "Add Period type for time periods with themes and current marker", "commit": "0e7e4b4" },
+        { "description": "Add JSON Schema generation for JourneyRoadmap via GenerateJourneyRoadmapSchema()", "commit": "c36f94a" }
+      ],
+      "refactored": [
+        { "description": "Remove viewer/ package in favor of unified @grokify/prism npm package", "commit": "6811b75" }
+      ],
+      "documentation": [
+        { "description": "Update README shields", "commit": "4e9ee22" },
+        { "description": "Add v0.15.0 release notes", "commit": "" }
+      ]
+    },
+    {
+      "version": "v0.14.1",
+      "date": "2026-06-08",
+      "highlights": [
+        { "description": "Dependency updates and lint fixes" }
+      ],
+      "changed": [
+        { "description": "Update github.com/plexusone/structured-evaluation to v0.8.0", "commit": "faa91c5" }
+      ],
+      "fixed": [
+        { "description": "Fix gofmt lint issues", "commit": "e1e41c3" }
+      ],
+      "tests": [
+        { "description": "Add comprehensive JTBD canvas tests", "commit": "527432d" }
+      ],
+      "ci": [
+        { "description": "Bump actions/checkout from 6 to 7", "commit": "586cff6" }
+      ],
+      "dependencies": [
+        { "description": "Update go.mod dependencies", "commit": "9714738" }
+      ]
+    },
+    {
       "version": "v0.14.0",
       "date": "2026-06-07",
       "highlights": [

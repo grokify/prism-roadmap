@@ -64,6 +64,7 @@ This library provides comprehensive, machine-readable formats for planning docum
 ### Roadmap
 
 - **Roadmap** - Standalone roadmaps with phases, deliverables, and swimlane visualization
+- **Journey Roadmap** - Capability maturity evolution planning with periods, targets, and narratives
 
 ### Strategic Planning Canvases
 
@@ -87,6 +88,47 @@ Each canvas supports multiple output formats:
 - **SVG** - Rendered vector graphics (via D2 CLI)
 - **Mermaid** - Mermaid diagram syntax for documentation
 - **Lit/JSON** - Structured data for web components
+
+### Journey Roadmaps
+
+Plan capability maturity evolution over time with the `journey` package:
+
+```go
+import "github.com/grokify/prism-roadmap/journey"
+
+roadmap := journey.JourneyRoadmap{
+    ID:      "security-2026",
+    Name:    "Security Capability Roadmap 2026",
+    Periods: []journey.Period{
+        {ID: "q1-2026", Name: "Q1 2026", StartDate: "2026-01-01", EndDate: "2026-03-31"},
+        {ID: "q2-2026", Name: "Q2 2026", StartDate: "2026-04-01", EndDate: "2026-06-30"},
+    },
+    Capabilities: []journey.CapabilityJourney{
+        {
+            ID:           "sast",
+            Name:         "Static Analysis",
+            CurrentLevel: 2,
+            TargetLevel:  4,
+            Targets: []journey.CapabilityMaturityTarget{
+                {PeriodID: "q1-2026", Level: 3, Confidence: "high"},
+                {PeriodID: "q2-2026", Level: 4, Confidence: "medium"},
+            },
+        },
+    },
+}
+```
+
+Key types:
+
+| Type | Description |
+|------|-------------|
+| `JourneyRoadmap` | Root type with periods, capabilities, dependencies, teams |
+| `CapabilityJourney` | Tracks capability maturity progression |
+| `CapabilityMaturityTarget` | Target level for a period with confidence |
+| `Dependency` | Cross-capability or external dependencies |
+| `Team` | Team hierarchy with capacity assignments |
+| `Initiative` | Work items driving capability improvements |
+| `JourneyNarrative` | Executive storytelling with chapters |
 
 ### Feature Prioritization
 
@@ -997,6 +1039,27 @@ See the `examples/` directory for complete examples:
 - `examples/agent-platform.mrd.json` - Market requirements for an AI governance platform
 - `examples/agent-control-plane.prd.json` - Product requirements for the control plane
 - `examples/agent-control-plane.trd.json` - Technical requirements for implementation
+
+## TypeScript / JavaScript
+
+For TypeScript/JavaScript projects, use the unified `@grokify/prism` npm package:
+
+```bash
+npm install @grokify/prism
+```
+
+```typescript
+import { JourneyRoadmapSchema } from '@grokify/prism/schema/roadmap';
+import { renderTimelineView } from '@grokify/prism/html/roadmap';
+
+// Validate data
+const roadmap = JourneyRoadmapSchema.parse(jsonData);
+
+// Render to HTML
+const html = renderTimelineView(roadmap);
+```
+
+See [@grokify/prism on npm](https://www.npmjs.com/package/@grokify/prism) for full documentation.
 
 ## References
 
