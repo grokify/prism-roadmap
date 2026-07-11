@@ -30,14 +30,17 @@ func main() {
 
 	fmt.Printf("Generating schemas to %s...\n", absDir)
 
-	// Generate canvas schemas
-	if err := gen.GenerateCanvasSchemas(absDir); err != nil {
-		fmt.Printf("Error generating canvas schemas: %v\n", err)
+	// Generate all schemas
+	if err := gen.GenerateAll(absDir); err != nil {
+		fmt.Printf("Error generating schemas: %v\n", err)
 		os.Exit(1)
 	}
 
-	fmt.Println("Canvas schemas generated successfully!")
+	fmt.Println("Schemas generated successfully!")
 	fmt.Println("Generated files:")
+	fmt.Println("  - prd.schema.json")
+	fmt.Println("  - okr.schema.json")
+	fmt.Println("  - v2mom.schema.json")
 	fmt.Println("  - shapeup-pitch.schema.json")
 	fmt.Println("  - shapeup-bet.schema.json")
 	fmt.Println("  - shapeup-scope.schema.json")
@@ -47,4 +50,5 @@ func main() {
 	fmt.Println("  - leanstartup.schema.json")
 	fmt.Println("  - designthinking.schema.json")
 	fmt.Println("  - jtbd.schema.json")
+	fmt.Println("  - journey-roadmap.schema.json")
 }

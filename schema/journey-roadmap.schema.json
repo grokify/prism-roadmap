@@ -1,0 +1,771 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/grokify/prism-roadmap/schema/journey-roadmap.schema.json",
+  "$ref": "#/$defs/JourneyRoadmap",
+  "$defs": {
+    "CapabilityAdvance": {
+      "properties": {
+        "capabilityId": {
+          "type": "string"
+        },
+        "capabilityName": {
+          "type": "string"
+        },
+        "from": {
+          "type": "string"
+        },
+        "to": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "CapabilityJourney": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "capabilityId": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "currentState": {
+          "$ref": "#/$defs/MaturityState"
+        },
+        "targetStates": {
+          "items": {
+            "$ref": "#/$defs/TargetState"
+          },
+          "type": "array"
+        },
+        "desiredEndState": {
+          "$ref": "#/$defs/MaturityState"
+        },
+        "tags": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "metadata": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Capacity": {
+      "properties": {
+        "storyPoints": {
+          "type": "integer"
+        },
+        "ftes": {
+          "type": "number"
+        },
+        "fteMonths": {
+          "type": "number"
+        },
+        "customUnit": {
+          "type": "string"
+        },
+        "customValue": {
+          "type": "number"
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Dependency": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "from": {
+          "$ref": "#/$defs/EntityRef"
+        },
+        "to": {
+          "$ref": "#/$defs/EntityRef"
+        },
+        "type": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "risk": {
+          "type": "string"
+        },
+        "expectedResolution": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "EntityRef": {
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Initiative": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "periods": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "startPeriod": {
+          "type": "string"
+        },
+        "endPeriod": {
+          "type": "string"
+        },
+        "ownerTeam": {
+          "type": "string"
+        },
+        "contributingTeams": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "advances": {
+          "items": {
+            "$ref": "#/$defs/CapabilityAdvance"
+          },
+          "type": "array"
+        },
+        "outputs": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "expectedOutcomes": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "requiredCapacity": {
+          "$ref": "#/$defs/Capacity"
+        },
+        "confidence": {
+          "type": "number"
+        },
+        "priority": {
+          "type": "string"
+        },
+        "tags": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "links": {
+          "items": {
+            "$ref": "#/$defs/Link"
+          },
+          "type": "array"
+        },
+        "metadata": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "JourneyChapter": {
+      "properties": {
+        "periodId": {
+          "type": "string"
+        },
+        "headline": {
+          "type": "string"
+        },
+        "story": {
+          "type": "string"
+        },
+        "keyChanges": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "milestones": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "userImpact": {
+          "type": "string"
+        },
+        "risks": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "JourneyRoadmap": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "vision": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "timeModel": {
+          "$ref": "#/$defs/TimeModel"
+        },
+        "capabilityJourneys": {
+          "items": {
+            "$ref": "#/$defs/CapabilityJourney"
+          },
+          "type": "array"
+        },
+        "outcomeJourneys": {
+          "items": {
+            "$ref": "#/$defs/OutcomeJourney"
+          },
+          "type": "array"
+        },
+        "initiatives": {
+          "items": {
+            "$ref": "#/$defs/Initiative"
+          },
+          "type": "array"
+        },
+        "dependencies": {
+          "items": {
+            "$ref": "#/$defs/Dependency"
+          },
+          "type": "array"
+        },
+        "teams": {
+          "items": {
+            "$ref": "#/$defs/Team"
+          },
+          "type": "array"
+        },
+        "risks": {
+          "items": {
+            "$ref": "#/$defs/Risk"
+          },
+          "type": "array"
+        },
+        "narrative": {
+          "$ref": "#/$defs/RoadmapNarrative"
+        },
+        "scenarios": {
+          "items": {
+            "$ref": "#/$defs/Scenario"
+          },
+          "type": "array"
+        },
+        "metadata": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Link": {
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "MaturityState": {
+      "properties": {
+        "periodId": {
+          "type": "string"
+        },
+        "maturityLevel": {
+          "type": "string"
+        },
+        "summary": {
+          "type": "string"
+        },
+        "evidence": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "OutcomeJourney": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "persona": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string"
+        },
+        "currentState": {
+          "$ref": "#/$defs/OutcomeState"
+        },
+        "targetStates": {
+          "items": {
+            "$ref": "#/$defs/OutcomeTargetState"
+          },
+          "type": "array"
+        },
+        "tags": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "metadata": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "OutcomeState": {
+      "properties": {
+        "value": {
+          "type": "number"
+        },
+        "unit": {
+          "type": "string"
+        },
+        "summary": {
+          "type": "string"
+        },
+        "measuredAt": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "OutcomeTargetState": {
+      "properties": {
+        "periodId": {
+          "type": "string"
+        },
+        "value": {
+          "type": "number"
+        },
+        "unit": {
+          "type": "string"
+        },
+        "summary": {
+          "type": "string"
+        },
+        "driverCapabilities": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "driverInitiatives": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "confidence": {
+          "type": "number"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Period": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        },
+        "startDate": {
+          "type": "string"
+        },
+        "endDate": {
+          "type": "string"
+        },
+        "isCurrent": {
+          "type": "boolean"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Risk": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "probability": {
+          "type": "string"
+        },
+        "impact": {
+          "type": "string"
+        },
+        "mitigation": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "affectedPeriods": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "tags": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "RoadmapNarrative": {
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "currentState": {
+          "type": "string"
+        },
+        "turningPoint": {
+          "type": "string"
+        },
+        "journey": {
+          "items": {
+            "$ref": "#/$defs/JourneyChapter"
+          },
+          "type": "array"
+        },
+        "destination": {
+          "type": "string"
+        },
+        "callToAction": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Scenario": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "isBase": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Scope": {
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "tags": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "SuccessMeasure": {
+      "properties": {
+        "metric": {
+          "type": "string"
+        },
+        "target": {
+          "type": "number"
+        },
+        "unit": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "TargetState": {
+      "properties": {
+        "periodId": {
+          "type": "string"
+        },
+        "maturityLevel": {
+          "type": "string"
+        },
+        "summary": {
+          "type": "string"
+        },
+        "changes": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "initiatives": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "successMeasures": {
+          "items": {
+            "$ref": "#/$defs/SuccessMeasure"
+          },
+          "type": "array"
+        },
+        "confidence": {
+          "type": "number"
+        },
+        "commitment": {
+          "type": "string"
+        },
+        "assumptions": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "scenarioId": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Team": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "level": {
+          "type": "string"
+        },
+        "parentId": {
+          "type": "string"
+        },
+        "childIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "leaderId": {
+          "type": "string"
+        },
+        "leaderName": {
+          "type": "string"
+        },
+        "capacity": {
+          "$ref": "#/$defs/TeamCapacity"
+        },
+        "skills": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "costCenter": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "tags": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "metadata": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "TeamCapacity": {
+      "properties": {
+        "ftes": {
+          "type": "number"
+        },
+        "storyPointsPerSprint": {
+          "type": "integer"
+        },
+        "storyPointsPerQuarter": {
+          "type": "integer"
+        },
+        "allocatedPercent": {
+          "type": "number"
+        },
+        "reservedPercent": {
+          "type": "number"
+        },
+        "effectiveDate": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "TimeModel": {
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "startDate": {
+          "type": "string"
+        },
+        "endDate": {
+          "type": "string"
+        },
+        "periods": {
+          "items": {
+            "$ref": "#/$defs/Period"
+          },
+          "type": "array"
+        },
+        "fiscalYear": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    }
+  },
+  "title": "Journey Roadmap",
+  "description": "Schema for capability evolution roadmaps that model how capabilities, outcomes, and business value evolve over time through transitions enabled by initiatives"
+}
