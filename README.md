@@ -85,7 +85,7 @@ The **OpportunitySpec** is designed for feature-level opportunities, combining P
 Each canvas supports multiple output formats:
 
 - **D2** - D2 diagram language for high-quality diagrams
-- **SVG** - Rendered vector graphics (via D2 CLI)
+- **SVG** - Rendered vector graphics (native for BMC, OpportunitySpec, Opportunity Canvas, and Lean UX; others via D2 CLI)
 - **Mermaid** - Mermaid diagram syntax for documentation
 - **Lit/JSON** - Structured data for web components
 

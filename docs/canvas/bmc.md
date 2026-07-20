@@ -13,6 +13,10 @@ The BMC provides a visual chart with elements describing a firm's value proposit
 | Key Resources || Channels ||
 | Cost Structure ||| Revenue Streams ||
 
+### Example with Content
+
+![Business Model Canvas Example](bmc_grid_example.svg)
+
 ## Structure
 
 ```go
@@ -55,6 +59,19 @@ d2Output, _ := render.Render(c, render.FormatD2, render.BMCOptions())
 ```
 
 ## Rendering
+
+The BMC renders natively to SVG in Osterwalder's nine-block layout (no external
+tooling required), or to D2 for further processing:
+
+```go
+// Native SVG — stylized nine-block canvas
+svgOut, _ := render.Render(c, render.FormatSVG, render.DefaultOptions())
+
+// D2 — for the d2 toolchain
+d2Out, _ := render.Render(c, render.FormatD2, render.BMCOptions())
+```
+
+To convert D2 to SVG with the d2 CLI:
 
 ```bash
 d2 bmc_example.d2 bmc_example.svg
