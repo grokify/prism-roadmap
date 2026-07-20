@@ -8,11 +8,15 @@
   "releases": [
     {
       "version": "v0.15.0",
-      "date": "2026-07-11",
+      "date": "2026-07-19",
       "highlights": [
         { "description": "Add journey roadmap types for capability maturity evolution planning" },
         { "description": "Add JSON Schema generation for journey roadmap types" },
-        { "description": "Consolidate TypeScript viewer into unified @grokify/prism npm package" }
+        { "description": "Consolidate TypeScript viewer into unified @grokify/prism npm package" },
+        { "description": "Native SVG rendering for the Business Model Canvas and OpportunitySpec — no external tooling required" },
+        { "description": "New planning modules: effort estimation, market signals, and roadmap items (RMI)" },
+        { "description": "MCP (Model Context Protocol) server for prism-roadmap" },
+        { "description": "Importable canonical templates and rubrics for downstream tools" }
       ],
       "added": [
         { "description": "Add JourneyRoadmap type for capability evolution planning with periods, targets, and narratives", "commit": "0e7e4b4" },
@@ -23,14 +27,33 @@
         { "description": "Add Initiative type for work items driving capability improvements", "commit": "0e7e4b4" },
         { "description": "Add JourneyNarrative and JourneyChapter types for executive storytelling", "commit": "0e7e4b4" },
         { "description": "Add Period type for time periods with themes and current marker", "commit": "0e7e4b4" },
-        { "description": "Add JSON Schema generation for JourneyRoadmap via GenerateJourneyRoadmapSchema()", "commit": "c36f94a" }
+        { "description": "Add JSON Schema generation for JourneyRoadmap via GenerateJourneyRoadmapSchema()", "commit": "c36f94a" },
+        { "description": "Effort estimation and complexity-tracking types", "commit": "651cf3e" },
+        { "description": "Market signal aggregation types for customer demand", "commit": "023334d" },
+        { "description": "MoSCoW prioritization", "commit": "3d8ecbc" },
+        { "description": "RoadmapItem (RMI) type with integrated prioritization and effort", "commit": "cf078b5" },
+        { "description": "Cascading for goal hierarchies", "commit": "07f7bc2" },
+        { "description": "Cross-repo integration utilities", "commit": "91f0a23" },
+        { "description": "Model Context Protocol (MCP) server", "commit": "9c29a2e" },
+        { "description": "JSON Schema generation from Go types for market signal, effort estimate, complexity factors, and roadmap item", "commit": "bbd659c" },
+        { "description": "CLI commands for goals, journey, and roadmap items", "commit": "6fc0279" },
+        { "description": "Cross-repo reference validation command", "commit": "794f760" },
+        { "description": "Embedded, importable templates and rubrics packages, with a canonical Business Model Canvas template and rubric", "commit": "6f7bf45" },
+        { "description": "Native SVG renderers for the Business Model Canvas (Osterwalder nine-block) and OpportunitySpec (twelve-box) layouts", "commit": "d16df20" }
       ],
       "refactored": [
         { "description": "Remove viewer/ package in favor of unified @grokify/prism npm package", "commit": "6811b75" }
       ],
       "documentation": [
         { "description": "Update README shields", "commit": "4e9ee22" },
-        { "description": "Add v0.15.0 release notes", "commit": "" }
+        { "description": "Add v0.15.0 release notes", "commit": "" },
+        { "description": "Feature docs for effort estimation, market signals, and roadmap items", "commit": "bac7f45" },
+        { "description": "Document native SVG rendering with example canvases for BMC and OpportunitySpec", "commit": "7570f3f" }
+      ],
+      "dependencies": [
+        { "description": "Bump github.com/plexusone/structured-evaluation to v0.9.0", "commit": "145636b" },
+        { "description": "Bump actions/setup-go to v7", "commit": "6f570b7" },
+        { "description": "Add github.com/modelcontextprotocol/go-sdk for the MCP server", "commit": "c284b4a" }
       ]
     },
     {
