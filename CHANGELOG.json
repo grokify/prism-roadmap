@@ -7,6 +7,22 @@
   "maintainers": ["grokify", "johncwang@gmail.com"],
   "releases": [
     {
+      "version": "v0.16.0",
+      "date": "2026-07-20",
+      "highlights": [
+        { "description": "Canvas rubrics adopt the shared structured-evaluation rubric spec (rich weighted-criteria format)" }
+      ],
+      "breaking": [
+        { "description": "`rubrics.LoadRubric` returns `*structured-evaluation/rubric.RubricSet` instead of the former local `*Rubric` type", "commit": "27281b2" }
+      ],
+      "changed": [
+        { "description": "Reshape opportunity-spec rubric to the canonical format (`thresholds` -> `passCriteria.scoreThresholds`)", "commit": "27281b2" }
+      ],
+      "dependencies": [
+        { "description": "Bump github.com/plexusone/structured-evaluation to v0.10.0 for the rich weighted-criteria form and yaml tags", "commit": "27281b2" }
+      ]
+    },
+    {
       "version": "v0.15.0",
       "date": "2026-07-19",
       "highlights": [
