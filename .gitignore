@@ -1,14 +1,3 @@
-.DS_Store
-.env
-_*
-*.tar
-coverage.txt
-debug.test
-main
-main.zip
-/srequirements
-/cmd/srequirements/srequirements
-/splan
-/cmd/splan/splan
-/site/
-/generate
+# Build artifacts
+/validate
+*.out
