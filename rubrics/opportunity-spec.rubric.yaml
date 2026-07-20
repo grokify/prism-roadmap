@@ -60,7 +60,7 @@ categories:
         fail:
           description: Users not identified or too vague
           indicators:
-            - "All users" or "everyone"
+            - '"All users" or "everyone"'
             - No user research evident
             - Missing user section
 
@@ -82,7 +82,7 @@ categories:
         fail:
           description: Competitive landscape missing or dismissive
           indicators:
-            - "No competition" claims
+            - '"No competition" claims'
             - Missing alternatives section
             - Ignoring existing solutions
 
@@ -271,7 +271,7 @@ categories:
           description: Risks not addressed or dismissed
           indicators:
             - No risks identified
-            - "Low risk" without justification
+            - '"Low risk" without justification'
             - Missing assumptions
 
       - id: VR3
@@ -293,7 +293,7 @@ categories:
           description: No recommendation or hedged non-answer
           indicators:
             - Missing recommendation
-            - "Need more research" without specifics
+            - '"Need more research" without specifics'
             - No decision made
 
   - name: Document Quality
@@ -340,7 +340,7 @@ categories:
         fail:
           description: Multiple boxes empty or placeholder
           indicators:
-            - >3 boxes missing
+            - ">3 boxes missing"
             - Extensive placeholders
             - Clearly incomplete
 
