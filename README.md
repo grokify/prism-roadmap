@@ -35,7 +35,7 @@ This project is part of the [PRISM ecosystem](https://github.com/grokify/prism):
 |---------|---------|
 | [prism-core](https://github.com/grokify/prism-core) | Shared primitives (Person, Status, Priority, Risk, Domain) |
 | [prism-capability](https://github.com/grokify/prism-capability) | Define what capabilities exist |
-| [prism-intelligence](https://github.com/grokify/prism-intelligence) | Measure maturity with SLIs/SLOs |
+| [prism-maturity](https://github.com/grokify/prism-maturity) | Measure maturity with SLIs/SLOs |
 | **prism-roadmap** | Roadmaps, requirements, and goal frameworks (this project) |
 
 ```
