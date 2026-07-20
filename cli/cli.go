@@ -41,8 +41,10 @@ func init() {
 	// Add top-level commands
 	RootCmd.AddCommand(requirementsCmd)
 	RootCmd.AddCommand(goalsCmd)
+	RootCmd.AddCommand(journeyCmd)
 	RootCmd.AddCommand(schemaCmd)
 	RootCmd.AddCommand(mergeCmd)
+	RootCmd.AddCommand(rmiCmd)
 
 	// Add requirements subcommands
 	requirementsCmd.AddCommand(prdCmd)
@@ -52,4 +54,15 @@ func init() {
 	// Add goals subcommands
 	goalsCmd.AddCommand(v2momCmd)
 	goalsCmd.AddCommand(okrCmd)
+	goalsCmd.AddCommand(goalsCascadeCmd)
+	goalsCmd.AddCommand(goalsAlignCmd)
+	goalsCmd.AddCommand(goalsValidateCmd)
+	goalsCmd.AddCommand(goalsInitCmd)
+
+	// Add journey subcommands
+	journeyCmd.AddCommand(journeyValidateCmd)
+	journeyCmd.AddCommand(journeyGenerateCmd)
+	journeyCmd.AddCommand(journeyCheckCmd)
+	journeyCmd.AddCommand(journeyInitCmd)
+	journeyGenerateCmd.AddCommand(journeyGenerateMarkdownCmd)
 }
