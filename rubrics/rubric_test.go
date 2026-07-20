@@ -37,3 +37,16 @@ func TestLoadRichRubric(t *testing.T) {
 		t.Error("expected pass-level indicators in the rich rubric")
 	}
 }
+
+func TestRichRubricScoreThresholds(t *testing.T) {
+	r, err := LoadRubric("opportunity-spec")
+	if err != nil {
+		t.Fatalf("LoadRubric: %v", err)
+	}
+	if r.PassCriteria.ScoreThresholds == nil {
+		t.Fatal("score thresholds not parsed")
+	}
+	if r.PassCriteria.ScoreThresholds.Pass != 80 || r.PassCriteria.ScoreThresholds.Partial != 60 {
+		t.Errorf("thresholds = %+v, want pass 80 partial 60", r.PassCriteria.ScoreThresholds)
+	}
+}

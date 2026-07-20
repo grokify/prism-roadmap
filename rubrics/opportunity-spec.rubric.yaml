@@ -10,9 +10,10 @@ description: |
   12-box framework suitable for feature-level opportunity evaluation.
 
 # Scoring thresholds
-thresholds:
-  pass: 80
-  partial: 60
+passCriteria:
+  scoreThresholds:
+    pass: 80
+    partial: 60
 
 # Evaluation categories with weighted scoring
 categories:
