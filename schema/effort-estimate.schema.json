@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/grokify/prism-roadmap/schema/effort-estimate.schema.json",
+  "$ref": "#/$defs/EffortEstimate",
+  "$defs": {
+    "EffortEstimate": {
+      "properties": {
+        "person_days": {
+          "type": "integer"
+        },
+        "tshirt_size": {
+          "type": "string"
+        },
+        "confidence": {
+          "type": "string"
+        },
+        "unit": {
+          "type": "string"
+        },
+        "justification": {
+          "type": "string"
+        },
+        "estimated_by": {
+          "type": "string"
+        },
+        "estimated_date": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    }
+  },
+  "title": "Effort Estimate",
+  "description": "Schema for implementation effort estimation"
+}

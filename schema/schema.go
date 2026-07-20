@@ -99,6 +99,20 @@ const (
 
 	// JourneyRoadmapSchemaID is the canonical ID for the Journey Roadmap schema.
 	JourneyRoadmapSchemaID = "https://github.com/grokify/prism-roadmap/schema/journey-roadmap.schema.json"
+
+	// Prioritization schema IDs
+
+	// MarketSignalSchemaID is the canonical ID for the Market Signal schema.
+	MarketSignalSchemaID = "https://github.com/grokify/prism-roadmap/schema/market-signal.schema.json"
+
+	// EffortEstimateSchemaID is the canonical ID for the Effort Estimate schema.
+	EffortEstimateSchemaID = "https://github.com/grokify/prism-roadmap/schema/effort-estimate.schema.json"
+
+	// ComplexityFactorsSchemaID is the canonical ID for the Complexity Factors schema.
+	ComplexityFactorsSchemaID = "https://github.com/grokify/prism-roadmap/schema/complexity-factors.schema.json"
+
+	// RoadmapItemSchemaID is the canonical ID for the Roadmap Item schema.
+	RoadmapItemSchemaID = "https://github.com/grokify/prism-roadmap/schema/roadmap-item.schema.json"
 )
 
 // OKR Schema

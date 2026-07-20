@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/grokify/structured-plan/schema/v2mom.schema.json",
+  "$id": "https://github.com/grokify/prism-roadmap/schema/v2mom.schema.json",
   "$ref": "#/$defs/V2MOM",
   "$defs": {
     "Measure": {
