@@ -29,6 +29,10 @@ OpportunitySpec bridges the gap between user discovery and business case rigor, 
 └─────────────────────┴─────────────────────┴─────────────────────┘
 ```
 
+### Example with Content
+
+![OpportunitySpec Example](opportunity_spec_grid_example.svg)
+
 ## Row Organization
 
 | Row | Focus | Boxes |
@@ -456,6 +460,16 @@ See `rubrics/opportunity-spec.rubric.yaml` for LLM evaluation criteria with 5 we
 | Market & Timing | 20% | Market definition, timing rationale, success metrics |
 | Validation Readiness | 20% | Requirements, risks, recommendation quality |
 | Document Quality | 15% | Coherence, completeness, actionability |
+
+## Rendering
+
+The OpportunitySpec renders natively to SVG in its twelve-box (four-row) layout,
+colored by row — Discovery, Value, Market, Validation:
+
+```go
+c := canvas.NewOpportunitySpec(spec)
+svgOut, _ := render.Render(c, render.FormatSVG, render.DefaultOptions())
+```
 
 ## See Also
 

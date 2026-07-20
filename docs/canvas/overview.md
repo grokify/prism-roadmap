@@ -47,8 +47,14 @@ Each canvas supports multiple rendering formats:
 | Format | Extension | Description |
 |--------|-----------|-------------|
 | D2 | `.d2` | D2 diagram language text |
-| SVG | `.svg` | Rendered vector graphics (via D2 CLI) |
+| SVG | `.svg` | Rendered vector graphics — **native** for BMC, OpportunitySpec, Opportunity Canvas, and Lean UX; others via the D2 CLI |
 | Mermaid | `.mmd` | Mermaid diagram syntax |
+
+Native SVG needs no external tooling:
+
+```go
+svgOut, _ := render.Render(c, render.FormatSVG, render.DefaultOptions())
+```
 | Lit JSON | `.lit.json` | Structured data for Lit web components |
 | HTML | `.html` | Interactive HTML viewer |
 
@@ -107,6 +113,27 @@ render.LeanStartupOptions()      // Build-Measure-Learn cycle
 render.DesignThinkingOptions()   // 5-phase diamond layout
 render.JTBDOptions()             // Job map + forces layout
 ```
+
+## Templates & Rubrics
+
+Canonical authoring templates and evaluation rubrics for the canvases and
+documents are shipped as embedded, importable assets, so downstream tools
+consume them directly instead of copying them:
+
+```go
+import (
+    "github.com/grokify/prism-roadmap/templates"
+    "github.com/grokify/prism-roadmap/rubrics"
+)
+
+md, _ := templates.Get("bmc")            // canonical BMC template
+yaml, _ := rubrics.Get("opportunity-spec") // its evaluation rubric
+
+templates.Names() // [assumption-map bmc discovery-snapshot opportunity-spec ...]
+```
+
+`templates.FS()` and `rubrics.FS()` expose the raw `embed.FS` for tools with
+their own filesystem-based loaders.
 
 ## Architecture
 
