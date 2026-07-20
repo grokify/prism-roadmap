@@ -29,7 +29,14 @@ func (r *SVGRenderer) FileExtension() string {
 
 // Supports returns true for supported canvas types.
 func (r *SVGRenderer) Supports(canvasType canvas.CanvasType) bool {
-	return canvasType == canvas.CanvasTypeOpportunity || canvasType == canvas.CanvasTypeLeanUX
+	switch canvasType {
+	case canvas.CanvasTypeOpportunity,
+		canvas.CanvasTypeLeanUX,
+		canvas.CanvasTypeBMC,
+		canvas.CanvasTypeOpportunitySpec:
+		return true
+	}
+	return false
 }
 
 // Render converts a canvas to SVG format.
@@ -49,6 +56,16 @@ func (r *SVGRenderer) Render(c *canvas.Canvas, opts *render.Options) ([]byte, er
 			return r.renderLeanUXGrid(c.LeanUX, opts)
 		}
 		return nil, fmt.Errorf("SVG renderer only supports grid layout for Lean UX Canvas")
+	case canvas.CanvasTypeBMC:
+		if c.BMC == nil {
+			return nil, fmt.Errorf("canvas type %s has no BMC data", c.Type)
+		}
+		return r.renderBMCGrid(c.BMC, opts)
+	case canvas.CanvasTypeOpportunitySpec:
+		if c.OpportunitySpec == nil {
+			return nil, fmt.Errorf("canvas type %s has no OpportunitySpec data", c.Type)
+		}
+		return r.renderOpportunitySpecGrid(c.OpportunitySpec, opts)
 	default:
 		return nil, fmt.Errorf("SVG renderer does not support canvas type: %s", c.Type)
 	}
@@ -420,6 +437,170 @@ func formatExperiment(exp *canvas.Experiment) []string {
 		items = append(items, "Status: "+string(exp.Status))
 	}
 	return items
+}
+
+// renderBMCGrid renders a Business Model Canvas in Osterwalder's nine-block
+// layout: five columns across the top (two of them split into upper and lower
+// cells), with Cost Structure and Revenue Streams spanning the bottom.
+func (r *SVGRenderer) renderBMCGrid(bmc *canvas.BusinessModelCanvas, _ *render.Options) ([]byte, error) {
+	const (
+		startX     = 20
+		startY     = 20
+		gap        = 8
+		colWidth   = 196
+		topHeight  = 230
+		botHeight  = 90
+		halfHeight = (topHeight - gap) / 2
+	)
+
+	width := startX*2 + 5*colWidth + 4*gap
+	totalHeight := startY + topHeight + gap + botHeight + 20
+	colX := func(i int) int { return startX + i*(colWidth+gap) }
+
+	var sb strings.Builder
+	sb.WriteString(fmt.Sprintf(`<svg width="100%%" viewBox="0 0 %d %d" xmlns="http://www.w3.org/2000/svg">`, width, totalHeight))
+	sb.WriteString(fmt.Sprintf(`<title>%s</title>`, escapeXML(bmc.Metadata.Title)))
+	sb.WriteString(`<desc>Business Model Canvas - Osterwalder's 9-block structure</desc>`)
+
+	// Column 1: Key Partnerships (full height).
+	sb.WriteString(r.renderCell(colX(0), startY, colWidth, topHeight,
+		"Key Partnerships", "Who helps us",
+		mapStrings(bmc.KeyPartnerships, func(p canvas.Partnership) string { return p.Description }), blueScheme))
+
+	// Column 2: Key Activities (top) / Key Resources (bottom).
+	sb.WriteString(r.renderCell(colX(1), startY, colWidth, halfHeight,
+		"Key Activities", "What we do",
+		mapStrings(bmc.KeyActivities, func(a canvas.Activity) string { return a.Name }), blueScheme))
+	sb.WriteString(r.renderCell(colX(1), startY+halfHeight+gap, colWidth, halfHeight,
+		"Key Resources", "What we need",
+		mapStrings(bmc.KeyResources, func(x canvas.Resource) string { return x.Name }), blueScheme))
+
+	// Column 3: Value Propositions (full height, centre).
+	sb.WriteString(r.renderCell(colX(2), startY, colWidth, topHeight,
+		"Value Propositions", "The value we deliver",
+		mapStrings(bmc.ValuePropositions, func(v canvas.ValueProposition) string { return v.Description }), greenScheme))
+
+	// Column 4: Customer Relationships (top) / Channels (bottom).
+	sb.WriteString(r.renderCell(colX(3), startY, colWidth, halfHeight,
+		"Customer Relationships", "How we engage",
+		mapStrings(bmc.CustomerRelationships, func(c canvas.CustomerRelation) string { return c.Description }), orangeScheme))
+	sb.WriteString(r.renderCell(colX(3), startY+halfHeight+gap, colWidth, halfHeight,
+		"Channels", "How we reach them",
+		mapStrings(bmc.Channels, func(c canvas.Channel) string { return c.Name }), orangeScheme))
+
+	// Column 5: Customer Segments (full height).
+	sb.WriteString(r.renderCell(colX(4), startY, colWidth, topHeight,
+		"Customer Segments", "Who we serve",
+		mapStrings(bmc.CustomerSegments, func(c canvas.CustomerSegment) string { return c.Name }), orangeScheme))
+
+	// Bottom row: Cost Structure | Revenue Streams.
+	botY := startY + topHeight + gap
+	botWidth := (5*colWidth + 4*gap - gap) / 2
+	sb.WriteString(r.renderCell(startX, botY, botWidth, botHeight,
+		"Cost Structure", "What it costs to operate",
+		mapStrings(bmc.CostStructure, func(c canvas.Cost) string { return c.Description }), grayScheme))
+	sb.WriteString(r.renderCell(startX+botWidth+gap, botY, botWidth, botHeight,
+		"Revenue Streams", "How we earn",
+		mapStrings(bmc.RevenueStreams, func(x canvas.RevenueStream) string { return x.Description }), grayScheme))
+
+	sb.WriteString(`</svg>`)
+	return []byte(sb.String()), nil
+}
+
+// renderOpportunitySpecGrid renders the OpportunitySpec in its twelve-box layout
+// (four rows of three), coloured by row: Discovery, Value, Market, Validation.
+func (r *SVGRenderer) renderOpportunitySpecGrid(os *canvas.OpportunitySpec, _ *render.Options) ([]byte, error) {
+	const (
+		startX     = 40
+		startY     = 20
+		gap        = 10
+		cellWidth  = 200
+		cellHeight = 115
+	)
+
+	width := startX*2 + 3*cellWidth + 2*gap
+	totalHeight := startY + 4*(cellHeight+gap) + 10
+	colX := func(i int) int { return startX + i*(cellWidth+gap) }
+	rowY := func(i int) int { return startY + i*(cellHeight+gap) }
+
+	var sb strings.Builder
+	sb.WriteString(fmt.Sprintf(`<svg width="100%%" viewBox="0 0 %d %d" xmlns="http://www.w3.org/2000/svg">`, width, totalHeight))
+	sb.WriteString(fmt.Sprintf(`<title>%s</title>`, escapeXML(os.Metadata.Title)))
+	sb.WriteString(`<desc>OpportunitySpec - 12-box merge of Patton's Opportunity Canvas and Cagan's Opportunity Assessment</desc>`)
+
+	cell := func(col, row int, title, subtitle string, content []string, scheme colorScheme) {
+		sb.WriteString(r.renderCell(colX(col), rowY(row), cellWidth, cellHeight, title, subtitle, content, scheme))
+	}
+
+	// Row 1: Discovery (blue).
+	cell(0, 0, "1 · Users & Problem", "Who has the problem",
+		lead(os.UsersAndProblem.EstimatedUserBase, os.UsersAndProblem.AffectedPersonas), blueScheme)
+	cell(1, 0, "2 · Current Solutions", "How they solve it today",
+		concat(os.CurrentSolutions.Workarounds, os.CurrentSolutions.InternalSolutions), blueScheme)
+	cell(2, 0, "3 · Solution Ideas", "Our concepts",
+		lead(os.SolutionIdeas.RecommendedIdea, os.SolutionIdeas.AlternativesPros), blueScheme)
+
+	// Row 2: Value (green).
+	cell(0, 1, "4 · User Value", "Value to users",
+		lead(os.UserValue.ValueStatement, os.UserValue.KeyBenefits), greenScheme)
+	cell(1, 1, "5 · Business Value", "Value to the business",
+		lead(os.BusinessValue.BusinessProblem, os.BusinessValue.BusinessOutcomes), greenScheme)
+	cell(2, 1, "6 · Competitive Edge", "Why us",
+		lead(os.CompetitiveEdge.Differentiator, os.CompetitiveEdge.CoreStrengths), greenScheme)
+
+	// Row 3: Market (orange).
+	cell(0, 2, "7 · Market & Timing", "Who and why now",
+		lead(os.MarketAndTiming.PrimarySegment, os.MarketAndTiming.Industries), orangeScheme)
+	cell(1, 2, "8 · Go-to-Market", "How we reach users",
+		lead(os.GoToMarket.Strategy, os.GoToMarket.Channels), orangeScheme)
+	cell(2, 2, "9 · Success Metrics", "How we measure",
+		concat(os.SuccessMetrics.UserMetrics, os.SuccessMetrics.BusinessMetrics), orangeScheme)
+
+	// Row 4: Validation (purple).
+	cell(0, 3, "10 · Critical Requirements", "What must be true",
+		os.CriticalRequirements.MustHaveCapabilities, purpleScheme)
+	cell(1, 3, "11 · Risks & Assumptions", "What we're betting on",
+		compact([]string{os.RisksAndAssumptions.RiskiestAssumption, os.RisksAndAssumptions.HighestRisk}), purpleScheme)
+	cell(2, 3, "12 · Recommendation", "The decision",
+		compact([]string{os.Recommendation.Decision, os.Recommendation.Confidence}), purpleScheme)
+
+	sb.WriteString(`</svg>`)
+	return []byte(sb.String()), nil
+}
+
+// mapStrings projects a slice through f, dropping empty results.
+func mapStrings[T any](items []T, f func(T) string) []string {
+	out := make([]string, 0, len(items))
+	for _, it := range items {
+		if s := f(it); s != "" {
+			out = append(out, s)
+		}
+	}
+	return out
+}
+
+// lead prepends a non-empty leading string to items.
+func lead(head string, items []string) []string {
+	if head == "" {
+		return items
+	}
+	return append([]string{head}, items...)
+}
+
+// concat joins two string slices.
+func concat(a, b []string) []string {
+	return append(append([]string{}, a...), b...)
+}
+
+// compact drops empty strings.
+func compact(items []string) []string {
+	out := make([]string, 0, len(items))
+	for _, s := range items {
+		if s != "" {
+			out = append(out, s)
+		}
+	}
+	return out
 }
 
 func escapeXML(s string) string {
