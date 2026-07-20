@@ -42,7 +42,7 @@ This project is part of the [PRISM ecosystem](https://github.com/grokify/prism):
 prism-core (shared types)
          │
          ├── prism-capability ── "What we need"
-         ├── prism-intelligence ── "How we measure"
+         ├── prism-maturity ── "How we measure"
          └── prism-roadmap ── "What we build"
 ```
 
