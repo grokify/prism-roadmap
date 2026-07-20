@@ -1,6 +1,6 @@
 # Feature Prioritization
 
-prism-roadmap includes two industry-standard prioritization frameworks that integrate with OpportunitySpec: **RICE Scoring** and the **Kano Model**.
+prism-roadmap includes multiple industry-standard prioritization frameworks that integrate with OpportunitySpec: **RICE Scoring**, the **Kano Model**, and **MoSCoW Prioritization**.
 
 ## Overview
 
@@ -8,8 +8,73 @@ prism-roadmap includes two industry-standard prioritization frameworks that inte
 |-----------|---------|--------|----------|
 | **RICE** | Quantitative prioritization | Numeric score | Ranking features by ROI |
 | **Kano** | Qualitative classification | Category | Understanding customer impact |
+| **MoSCoW** | Release planning | Priority category | Sprint/release scoping |
 
-Both frameworks are embedded in `OpportunitySpec` to enable prioritization at the feature discovery stage.
+All frameworks are embedded in `OpportunitySpec` to enable prioritization at the feature discovery stage.
+
+## MoSCoW Prioritization
+
+MoSCoW is a prioritization technique used in release planning to categorize requirements by necessity.
+
+**Reference:** [Wikipedia - MoSCoW Method](https://en.wikipedia.org/wiki/MoSCoW_method)
+
+### Categories
+
+| Category | Weight | Description |
+|----------|--------|-------------|
+| **Must Have** | 4 | Critical requirements. Release fails without them. |
+| **Should Have** | 3 | Important but not critical. Can be worked around. |
+| **Could Have** | 2 | Desirable. Include if time permits. |
+| **Won't Have** | 0 | Explicitly excluded from current release scope. |
+
+### MoSCoWPriority Type
+
+```go
+type MoSCoWPriority string
+
+const (
+    MoSCoWMustHave   MoSCoWPriority = "must_have"
+    MoSCoWShouldHave MoSCoWPriority = "should_have"
+    MoSCoWCouldHave  MoSCoWPriority = "could_have"
+    MoSCoWWontHave   MoSCoWPriority = "wont_have"
+)
+```
+
+### Usage Example
+
+```go
+import "github.com/grokify/prism-roadmap/prioritization"
+
+// Get priority weight for sorting
+priority := prioritization.MoSCoWMustHave
+weight := priority.Weight() // Returns 4
+
+// Check if valid
+if priority.IsValid() {
+    fmt.Printf("Priority: %s (weight: %d)\n", priority, weight)
+}
+
+// Get all valid priorities
+allPriorities := prioritization.ValidMoSCoWPriorities()
+```
+
+### Weight Method
+
+The `Weight()` method returns a numeric value for sorting:
+
+| Priority | Weight |
+|----------|--------|
+| `must_have` | 4 |
+| `should_have` | 3 |
+| `could_have` | 2 |
+| `wont_have` | 0 |
+
+### When to Use MoSCoW
+
+- Sprint or release planning sessions
+- Negotiating scope with stakeholders
+- Making explicit trade-offs under time pressure
+- Clarifying what "out of scope" means
 
 ## RICE Scoring
 

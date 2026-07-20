@@ -99,6 +99,9 @@ nav:
       - Prioritization (RICE & Kano): canvas/prioritization.md
   - Features:
       - Scoring & Validation: features/scoring.md
+      - Market Signal: features/market-signal.md
+      - Effort Estimation: features/effort-estimation.md
+      - Roadmap Items (RMI): features/roadmap-items.md
       - Persona Library: features/persona-library.md
       - Completeness Check: features/completeness.md
   - Examples:
