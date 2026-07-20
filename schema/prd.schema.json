@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/grokify/structured-plan/schema/prd.schema.json",
+  "$id": "https://github.com/grokify/prism-roadmap/schema/prd.schema.json",
   "$ref": "#/$defs/Document",
   "$defs": {
     "APIEndpoint": {

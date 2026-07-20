@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/grokify/structured-plan/schema/okr.schema.json",
+  "$id": "https://github.com/grokify/prism-roadmap/schema/okr.schema.json",
   "$ref": "#/$defs/OKRDocument",
   "$defs": {
     "Alignment": {

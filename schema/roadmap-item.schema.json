@@ -1,0 +1,282 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/grokify/prism-roadmap/schema/roadmap-item.schema.json",
+  "$ref": "#/$defs/RoadmapItem",
+  "$defs": {
+    "ComplexityFactors": {
+      "properties": {
+        "new_architecture": {
+          "type": "boolean"
+        },
+        "new_design_ux": {
+          "type": "boolean"
+        },
+        "new_billing_sku": {
+          "type": "boolean"
+        },
+        "dependencies": {
+          "items": {
+            "$ref": "#/$defs/Dependency"
+          },
+          "type": "array"
+        },
+        "new_integration": {
+          "type": "boolean"
+        },
+        "new_compliance": {
+          "type": "boolean"
+        },
+        "new_data_model": {
+          "type": "boolean"
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Dependency": {
+      "properties": {
+        "team_id": {
+          "type": "string"
+        },
+        "team_name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "estimated_days": {
+          "type": "integer"
+        },
+        "status": {
+          "type": "string"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "EffortEstimate": {
+      "properties": {
+        "person_days": {
+          "type": "integer"
+        },
+        "tshirt_size": {
+          "type": "string"
+        },
+        "confidence": {
+          "type": "string"
+        },
+        "unit": {
+          "type": "string"
+        },
+        "justification": {
+          "type": "string"
+        },
+        "estimated_by": {
+          "type": "string"
+        },
+        "estimated_date": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "MarketSignal": {
+      "properties": {
+        "total_votes": {
+          "type": "integer"
+        },
+        "customer_count": {
+          "type": "integer"
+        },
+        "total_arr": {
+          "type": "integer"
+        },
+        "currency": {
+          "type": "string"
+        },
+        "score": {
+          "type": "number"
+        },
+        "idea_count": {
+          "type": "integer"
+        },
+        "sources": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "customer_ids": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "RICEScore": {
+      "properties": {
+        "featureId": {
+          "type": "string"
+        },
+        "featureName": {
+          "type": "string"
+        },
+        "reach": {
+          "type": "integer"
+        },
+        "reachUnit": {
+          "type": "string"
+        },
+        "impact": {
+          "type": "string"
+        },
+        "confidence": {
+          "type": "string"
+        },
+        "effort": {
+          "type": "number"
+        },
+        "effortUnit": {
+          "type": "string"
+        },
+        "score": {
+          "type": "number"
+        },
+        "reachJustification": {
+          "type": "string"
+        },
+        "impactJustification": {
+          "type": "string"
+        },
+        "confidenceJustification": {
+          "type": "string"
+        },
+        "effortJustification": {
+          "type": "string"
+        },
+        "scoredBy": {
+          "type": "string"
+        },
+        "scoredDate": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "RoadmapItem": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "moscow": {
+          "type": "string"
+        },
+        "rice": {
+          "$ref": "#/$defs/RICEScore"
+        },
+        "market_signal": {
+          "$ref": "#/$defs/MarketSignal"
+        },
+        "effort": {
+          "$ref": "#/$defs/EffortEstimate"
+        },
+        "complexity": {
+          "$ref": "#/$defs/ComplexityFactors"
+        },
+        "capability_refs": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "goal_refs": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "idea_refs": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "quarter": {
+          "type": "string"
+        },
+        "start_date": {
+          "type": "string"
+        },
+        "due_date": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "progress": {
+          "type": "integer"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "tags": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    }
+  },
+  "title": "Roadmap Item",
+  "description": "Schema for roadmap items with prioritization and effort estimation"
+}

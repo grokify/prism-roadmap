@@ -9,10 +9,13 @@ import (
 	"github.com/invopop/jsonschema"
 
 	"github.com/grokify/prism-roadmap/canvas"
+	"github.com/grokify/prism-roadmap/effort"
 	"github.com/grokify/prism-roadmap/goals/okr"
 	"github.com/grokify/prism-roadmap/goals/v2mom"
 	"github.com/grokify/prism-roadmap/journey"
 	"github.com/grokify/prism-roadmap/requirements/prd"
+	"github.com/grokify/prism-roadmap/rmi"
+	"github.com/grokify/prism-roadmap/signal"
 )
 
 // Generator creates JSON Schema files from Go types.
@@ -104,6 +107,11 @@ func (g *Generator) GenerateAll(dir string) error {
 	journeyPath := filepath.Join(dir, "journey-roadmap.schema.json")
 	if err := g.WriteJourneyRoadmapSchema(journeyPath); err != nil {
 		return fmt.Errorf("generating Journey Roadmap schema: %w", err)
+	}
+
+	// Generate prioritization schemas (MarketSignal, EffortEstimate, ComplexityFactors, RoadmapItem)
+	if err := g.GeneratePrioritizationSchemas(dir); err != nil {
+		return fmt.Errorf("generating prioritization schemas: %w", err)
 	}
 
 	// TODO: Add MRD and TRD schema generation when types are ready
@@ -553,3 +561,149 @@ func (g *Generator) GenerateJourneyRoadmapSchemaJSON() ([]byte, error) {
 func (g *Generator) WriteJourneyRoadmapSchema(path string) error {
 	return g.writeSchema(path, g.GenerateJourneyRoadmapSchemaJSON)
 }
+
+// Market Signal Schema Generation
+
+// GenerateMarketSignalSchema generates JSON Schema for the MarketSignal type.
+func (g *Generator) GenerateMarketSignalSchema() (*jsonschema.Schema, error) {
+	schema := g.Reflector.Reflect(&signal.MarketSignal{})
+	if schema == nil {
+		return nil, fmt.Errorf("failed to generate schema for signal.MarketSignal")
+	}
+
+	schema.ID = jsonschema.ID(MarketSignalSchemaID)
+	schema.Title = "Market Signal"
+	schema.Description = "Schema for aggregated customer demand signals"
+
+	return schema, nil
+}
+
+// GenerateMarketSignalSchemaJSON generates JSON Schema for MarketSignal and returns it as JSON bytes.
+func (g *Generator) GenerateMarketSignalSchemaJSON() ([]byte, error) {
+	schema, err := g.GenerateMarketSignalSchema()
+	if err != nil {
+		return nil, err
+	}
+	return json.MarshalIndent(schema, "", "  ")
+}
+
+// WriteMarketSignalSchema generates and writes the MarketSignal schema to a file.
+func (g *Generator) WriteMarketSignalSchema(path string) error {
+	return g.writeSchema(path, g.GenerateMarketSignalSchemaJSON)
+}
+
+// Effort Estimation Schema Generation
+
+// GenerateEffortEstimateSchema generates JSON Schema for the EffortEstimate type.
+func (g *Generator) GenerateEffortEstimateSchema() (*jsonschema.Schema, error) {
+	schema := g.Reflector.Reflect(&effort.EffortEstimate{})
+	if schema == nil {
+		return nil, fmt.Errorf("failed to generate schema for effort.EffortEstimate")
+	}
+
+	schema.ID = jsonschema.ID(EffortEstimateSchemaID)
+	schema.Title = "Effort Estimate"
+	schema.Description = "Schema for implementation effort estimation"
+
+	return schema, nil
+}
+
+// GenerateEffortEstimateSchemaJSON generates JSON Schema for EffortEstimate and returns it as JSON bytes.
+func (g *Generator) GenerateEffortEstimateSchemaJSON() ([]byte, error) {
+	schema, err := g.GenerateEffortEstimateSchema()
+	if err != nil {
+		return nil, err
+	}
+	return json.MarshalIndent(schema, "", "  ")
+}
+
+// WriteEffortEstimateSchema generates and writes the EffortEstimate schema to a file.
+func (g *Generator) WriteEffortEstimateSchema(path string) error {
+	return g.writeSchema(path, g.GenerateEffortEstimateSchemaJSON)
+}
+
+// GenerateComplexityFactorsSchema generates JSON Schema for the ComplexityFactors type.
+func (g *Generator) GenerateComplexityFactorsSchema() (*jsonschema.Schema, error) {
+	schema := g.Reflector.Reflect(&effort.ComplexityFactors{})
+	if schema == nil {
+		return nil, fmt.Errorf("failed to generate schema for effort.ComplexityFactors")
+	}
+
+	schema.ID = jsonschema.ID(ComplexityFactorsSchemaID)
+	schema.Title = "Complexity Factors"
+	schema.Description = "Schema for implementation complexity tracking"
+
+	return schema, nil
+}
+
+// GenerateComplexityFactorsSchemaJSON generates JSON Schema for ComplexityFactors and returns it as JSON bytes.
+func (g *Generator) GenerateComplexityFactorsSchemaJSON() ([]byte, error) {
+	schema, err := g.GenerateComplexityFactorsSchema()
+	if err != nil {
+		return nil, err
+	}
+	return json.MarshalIndent(schema, "", "  ")
+}
+
+// WriteComplexityFactorsSchema generates and writes the ComplexityFactors schema to a file.
+func (g *Generator) WriteComplexityFactorsSchema(path string) error {
+	return g.writeSchema(path, g.GenerateComplexityFactorsSchemaJSON)
+}
+
+// RoadmapItem Schema Generation
+
+// GenerateRoadmapItemSchema generates JSON Schema for the RoadmapItem type.
+func (g *Generator) GenerateRoadmapItemSchema() (*jsonschema.Schema, error) {
+	schema := g.Reflector.Reflect(&rmi.RoadmapItem{})
+	if schema == nil {
+		return nil, fmt.Errorf("failed to generate schema for rmi.RoadmapItem")
+	}
+
+	schema.ID = jsonschema.ID(RoadmapItemSchemaID)
+	schema.Title = "Roadmap Item"
+	schema.Description = "Schema for roadmap items with prioritization and effort estimation"
+
+	return schema, nil
+}
+
+// GenerateRoadmapItemSchemaJSON generates JSON Schema for RoadmapItem and returns it as JSON bytes.
+func (g *Generator) GenerateRoadmapItemSchemaJSON() ([]byte, error) {
+	schema, err := g.GenerateRoadmapItemSchema()
+	if err != nil {
+		return nil, err
+	}
+	return json.MarshalIndent(schema, "", "  ")
+}
+
+// WriteRoadmapItemSchema generates and writes the RoadmapItem schema to a file.
+func (g *Generator) WriteRoadmapItemSchema(path string) error {
+	return g.writeSchema(path, g.GenerateRoadmapItemSchemaJSON)
+}
+
+// GeneratePrioritizationSchemas generates all prioritization-related schemas to the specified directory.
+func (g *Generator) GeneratePrioritizationSchemas(dir string) error {
+	// Market Signal schema
+	if err := g.WriteMarketSignalSchema(filepath.Join(dir, "market-signal.schema.json")); err != nil {
+		return fmt.Errorf("generating MarketSignal schema: %w", err)
+	}
+
+	// Effort Estimate schema
+	if err := g.WriteEffortEstimateSchema(filepath.Join(dir, "effort-estimate.schema.json")); err != nil {
+		return fmt.Errorf("generating EffortEstimate schema: %w", err)
+	}
+
+	// Complexity Factors schema
+	if err := g.WriteComplexityFactorsSchema(filepath.Join(dir, "complexity-factors.schema.json")); err != nil {
+		return fmt.Errorf("generating ComplexityFactors schema: %w", err)
+	}
+
+	// Roadmap Item schema
+	if err := g.WriteRoadmapItemSchema(filepath.Join(dir, "roadmap-item.schema.json")); err != nil {
+		return fmt.Errorf("generating RoadmapItem schema: %w", err)
+	}
+
+	return nil
+}
+
+// MoSCoW Prioritization uses the existing prioritization.RICEScore type.
+// MoSCoWPriority is a string enum and doesn't need its own schema file.
