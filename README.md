@@ -138,6 +138,7 @@ Prioritization frameworks integrated with OpportunitySpec:
 |-----------|------|-------------|
 | **RICE** | Quantitative | Score = (Reach × Impact × Confidence) / Effort |
 | **Kano** | Qualitative | Categories: Must-Be, Performance, Attractive, Indifferent, Reverse |
+| **MoSCoW** | Release Planning | Categories: Must Have, Should Have, Could Have, Won't Have |
 
 ```go
 import "github.com/grokify/prism-roadmap/prioritization"
@@ -148,6 +149,55 @@ rice.Calculate() // Score = 1000
 
 // Kano classification
 category := prioritization.ClassifyKano(KanoLike, KanoDislike) // Performance
+
+// MoSCoW prioritization
+priority := prioritization.MoSCoWMustHave
+weight := priority.Weight() // Returns 4
+```
+
+### Market Signals & Effort Estimation
+
+Aggregate customer demand and estimate implementation effort:
+
+```go
+import (
+    "github.com/grokify/prism-roadmap/signal"
+    "github.com/grokify/prism-roadmap/effort"
+    "github.com/grokify/prism-roadmap/rmi"
+)
+
+// Market signal from customer ideas
+sig := &signal.MarketSignal{
+    TotalVotes:    150,
+    CustomerCount: 25,
+    TotalARR:      500000000, // $5M in cents
+}
+sig.CalculateScore() // Weighted score
+
+// Effort estimation with complexity
+est := &effort.EffortEstimate{
+    PersonDays: 15,
+    TShirtSize: effort.TShirtSizeMedium,
+    Confidence: effort.ConfidenceMedium,
+}
+
+// Complexity factors
+complexity := &effort.ComplexityFactors{
+    NewArchitecture: false,
+    NewDesignUX:     true,
+    Dependencies:    []effort.Dependency{{Name: "Auth API", Type: "internal"}},
+}
+
+// Roadmap Item combining all components
+item := &rmi.RoadmapItem{
+    ID:           "rmi-feature-1",
+    Name:         "Bulk Export",
+    MoSCoW:       prioritization.MoSCoWShouldHave,
+    MarketSignal: sig,
+    Effort:       est,
+    Complexity:   complexity,
+    Status:       rmi.RMIStatusApproved,
+}
 ```
 
 The natural workflow from market to implementation:
