@@ -13,8 +13,8 @@ github.com/google/jsonschema-go v0.4.3 h1:/DBOLZTfDow7pe2GmaJNhltueGTtDKICi8V8p+
 github.com/google/jsonschema-go v0.4.3/go.mod h1:r5quNTdLOYEz95Ru18zA0ydNbBuYoo9tgaYcxEYhJVE=
 github.com/grokify/priority-frameworks v0.2.0 h1:rmSJnMCSmGwNh2GTXy6OorbXPmSOvIAlTngIDv2PpzY=
 github.com/grokify/priority-frameworks v0.2.0/go.mod h1:STc3170PyAAzqxnn7anXViyFsjSvIBvt+pNb8SP3Vwk=
-github.com/grokify/prism-core v0.3.0 h1:lrSgu5hHAIp2K0+cCViRbW1dqf9fvd9EpONFg94ygpc=
-github.com/grokify/prism-core v0.3.0/go.mod h1:MGwhaaZdFW8WShYx3lqzGkcx8f07xFDbwd+u+4uBAT0=
+github.com/grokify/prism-core v0.4.0 h1:aJy92m4ls41RqfRt/FETZyDNj6ECzPtTyh8nVEtRJYU=
+github.com/grokify/prism-core v0.4.0/go.mod h1:MGwhaaZdFW8WShYx3lqzGkcx8f07xFDbwd+u+4uBAT0=
 github.com/grokify/structureddocs v0.1.0 h1:ziCUm7OeJDwKoq8KrmIm44AFDJR7UtWhgHqVEyNiGRY=
 github.com/grokify/structureddocs v0.1.0/go.mod h1:DD6ooCUwmtyLzGs12TAhRmf/PjEDNapcKH8DAnJQvzQ=
 github.com/inconshreveable/mousetrap v1.1.0 h1:wN+x4NVGpMsO7ErUn/mUI3vEoE6Jt13X2s0bqwp9tc8=
@@ -25,8 +25,8 @@ github.com/modelcontextprotocol/go-sdk v1.6.1 h1:0zOSupjKUxPKSocPT1Wtago+mUHU2/u
 github.com/modelcontextprotocol/go-sdk v1.6.1/go.mod h1:kzm3kzFL1/+AziGOE0nUs3gvPoNxMCvkxokMkuFapXQ=
 github.com/pb33f/ordered-map/v2 v2.3.1 h1:5319HDO0aw4DA4gzi+zv4FXU9UlSs3xGZ40wcP1nBjY=
 github.com/pb33f/ordered-map/v2 v2.3.1/go.mod h1:qxFQgd0PkVUtOMCkTapqotNgzRhMPL7VvaHKbd1HnmQ=
-github.com/plexusone/structured-evaluation v0.10.0 h1:fmpNtO+H6Z5GvCQx4LPDIEPXC24X6KixBJny5wUWMZY=
-github.com/plexusone/structured-evaluation v0.10.0/go.mod h1:/EeH1LVHmGq+O35LQ/VybJNLIGqpoJlR8FqKCOt2KC4=
+github.com/plexusone/structured-evaluation v0.11.0 h1:kQCpHEIaysdkVLw2C8OHfkwH+4GEHTuWftyjlIjUzIE=
+github.com/plexusone/structured-evaluation v0.11.0/go.mod h1:/EeH1LVHmGq+O35LQ/VybJNLIGqpoJlR8FqKCOt2KC4=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/russross/blackfriday/v2 v2.1.0/go.mod h1:+Rmxgy9KzJVeS9/2gXHxylqXiyQDYRxCVz55jmeOWTM=
