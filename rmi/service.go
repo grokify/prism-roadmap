@@ -8,6 +8,7 @@ import (
 	"sort"
 	"time"
 
+	"github.com/grokify/prism-roadmap/goals/okr"
 	"github.com/grokify/prism-roadmap/prioritization"
 )
 
@@ -125,10 +126,9 @@ func (s *Service) Create(input CreateInput) (*RoadmapItem, error) {
 		return nil, fmt.Errorf("item %s already exists", input.ID)
 	}
 
-	if input.MoSCoW == "" {
-		input.MoSCoW = prioritization.MoSCoWShouldHave // default
-	}
-
+	// MoSCoW is optional — empty persists as unset (not yet prioritized)
+	// rather than silently defaulting. Callers wanting a default supply it
+	// themselves (the CLI's --moscow flag defaults to should_have).
 	item := NewRoadmapItem(input.ID, input.Name, input.MoSCoW)
 	item.Description = input.Description
 	item.Quarter = input.Quarter
@@ -407,6 +407,16 @@ func (s *Service) TopByMarketSignal(n int) []RoadmapItem {
 		items = items[:n]
 	}
 	return items
+}
+
+// RICEByObjective joins this service's roadmap items to the objectives in the
+// given OKR document, returning per-objective RICE rollups ordered by total RICE
+// (highest first). Returns nil if doc is nil.
+func (s *Service) RICEByObjective(doc *okr.OKRDocument) []ObjectiveRICE {
+	if doc == nil {
+		return nil
+	}
+	return RICEByObjective(s.set.Items, doc.Objectives)
 }
 
 // ActionableItems returns all items that can be worked on.

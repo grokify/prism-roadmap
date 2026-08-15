@@ -50,7 +50,7 @@ type CreateRMIInput struct {
 	ID          string   `json:"id" jsonschema:"description=Unique item ID"`
 	Name        string   `json:"name" jsonschema:"description=Item name"`
 	Description string   `json:"description,omitempty" jsonschema:"description=Item description"`
-	MoSCoW      string   `json:"moscow" jsonschema:"description=MoSCoW priority (must_have, should_have, could_have, wont_have)"`
+	MoSCoW      string   `json:"moscow,omitempty" jsonschema:"description=Optional MoSCoW priority (must_have, should_have, could_have, wont_have); empty means not yet prioritized"`
 	Quarter     string   `json:"quarter,omitempty" jsonschema:"description=Target quarter (e.g., Q3 2026)"`
 	Owner       string   `json:"owner,omitempty" jsonschema:"description=Item owner"`
 	Tags        []string `json:"tags,omitempty" jsonschema:"description=Tags for categorization"`
@@ -225,8 +225,10 @@ func (s *Server) getRMI(ctx context.Context, req *mcp.CallToolRequest, input Get
 func (s *Server) createRMI(ctx context.Context, req *mcp.CallToolRequest, input CreateRMIInput) (*mcp.CallToolResult, CreateRMIOutput, error) {
 	svc := s.getOrCreateService(input.File)
 
+	// MoSCoW is optional — empty means not yet prioritized. Validate only
+	// when supplied (mirroring updateRMI).
 	moscow := prioritization.MoSCoWPriority(input.MoSCoW)
-	if !prioritization.IsValidMoSCoWPriority(moscow) {
+	if moscow != prioritization.MoSCoWUnspecified && !prioritization.IsValidMoSCoWPriority(moscow) {
 		return nil, CreateRMIOutput{
 			File:  filepath.Base(input.File),
 			Error: "invalid moscow priority: " + input.MoSCoW,

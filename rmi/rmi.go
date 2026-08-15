@@ -25,8 +25,10 @@ type RoadmapItem struct {
 	Name        string `json:"name"`
 	Description string `json:"description,omitempty"`
 
-	// Prioritization
-	MoSCoW       prioritization.MoSCoWPriority `json:"moscow"`
+	// Prioritization. MoSCoW is optional — empty means not yet prioritized
+	// (e.g. items imported from an external PM tool before triage). When
+	// set, it must be a valid prioritization.MoSCoWPriority value.
+	MoSCoW       prioritization.MoSCoWPriority `json:"moscow,omitempty"`
 	RICE         *prioritization.RICEScore     `json:"rice,omitempty"`
 	MarketSignal *signal.MarketSignal          `json:"market_signal,omitempty"`
 
@@ -138,10 +140,7 @@ func (r *RoadmapItem) Validate() error {
 	if r.Name == "" {
 		return fmt.Errorf("name is required")
 	}
-	if r.MoSCoW == "" {
-		return fmt.Errorf("moscow priority is required")
-	}
-	if !prioritization.IsValidMoSCoWPriority(r.MoSCoW) {
+	if r.MoSCoW != "" && !prioritization.IsValidMoSCoWPriority(r.MoSCoW) {
 		return fmt.Errorf("invalid moscow priority: %s", r.MoSCoW)
 	}
 	if r.RICE != nil {
