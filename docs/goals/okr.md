@@ -136,6 +136,47 @@ doc.Goals = &prd.GoalsAlignment{
 | Target value | Key Result target |
 | Current baseline | Key Result baseline |
 
+## Roadmap Item Linking
+
+`rmi.RoadmapItem` links to OKR objectives and key results independently of
+PRD mapping, so RICE-scored execution work can be rolled up against goals
+directly:
+
+```go
+import (
+    "github.com/grokify/prism-roadmap/rmi"
+    "github.com/grokify/prism-roadmap/goals/okr"
+)
+
+item := rmi.NewRoadmapItem("RMI-1", "Onboarding revamp", prioritization.MoSCoWMustHave).
+    WithRICE(prioritization.NewRICEScore("RMI-1", 1000, prioritization.ImpactHigh, prioritization.ConfidenceHigh, 2.0))
+
+item.AddObjectiveRef("OBJ-activation")   // supports an objective
+item.AddKeyResultRef("OBJ-activation-KR1") // advances a specific key result
+
+item.SupportsObjective("OBJ-activation") // true
+```
+
+### Rolling up RICE by objective
+
+`RICEByObjective` answers "how much prioritized effort is actually backing
+each objective?" — one `ObjectiveRICE` per objective, ordered by
+`TotalRICE` descending. Objectives with no linked items are included with
+zero aggregates, so coverage gaps stay visible instead of silently
+disappearing:
+
+```go
+rollups := rmi.RICEByObjective(items, doc.Objectives)
+for _, r := range rollups {
+    fmt.Printf("%s: total RICE %.0f across %d scored items (mean %.0f, top %.0f)\n",
+        r.ObjectiveTitle, r.TotalRICE, r.ScoredCount, r.MeanRICE, r.TopRICE)
+}
+```
+
+`rmi.UnlinkedScoredItems(items)` returns RICE-scored items with no
+`ObjectiveRefs` — prioritized work that isn't tied to any goal, worth a
+second look during planning.
+
 ## Progress Calculation
 
 ```go
