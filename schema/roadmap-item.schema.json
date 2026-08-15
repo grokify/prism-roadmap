@@ -128,6 +128,12 @@
           },
           "type": "array"
         },
+        "idea_ids": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
         "updated_at": {
           "type": "string",
           "format": "date-time"
@@ -232,6 +238,18 @@
           "type": "array"
         },
         "idea_refs": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "objective_refs": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "key_result_refs": {
           "items": {
             "type": "string"
           },
