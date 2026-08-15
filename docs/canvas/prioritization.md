@@ -115,6 +115,27 @@ Score = (Reach × Impact × Confidence) / Effort
 | `medium` | 0.8 (80%) | Some data, reasonable assumptions |
 | `low` | 0.5 (50%) | Gut feel, limited data |
 
+### Parsing and Validation
+
+`ImpactLevel` and `ConfidenceLevel` each have `IsValid()` and a
+`ParseXxxLevel()` constructor that rejects unrecognized input instead of
+silently accepting it:
+
+```go
+impact, err := prioritization.ParseImpactLevel("High") // case-insensitive
+if err != nil {
+    // unrecognized level
+}
+
+prioritization.ImpactHigh.IsValid()      // true
+prioritization.ImpactLevel("urgent").IsValid() // false
+```
+
+`RICEScore.Validate()` uses the same check: a non-empty but unrecognized
+`Impact` or `Confidence` value is rejected rather than silently falling
+back to a default multiplier in `Calculate()`. An empty value is still
+allowed (not yet estimated).
+
 ### Example Calculation
 
 ```go
