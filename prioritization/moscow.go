@@ -17,6 +17,12 @@ const (
 	MoSCoWShouldHave MoSCoWPriority = "should_have" // Important but not critical
 	MoSCoWCouldHave  MoSCoWPriority = "could_have"  // Nice to have
 	MoSCoWWontHave   MoSCoWPriority = "wont_have"   // Explicitly out of scope
+
+	// MoSCoWUnspecified is the zero value: not yet prioritized (e.g. items
+	// imported from an external PM tool before triage). It is not a valid
+	// value for IsValidMoSCoWPriority — types that allow it (such as
+	// rmi.RoadmapItem) treat it as "unset" rather than as a priority level.
+	MoSCoWUnspecified MoSCoWPriority = ""
 )
 
 // String returns the string representation.
@@ -59,7 +65,7 @@ func (m MoSCoWPriority) Description() string {
 
 // IsActionable returns true if items at this priority require action.
 func (m MoSCoWPriority) IsActionable() bool {
-	return m != MoSCoWWontHave && m != ""
+	return m != MoSCoWWontHave && m != MoSCoWUnspecified
 }
 
 // MoSCoWItem represents an item with MoSCoW prioritization.

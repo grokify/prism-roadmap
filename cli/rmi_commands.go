@@ -243,9 +243,9 @@ var rmiValidateCmd = &cobra.Command{
 	Long: `Validate a roadmap items JSON file for structural correctness.
 
 Checks:
-  - All items have required fields (ID, Name, MoSCoW)
+  - All items have required fields (ID, Name)
   - No duplicate IDs
-  - Valid MoSCoW priorities
+  - Valid MoSCoW priorities when set (MoSCoW is optional)
   - Valid RICE/Effort configurations if present
 
 Examples:
@@ -482,8 +482,10 @@ func runRMICreate(cmd *cobra.Command, args []string) error {
 		svc = rmi.NewService()
 	}
 
+	// MoSCoW is optional — the flag defaults to should_have, but an explicit
+	// --moscow="" creates an unprioritized item. Validate only when set.
 	moscow := prioritization.MoSCoWPriority(rmiCreateFlags.moscow)
-	if !prioritization.IsValidMoSCoWPriority(moscow) {
+	if moscow != prioritization.MoSCoWUnspecified && !prioritization.IsValidMoSCoWPriority(moscow) {
 		return fmt.Errorf("invalid moscow priority: %s (expected: must_have, should_have, could_have, wont_have)", rmiCreateFlags.moscow)
 	}
 

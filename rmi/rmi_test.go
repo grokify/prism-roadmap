@@ -204,12 +204,14 @@ func TestRoadmapItemValidate(t *testing.T) {
 			wantErr: true,
 		},
 		{
-			name: "missing MoSCoW",
+			// MoSCoW is optional — empty means not yet prioritized (e.g.
+			// items imported from an external PM tool before triage).
+			name: "empty MoSCoW is valid",
 			item: RoadmapItem{
 				ID:   "rmi-1",
 				Name: "Test Item",
 			},
-			wantErr: true,
+			wantErr: false,
 		},
 		{
 			name: "invalid MoSCoW",

@@ -66,6 +66,32 @@ func TestService_Create(t *testing.T) {
 	}
 }
 
+// TestService_Create_EmptyMoSCoW verifies MoSCoW is optional: an item
+// created without one persists as unset (no silent should_have default) and
+// still validates.
+func TestService_Create_EmptyMoSCoW(t *testing.T) {
+	svc, cleanup := setupTestService(t)
+	defer cleanup()
+
+	item, err := svc.Create(CreateInput{
+		ID:   "rmi-untriaged",
+		Name: "Imported from external PM tool",
+	})
+	if err != nil {
+		t.Fatalf("Create() error = %v", err)
+	}
+
+	if item.MoSCoW != prioritization.MoSCoWUnspecified {
+		t.Errorf("MoSCoW = %q, want unset (empty)", item.MoSCoW)
+	}
+	if err := item.Validate(); err != nil {
+		t.Errorf("Validate() on empty-MoSCoW item: %v", err)
+	}
+	if item.IsActionable() {
+		t.Error("IsActionable() = true for unprioritized item, want false")
+	}
+}
+
 func TestService_Create_Duplicate(t *testing.T) {
 	svc, cleanup := setupTestService(t)
 	defer cleanup()
