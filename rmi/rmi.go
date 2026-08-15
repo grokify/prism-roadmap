@@ -40,6 +40,8 @@ type RoadmapItem struct {
 	CapabilityRefs []string `json:"capability_refs,omitempty"` // prism-capability IDs
 	GoalRefs       []string `json:"goal_refs,omitempty"`       // prism-maturity goal IDs
 	IdeaRefs       []string `json:"idea_refs,omitempty"`       // ProductContext idea IDs
+	ObjectiveRefs  []string `json:"objective_refs,omitempty"`  // OKR objective IDs this item supports
+	KeyResultRefs  []string `json:"key_result_refs,omitempty"` // OKR key result IDs this item advances
 
 	// Timeline
 	Quarter   string `json:"quarter,omitempty"`    // e.g., "Q3 2026"
@@ -213,6 +215,28 @@ func (r *RoadmapItem) AddGoalRef(goalID string) {
 func (r *RoadmapItem) AddIdeaRef(ideaID string) {
 	r.IdeaRefs = append(r.IdeaRefs, ideaID)
 	r.UpdatedAt = time.Now()
+}
+
+// AddObjectiveRef links this item to an OKR objective it supports.
+func (r *RoadmapItem) AddObjectiveRef(objectiveID string) {
+	r.ObjectiveRefs = append(r.ObjectiveRefs, objectiveID)
+	r.UpdatedAt = time.Now()
+}
+
+// AddKeyResultRef links this item to an OKR key result it advances.
+func (r *RoadmapItem) AddKeyResultRef(keyResultID string) {
+	r.KeyResultRefs = append(r.KeyResultRefs, keyResultID)
+	r.UpdatedAt = time.Now()
+}
+
+// SupportsObjective reports whether this item is linked to the given objective ID.
+func (r *RoadmapItem) SupportsObjective(objectiveID string) bool {
+	for _, ref := range r.ObjectiveRefs {
+		if ref == objectiveID {
+			return true
+		}
+	}
+	return false
 }
 
 // ValidRMIStatuses returns all valid RMI statuses.
