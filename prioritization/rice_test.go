@@ -106,6 +106,70 @@ func TestImpactLevel_Multiplier(t *testing.T) {
 	}
 }
 
+func TestParseImpactLevel(t *testing.T) {
+	tests := []struct {
+		in      string
+		want    ImpactLevel
+		wantErr bool
+	}{
+		{"massive", ImpactMassive, false},
+		{"HIGH", ImpactHigh, false}, // case-insensitive
+		{"  medium  ", ImpactMedium, false},
+		{"bogus", "", true},
+		{"", "", true},
+	}
+	for _, tt := range tests {
+		got, err := ParseImpactLevel(tt.in)
+		if tt.wantErr {
+			if err == nil {
+				t.Errorf("ParseImpactLevel(%q) expected error, got nil", tt.in)
+			}
+			continue
+		}
+		if err != nil {
+			t.Errorf("ParseImpactLevel(%q) unexpected error: %v", tt.in, err)
+		}
+		if got != tt.want {
+			t.Errorf("ParseImpactLevel(%q) = %q, want %q", tt.in, got, tt.want)
+		}
+	}
+}
+
+func TestParseConfidenceLevel(t *testing.T) {
+	if got, err := ParseConfidenceLevel("High"); err != nil || got != ConfidenceHigh {
+		t.Errorf("ParseConfidenceLevel(High) = %q, %v; want high, nil", got, err)
+	}
+	if _, err := ParseConfidenceLevel("certain"); err == nil {
+		t.Error("ParseConfidenceLevel(certain) expected error, got nil")
+	}
+}
+
+func TestRICEScore_ValidateInvalidLevels(t *testing.T) {
+	// A non-empty but unrecognized impact/confidence must be rejected rather
+	// than silently multiplied by the default fallback.
+	bad := RICEScore{FeatureID: "f", Reach: 10, Impact: "gigantic", Confidence: ConfidenceHigh, Effort: 1}
+	if err := bad.Validate(); err == nil {
+		t.Error("Validate() with invalid impact = nil, want error")
+	}
+
+	bad = RICEScore{FeatureID: "f", Reach: 10, Impact: ImpactHigh, Confidence: "certain", Effort: 1}
+	if err := bad.Validate(); err == nil {
+		t.Error("Validate() with invalid confidence = nil, want error")
+	}
+
+	// A fully valid score still passes.
+	good := RICEScore{FeatureID: "f", Reach: 10, Impact: ImpactHigh, Confidence: ConfidenceHigh, Effort: 1}
+	if err := good.Validate(); err != nil {
+		t.Errorf("Validate() with valid levels = %v, want nil", err)
+	}
+
+	// Empty impact/confidence remains allowed (partial scoring in progress).
+	partial := RICEScore{FeatureID: "f", Reach: 10, Effort: 1}
+	if err := partial.Validate(); err != nil {
+		t.Errorf("Validate() with empty levels = %v, want nil", err)
+	}
+}
+
 func TestConfidenceLevel_Multiplier(t *testing.T) {
 	tests := []struct {
 		level ConfidenceLevel
