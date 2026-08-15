@@ -5,6 +5,7 @@ package prioritization
 import (
 	"fmt"
 	"sort"
+	"strings"
 )
 
 // RICE Scoring Framework
@@ -45,6 +46,26 @@ func (i ImpactLevel) String() string {
 	return string(i)
 }
 
+// IsValid reports whether i is a recognized impact level.
+func (i ImpactLevel) IsValid() bool {
+	switch i {
+	case ImpactMassive, ImpactHigh, ImpactMedium, ImpactLow, ImpactMinimal:
+		return true
+	default:
+		return false
+	}
+}
+
+// ParseImpactLevel parses a string into an ImpactLevel (case-insensitive).
+// Returns an error if the value is not a recognized level.
+func ParseImpactLevel(s string) (ImpactLevel, error) {
+	level := ImpactLevel(strings.ToLower(strings.TrimSpace(s)))
+	if !level.IsValid() {
+		return "", fmt.Errorf("invalid impact level: %q", s)
+	}
+	return level, nil
+}
+
 // ConfidenceLevel represents confidence in RICE estimates.
 type ConfidenceLevel string
 
@@ -71,6 +92,26 @@ func (c ConfidenceLevel) Multiplier() float64 {
 // String returns the string representation.
 func (c ConfidenceLevel) String() string {
 	return string(c)
+}
+
+// IsValid reports whether c is a recognized confidence level.
+func (c ConfidenceLevel) IsValid() bool {
+	switch c {
+	case ConfidenceHigh, ConfidenceMedium, ConfidenceLow:
+		return true
+	default:
+		return false
+	}
+}
+
+// ParseConfidenceLevel parses a string into a ConfidenceLevel (case-insensitive).
+// Returns an error if the value is not a recognized level.
+func ParseConfidenceLevel(s string) (ConfidenceLevel, error) {
+	level := ConfidenceLevel(strings.ToLower(strings.TrimSpace(s)))
+	if !level.IsValid() {
+		return "", fmt.Errorf("invalid confidence level: %q", s)
+	}
+	return level, nil
 }
 
 // RICEScore represents a RICE prioritization score for a feature.
@@ -136,6 +177,14 @@ func (r *RICEScore) Validate() error {
 	}
 	if r.Effort < 0 {
 		return fmt.Errorf("effort must be non-negative")
+	}
+	// A non-empty but unrecognized impact/confidence silently multiplies by the
+	// default fallback in Multiplier(), which hides data-entry errors. Reject it.
+	if r.Impact != "" && !r.Impact.IsValid() {
+		return fmt.Errorf("invalid impact level: %s", r.Impact)
+	}
+	if r.Confidence != "" && !r.Confidence.IsValid() {
+		return fmt.Errorf("invalid confidence level: %s", r.Confidence)
 	}
 	return nil
 }
