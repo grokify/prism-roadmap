@@ -4,609 +4,1721 @@
   "repository": "https://github.com/grokify/prism-roadmap",
   "versioning": "semver",
   "commitConvention": "conventional",
-  "maintainers": ["grokify", "johncwang@gmail.com"],
+  "maintainers": [
+    "grokify",
+    "johncwang@gmail.com"
+  ],
   "releases": [
+    {
+      "version": "v0.17.0",
+      "date": "2026-08-15",
+      "highlights": [
+        {
+          "description": "MoSCoW prioritization on RoadmapItem is now optional: empty means \"not yet prioritized,\" honestly representing items imported from an external PM tool before triage, instead of silently defaulting to should_have"
+        },
+        {
+          "description": "OKR objective/key-result linking: RoadmapItem gains ObjectiveRefs/KeyResultRefs, and RICEByObjective rolls up prioritized (RICE-scored) work per OKR objective, surfacing coverage gaps and unlinked scored work"
+        },
+        {
+          "description": "v2mom and continuous-discovery OST templates/rubrics land in their canonical home here, upstreamed from downstream local copies"
+        },
+        {
+          "description": "assumption-map, bmc, and discovery-snapshot rubrics migrated to the canonical structured-evaluation rich format (id, passCriteria.maxFindingsSeverity) \u2014 the same fix downstream consumers had been applying locally"
+        },
+        {
+          "description": "RICE Validate() now rejects unrecognized (non-empty) impact/confidence levels instead of silently falling back to a default multiplier"
+        }
+      ],
+      "added": [
+        {
+          "description": "RoadmapItem.ObjectiveRefs/KeyResultRefs, AddObjectiveRef/AddKeyResultRef/SupportsObjective",
+          "commit": "6c5a24c"
+        },
+        {
+          "description": "rmi.RICEByObjective and rmi.UnlinkedScoredItems for rolling up RICE-scored items per OKR objective",
+          "commit": "6c5a24c"
+        },
+        {
+          "description": "prioritization.ImpactLevel/ConfidenceLevel gain IsValid() and ParseImpactLevel()/ParseConfidenceLevel()",
+          "commit": "2d74dd9"
+        },
+        {
+          "description": "v2mom family templates and rubrics (vision, values, methods, obstacles, measures, alignment, summary) and the continuous-discovery OST template/rubric",
+          "commit": "ae5fc41"
+        }
+      ],
+      "changed": [
+        {
+          "description": "rmi.RoadmapItem.MoSCoW is optional: empty means \"not yet prioritized\" (e.g. items imported from an external PM tool before triage). Validate() only checks MoSCoW against the valid-priority set when it's set",
+          "commit": "e25f0df"
+        },
+        {
+          "description": "rmi.Service.Create no longer silently defaults an empty MoSCoW to should_have \u2014 empty persists as unset. The splan CLI's --moscow flag still defaults to should_have; pass --moscow=\"\" for an explicit unprioritized item",
+          "commit": "e25f0df"
+        },
+        {
+          "description": "RICEScore.Validate() rejects a non-empty, unrecognized Impact or Confidence value instead of silently applying a default multiplier",
+          "commit": "2d74dd9"
+        },
+        {
+          "description": "assumption-map, bmc, and discovery-snapshot rubrics rewritten from the intermediate flat format (spec_type key, no id, no passCriteria) to native structured-evaluation rich format",
+          "commit": "ededc57"
+        },
+        {
+          "description": "Regenerated JSON schemas, picking up previously-undocumented fields already present in the Go types (idea_refs on MarketSignal; objective_refs/key_result_refs on RoadmapItem)",
+          "commit": "73e49da"
+        },
+        {
+          "description": "Bumped plexusone/structured-evaluation to v0.14.0 for the layered-rubric schema",
+          "commit": "7bfcf8c"
+        }
+      ],
+      "documentation": [
+        {
+          "description": "Document optional MoSCoW semantics, the OKR objective-linking usage pattern, and add a prioritization frameworks (RICE/Kano/MoSCoW) summary table",
+          "commit": "cd0767b"
+        }
+      ]
+    },
     {
       "version": "v0.16.0",
       "date": "2026-07-20",
       "highlights": [
-        { "description": "Canvas rubrics adopt the shared structured-evaluation rubric spec (rich weighted-criteria format)" }
+        {
+          "description": "Canvas rubrics adopt the shared structured-evaluation rubric spec (rich weighted-criteria format)"
+        }
       ],
       "breaking": [
-        { "description": "`rubrics.LoadRubric` returns `*structured-evaluation/rubric.RubricSet` instead of the former local `*Rubric` type", "commit": "27281b2" }
+        {
+          "description": "`rubrics.LoadRubric` returns `*structured-evaluation/rubric.RubricSet` instead of the former local `*Rubric` type",
+          "commit": "27281b2"
+        }
       ],
       "changed": [
-        { "description": "Reshape opportunity-spec rubric to the canonical format (`thresholds` -> `passCriteria.scoreThresholds`)", "commit": "27281b2" }
+        {
+          "description": "Reshape opportunity-spec rubric to the canonical format (`thresholds` -> `passCriteria.scoreThresholds`)",
+          "commit": "27281b2"
+        }
       ],
       "dependencies": [
-        { "description": "Bump github.com/plexusone/structured-evaluation to v0.10.0 for the rich weighted-criteria form and yaml tags", "commit": "27281b2" }
+        {
+          "description": "Bump github.com/plexusone/structured-evaluation to v0.10.0 for the rich weighted-criteria form and yaml tags",
+          "commit": "27281b2"
+        }
       ]
     },
     {
       "version": "v0.15.0",
       "date": "2026-07-19",
       "highlights": [
-        { "description": "Add journey roadmap types for capability maturity evolution planning" },
-        { "description": "Add JSON Schema generation for journey roadmap types" },
-        { "description": "Consolidate TypeScript viewer into unified @grokify/prism npm package" },
-        { "description": "Native SVG rendering for the Business Model Canvas and OpportunitySpec — no external tooling required" },
-        { "description": "New planning modules: effort estimation, market signals, and roadmap items (RMI)" },
-        { "description": "MCP (Model Context Protocol) server for prism-roadmap" },
-        { "description": "Importable canonical templates and rubrics for downstream tools" }
+        {
+          "description": "Add journey roadmap types for capability maturity evolution planning"
+        },
+        {
+          "description": "Add JSON Schema generation for journey roadmap types"
+        },
+        {
+          "description": "Consolidate TypeScript viewer into unified @grokify/prism npm package"
+        },
+        {
+          "description": "Native SVG rendering for the Business Model Canvas and OpportunitySpec \u2014 no external tooling required"
+        },
+        {
+          "description": "New planning modules: effort estimation, market signals, and roadmap items (RMI)"
+        },
+        {
+          "description": "MCP (Model Context Protocol) server for prism-roadmap"
+        },
+        {
+          "description": "Importable canonical templates and rubrics for downstream tools"
+        }
       ],
       "added": [
-        { "description": "Add JourneyRoadmap type for capability evolution planning with periods, targets, and narratives", "commit": "0e7e4b4" },
-        { "description": "Add CapabilityJourney type for tracking capability maturity progression", "commit": "0e7e4b4" },
-        { "description": "Add CapabilityMaturityTarget type for period-specific maturity targets with confidence", "commit": "0e7e4b4" },
-        { "description": "Add Dependency type for cross-capability and external dependencies", "commit": "0e7e4b4" },
-        { "description": "Add Team type with hierarchy, capacity, and initiative assignments", "commit": "0e7e4b4" },
-        { "description": "Add Initiative type for work items driving capability improvements", "commit": "0e7e4b4" },
-        { "description": "Add JourneyNarrative and JourneyChapter types for executive storytelling", "commit": "0e7e4b4" },
-        { "description": "Add Period type for time periods with themes and current marker", "commit": "0e7e4b4" },
-        { "description": "Add JSON Schema generation for JourneyRoadmap via GenerateJourneyRoadmapSchema()", "commit": "c36f94a" },
-        { "description": "Effort estimation and complexity-tracking types", "commit": "651cf3e" },
-        { "description": "Market signal aggregation types for customer demand", "commit": "023334d" },
-        { "description": "MoSCoW prioritization", "commit": "3d8ecbc" },
-        { "description": "RoadmapItem (RMI) type with integrated prioritization and effort", "commit": "cf078b5" },
-        { "description": "Cascading for goal hierarchies", "commit": "07f7bc2" },
-        { "description": "Cross-repo integration utilities", "commit": "91f0a23" },
-        { "description": "Model Context Protocol (MCP) server", "commit": "9c29a2e" },
-        { "description": "JSON Schema generation from Go types for market signal, effort estimate, complexity factors, and roadmap item", "commit": "bbd659c" },
-        { "description": "CLI commands for goals, journey, and roadmap items", "commit": "6fc0279" },
-        { "description": "Cross-repo reference validation command", "commit": "794f760" },
-        { "description": "Embedded, importable templates and rubrics packages, with a canonical Business Model Canvas template and rubric", "commit": "6f7bf45" },
-        { "description": "Native SVG renderers for the Business Model Canvas (Osterwalder nine-block) and OpportunitySpec (twelve-box) layouts", "commit": "d16df20" }
+        {
+          "description": "Add JourneyRoadmap type for capability evolution planning with periods, targets, and narratives",
+          "commit": "0e7e4b4"
+        },
+        {
+          "description": "Add CapabilityJourney type for tracking capability maturity progression",
+          "commit": "0e7e4b4"
+        },
+        {
+          "description": "Add CapabilityMaturityTarget type for period-specific maturity targets with confidence",
+          "commit": "0e7e4b4"
+        },
+        {
+          "description": "Add Dependency type for cross-capability and external dependencies",
+          "commit": "0e7e4b4"
+        },
+        {
+          "description": "Add Team type with hierarchy, capacity, and initiative assignments",
+          "commit": "0e7e4b4"
+        },
+        {
+          "description": "Add Initiative type for work items driving capability improvements",
+          "commit": "0e7e4b4"
+        },
+        {
+          "description": "Add JourneyNarrative and JourneyChapter types for executive storytelling",
+          "commit": "0e7e4b4"
+        },
+        {
+          "description": "Add Period type for time periods with themes and current marker",
+          "commit": "0e7e4b4"
+        },
+        {
+          "description": "Add JSON Schema generation for JourneyRoadmap via GenerateJourneyRoadmapSchema()",
+          "commit": "c36f94a"
+        },
+        {
+          "description": "Effort estimation and complexity-tracking types",
+          "commit": "651cf3e"
+        },
+        {
+          "description": "Market signal aggregation types for customer demand",
+          "commit": "023334d"
+        },
+        {
+          "description": "MoSCoW prioritization",
+          "commit": "3d8ecbc"
+        },
+        {
+          "description": "RoadmapItem (RMI) type with integrated prioritization and effort",
+          "commit": "cf078b5"
+        },
+        {
+          "description": "Cascading for goal hierarchies",
+          "commit": "07f7bc2"
+        },
+        {
+          "description": "Cross-repo integration utilities",
+          "commit": "91f0a23"
+        },
+        {
+          "description": "Model Context Protocol (MCP) server",
+          "commit": "9c29a2e"
+        },
+        {
+          "description": "JSON Schema generation from Go types for market signal, effort estimate, complexity factors, and roadmap item",
+          "commit": "bbd659c"
+        },
+        {
+          "description": "CLI commands for goals, journey, and roadmap items",
+          "commit": "6fc0279"
+        },
+        {
+          "description": "Cross-repo reference validation command",
+          "commit": "794f760"
+        },
+        {
+          "description": "Embedded, importable templates and rubrics packages, with a canonical Business Model Canvas template and rubric",
+          "commit": "6f7bf45"
+        },
+        {
+          "description": "Native SVG renderers for the Business Model Canvas (Osterwalder nine-block) and OpportunitySpec (twelve-box) layouts",
+          "commit": "d16df20"
+        }
       ],
       "refactored": [
-        { "description": "Remove viewer/ package in favor of unified @grokify/prism npm package", "commit": "6811b75" }
+        {
+          "description": "Remove viewer/ package in favor of unified @grokify/prism npm package",
+          "commit": "6811b75"
+        }
       ],
       "documentation": [
-        { "description": "Update README shields", "commit": "4e9ee22" },
-        { "description": "Add v0.15.0 release notes", "commit": "" },
-        { "description": "Feature docs for effort estimation, market signals, and roadmap items", "commit": "bac7f45" },
-        { "description": "Document native SVG rendering with example canvases for BMC and OpportunitySpec", "commit": "7570f3f" }
+        {
+          "description": "Update README shields",
+          "commit": "4e9ee22"
+        },
+        {
+          "description": "Add v0.15.0 release notes",
+          "commit": ""
+        },
+        {
+          "description": "Feature docs for effort estimation, market signals, and roadmap items",
+          "commit": "bac7f45"
+        },
+        {
+          "description": "Document native SVG rendering with example canvases for BMC and OpportunitySpec",
+          "commit": "7570f3f"
+        }
       ],
       "dependencies": [
-        { "description": "Bump github.com/plexusone/structured-evaluation to v0.9.0", "commit": "145636b" },
-        { "description": "Bump actions/setup-go to v7", "commit": "6f570b7" },
-        { "description": "Add github.com/modelcontextprotocol/go-sdk for the MCP server", "commit": "c284b4a" }
+        {
+          "description": "Bump github.com/plexusone/structured-evaluation to v0.9.0",
+          "commit": "145636b"
+        },
+        {
+          "description": "Bump actions/setup-go to v7",
+          "commit": "6f570b7"
+        },
+        {
+          "description": "Add github.com/modelcontextprotocol/go-sdk for the MCP server",
+          "commit": "c284b4a"
+        }
       ]
     },
     {
       "version": "v0.14.1",
       "date": "2026-06-08",
       "highlights": [
-        { "description": "Dependency updates and lint fixes" }
+        {
+          "description": "Dependency updates and lint fixes"
+        }
       ],
       "changed": [
-        { "description": "Update github.com/plexusone/structured-evaluation to v0.8.0", "commit": "faa91c5" }
+        {
+          "description": "Update github.com/plexusone/structured-evaluation to v0.8.0",
+          "commit": "faa91c5"
+        }
       ],
       "fixed": [
-        { "description": "Fix gofmt lint issues", "commit": "e1e41c3" }
+        {
+          "description": "Fix gofmt lint issues",
+          "commit": "e1e41c3"
+        }
       ],
       "tests": [
-        { "description": "Add comprehensive JTBD canvas tests", "commit": "527432d" }
+        {
+          "description": "Add comprehensive JTBD canvas tests",
+          "commit": "527432d"
+        }
       ],
       "ci": [
-        { "description": "Bump actions/checkout from 6 to 7", "commit": "586cff6" }
+        {
+          "description": "Bump actions/checkout from 6 to 7",
+          "commit": "586cff6"
+        }
       ],
       "dependencies": [
-        { "description": "Update go.mod dependencies", "commit": "9714738" }
+        {
+          "description": "Update go.mod dependencies",
+          "commit": "9714738"
+        }
       ]
     },
     {
       "version": "v0.14.0",
       "date": "2026-06-07",
       "highlights": [
-        { "description": "Add strategic planning canvas types (BMC, OST, Opportunity, Feature, Lean UX, Opportunity Assessment, OpportunitySpec)" },
-        { "description": "Add multi-format canvas rendering (D2, D2-to-SVG, Mermaid, Lit/JSON)" },
-        { "description": "Add RICE and Kano prioritization scoring models" },
-        { "description": "Migrate to priority-frameworks for Priority and MoSCoW types" }
+        {
+          "description": "Add strategic planning canvas types (BMC, OST, Opportunity, Feature, Lean UX, Opportunity Assessment, OpportunitySpec)"
+        },
+        {
+          "description": "Add multi-format canvas rendering (D2, D2-to-SVG, Mermaid, Lit/JSON)"
+        },
+        {
+          "description": "Add RICE and Kano prioritization scoring models"
+        },
+        {
+          "description": "Migrate to priority-frameworks for Priority and MoSCoW types"
+        }
       ],
       "added": [
-        { "description": "Add Business Model Canvas (BMC) with 9-block structure", "commit": "d6256c3" },
-        { "description": "Add Opportunity Solution Tree (OST) with tree structure for outcome-driven discovery", "commit": "d6256c3" },
-        { "description": "Add Opportunity Canvas (Patton) with 9-block opportunity assessment", "commit": "d6256c3" },
-        { "description": "Add Opportunity Assessment (Cagan/SVPG) with 10-question go/no-go evaluation", "commit": "d6256c3" },
-        { "description": "Add OpportunitySpec merging Patton + Cagan for feature-level opportunities", "commit": "d6256c3" },
-        { "description": "Add Feature Canvas (Efimov) for feature definition and validation", "commit": "d6256c3" },
-        { "description": "Add Lean UX Canvas (Gothelf) for hypothesis-driven product design", "commit": "d6256c3" },
-        { "description": "Add D2 renderer for canvas diagram generation", "commit": "d9dad74" },
-        { "description": "Add D2-to-SVG renderer (shells out to d2 CLI)", "commit": "d9dad74" },
-        { "description": "Add Mermaid renderer for documentation integration", "commit": "d9dad74" },
-        { "description": "Add Lit/JSON renderer for web component data", "commit": "d9dad74" },
-        { "description": "Add RICE scoring model (Reach, Impact, Confidence, Effort)", "commit": "67af1e8" },
-        { "description": "Add Kano model categorization (Basic, Performance, Excitement, Indifferent, Reverse)", "commit": "67af1e8" },
-        { "description": "Add canvas JSON schema definitions", "commit": "92135fb" },
-        { "description": "Add canvas markdown templates for LLM-assisted authoring", "commit": "649739d" },
-        { "description": "Add canvas evaluation rubrics for LLM-as-Judge", "commit": "b365ab4" },
-        { "description": "Add canvas example files and generator script", "commit": "9353b8b" }
+        {
+          "description": "Add Business Model Canvas (BMC) with 9-block structure",
+          "commit": "d6256c3"
+        },
+        {
+          "description": "Add Opportunity Solution Tree (OST) with tree structure for outcome-driven discovery",
+          "commit": "d6256c3"
+        },
+        {
+          "description": "Add Opportunity Canvas (Patton) with 9-block opportunity assessment",
+          "commit": "d6256c3"
+        },
+        {
+          "description": "Add Opportunity Assessment (Cagan/SVPG) with 10-question go/no-go evaluation",
+          "commit": "d6256c3"
+        },
+        {
+          "description": "Add OpportunitySpec merging Patton + Cagan for feature-level opportunities",
+          "commit": "d6256c3"
+        },
+        {
+          "description": "Add Feature Canvas (Efimov) for feature definition and validation",
+          "commit": "d6256c3"
+        },
+        {
+          "description": "Add Lean UX Canvas (Gothelf) for hypothesis-driven product design",
+          "commit": "d6256c3"
+        },
+        {
+          "description": "Add D2 renderer for canvas diagram generation",
+          "commit": "d9dad74"
+        },
+        {
+          "description": "Add D2-to-SVG renderer (shells out to d2 CLI)",
+          "commit": "d9dad74"
+        },
+        {
+          "description": "Add Mermaid renderer for documentation integration",
+          "commit": "d9dad74"
+        },
+        {
+          "description": "Add Lit/JSON renderer for web component data",
+          "commit": "d9dad74"
+        },
+        {
+          "description": "Add RICE scoring model (Reach, Impact, Confidence, Effort)",
+          "commit": "67af1e8"
+        },
+        {
+          "description": "Add Kano model categorization (Basic, Performance, Excitement, Indifferent, Reverse)",
+          "commit": "67af1e8"
+        },
+        {
+          "description": "Add canvas JSON schema definitions",
+          "commit": "92135fb"
+        },
+        {
+          "description": "Add canvas markdown templates for LLM-assisted authoring",
+          "commit": "649739d"
+        },
+        {
+          "description": "Add canvas evaluation rubrics for LLM-as-Judge",
+          "commit": "b365ab4"
+        },
+        {
+          "description": "Add canvas example files and generator script",
+          "commit": "9353b8b"
+        }
       ],
       "changed": [
-        { "description": "Upgrade structured-evaluation to v0.7.0 with report validation and lint command", "commit": "727d9c6" },
-        { "description": "Migrate from evaluation package to rubric package (EvaluationReport → Rubric)", "commit": "ab48b15" }
+        {
+          "description": "Upgrade structured-evaluation to v0.7.0 with report validation and lint command",
+          "commit": "727d9c6"
+        },
+        {
+          "description": "Migrate from evaluation package to rubric package (EvaluationReport \u2192 Rubric)",
+          "commit": "ab48b15"
+        }
       ],
       "refactored": [
-        { "description": "Migrate to priority-frameworks for Priority and MoSCoW types", "commit": "fccc76c" },
-        { "description": "Remove aha-go dependency", "commit": "73502fc" }
+        {
+          "description": "Migrate to priority-frameworks for Priority and MoSCoW types",
+          "commit": "fccc76c"
+        },
+        {
+          "description": "Remove aha-go dependency",
+          "commit": "73502fc"
+        }
       ],
       "documentation": [
-        { "description": "Add canvas documentation for all 7 canvas types", "commit": "ae5639a" },
-        { "description": "Add canvas diagrams and rendered examples", "commit": "ae5639a" },
-        { "description": "Update README with Strategic Planning Canvases section", "commit": "1877666" },
-        { "description": "Update evaluation integration examples for rubric package rename", "commit": "4dbf7e8" }
+        {
+          "description": "Add canvas documentation for all 7 canvas types",
+          "commit": "ae5639a"
+        },
+        {
+          "description": "Add canvas diagrams and rendered examples",
+          "commit": "ae5639a"
+        },
+        {
+          "description": "Update README with Strategic Planning Canvases section",
+          "commit": "1877666"
+        },
+        {
+          "description": "Update evaluation integration examples for rubric package rename",
+          "commit": "4dbf7e8"
+        }
       ],
       "dependencies": [
-        { "description": "Add github.com/grokify/priority-frameworks v0.2.0", "commit": "fccc76c" },
-        { "description": "Upgrade github.com/plexusone/structured-evaluation from v0.6.0 to v0.7.0", "commit": "727d9c6" }
+        {
+          "description": "Add github.com/grokify/priority-frameworks v0.2.0",
+          "commit": "fccc76c"
+        },
+        {
+          "description": "Upgrade github.com/plexusone/structured-evaluation from v0.6.0 to v0.7.0",
+          "commit": "727d9c6"
+        }
       ]
     },
     {
       "version": "v0.13.0",
       "date": "2026-05-24",
       "highlights": [
-        { "description": "BREAKING: Repository renamed from grokify/prism-execution to grokify/prism-roadmap" },
-        { "description": "Add cascading goals framework specification supporting OKR and V2MOM methodologies" },
-        { "description": "Refactor CLI commands to reusable cli/ package" }
+        {
+          "description": "BREAKING: Repository renamed from grokify/prism-execution to grokify/prism-roadmap"
+        },
+        {
+          "description": "Add cascading goals framework specification supporting OKR and V2MOM methodologies"
+        },
+        {
+          "description": "Refactor CLI commands to reusable cli/ package"
+        }
       ],
       "breaking": [
-        { "description": "Go module path changed from github.com/grokify/prism-execution to github.com/grokify/prism-roadmap", "commit": "4bf42bf" }
+        {
+          "description": "Go module path changed from github.com/grokify/prism-execution to github.com/grokify/prism-roadmap",
+          "commit": "4bf42bf"
+        }
       ],
       "added": [
-        { "description": "Add cascading goals PRD with user stories, functional requirements, and data model changes", "commit": "7ba41c6" },
-        { "description": "Add cascading goals TRD with package structure, interfaces, and implementation details", "commit": "7ba41c6" },
-        { "description": "Add cascading goals ROADMAP with 3-phase implementation plan", "commit": "7ba41c6" }
+        {
+          "description": "Add cascading goals PRD with user stories, functional requirements, and data model changes",
+          "commit": "7ba41c6"
+        },
+        {
+          "description": "Add cascading goals TRD with package structure, interfaces, and implementation details",
+          "commit": "7ba41c6"
+        },
+        {
+          "description": "Add cascading goals ROADMAP with 3-phase implementation plan",
+          "commit": "7ba41c6"
+        }
       ],
       "changed": [
-        { "description": "All import paths updated to github.com/grokify/prism-roadmap", "commit": "dc360c2" }
+        {
+          "description": "All import paths updated to github.com/grokify/prism-roadmap",
+          "commit": "dc360c2"
+        }
       ],
       "refactored": [
-        { "description": "Extract CLI commands from cmd/splan/main.go to cli/ package for reusability", "commit": "3dc51d0" }
+        {
+          "description": "Extract CLI commands from cmd/splan/main.go to cli/ package for reusability",
+          "commit": "3dc51d0"
+        }
       ],
       "documentation": [
-        { "description": "Update README with new repository URLs and installation commands", "commit": "2d3a2b6" },
-        { "description": "Update all documentation files for prism-roadmap rename", "commit": "d4e638a" },
-        { "description": "Update MkDocs configuration for prism-roadmap site", "commit": "56fddef" },
-        { "description": "Update CHANGELOG for name change", "commit": "636fdf0" }
+        {
+          "description": "Update README with new repository URLs and installation commands",
+          "commit": "2d3a2b6"
+        },
+        {
+          "description": "Update all documentation files for prism-roadmap rename",
+          "commit": "d4e638a"
+        },
+        {
+          "description": "Update MkDocs configuration for prism-roadmap site",
+          "commit": "56fddef"
+        },
+        {
+          "description": "Update CHANGELOG for name change",
+          "commit": "636fdf0"
+        }
       ],
       "dependencies": [
-        { "description": "Update structured-evaluation to v0.4.0", "commit": "4bf42bf" },
-        { "description": "Update go.mod dependencies", "commit": "1b66d4f" }
+        {
+          "description": "Update structured-evaluation to v0.4.0",
+          "commit": "4bf42bf"
+        },
+        {
+          "description": "Update go.mod dependencies",
+          "commit": "1b66d4f"
+        }
       ]
     },
     {
       "version": "v0.12.0",
       "date": "2026-05-18",
       "highlights": [
-        { "description": "Integrate prism-core v0.1.0 for shared types across PRISM ecosystem" }
+        {
+          "description": "Integrate prism-core v0.1.0 for shared types across PRISM ecosystem"
+        }
       ],
       "changed": [
-        { "description": "Import Person type from prism-core instead of local definition", "commit": "0beb118" },
-        { "description": "Import DocumentStatus and Priority types from prism-core", "commit": "ba5a5cc" },
-        { "description": "Import Risk types (RiskImpact, RiskProbability, RiskStatus) from prism-core", "commit": "bc20f6b" },
-        { "description": "Import MoSCoW constants from prism-core", "commit": "ea7e732" }
+        {
+          "description": "Import Person type from prism-core instead of local definition",
+          "commit": "0beb118"
+        },
+        {
+          "description": "Import DocumentStatus and Priority types from prism-core",
+          "commit": "ba5a5cc"
+        },
+        {
+          "description": "Import Risk types (RiskImpact, RiskProbability, RiskStatus) from prism-core",
+          "commit": "bc20f6b"
+        },
+        {
+          "description": "Import MoSCoW constants from prism-core",
+          "commit": "ea7e732"
+        }
       ],
       "dependencies": [
-        { "description": "Add github.com/grokify/prism-core v0.1.0", "commit": "87a2b50" }
+        {
+          "description": "Add github.com/grokify/prism-core v0.1.0",
+          "commit": "87a2b50"
+        }
       ],
       "documentation": [
-        { "description": "Add v0.12.0 release notes documenting prism-core integration" }
+        {
+          "description": "Add v0.12.0 release notes documenting prism-core integration"
+        }
       ]
     },
     {
       "version": "v0.11.0",
       "date": "2026-05-17",
       "highlights": [
-        { "description": "Repository renamed from grokify/structured-plan to grokify/prism-execution" },
-        { "description": "Part of PRISM ecosystem consolidation with prism-capability and prism-intelligence" }
+        {
+          "description": "Repository renamed from grokify/structured-plan to grokify/prism-execution"
+        },
+        {
+          "description": "Part of PRISM ecosystem consolidation with prism-capability and prism-intelligence"
+        }
       ],
       "breaking": [
-        { "description": "Go module path changed from github.com/grokify/structured-plan to github.com/grokify/prism-execution", "commit": "d658dbc" }
+        {
+          "description": "Go module path changed from github.com/grokify/structured-plan to github.com/grokify/prism-execution",
+          "commit": "d658dbc"
+        }
       ],
       "changed": [
-        { "description": "All import paths updated to github.com/grokify/prism-execution", "commit": "d658dbc" },
-        { "description": "JSON Schema $id URLs updated to prism-execution", "commit": "2963d76" },
-        { "description": "README badges and installation instructions updated", "commit": "03a7253" }
+        {
+          "description": "All import paths updated to github.com/grokify/prism-execution",
+          "commit": "d658dbc"
+        },
+        {
+          "description": "JSON Schema $id URLs updated to prism-execution",
+          "commit": "2963d76"
+        },
+        {
+          "description": "README badges and installation instructions updated",
+          "commit": "03a7253"
+        }
       ],
       "documentation": [
-        { "description": "Updated README with new repository URLs and installation commands", "commit": "03a7253" },
-        { "description": "Updated all documentation files for prism-execution rename", "commit": "86a446f" }
+        {
+          "description": "Updated README with new repository URLs and installation commands",
+          "commit": "03a7253"
+        },
+        {
+          "description": "Updated all documentation files for prism-execution rename",
+          "commit": "86a446f"
+        }
       ]
     },
     {
       "version": "v0.10.0",
       "date": "2026-04-26",
       "highlights": [
-        { "description": "Add rollout status tracking for B2B SaaS deployments with phased rollout waves", "commit": "ec9511c" }
+        {
+          "description": "Add rollout status tracking for B2B SaaS deployments with phased rollout waves",
+          "commit": "ec9511c"
+        }
       ],
       "added": [
-        { "description": "Add `RolloutStatus` type with deployment and adoption tracking for B2B SaaS deliverables", "commit": "ec9511c" },
-        { "description": "Add `RolloutStage` enum: `not_started`, `rolling_out`, `deployed`, `adopted`, `paused`, `rolled_back`", "commit": "ec9511c" },
-        { "description": "Add `RolloutWave` type for phased rollout tracking (beta, GA waves)", "commit": "ec9511c" },
-        { "description": "Add `DeploymentPercent()` method returning percentage of customers with feature deployed", "commit": "ec9511c" },
-        { "description": "Add `AdoptionPercent()` method returning percentage of customers actively using feature", "commit": "ec9511c" },
-        { "description": "Add `AdoptionOfDeployed()` method for adoption relative to deployed customers", "commit": "ec9511c" },
-        { "description": "Add `IsFullyDeployed()` method to check if all customers have feature deployed", "commit": "ec9511c" },
-        { "description": "Add `Rollout` field to `Deliverable` for optional B2B deployment tracking", "commit": "ec9511c" },
-        { "description": "Add `ComplianceRequirement` type to PRD schema for regulatory standards tracking", "commit": "c2c8b15" }
+        {
+          "description": "Add `RolloutStatus` type with deployment and adoption tracking for B2B SaaS deliverables",
+          "commit": "ec9511c"
+        },
+        {
+          "description": "Add `RolloutStage` enum: `not_started`, `rolling_out`, `deployed`, `adopted`, `paused`, `rolled_back`",
+          "commit": "ec9511c"
+        },
+        {
+          "description": "Add `RolloutWave` type for phased rollout tracking (beta, GA waves)",
+          "commit": "ec9511c"
+        },
+        {
+          "description": "Add `DeploymentPercent()` method returning percentage of customers with feature deployed",
+          "commit": "ec9511c"
+        },
+        {
+          "description": "Add `AdoptionPercent()` method returning percentage of customers actively using feature",
+          "commit": "ec9511c"
+        },
+        {
+          "description": "Add `AdoptionOfDeployed()` method for adoption relative to deployed customers",
+          "commit": "ec9511c"
+        },
+        {
+          "description": "Add `IsFullyDeployed()` method to check if all customers have feature deployed",
+          "commit": "ec9511c"
+        },
+        {
+          "description": "Add `Rollout` field to `Deliverable` for optional B2B deployment tracking",
+          "commit": "ec9511c"
+        },
+        {
+          "description": "Add `ComplianceRequirement` type to PRD schema for regulatory standards tracking",
+          "commit": "c2c8b15"
+        }
       ],
       "tests": [
-        { "description": "Add comprehensive tests for `RolloutStatus` methods and `RolloutWave` tracking", "commit": "ec9511c" }
+        {
+          "description": "Add comprehensive tests for `RolloutStatus` methods and `RolloutWave` tracking",
+          "commit": "ec9511c"
+        }
       ],
       "dependencies": [
-        { "description": "Update `github.com/invopop/jsonschema` from 0.13.0 to 0.14.0", "commit": "ee5cefc" }
+        {
+          "description": "Update `github.com/invopop/jsonschema` from 0.13.0 to 0.14.0",
+          "commit": "ee5cefc"
+        }
       ]
     },
     {
       "version": "v0.9.0",
       "date": "2026-03-16",
       "highlights": [
-        { "description": "Add compliance requirements support for regulatory standards tracking (GDPR, SOC2, HIPAA, PCI-DSS, WCAG, FedRAMP)", "commit": "25a76db" },
-        { "description": "Add requirements-by-phase view consolidating all requirements for execution planning", "commit": "531117f" },
-        { "description": "Add NFR category display names for improved rendering", "commit": "25a76db" }
+        {
+          "description": "Add compliance requirements support for regulatory standards tracking (GDPR, SOC2, HIPAA, PCI-DSS, WCAG, FedRAMP)",
+          "commit": "25a76db"
+        },
+        {
+          "description": "Add requirements-by-phase view consolidating all requirements for execution planning",
+          "commit": "531117f"
+        },
+        {
+          "description": "Add NFR category display names for improved rendering",
+          "commit": "25a76db"
+        }
       ],
       "added": [
-        { "description": "Add `ComplianceRequirement` type with fields for standard, control reference, geographic scope, effective date, audit frequency, evidence requirements, certification, and penalties", "commit": "25a76db" },
-        { "description": "Add `ComplianceCategory` enum: `data_privacy`, `security`, `healthcare`, `financial`, `accessibility`, `government`, `industry`", "commit": "25a76db" },
-        { "description": "Add `ComplianceStatus` enum: `not_started`, `in_progress`, `compliant`, `non_compliant`", "commit": "25a76db" },
-        { "description": "Add `ComplianceCategoryDisplayNames` and `NFRCategoryDisplayNames` maps for human-readable category names", "commit": "25a76db" },
-        { "description": "Add compliance requirement ID uniqueness and tag validation", "commit": "25a76db" },
-        { "description": "Add compliance requirements scoring in `scoreRequirementsQuality()` with bonus for multiple categories and evidence requirements", "commit": "2d2dbf7" },
-        { "description": "Add compliance requirements completeness check with optional bonus scoring", "commit": "2d2dbf7" },
-        { "description": "Add compliance requirements to tag-based filtering", "commit": "2d2dbf7" },
-        { "description": "Add `generateComplianceRequirements()` rendering grouped by category", "commit": "531117f" },
-        { "description": "Add `generateRequirementsByPhase()` consolidating all requirement types by roadmap phase", "commit": "531117f" },
-        { "description": "Add natural sorting for requirement IDs (FR-2 sorts before FR-10)", "commit": "531117f" },
-        { "description": "Add priority-based sorting for requirements (Must → Should → Could → Won't)", "commit": "531117f" },
-        { "description": "Add `HasSection()` support for `SectionComplianceReqs` and `SectionRequirementsByPhase`", "commit": "531117f" },
-        { "description": "Add `hasRequirementsWithPhases()` helper to detect phase-assigned requirements", "commit": "531117f" },
-        { "description": "Add `SectionComplianceReqs` and `SectionRequirementsByPhase` to all PRD type templates", "commit": "531117f" }
+        {
+          "description": "Add `ComplianceRequirement` type with fields for standard, control reference, geographic scope, effective date, audit frequency, evidence requirements, certification, and penalties",
+          "commit": "25a76db"
+        },
+        {
+          "description": "Add `ComplianceCategory` enum: `data_privacy`, `security`, `healthcare`, `financial`, `accessibility`, `government`, `industry`",
+          "commit": "25a76db"
+        },
+        {
+          "description": "Add `ComplianceStatus` enum: `not_started`, `in_progress`, `compliant`, `non_compliant`",
+          "commit": "25a76db"
+        },
+        {
+          "description": "Add `ComplianceCategoryDisplayNames` and `NFRCategoryDisplayNames` maps for human-readable category names",
+          "commit": "25a76db"
+        },
+        {
+          "description": "Add compliance requirement ID uniqueness and tag validation",
+          "commit": "25a76db"
+        },
+        {
+          "description": "Add compliance requirements scoring in `scoreRequirementsQuality()` with bonus for multiple categories and evidence requirements",
+          "commit": "2d2dbf7"
+        },
+        {
+          "description": "Add compliance requirements completeness check with optional bonus scoring",
+          "commit": "2d2dbf7"
+        },
+        {
+          "description": "Add compliance requirements to tag-based filtering",
+          "commit": "2d2dbf7"
+        },
+        {
+          "description": "Add `generateComplianceRequirements()` rendering grouped by category",
+          "commit": "531117f"
+        },
+        {
+          "description": "Add `generateRequirementsByPhase()` consolidating all requirement types by roadmap phase",
+          "commit": "531117f"
+        },
+        {
+          "description": "Add natural sorting for requirement IDs (FR-2 sorts before FR-10)",
+          "commit": "531117f"
+        },
+        {
+          "description": "Add priority-based sorting for requirements (Must \u2192 Should \u2192 Could \u2192 Won't)",
+          "commit": "531117f"
+        },
+        {
+          "description": "Add `HasSection()` support for `SectionComplianceReqs` and `SectionRequirementsByPhase`",
+          "commit": "531117f"
+        },
+        {
+          "description": "Add `hasRequirementsWithPhases()` helper to detect phase-assigned requirements",
+          "commit": "531117f"
+        },
+        {
+          "description": "Add `SectionComplianceReqs` and `SectionRequirementsByPhase` to all PRD type templates",
+          "commit": "531117f"
+        }
       ],
       "changed": [
-        { "description": "Update `Requirements` struct to include `Compliance` field", "commit": "25a76db" },
-        { "description": "Update all section ordering templates (default, strategy, feature, technical) with compliance requirements", "commit": "531117f" }
+        {
+          "description": "Update `Requirements` struct to include `Compliance` field",
+          "commit": "25a76db"
+        },
+        {
+          "description": "Update all section ordering templates (default, strategy, feature, technical) with compliance requirements",
+          "commit": "531117f"
+        }
       ]
     },
     {
       "version": "v0.8.0",
       "date": "2026-02-08",
       "highlights": [
-        { "description": "Add markdown rendering for 8 extended PRD sections (Problem, Market, Solution, Decisions, Reviews, RevisionHistory, NonGoals, SuccessMetrics)", "commit": "1507c7b" },
-        { "description": "Add structured `NonGoals` and `SuccessMetrics` fields to PRD Document type", "commit": "1507c7b" },
-        { "description": "Add completeness scoring for all 8 new optional sections", "commit": "1507c7b" },
-        { "description": "Add configurable section ordering with PRD type templates (strategy, feature, technical)", "commit": "e012832" }
+        {
+          "description": "Add markdown rendering for 8 extended PRD sections (Problem, Market, Solution, Decisions, Reviews, RevisionHistory, NonGoals, SuccessMetrics)",
+          "commit": "1507c7b"
+        },
+        {
+          "description": "Add structured `NonGoals` and `SuccessMetrics` fields to PRD Document type",
+          "commit": "1507c7b"
+        },
+        {
+          "description": "Add completeness scoring for all 8 new optional sections",
+          "commit": "1507c7b"
+        },
+        {
+          "description": "Add configurable section ordering with PRD type templates (strategy, feature, technical)",
+          "commit": "e012832"
+        }
       ],
       "added": [
-        { "description": "Add `generateProblem()` rendering for problem statement, evidence table, root causes, affected segments", "commit": "1507c7b" },
-        { "description": "Add `generateMarket()` rendering for alternatives table, strengths/weaknesses, differentiation, market risks", "commit": "1507c7b" },
-        { "description": "Add `generateSolution()` rendering for solution options table with selection indicator, benefits/tradeoffs/risks", "commit": "1507c7b" },
-        { "description": "Add `generateDecisions()` rendering for decision records table with alternatives considered", "commit": "1507c7b" },
-        { "description": "Add `generateReviews()` rendering for review decision badge, quality scores, blockers, revision triggers", "commit": "1507c7b" },
-        { "description": "Add `generateRevisionHistory()` rendering for version history table", "commit": "1507c7b" },
-        { "description": "Add `generateNonGoals()` rendering for structured non-goals table", "commit": "1507c7b" },
-        { "description": "Add `generateSuccessMetrics()` rendering for north star, supporting, and guardrail metrics", "commit": "1507c7b" },
-        { "description": "Add `SuccessMetrics` type with `NorthStar`, `Supporting`, and `Guardrail` metric arrays", "commit": "1507c7b" },
-        { "description": "Add `Metric` type with ID, name, description, baseline, target, and measurement method", "commit": "1507c7b" },
-        { "description": "Add `NonGoals` field to PRD Document for structured non-goals with rationale", "commit": "1507c7b" },
-        { "description": "Add `SuccessMetrics` field to PRD Document for organized success metrics", "commit": "1507c7b" },
-        { "description": "Add `checkProblem()` completeness function for problem definition scoring", "commit": "1507c7b" },
-        { "description": "Add `checkMarket()` completeness function for market analysis scoring", "commit": "1507c7b" },
-        { "description": "Add `checkSolution()` completeness function for solution section scoring", "commit": "1507c7b" },
-        { "description": "Add `checkDecisions()` completeness function for decisions scoring", "commit": "1507c7b" },
-        { "description": "Add `checkReviews()` completeness function for reviews scoring", "commit": "1507c7b" },
-        { "description": "Add `checkRevisionHistory()` completeness function for revision history scoring", "commit": "1507c7b" },
-        { "description": "Add `checkNonGoals()` completeness function for non-goals scoring", "commit": "1507c7b" },
-        { "description": "Add `checkSuccessMetrics()` completeness function for success metrics scoring", "commit": "1507c7b" },
-        { "description": "Add TOC entries for all 8 new sections in `generateTableOfContents()`", "commit": "1507c7b" },
-        { "description": "Add `SectionID` type and constants for all 27 PRD sections", "commit": "e012832" },
-        { "description": "Add `PRDType` enum with `strategy`, `feature`, `technical` templates for section ordering", "commit": "e012832" },
-        { "description": "Add `--type` CLI flag to select PRD type template for section ordering", "commit": "e012832" },
-        { "description": "Add `--order` CLI flag to specify custom section order (comma-separated IDs)", "commit": "e012832" },
-        { "description": "Add `list-sections` subcommand to display available section IDs", "commit": "e012832" },
-        { "description": "Add `HasSection()` method to check if a section has content", "commit": "e012832" },
-        { "description": "Add `GetSectionOrder()` method to get section order based on PRDType or custom order", "commit": "e012832" },
-        { "description": "Add `GetActiveSections()` method to get only sections with content", "commit": "e012832" },
-        { "description": "Add `PRDType` and `SectionOrder` fields to PRD Metadata", "commit": "e012832" }
+        {
+          "description": "Add `generateProblem()` rendering for problem statement, evidence table, root causes, affected segments",
+          "commit": "1507c7b"
+        },
+        {
+          "description": "Add `generateMarket()` rendering for alternatives table, strengths/weaknesses, differentiation, market risks",
+          "commit": "1507c7b"
+        },
+        {
+          "description": "Add `generateSolution()` rendering for solution options table with selection indicator, benefits/tradeoffs/risks",
+          "commit": "1507c7b"
+        },
+        {
+          "description": "Add `generateDecisions()` rendering for decision records table with alternatives considered",
+          "commit": "1507c7b"
+        },
+        {
+          "description": "Add `generateReviews()` rendering for review decision badge, quality scores, blockers, revision triggers",
+          "commit": "1507c7b"
+        },
+        {
+          "description": "Add `generateRevisionHistory()` rendering for version history table",
+          "commit": "1507c7b"
+        },
+        {
+          "description": "Add `generateNonGoals()` rendering for structured non-goals table",
+          "commit": "1507c7b"
+        },
+        {
+          "description": "Add `generateSuccessMetrics()` rendering for north star, supporting, and guardrail metrics",
+          "commit": "1507c7b"
+        },
+        {
+          "description": "Add `SuccessMetrics` type with `NorthStar`, `Supporting`, and `Guardrail` metric arrays",
+          "commit": "1507c7b"
+        },
+        {
+          "description": "Add `Metric` type with ID, name, description, baseline, target, and measurement method",
+          "commit": "1507c7b"
+        },
+        {
+          "description": "Add `NonGoals` field to PRD Document for structured non-goals with rationale",
+          "commit": "1507c7b"
+        },
+        {
+          "description": "Add `SuccessMetrics` field to PRD Document for organized success metrics",
+          "commit": "1507c7b"
+        },
+        {
+          "description": "Add `checkProblem()` completeness function for problem definition scoring",
+          "commit": "1507c7b"
+        },
+        {
+          "description": "Add `checkMarket()` completeness function for market analysis scoring",
+          "commit": "1507c7b"
+        },
+        {
+          "description": "Add `checkSolution()` completeness function for solution section scoring",
+          "commit": "1507c7b"
+        },
+        {
+          "description": "Add `checkDecisions()` completeness function for decisions scoring",
+          "commit": "1507c7b"
+        },
+        {
+          "description": "Add `checkReviews()` completeness function for reviews scoring",
+          "commit": "1507c7b"
+        },
+        {
+          "description": "Add `checkRevisionHistory()` completeness function for revision history scoring",
+          "commit": "1507c7b"
+        },
+        {
+          "description": "Add `checkNonGoals()` completeness function for non-goals scoring",
+          "commit": "1507c7b"
+        },
+        {
+          "description": "Add `checkSuccessMetrics()` completeness function for success metrics scoring",
+          "commit": "1507c7b"
+        },
+        {
+          "description": "Add TOC entries for all 8 new sections in `generateTableOfContents()`",
+          "commit": "1507c7b"
+        },
+        {
+          "description": "Add `SectionID` type and constants for all 27 PRD sections",
+          "commit": "e012832"
+        },
+        {
+          "description": "Add `PRDType` enum with `strategy`, `feature`, `technical` templates for section ordering",
+          "commit": "e012832"
+        },
+        {
+          "description": "Add `--type` CLI flag to select PRD type template for section ordering",
+          "commit": "e012832"
+        },
+        {
+          "description": "Add `--order` CLI flag to specify custom section order (comma-separated IDs)",
+          "commit": "e012832"
+        },
+        {
+          "description": "Add `list-sections` subcommand to display available section IDs",
+          "commit": "e012832"
+        },
+        {
+          "description": "Add `HasSection()` method to check if a section has content",
+          "commit": "e012832"
+        },
+        {
+          "description": "Add `GetSectionOrder()` method to get section order based on PRDType or custom order",
+          "commit": "e012832"
+        },
+        {
+          "description": "Add `GetActiveSections()` method to get only sections with content",
+          "commit": "e012832"
+        },
+        {
+          "description": "Add `PRDType` and `SectionOrder` fields to PRD Metadata",
+          "commit": "e012832"
+        }
       ],
       "changed": [
-        { "description": "Update `OptionalTotal` from 8 to 16 sections in completeness scoring", "commit": "1507c7b" },
-        { "description": "Regenerate PRD JSON schema with `nonGoals` and `successMetrics` fields", "commit": "fe1b86f" },
-        { "description": "Remove hardcoded section numbers from markdown headers for dynamic ordering", "commit": "e012832" },
-        { "description": "Refactor `ToMarkdown()` to use `renderSection()` dispatcher with dynamic ordering", "commit": "e012832" },
-        { "description": "Split `generateRequirements()` into `generateFunctionalRequirements()` and `generateNonFunctionalRequirements()`", "commit": "e012832" }
+        {
+          "description": "Update `OptionalTotal` from 8 to 16 sections in completeness scoring",
+          "commit": "1507c7b"
+        },
+        {
+          "description": "Regenerate PRD JSON schema with `nonGoals` and `successMetrics` fields",
+          "commit": "fe1b86f"
+        },
+        {
+          "description": "Remove hardcoded section numbers from markdown headers for dynamic ordering",
+          "commit": "e012832"
+        },
+        {
+          "description": "Refactor `ToMarkdown()` to use `renderSection()` dispatcher with dynamic ordering",
+          "commit": "e012832"
+        },
+        {
+          "description": "Split `generateRequirements()` into `generateFunctionalRequirements()` and `generateNonFunctionalRequirements()`",
+          "commit": "e012832"
+        }
       ],
       "fixed": [
-        { "description": "Add blank lines before lists in markdown for Pandoc PDF compatibility", "commit": "e012832" }
+        {
+          "description": "Add blank lines before lists in markdown for Pandoc PDF compatibility",
+          "commit": "e012832"
+        }
       ],
       "tests": [
-        { "description": "Add tests for all 8 `generateX()` rendering functions", "commit": "29b0701" },
-        { "description": "Add JSON round-trip tests for `SuccessMetrics` and `Metric` types", "commit": "29b0701" },
-        { "description": "Update completeness test expectations for 23 sections (7 required + 16 optional)", "commit": "29b0701" },
-        { "description": "Add tests for section ordering (strategy, feature, technical templates)", "commit": "e012832" },
-        { "description": "Add tests for `HasSection()`, `GetSectionOrder()`, `GetActiveSections()` methods", "commit": "e012832" },
-        { "description": "Add tests for `CompleteSectionOrder()` and `ValidateSectionOrder()` functions", "commit": "e012832" }
+        {
+          "description": "Add tests for all 8 `generateX()` rendering functions",
+          "commit": "29b0701"
+        },
+        {
+          "description": "Add JSON round-trip tests for `SuccessMetrics` and `Metric` types",
+          "commit": "29b0701"
+        },
+        {
+          "description": "Update completeness test expectations for 23 sections (7 required + 16 optional)",
+          "commit": "29b0701"
+        },
+        {
+          "description": "Add tests for section ordering (strategy, feature, technical templates)",
+          "commit": "e012832"
+        },
+        {
+          "description": "Add tests for `HasSection()`, `GetSectionOrder()`, `GetActiveSections()` methods",
+          "commit": "e012832"
+        },
+        {
+          "description": "Add tests for `CompleteSectionOrder()` and `ValidateSectionOrder()` functions",
+          "commit": "e012832"
+        }
       ],
       "documentation": [
-        { "description": "Add v0.8.0 release notes with extended section rendering examples", "commit": "5fb7d15" },
-        { "description": "Update README PRD section table with new optional sections", "commit": "5fb7d15" },
-        { "description": "Update PRD documentation with extended sections", "commit": "5fb7d15" }
+        {
+          "description": "Add v0.8.0 release notes with extended section rendering examples",
+          "commit": "5fb7d15"
+        },
+        {
+          "description": "Update README PRD section table with new optional sections",
+          "commit": "5fb7d15"
+        },
+        {
+          "description": "Update PRD documentation with extended sections",
+          "commit": "5fb7d15"
+        }
       ]
     },
     {
       "version": "v0.7.0",
       "date": "2026-02-02",
       "highlights": [
-        { "description": "Add PRD schema types for platform/infrastructure PRDs with microservices support", "commit": "2b8dc56" },
-        { "description": "Add markdown rendering for technical architecture enhancements", "commit": "48be2d0" },
-        { "description": "Add completeness scoring for in-scope and related documents sections", "commit": "2004120" }
+        {
+          "description": "Add PRD schema types for platform/infrastructure PRDs with microservices support",
+          "commit": "2b8dc56"
+        },
+        {
+          "description": "Add markdown rendering for technical architecture enhancements",
+          "commit": "48be2d0"
+        },
+        {
+          "description": "Add completeness scoring for in-scope and related documents sections",
+          "commit": "2004120"
+        }
       ],
       "added": [
-        { "description": "Add `--text-icons` CLI flag for Pandoc PDF compatibility" },
-        { "description": "Add `Service` type with layer, protocol, language, responsibilities, dependencies", "commit": "2b8dc56" },
-        { "description": "Add `APISpec` and `APIEndpoint` types for API documentation", "commit": "2b8dc56" },
-        { "description": "Add `StorageCategory` type for storage architecture by category", "commit": "2b8dc56" },
-        { "description": "Add `GitOpsConfig` and `SourceOfTruth` types for GitOps configuration", "commit": "2b8dc56" },
-        { "description": "Add `OrchestrationConfig` type for workflow orchestration (short-lived, long-running)", "commit": "2b8dc56" },
-        { "description": "Add `RelatedDocument` type for linking PRDs, TRDs, design docs, RFCs", "commit": "2b8dc56" },
-        { "description": "Add `InScope` field to `Document` (complements `OutOfScope`)", "commit": "2b8dc56" },
-        { "description": "Add enum types: `ServiceLayer`, `Protocol`, `StorageCategoryType`, `SourceOfTruthLocation`, `RelationshipType`, `DocumentType`", "commit": "2b8dc56" },
-        { "description": "Add markdown rendering for Services table and detailed sections", "commit": "48be2d0" },
-        { "description": "Add markdown rendering for APIs with endpoints table", "commit": "48be2d0" },
-        { "description": "Add markdown rendering for Storage Architecture table", "commit": "48be2d0" },
-        { "description": "Add markdown rendering for GitOps Configuration", "commit": "48be2d0" },
-        { "description": "Add markdown rendering for Workflow Orchestration", "commit": "48be2d0" },
-        { "description": "Add markdown rendering for In Scope and Related Documents", "commit": "48be2d0" },
-        { "description": "Add `checkInScope()` completeness function for in-scope items", "commit": "2004120" },
-        { "description": "Add `checkRelatedDocuments()` completeness function for related documents", "commit": "2004120" }
+        {
+          "description": "Add `--text-icons` CLI flag for Pandoc PDF compatibility"
+        },
+        {
+          "description": "Add `Service` type with layer, protocol, language, responsibilities, dependencies",
+          "commit": "2b8dc56"
+        },
+        {
+          "description": "Add `APISpec` and `APIEndpoint` types for API documentation",
+          "commit": "2b8dc56"
+        },
+        {
+          "description": "Add `StorageCategory` type for storage architecture by category",
+          "commit": "2b8dc56"
+        },
+        {
+          "description": "Add `GitOpsConfig` and `SourceOfTruth` types for GitOps configuration",
+          "commit": "2b8dc56"
+        },
+        {
+          "description": "Add `OrchestrationConfig` type for workflow orchestration (short-lived, long-running)",
+          "commit": "2b8dc56"
+        },
+        {
+          "description": "Add `RelatedDocument` type for linking PRDs, TRDs, design docs, RFCs",
+          "commit": "2b8dc56"
+        },
+        {
+          "description": "Add `InScope` field to `Document` (complements `OutOfScope`)",
+          "commit": "2b8dc56"
+        },
+        {
+          "description": "Add enum types: `ServiceLayer`, `Protocol`, `StorageCategoryType`, `SourceOfTruthLocation`, `RelationshipType`, `DocumentType`",
+          "commit": "2b8dc56"
+        },
+        {
+          "description": "Add markdown rendering for Services table and detailed sections",
+          "commit": "48be2d0"
+        },
+        {
+          "description": "Add markdown rendering for APIs with endpoints table",
+          "commit": "48be2d0"
+        },
+        {
+          "description": "Add markdown rendering for Storage Architecture table",
+          "commit": "48be2d0"
+        },
+        {
+          "description": "Add markdown rendering for GitOps Configuration",
+          "commit": "48be2d0"
+        },
+        {
+          "description": "Add markdown rendering for Workflow Orchestration",
+          "commit": "48be2d0"
+        },
+        {
+          "description": "Add markdown rendering for In Scope and Related Documents",
+          "commit": "48be2d0"
+        },
+        {
+          "description": "Add `checkInScope()` completeness function for in-scope items",
+          "commit": "2004120"
+        },
+        {
+          "description": "Add `checkRelatedDocuments()` completeness function for related documents",
+          "commit": "2004120"
+        }
       ],
       "changed": [
-        { "description": "Update `TechnicalArchitecture` scoring: +1 for Services, +1 for APIs, +0.5 for Storage/GitOps/Orchestration", "commit": "2004120" },
-        { "description": "Update `OptionalTotal` from 6 to 8 sections", "commit": "2004120" },
-        { "description": "Update `TechArchitecture` maxPoints from 4.0 to 7.5", "commit": "2004120" },
-        { "description": "Regenerate PRD JSON schema with new types", "commit": "15f937f" }
+        {
+          "description": "Update `TechnicalArchitecture` scoring: +1 for Services, +1 for APIs, +0.5 for Storage/GitOps/Orchestration",
+          "commit": "2004120"
+        },
+        {
+          "description": "Update `OptionalTotal` from 6 to 8 sections",
+          "commit": "2004120"
+        },
+        {
+          "description": "Update `TechArchitecture` maxPoints from 4.0 to 7.5",
+          "commit": "2004120"
+        },
+        {
+          "description": "Regenerate PRD JSON schema with new types",
+          "commit": "15f937f"
+        }
       ],
       "fixed": [
-        { "description": "Add `UseTextIcons` option for Pandoc PDF compatibility (converts emoji to ASCII)", "commit": "52c6128" }
+        {
+          "description": "Add `UseTextIcons` option for Pandoc PDF compatibility (converts emoji to ASCII)",
+          "commit": "52c6128"
+        }
       ],
       "documentation": [
-        { "description": "Reorganize release notes from root to `docs/releases/`", "commit": "6f11b20" },
-        { "description": "Add v0.7.0 release notes with PRD platform architecture features", "commit": "fd11129" },
-        { "description": "Document PRD technical architecture sections in README", "commit": "38078c1" },
-        { "description": "Update PRD section table with `inScope` and `relatedDocuments`", "commit": "38078c1" },
-        { "description": "Update completeness check example output for 8 optional sections", "commit": "38078c1" },
-        { "description": "Document Pandoc PDF generation with XeLaTeX and DejaVu font requirements", "commit": "7123664" },
-        { "description": "Add release notes to MkDocs navigation", "commit": "b65aa90" }
+        {
+          "description": "Reorganize release notes from root to `docs/releases/`",
+          "commit": "6f11b20"
+        },
+        {
+          "description": "Add v0.7.0 release notes with PRD platform architecture features",
+          "commit": "fd11129"
+        },
+        {
+          "description": "Document PRD technical architecture sections in README",
+          "commit": "38078c1"
+        },
+        {
+          "description": "Update PRD section table with `inScope` and `relatedDocuments`",
+          "commit": "38078c1"
+        },
+        {
+          "description": "Update completeness check example output for 8 optional sections",
+          "commit": "38078c1"
+        },
+        {
+          "description": "Document Pandoc PDF generation with XeLaTeX and DejaVu font requirements",
+          "commit": "7123664"
+        },
+        {
+          "description": "Add release notes to MkDocs navigation",
+          "commit": "b65aa90"
+        }
       ]
     },
     {
       "version": "v0.6.0",
       "date": "2026-01-30",
       "highlights": [
-        { "description": "BREAKING: Migrate all JSON tags from `snake_case` to `camelCase` for consistency with JSON/JavaScript conventions", "commit": "7469a09" },
-        { "description": "Add Goals CLI commands (V2MOM and OKR) for validation, Marp slide generation, and template creation", "commit": "c3677cf" },
-        { "description": "Add JSON Schema generation for OKR and V2MOM documents", "commit": "13a69b0" }
+        {
+          "description": "BREAKING: Migrate all JSON tags from `snake_case` to `camelCase` for consistency with JSON/JavaScript conventions",
+          "commit": "7469a09"
+        },
+        {
+          "description": "Add Goals CLI commands (V2MOM and OKR) for validation, Marp slide generation, and template creation",
+          "commit": "c3677cf"
+        },
+        {
+          "description": "Add JSON Schema generation for OKR and V2MOM documents",
+          "commit": "13a69b0"
+        }
       ],
       "changed": [
-        { "description": "BREAKING: Migrate 252 JSON field names from `snake_case` to `camelCase`", "commit": "7469a09" },
-        { "description": "Update all example JSON files to use `camelCase` field names", "commit": "53e5121" },
-        { "description": "Regenerate PRD JSON schema with `camelCase` field names", "commit": "33dc1fb" }
+        {
+          "description": "BREAKING: Migrate 252 JSON field names from `snake_case` to `camelCase`",
+          "commit": "7469a09"
+        },
+        {
+          "description": "Update all example JSON files to use `camelCase` field names",
+          "commit": "53e5121"
+        },
+        {
+          "description": "Regenerate PRD JSON schema with `camelCase` field names",
+          "commit": "33dc1fb"
+        }
       ],
       "added": [
-        { "description": "Add `splan goals v2mom validate` command for V2MOM validation", "commit": "c3677cf" },
-        { "description": "Add `splan goals v2mom generate marp` command for Marp slide generation", "commit": "c3677cf" },
-        { "description": "Add `splan goals v2mom init` command for creating V2MOM templates", "commit": "c3677cf" },
-        { "description": "Add `splan goals okr validate` command for OKR validation", "commit": "13a69b0" },
-        { "description": "Add `splan goals okr generate marp` command for Marp slide generation", "commit": "13a69b0" },
-        { "description": "Add `splan goals okr init` command for creating OKR templates", "commit": "13a69b0" },
-        { "description": "Add OKR and V2MOM JSON Schema generation (`splan schema generate --type okr/v2mom`)", "commit": "13a69b0" },
-        { "description": "Add embedded OKR and V2MOM JSON schemas with `OKRSchema()` and `V2MOMSchema()`", "commit": "13a69b0" },
-        { "description": "Add V2MOM example files (minimal, product, agentplexus)", "commit": "13a69b0" },
-        { "description": "Add migration script for user JSON files (`scripts/migrate_json_to_camelcase.sh`)", "commit": "28dbd35" },
-        { "description": "Add migration plan documenting all field name changes (`MIGRATION_CAMELCASE.md`)", "commit": "28dbd35" }
+        {
+          "description": "Add `splan goals v2mom validate` command for V2MOM validation",
+          "commit": "c3677cf"
+        },
+        {
+          "description": "Add `splan goals v2mom generate marp` command for Marp slide generation",
+          "commit": "c3677cf"
+        },
+        {
+          "description": "Add `splan goals v2mom init` command for creating V2MOM templates",
+          "commit": "c3677cf"
+        },
+        {
+          "description": "Add `splan goals okr validate` command for OKR validation",
+          "commit": "13a69b0"
+        },
+        {
+          "description": "Add `splan goals okr generate marp` command for Marp slide generation",
+          "commit": "13a69b0"
+        },
+        {
+          "description": "Add `splan goals okr init` command for creating OKR templates",
+          "commit": "13a69b0"
+        },
+        {
+          "description": "Add OKR and V2MOM JSON Schema generation (`splan schema generate --type okr/v2mom`)",
+          "commit": "13a69b0"
+        },
+        {
+          "description": "Add embedded OKR and V2MOM JSON schemas with `OKRSchema()` and `V2MOMSchema()`",
+          "commit": "13a69b0"
+        },
+        {
+          "description": "Add V2MOM example files (minimal, product, agentplexus)",
+          "commit": "13a69b0"
+        },
+        {
+          "description": "Add migration script for user JSON files (`scripts/migrate_json_to_camelcase.sh`)",
+          "commit": "28dbd35"
+        },
+        {
+          "description": "Add migration plan documenting all field name changes (`MIGRATION_CAMELCASE.md`)",
+          "commit": "28dbd35"
+        }
       ],
       "documentation": [
-        { "description": "Document complete `snake_case` to `camelCase` field mapping", "commit": "28dbd35" }
+        {
+          "description": "Document complete `snake_case` to `camelCase` field mapping",
+          "commit": "28dbd35"
+        }
       ]
     },
     {
       "version": "v0.5.0",
       "date": "2026-01-30",
       "highlights": [
-        { "description": "Rename repository from structured-requirements to structured-plan", "commit": "5cde98e" },
-        { "description": "Add framework-agnostic `Goals` wrapper supporting both OKR and V2MOM", "commit": "c1282b4" },
-        { "description": "Extract common types (`Risk`, `Assumption`, `Constraint`, etc.) to `common/` package", "commit": "8f2ba1c" }
+        {
+          "description": "Rename repository from structured-requirements to structured-plan",
+          "commit": "5cde98e"
+        },
+        {
+          "description": "Add framework-agnostic `Goals` wrapper supporting both OKR and V2MOM",
+          "commit": "c1282b4"
+        },
+        {
+          "description": "Extract common types (`Risk`, `Assumption`, `Constraint`, etc.) to `common/` package",
+          "commit": "8f2ba1c"
+        }
       ],
       "added": [
-        { "description": "Add `goals/` package with framework-agnostic `Goals` wrapper", "commit": "c1282b4" },
-        { "description": "Add `GoalItem` and `ResultItem` abstractions for unified rendering", "commit": "c1282b4" },
-        { "description": "Add `GoalLabel()`/`ResultLabel()` for dynamic framework-specific labels", "commit": "c1282b4" },
-        { "description": "Add `ResultItemsByPhase()` for roadmap alignment", "commit": "c1282b4" },
-        { "description": "Add `ProductGoals` field to PRD for framework-agnostic goals", "commit": "288156d" },
-        { "description": "Add `GetProductGoals()` helper for unified goals access", "commit": "288156d" },
-        { "description": "Add `ToSwimlaneTableWithGoals()` with dynamic labels (Objectives/Methods, Key Results/Measures)", "commit": "288156d" },
-        { "description": "Add `common/status.go` with `Status` type and constants", "commit": "8f2ba1c" },
-        { "description": "Add `common/risk.go` with `Risk`, `RiskProbability`, `RiskImpact`, `RiskStatus` types", "commit": "8f2ba1c" },
-        { "description": "Add `common/assumption.go` with `Assumption` type", "commit": "8f2ba1c" },
-        { "description": "Add `common/constraint.go` with `Constraint` and `ConstraintType`", "commit": "8f2ba1c" },
-        { "description": "Add `common/decision.go` with `OpenItem`, `Option`, `DecisionRecord` types", "commit": "8f2ba1c" },
-        { "description": "Add `common/glossary.go` with `GlossaryTerm` type", "commit": "8f2ba1c" },
-        { "description": "Add `common/custom.go` with `CustomSection` type", "commit": "8f2ba1c" },
-        { "description": "Add `common/nongoals.go` with `NonGoal` type", "commit": "8f2ba1c" },
-        { "description": "Add GoReleaser with multi-platform builds (linux, darwin, windows on amd64/arm64)", "commit": "d38d5b0" },
-        { "description": "Add Homebrew tap publishing to grokify/homebrew-tap", "commit": "d38d5b0" },
-        { "description": "Add release workflow triggered on version tags", "commit": "d38d5b0" }
+        {
+          "description": "Add `goals/` package with framework-agnostic `Goals` wrapper",
+          "commit": "c1282b4"
+        },
+        {
+          "description": "Add `GoalItem` and `ResultItem` abstractions for unified rendering",
+          "commit": "c1282b4"
+        },
+        {
+          "description": "Add `GoalLabel()`/`ResultLabel()` for dynamic framework-specific labels",
+          "commit": "c1282b4"
+        },
+        {
+          "description": "Add `ResultItemsByPhase()` for roadmap alignment",
+          "commit": "c1282b4"
+        },
+        {
+          "description": "Add `ProductGoals` field to PRD for framework-agnostic goals",
+          "commit": "288156d"
+        },
+        {
+          "description": "Add `GetProductGoals()` helper for unified goals access",
+          "commit": "288156d"
+        },
+        {
+          "description": "Add `ToSwimlaneTableWithGoals()` with dynamic labels (Objectives/Methods, Key Results/Measures)",
+          "commit": "288156d"
+        },
+        {
+          "description": "Add `common/status.go` with `Status` type and constants",
+          "commit": "8f2ba1c"
+        },
+        {
+          "description": "Add `common/risk.go` with `Risk`, `RiskProbability`, `RiskImpact`, `RiskStatus` types",
+          "commit": "8f2ba1c"
+        },
+        {
+          "description": "Add `common/assumption.go` with `Assumption` type",
+          "commit": "8f2ba1c"
+        },
+        {
+          "description": "Add `common/constraint.go` with `Constraint` and `ConstraintType`",
+          "commit": "8f2ba1c"
+        },
+        {
+          "description": "Add `common/decision.go` with `OpenItem`, `Option`, `DecisionRecord` types",
+          "commit": "8f2ba1c"
+        },
+        {
+          "description": "Add `common/glossary.go` with `GlossaryTerm` type",
+          "commit": "8f2ba1c"
+        },
+        {
+          "description": "Add `common/custom.go` with `CustomSection` type",
+          "commit": "8f2ba1c"
+        },
+        {
+          "description": "Add `common/nongoals.go` with `NonGoal` type",
+          "commit": "8f2ba1c"
+        },
+        {
+          "description": "Add GoReleaser with multi-platform builds (linux, darwin, windows on amd64/arm64)",
+          "commit": "d38d5b0"
+        },
+        {
+          "description": "Add Homebrew tap publishing to grokify/homebrew-tap",
+          "commit": "d38d5b0"
+        },
+        {
+          "description": "Add release workflow triggered on version tags",
+          "commit": "d38d5b0"
+        }
       ],
       "changed": [
-        { "description": "Rename module from `github.com/grokify/structured-requirements` to `github.com/grokify/structured-plan`", "commit": "5cde98e" },
-        { "description": "Deprecate `ToSwimlaneTableWithOKRs()` in favor of `ToSwimlaneTableWithGoals()`", "commit": "288156d" },
-        { "description": "Consolidate CLI: migrate `merge` command to splan and remove legacy srequirements", "commit": "20b77f0" }
+        {
+          "description": "Rename module from `github.com/grokify/structured-requirements` to `github.com/grokify/structured-plan`",
+          "commit": "5cde98e"
+        },
+        {
+          "description": "Deprecate `ToSwimlaneTableWithOKRs()` in favor of `ToSwimlaneTableWithGoals()`",
+          "commit": "288156d"
+        },
+        {
+          "description": "Consolidate CLI: migrate `merge` command to splan and remove legacy srequirements",
+          "commit": "20b77f0"
+        }
       ],
       "refactored": [
-        { "description": "Consolidate OKR types into `goals/okr` package with merged fields from PRD", "commit": "d68dc6b" },
-        { "description": "Add `PhaseTarget`, `MeasurementMethod`, `Tags` to `KeyResult` from PRD", "commit": "d68dc6b" },
-        { "description": "Add `Rationale`, `Category`, `Tags` to `Objective` from PRD", "commit": "d68dc6b" },
-        { "description": "Update PRD to use `goals/okr` types via type aliases", "commit": "d68dc6b" },
-        { "description": "Extract common types from PRD/MRD/TRD to `common/` package", "commit": "8f2ba1c" },
-        { "description": "Update PRD/MRD/TRD to use common types via type aliases", "commit": "8f2ba1c" },
-        { "description": "Migrate `merge` command to splan CLI and remove legacy srequirements CLI", "commit": "20b77f0" }
+        {
+          "description": "Consolidate OKR types into `goals/okr` package with merged fields from PRD",
+          "commit": "d68dc6b"
+        },
+        {
+          "description": "Add `PhaseTarget`, `MeasurementMethod`, `Tags` to `KeyResult` from PRD",
+          "commit": "d68dc6b"
+        },
+        {
+          "description": "Add `Rationale`, `Category`, `Tags` to `Objective` from PRD",
+          "commit": "d68dc6b"
+        },
+        {
+          "description": "Update PRD to use `goals/okr` types via type aliases",
+          "commit": "d68dc6b"
+        },
+        {
+          "description": "Extract common types from PRD/MRD/TRD to `common/` package",
+          "commit": "8f2ba1c"
+        },
+        {
+          "description": "Update PRD/MRD/TRD to use common types via type aliases",
+          "commit": "8f2ba1c"
+        },
+        {
+          "description": "Migrate `merge` command to splan CLI and remove legacy srequirements CLI",
+          "commit": "20b77f0"
+        }
       ],
       "documentation": [
-        { "description": "Document Phase 5 decision: structured-roadmap renamed to structured-tasks", "commit": "052e728" }
+        {
+          "description": "Document Phase 5 decision: structured-roadmap renamed to structured-tasks",
+          "commit": "052e728"
+        }
       ]
     },
     {
       "version": "v0.4.0",
       "date": "2026-01-29",
       "highlights": [
-        { "description": "Add OKR (Objectives and Key Results) structure replacing legacy goals fields", "commit": "7f96f4d" },
-        { "description": "Add CLI `filter` command with tag-based filtering (OR/AND logic)", "commit": "471ab77" },
-        { "description": "Add roadmap swimlane table with auto-derived OKR swimlanes", "commit": "813616e" }
+        {
+          "description": "Add OKR (Objectives and Key Results) structure replacing legacy goals fields",
+          "commit": "7f96f4d"
+        },
+        {
+          "description": "Add CLI `filter` command with tag-based filtering (OR/AND logic)",
+          "commit": "471ab77"
+        },
+        {
+          "description": "Add roadmap swimlane table with auto-derived OKR swimlanes",
+          "commit": "813616e"
+        }
       ],
       "added": [
-        { "description": "Add OKR structure with nested `Objectives` and `KeyResults` replacing legacy goals", "commit": "7f96f4d" },
-        { "description": "Add `KeyResult` type with baseline, target, current, confidence, and phase targets", "commit": "7f96f4d" },
-        { "description": "Add `PhaseTarget` type for roadmap-aligned OKR progress tracking", "commit": "7f96f4d" },
-        { "description": "Add CLI `filter` command for tag-based PRD filtering", "commit": "471ab77" },
-        { "description": "Add `FilterByTags()` method to PRD/MRD/TRD for OR-logic tag filtering", "commit": "3d3eb3b" },
-        { "description": "Add `FilterByTagsAll()` method for AND-logic tag filtering", "commit": "3d3eb3b" },
-        { "description": "Add `ValidateTag()` and `ValidateTags()` for kebab-case tag validation", "commit": "3d3eb3b" },
-        { "description": "Add roadmap swimlane table with `ToSwimlaneTable()` method", "commit": "813616e" },
-        { "description": "Add `ToSwimlaneTableWithOKRs()` for combined deliverables and OKR swimlanes", "commit": "813616e" },
-        { "description": "Add `StatusLegend()` for roadmap status icon reference table", "commit": "813616e" },
-        { "description": "Add Objectives overview list in markdown output", "commit": "7f96f4d" },
-        { "description": "Add `common` package with shared `Person` and `Approver` types", "commit": "fc0a9dc" },
-        { "description": "Add `FormatPersonMarkdown()` and `FormatPeopleMarkdown()` utilities", "commit": "fc0a9dc" },
-        { "description": "Add new PRD sections: Appendices, CurrentState, OpenItems, SecurityModel", "commit": "a589855" },
-        { "description": "Add `OpenItem` type for pending decisions with options and tradeoffs", "commit": "a589855" },
-        { "description": "Add `Option` type with pros/cons/effort/risk for decision tracking", "commit": "a589855" },
-        { "description": "Add generic appendix helpers: `NewTableAppendix`, `NewTextAppendix`, `NewCodeAppendix`", "commit": "a589855" },
-        { "description": "Add `DeliverableRollout` type for operational customer rollout swimlanes", "commit": "813616e" },
-        { "description": "Add Marp presentation template for structured-plan overview", "commit": "aa9478c" },
-        { "description": "Add `TODO.md` documenting restructuring plan for structured-plan rename", "commit": "aa9478c" }
+        {
+          "description": "Add OKR structure with nested `Objectives` and `KeyResults` replacing legacy goals",
+          "commit": "7f96f4d"
+        },
+        {
+          "description": "Add `KeyResult` type with baseline, target, current, confidence, and phase targets",
+          "commit": "7f96f4d"
+        },
+        {
+          "description": "Add `PhaseTarget` type for roadmap-aligned OKR progress tracking",
+          "commit": "7f96f4d"
+        },
+        {
+          "description": "Add CLI `filter` command for tag-based PRD filtering",
+          "commit": "471ab77"
+        },
+        {
+          "description": "Add `FilterByTags()` method to PRD/MRD/TRD for OR-logic tag filtering",
+          "commit": "3d3eb3b"
+        },
+        {
+          "description": "Add `FilterByTagsAll()` method for AND-logic tag filtering",
+          "commit": "3d3eb3b"
+        },
+        {
+          "description": "Add `ValidateTag()` and `ValidateTags()` for kebab-case tag validation",
+          "commit": "3d3eb3b"
+        },
+        {
+          "description": "Add roadmap swimlane table with `ToSwimlaneTable()` method",
+          "commit": "813616e"
+        },
+        {
+          "description": "Add `ToSwimlaneTableWithOKRs()` for combined deliverables and OKR swimlanes",
+          "commit": "813616e"
+        },
+        {
+          "description": "Add `StatusLegend()` for roadmap status icon reference table",
+          "commit": "813616e"
+        },
+        {
+          "description": "Add Objectives overview list in markdown output",
+          "commit": "7f96f4d"
+        },
+        {
+          "description": "Add `common` package with shared `Person` and `Approver` types",
+          "commit": "fc0a9dc"
+        },
+        {
+          "description": "Add `FormatPersonMarkdown()` and `FormatPeopleMarkdown()` utilities",
+          "commit": "fc0a9dc"
+        },
+        {
+          "description": "Add new PRD sections: Appendices, CurrentState, OpenItems, SecurityModel",
+          "commit": "a589855"
+        },
+        {
+          "description": "Add `OpenItem` type for pending decisions with options and tradeoffs",
+          "commit": "a589855"
+        },
+        {
+          "description": "Add `Option` type with pros/cons/effort/risk for decision tracking",
+          "commit": "a589855"
+        },
+        {
+          "description": "Add generic appendix helpers: `NewTableAppendix`, `NewTextAppendix`, `NewCodeAppendix`",
+          "commit": "a589855"
+        },
+        {
+          "description": "Add `DeliverableRollout` type for operational customer rollout swimlanes",
+          "commit": "813616e"
+        },
+        {
+          "description": "Add Marp presentation template for structured-plan overview",
+          "commit": "aa9478c"
+        },
+        {
+          "description": "Add `TODO.md` documenting restructuring plan for structured-plan rename",
+          "commit": "aa9478c"
+        }
       ],
       "changed": [
-        { "description": "Replace `BusinessObjectives`, `ProductGoals`, `SuccessMetrics` with OKR structure", "commit": "7f96f4d" },
-        { "description": "Show objectives in all phases where their Key Results appear (not just first phase)", "commit": "7f96f4d" }
+        {
+          "description": "Replace `BusinessObjectives`, `ProductGoals`, `SuccessMetrics` with OKR structure",
+          "commit": "7f96f4d"
+        },
+        {
+          "description": "Show objectives in all phases where their Key Results appear (not just first phase)",
+          "commit": "7f96f4d"
+        }
       ],
       "improved": [
-        { "description": "Enhance roadmap table formatting with 'Phase N' headers and bullet list items", "commit": "813616e" },
-        { "description": "Enhance author formatting with email links and roles", "commit": "fc0a9dc" },
-        { "description": "Ensure deterministic ordering for functional and non-functional requirement categories", "commit": "7f96f4d" },
-        { "description": "Ensure deterministic ordering for compliance controls frameworks", "commit": "7f96f4d" }
+        {
+          "description": "Enhance roadmap table formatting with 'Phase N' headers and bullet list items",
+          "commit": "813616e"
+        },
+        {
+          "description": "Enhance author formatting with email links and roles",
+          "commit": "fc0a9dc"
+        },
+        {
+          "description": "Ensure deterministic ordering for functional and non-functional requirement categories",
+          "commit": "7f96f4d"
+        },
+        {
+          "description": "Ensure deterministic ordering for compliance controls frameworks",
+          "commit": "7f96f4d"
+        }
       ],
       "refactored": [
-        { "description": "Simplify appendix system by removing domain-specific schemas", "commit": "a589855" },
-        { "description": "Use type aliases for backwards-compatible `Person` and `Approver` types", "commit": "fc0a9dc" }
+        {
+          "description": "Simplify appendix system by removing domain-specific schemas",
+          "commit": "a589855"
+        },
+        {
+          "description": "Use type aliases for backwards-compatible `Person` and `Approver` types",
+          "commit": "fc0a9dc"
+        }
       ],
       "documentation": [
-        { "description": "Add roadmap and swimlane table documentation to README", "commit": "9333044" },
-        { "description": "Add operational rollout swimlane guidance", "commit": "9333044" }
+        {
+          "description": "Add roadmap and swimlane table documentation to README",
+          "commit": "9333044"
+        },
+        {
+          "description": "Add operational rollout swimlane guidance",
+          "commit": "9333044"
+        }
       ]
     },
     {
       "version": "v0.3.2",
       "date": "2026-01-28",
       "fixed": [
-        { "description": "Reduce requirements table title column width to 70%", "commit": "e9c3017" }
+        {
+          "description": "Reduce requirements table title column width to 70%",
+          "commit": "e9c3017"
+        }
       ],
       "dependencies": [
-        { "description": "Update `go.mod` dependencies", "commit": "c8bd2b7" }
+        {
+          "description": "Update `go.mod` dependencies",
+          "commit": "c8bd2b7"
+        }
       ]
     },
     {
       "version": "v0.3.1",
       "date": "2026-01-27",
       "fixed": [
-        { "description": "Balance title and description column widths in requirements table", "commit": "5891df5" }
+        {
+          "description": "Balance title and description column widths in requirements table",
+          "commit": "5891df5"
+        }
       ]
     },
     {
       "version": "v0.3.0",
       "date": "2026-01-26",
       "highlights": [
-        { "description": "Add structured-evaluation integration for standardized PRD quality reports", "commit": "b5c79ce" },
-        { "description": "Add `merge` command for combining multiple PRD files", "commit": "8476603" }
+        {
+          "description": "Add structured-evaluation integration for standardized PRD quality reports",
+          "commit": "b5c79ce"
+        },
+        {
+          "description": "Add `merge` command for combining multiple PRD files",
+          "commit": "8476603"
+        }
       ],
       "added": [
-        { "description": "Add `ScoreToEvaluationReport()` to convert deterministic scoring to `EvaluationReport` format", "commit": "b5c79ce" },
-        { "description": "Add `GenerateEvaluationTemplate()` for LLM judge template generation", "commit": "b5c79ce" },
-        { "description": "Add `GenerateEvaluationTemplateWithWeights()` for custom category weights", "commit": "b5c79ce" },
-        { "description": "Add `StandardCategories()` returning 10 PRD evaluation categories with weights", "commit": "b5c79ce" },
-        { "description": "Add `CategoryDescriptions()` and `CategoryOwners()` helper functions for LLM prompts", "commit": "b5c79ce" },
-        { "description": "Add `GetCategoriesFromDocument()` to extract categories including custom sections", "commit": "b5c79ce" },
-        { "description": "Add `srequirements merge` CLI command for combining multiple JSON files", "commit": "8476603" },
-        { "description": "Add deep merge support for nested JSON objects", "commit": "8476603" },
-        { "description": "Add structured user story fields: `epic_id`, `story_points`, `labels`, `dependencies`", "commit": "4bc8bd7" }
+        {
+          "description": "Add `ScoreToEvaluationReport()` to convert deterministic scoring to `EvaluationReport` format",
+          "commit": "b5c79ce"
+        },
+        {
+          "description": "Add `GenerateEvaluationTemplate()` for LLM judge template generation",
+          "commit": "b5c79ce"
+        },
+        {
+          "description": "Add `GenerateEvaluationTemplateWithWeights()` for custom category weights",
+          "commit": "b5c79ce"
+        },
+        {
+          "description": "Add `StandardCategories()` returning 10 PRD evaluation categories with weights",
+          "commit": "b5c79ce"
+        },
+        {
+          "description": "Add `CategoryDescriptions()` and `CategoryOwners()` helper functions for LLM prompts",
+          "commit": "b5c79ce"
+        },
+        {
+          "description": "Add `GetCategoriesFromDocument()` to extract categories including custom sections",
+          "commit": "b5c79ce"
+        },
+        {
+          "description": "Add `srequirements merge` CLI command for combining multiple JSON files",
+          "commit": "8476603"
+        },
+        {
+          "description": "Add deep merge support for nested JSON objects",
+          "commit": "8476603"
+        },
+        {
+          "description": "Add structured user story fields: `epic_id`, `story_points`, `labels`, `dependencies`",
+          "commit": "4bc8bd7"
+        }
       ],
       "improved": [
-        { "description": "Use relative dash widths in markdown tables for wider Story and Description columns in Pandoc output", "commit": "c161df1" },
-        { "description": "Add `--desc-len` CLI flag to control description truncation length in tables (default: 100, was 60)", "commit": "c161df1" }
+        {
+          "description": "Use relative dash widths in markdown tables for wider Story and Description columns in Pandoc output",
+          "commit": "c161df1"
+        },
+        {
+          "description": "Add `--desc-len` CLI flag to control description truncation length in tables (default: 100, was 60)",
+          "commit": "c161df1"
+        }
       ],
       "dependencies": [
-        { "description": "Update `github.com/agentplexus/structured-evaluation` to v0.2.0", "commit": "a4e41d1" }
+        {
+          "description": "Update `github.com/agentplexus/structured-evaluation` to v0.2.0",
+          "commit": "a4e41d1"
+        }
       ],
       "chore": [
-        { "description": "Add built binaries to `.gitignore`", "commit": "cd2651c" }
+        {
+          "description": "Add built binaries to `.gitignore`",
+          "commit": "cd2651c"
+        }
       ]
     },
     {
       "version": "v0.2.0",
       "date": "2026-01-25",
       "highlights": [
-        { "description": "Add schema package with `//go:embed` for programmatic JSON Schema access", "commit": "c219bed" },
-        { "description": "Add schema generator from Go types using `invopop/jsonschema` (Go-first approach)", "commit": "699ef11" }
+        {
+          "description": "Add schema package with `//go:embed` for programmatic JSON Schema access",
+          "commit": "c219bed"
+        },
+        {
+          "description": "Add schema generator from Go types using `invopop/jsonschema` (Go-first approach)",
+          "commit": "699ef11"
+        }
       ],
       "added": [
-        { "description": "Add schema embed package with `PRDSchemaJSON`, `PRDSchema()`, and `PRDSchemaBytes()`", "commit": "c219bed" },
-        { "description": "Add `PRDSchemaID` constant for canonical schema URL", "commit": "c219bed" },
-        { "description": "Add schema generator using `invopop/jsonschema` to generate from Go types", "commit": "699ef11" },
-        { "description": "Add `NewGenerator()`, `GeneratePRDSchema()`, `WritePRDSchema()` functions", "commit": "699ef11" },
-        { "description": "Add `srequirements schema generate` CLI command for schema generation", "commit": "1970cb9" },
-        { "description": "Add extended PRD sections: problem, market, solution, decisions, reviews, revision_history, goals", "commit": "0911fd5" }
+        {
+          "description": "Add schema embed package with `PRDSchemaJSON`, `PRDSchema()`, and `PRDSchemaBytes()`",
+          "commit": "c219bed"
+        },
+        {
+          "description": "Add `PRDSchemaID` constant for canonical schema URL",
+          "commit": "c219bed"
+        },
+        {
+          "description": "Add schema generator using `invopop/jsonschema` to generate from Go types",
+          "commit": "699ef11"
+        },
+        {
+          "description": "Add `NewGenerator()`, `GeneratePRDSchema()`, `WritePRDSchema()` functions",
+          "commit": "699ef11"
+        },
+        {
+          "description": "Add `srequirements schema generate` CLI command for schema generation",
+          "commit": "1970cb9"
+        },
+        {
+          "description": "Add extended PRD sections: problem, market, solution, decisions, reviews, revision_history, goals",
+          "commit": "0911fd5"
+        }
       ],
       "dependencies": [
-        { "description": "Add `github.com/invopop/jsonschema` v0.13.0 for JSON Schema generation", "commit": "699ef11" }
+        {
+          "description": "Add `github.com/invopop/jsonschema` v0.13.0 for JSON Schema generation",
+          "commit": "699ef11"
+        }
       ]
     },
     {
       "version": "v0.1.0",
       "date": "2026-01-25",
       "highlights": [
-        { "description": "Initial release of structured-requirements for PRD, MRD, and TRD document management", "commit": "d4177b0" },
-        { "description": "Integration with structureddocs and structured-goals for consistent rendering and goals alignment", "commit": "c1493a4" }
+        {
+          "description": "Initial release of structured-requirements for PRD, MRD, and TRD document management",
+          "commit": "d4177b0"
+        },
+        {
+          "description": "Integration with structureddocs and structured-goals for consistent rendering and goals alignment",
+          "commit": "c1493a4"
+        }
       ],
       "added": [
-        { "description": "PRD (Product Requirements Document) types with personas, objectives, requirements, and roadmap", "commit": "d4177b0" },
-        { "description": "MRD (Market Requirements Document) types with market analysis and competitive landscape", "commit": "d4177b0" },
-        { "description": "TRD (Technical Requirements Document) types with architecture and technical specifications", "commit": "d4177b0" },
-        { "description": "Marp slide renderer for PRD using structureddocs shared themes", "commit": "d4177b0" },
-        { "description": "Goals alignment support for OKR and V2MOM frameworks via structured-goals", "commit": "d4177b0" },
-        { "description": "Document completeness scoring and validation", "commit": "d4177b0" },
-        { "description": "Persona library with common user archetypes", "commit": "d4177b0" },
-        { "description": "Multiple view formats: executive summary, PM view, PR/FAQ, six-pager", "commit": "d4177b0" },
-        { "description": "JSON Schema for PRD document validation", "commit": "d4177b0" },
-        { "description": "CLI command for requirements document management", "commit": "d4177b0" },
-        { "description": "Example PRD, MRD, and TRD documents", "commit": "d4177b0" }
+        {
+          "description": "PRD (Product Requirements Document) types with personas, objectives, requirements, and roadmap",
+          "commit": "d4177b0"
+        },
+        {
+          "description": "MRD (Market Requirements Document) types with market analysis and competitive landscape",
+          "commit": "d4177b0"
+        },
+        {
+          "description": "TRD (Technical Requirements Document) types with architecture and technical specifications",
+          "commit": "d4177b0"
+        },
+        {
+          "description": "Marp slide renderer for PRD using structureddocs shared themes",
+          "commit": "d4177b0"
+        },
+        {
+          "description": "Goals alignment support for OKR and V2MOM frameworks via structured-goals",
+          "commit": "d4177b0"
+        },
+        {
+          "description": "Document completeness scoring and validation",
+          "commit": "d4177b0"
+        },
+        {
+          "description": "Persona library with common user archetypes",
+          "commit": "d4177b0"
+        },
+        {
+          "description": "Multiple view formats: executive summary, PM view, PR/FAQ, six-pager",
+          "commit": "d4177b0"
+        },
+        {
+          "description": "JSON Schema for PRD document validation",
+          "commit": "d4177b0"
+        },
+        {
+          "description": "CLI command for requirements document management",
+          "commit": "d4177b0"
+        },
+        {
+          "description": "Example PRD, MRD, and TRD documents",
+          "commit": "d4177b0"
+        }
       ],
       "documentation": [
-        { "description": "MkDocs documentation site with getting started guides", "commit": "71e9b1f" },
-        { "description": "Document type references for PRD, MRD, and TRD", "commit": "71e9b1f" },
-        { "description": "Goals integration guides for OKR and V2MOM", "commit": "71e9b1f" },
-        { "description": "Feature documentation for scoring, completeness, and personas", "commit": "71e9b1f" },
-        { "description": "Add changelog and release notes for v0.1.0", "commit": "64acec9" }
+        {
+          "description": "MkDocs documentation site with getting started guides",
+          "commit": "71e9b1f"
+        },
+        {
+          "description": "Document type references for PRD, MRD, and TRD",
+          "commit": "71e9b1f"
+        },
+        {
+          "description": "Goals integration guides for OKR and V2MOM",
+          "commit": "71e9b1f"
+        },
+        {
+          "description": "Feature documentation for scoring, completeness, and personas",
+          "commit": "71e9b1f"
+        },
+        {
+          "description": "Add changelog and release notes for v0.1.0",
+          "commit": "64acec9"
+        }
       ],
       "dependencies": [
-        { "description": "Add `github.com/grokify/structureddocs` v0.1.0 for shared Marp utilities", "commit": "c1493a4" },
-        { "description": "Add `github.com/grokify/structured-goals` v0.1.0 for goals alignment", "commit": "c1493a4" }
+        {
+          "description": "Add `github.com/grokify/structureddocs` v0.1.0 for shared Marp utilities",
+          "commit": "c1493a4"
+        },
+        {
+          "description": "Add `github.com/grokify/structured-goals` v0.1.0 for goals alignment",
+          "commit": "c1493a4"
+        }
       ],
       "ci": [
-        { "description": "Add GitHub Actions workflows for build, lint, and test", "commit": "2219a95" }
+        {
+          "description": "Add GitHub Actions workflows for build, lint, and test",
+          "commit": "2219a95"
+        }
       ],
       "chore": [
-        { "description": "Add project configuration files", "commit": "db399b2" }
+        {
+          "description": "Add project configuration files",
+          "commit": "db399b2"
+        }
       ],
       "refactored": [
-        { "description": "Fix lint issues and remove unused code", "commit": "9286e56" }
+        {
+          "description": "Fix lint issues and remove unused code",
+          "commit": "9286e56"
+        }
       ]
     }
   ]
