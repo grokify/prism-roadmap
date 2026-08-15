@@ -19,8 +19,10 @@ type RoadmapItem struct {
     Name        string `json:"name"`
     Description string `json:"description,omitempty"`
 
-    // Prioritization
-    MoSCoW prioritization.MoSCoWPriority `json:"moscow"`
+    // Prioritization. MoSCoW is optional (v0.17.0+): empty means "not yet
+    // prioritized" (e.g. items imported from an external PM tool before
+    // triage). When set, it must be a valid MoSCoWPriority value.
+    MoSCoW prioritization.MoSCoWPriority `json:"moscow,omitempty"`
     RICE   *prioritization.RICEScore     `json:"rice,omitempty"`
 
     // Customer Demand
@@ -246,7 +248,10 @@ idea := &types.Idea{
 ## Best Practices
 
 !!! tip "RMI Design"
-    - Always set MoSCoW for release planning
+    - Set MoSCoW for release planning; items imported from external PM
+      tools (e.g. via [omniroadmap](https://github.com/grokify/omniroadmap))
+      may arrive unprioritized — empty MoSCoW is valid and means
+      "not yet triaged"
     - Include market signal for customer-driven items
     - Link to capabilities to show strategic alignment
     - Track status changes for roadmap visibility

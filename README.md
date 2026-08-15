@@ -66,6 +66,16 @@ This library provides comprehensive, machine-readable formats for planning docum
 - **Roadmap** - Standalone roadmaps with phases, deliverables, and swimlane visualization
 - **Journey Roadmap** - Capability maturity evolution planning with periods, targets, and narratives
 
+### Prioritization Frameworks
+
+Feature and requirement prioritization models (see [Feature Prioritization](#feature-prioritization) for usage and code):
+
+| Framework | Type | Levels / Categories (highest → lowest) | Use Case |
+|-----------|------|----------------------------------------|----------|
+| **RICE** | Quantitative score | Score = (Reach × Impact × Confidence) / Effort · Impact: Massive, High, Medium, Low, Minimal | Data-driven feature ranking |
+| **Kano** | Qualitative classification | Must-Be, Performance, Attractive, Indifferent, Reverse | Feature classification from customer surveys |
+| **MoSCoW** | Release planning | Must Have, Should Have, Could Have, Won't Have | Scope negotiation and release planning |
+
 ### Strategic Planning Canvases
 
 Visual canvas frameworks for strategic planning and opportunity assessment:
@@ -140,6 +150,13 @@ Prioritization frameworks integrated with OpportunitySpec:
 | **Kano** | Qualitative | Categories: Must-Be, Performance, Attractive, Indifferent, Reverse |
 | **MoSCoW** | Release Planning | Categories: Must Have, Should Have, Could Have, Won't Have |
 
+On `rmi.RoadmapItem`, MoSCoW is **optional** (v0.17.0+): empty means "not
+yet prioritized" — the natural state for items imported from an external
+PM tool (e.g. via [omniroadmap](https://github.com/grokify/omniroadmap),
+which converts Aha!/ProductBoard/JPD data into RoadmapItems) before
+triage. When set, it must be a valid priority;
+`prioritization.MoSCoWUnspecified` names the zero value.
+
 ```go
 import "github.com/grokify/prism-roadmap/prioritization"
 
@@ -153,6 +170,29 @@ category := prioritization.ClassifyKano(KanoLike, KanoDislike) // Performance
 // MoSCoW prioritization
 priority := prioritization.MoSCoWMustHave
 weight := priority.Weight() // Returns 4
+```
+
+RICE-scored roadmap items can be linked to OKR objectives to show how much
+prioritized effort is backing each goal:
+
+```go
+import (
+    "github.com/grokify/prism-roadmap/rmi"
+    "github.com/grokify/prism-roadmap/goals/okr"
+)
+
+item := rmi.NewRoadmapItem("RMI-1", "Onboarding revamp", prioritization.MoSCoWMustHave).
+    WithRICE(prioritization.NewRICEScore("RMI-1", 1000, prioritization.ImpactHigh, prioritization.ConfidenceHigh, 2.0))
+item.AddObjectiveRef("OBJ-activation") // link to an OKR objective
+
+// Roll up RICE scores per objective (ordered by total RICE, highest first)
+rollups := rmi.RICEByObjective([]rmi.RoadmapItem{*item}, doc.Objectives)
+for _, r := range rollups {
+    fmt.Printf("%s: total RICE %.0f across %d scored items\n", r.ObjectiveTitle, r.TotalRICE, r.ScoredCount)
+}
+
+// Surface prioritized work not tied to any objective
+orphans := rmi.UnlinkedScoredItems(items)
 ```
 
 ### Market Signals & Effort Estimation
