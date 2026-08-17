@@ -238,6 +238,28 @@ warnings := v2mom.Warnings(errs)
 }
 ```
 
+## Templates & Rubrics
+
+Beyond the Go `goals/v2mom` package, prism-roadmap ships authoring templates
+and LLM-as-a-Judge rubrics for documenting a V2MOM as structured Markdown. The
+set covers each of the five sections, a parent-alignment document for cascading,
+and a reconciled summary:
+
+| Asset | Template | Rubric |
+|-------|----------|--------|
+| Vision | `templates/v2mom-vision.md` | `rubrics/v2mom-vision.rubric.yaml` |
+| Values | `templates/v2mom-values.md` | `rubrics/v2mom-values.rubric.yaml` |
+| Methods | `templates/v2mom-methods.md` | `rubrics/v2mom-methods.rubric.yaml` |
+| Obstacles | `templates/v2mom-obstacles.md` | `rubrics/v2mom-obstacles.rubric.yaml` |
+| Measures | `templates/v2mom-measures.md` | `rubrics/v2mom-measures.rubric.yaml` |
+| Alignment | `templates/v2mom-alignment.md` | `rubrics/v2mom-alignment.rubric.yaml` |
+| Summary | `templates/v2mom-summary.md` | `rubrics/v2mom-summary.rubric.yaml` |
+
+The **summary** is the reconciled rollup of the five sections; its rubric
+evaluates fidelity to those sources, cross-reference/traceability quality, and
+cascade + health rollup accuracy. Downstream workflows consume these assets via
+`tools/prism-sync` rather than keeping local copies.
+
 ## Next Steps
 
 - [OKR Integration](okr.md)

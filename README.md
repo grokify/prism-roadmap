@@ -1106,21 +1106,46 @@ Note: This requires fonts with emoji support (e.g., Noto Color Emoji, Apple Colo
 
 ## Templates and Rubrics
 
-The `templates/` and `rubrics/` directories contain canonical assets for LLM-assisted document authoring and evaluation:
+The `templates/` and `rubrics/` directories contain canonical assets for LLM-assisted document authoring and evaluation. Each asset has a Markdown template (`templates/<name>.md`) and, where evaluation applies, a matching LLM-as-a-Judge rubric (`rubrics/<name>.rubric.yaml`) in [structured-evaluation](https://github.com/plexusone/structured-evaluation) rich format.
 
-### Templates
+### Continuous Discovery (Torres)
 
-| Template | Description |
-|----------|-------------|
-| `opportunity-spec.md` | OpportunitySpec 12-box canvas template |
+| Asset | Template | Rubric | Description |
+|-------|:--------:|:------:|-------------|
+| Discovery Snapshot | ✅ | ✅ | Weekly discovery progress snapshot |
+| Assumption Map | ✅ | ✅ | Desirability/viability/feasibility/usability risk mapping |
+| Experience Map | ✅ | ✅ | Customer journey across phases surfacing pain points and opportunities |
+| Opportunity Solution Tree | ✅ | ✅ | Outcome → opportunities → solutions → experiments |
+| OpportunitySpec | ✅ | ✅ | Merged Patton + Cagan 12-box discovery + business case |
 
-### Rubrics
+### Strategy & Business Model
 
-| Rubric | Description |
-|--------|-------------|
-| `opportunity-spec.rubric.yaml` | LLM-as-a-Judge evaluation criteria for OpportunitySpec |
+| Asset | Template | Rubric | Description |
+|-------|:--------:|:------:|-------------|
+| Business Model Canvas | ✅ | ✅ | Osterwalder 9-block business model |
 
-These assets are designed for integration with [multispec](https://github.com/plexusone/multispec) for structured document workflows.
+### Shape Up (Basecamp)
+
+| Asset | Template | Rubric | Description |
+|-------|:--------:|:------:|-------------|
+| ShapeUp Pitch | ✅ | ✅ | Problem framing and appetite setting |
+| ShapeUp Scope | ✅ | — | Scope hammering during build |
+
+### V2MOM (Salesforce)
+
+The full V2MOM set — one asset per section plus the reconciled summary — each with a template and rubric:
+
+| Asset | Template | Rubric | Description |
+|-------|:--------:|:------:|-------------|
+| Vision | ✅ | ✅ | Compelling future state |
+| Values | ✅ | ✅ | Ranked guiding principles |
+| Methods | ✅ | ✅ | Initiatives that advance the vision |
+| Obstacles | ✅ | ✅ | Blockers and mitigations |
+| Measures | ✅ | ✅ | Quantifiable success metrics |
+| Alignment | ✅ | ✅ | Cascade alignment to a parent V2MOM |
+| Summary | ✅ | ✅ | Reconciled rollup of all five sections |
+
+These assets are designed for integration with [multispec](https://github.com/plexusone/multispec) for structured document workflows, and are consumed downstream via `tools/prism-sync`.
 
 ## Examples
 
