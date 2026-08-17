@@ -10,6 +10,28 @@
   ],
   "releases": [
     {
+      "version": "v0.18.0",
+      "date": "2026-08-16",
+      "highlights": [
+        {
+          "description": "Experience Map lands as an authored document: prism-roadmap already defined schema/experience-map.schema.json but shipped no template — v0.18.0 adds the canonical template and LLM-as-a-Judge rubric so downstream continuous-discovery workflows can sync it instead of maintaining a local stopgap"
+        },
+        {
+          "description": "The V2MOM rubric set is now complete: v0.17.0 shipped the v2mom-summary template but left it unscored — v0.18.0 adds the v2mom-summary rubric, which evaluates fidelity to the five sources (Vision, Values, Methods, Obstacles, Measures), cross-reference traceability, and cascade/health rollup accuracy"
+        }
+      ],
+      "added": [
+        {
+          "description": "Experience Map template and LLM-as-a-Judge rubric (templates/experience-map.md, rubrics/experience-map.rubric.yaml) — a customer journey across phases surfacing pain points and opportunities that feed the Opportunity Solution Tree, per Teresa Torres's continuous discovery framework",
+          "commit": "e0ba113"
+        },
+        {
+          "description": "v2mom-summary rubric (rubrics/v2mom-summary.rubric.yaml) completing the V2MOM rubric set — evaluates the reconciled summary's fidelity to its five sources, cross-reference/traceability quality, and cascade + health rollup accuracy",
+          "commit": "04b7a41"
+        }
+      ]
+    },
+    {
       "version": "v0.17.0",
       "date": "2026-08-15",
       "highlights": [
