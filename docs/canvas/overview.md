@@ -129,8 +129,17 @@ import (
 md, _ := templates.Get("bmc")            // canonical BMC template
 yaml, _ := rubrics.Get("opportunity-spec") // its evaluation rubric
 
-templates.Names() // [assumption-map bmc discovery-snapshot opportunity-spec ...]
+templates.Names()
+// [assumption-map bmc discovery-snapshot experience-map opportunity-spec ost
+//  shapeup-pitch shapeup-scope v2mom-alignment v2mom-measures v2mom-methods
+//  v2mom-obstacles v2mom-summary v2mom-values v2mom-vision]
 ```
+
+Every template has a matching `<name>.rubric.yaml` except `shapeup-scope`
+(authoring-only, no evaluation rubric). The full set, grouped by framework, is
+cataloged in the [README](../../README.md#templates-and-rubrics); the V2MOM
+section-plus-summary assets are detailed in the
+[V2MOM guide](../goals/v2mom.md#templates--rubrics).
 
 `templates.FS()` and `rubrics.FS()` expose the raw `embed.FS` for tools with
 their own filesystem-based loaders.
