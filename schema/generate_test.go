@@ -325,3 +325,108 @@ func TestGenerateCanvasSchemas(t *testing.T) {
 func readFile(path string) ([]byte, error) {
 	return os.ReadFile(path)
 }
+
+func TestGenerateOpportunityAssessmentSchema(t *testing.T) {
+	gen := NewGenerator()
+
+	schema, err := gen.GenerateOpportunityAssessmentSchema()
+	if err != nil {
+		t.Fatalf("GenerateOpportunityAssessmentSchema failed: %v", err)
+	}
+	if schema == nil {
+		t.Fatal("schema is nil")
+	}
+	if schema.Title != "Opportunity Assessment" {
+		t.Errorf("expected title 'Opportunity Assessment', got %q", schema.Title)
+	}
+	if string(schema.ID) != OpportunityAssessmentSchemaID {
+		t.Errorf("expected ID %q, got %q", OpportunityAssessmentSchemaID, schema.ID)
+	}
+}
+
+func TestGenerateOpportunityAssessmentSchemaJSON(t *testing.T) {
+	gen := NewGenerator()
+	data, err := gen.GenerateOpportunityAssessmentSchemaJSON()
+	if err != nil {
+		t.Fatalf("GenerateOpportunityAssessmentSchemaJSON failed: %v", err)
+	}
+	if len(data) == 0 {
+		t.Fatal("generated JSON is empty")
+	}
+	var schema map[string]any
+	if err := json.Unmarshal(data, &schema); err != nil {
+		t.Fatalf("generated JSON is not valid: %v", err)
+	}
+}
+
+func TestGenerateEvidenceSchema(t *testing.T) {
+	gen := NewGenerator()
+
+	schema, err := gen.GenerateEvidenceSchema()
+	if err != nil {
+		t.Fatalf("GenerateEvidenceSchema failed: %v", err)
+	}
+	if schema == nil {
+		t.Fatal("schema is nil")
+	}
+	if string(schema.ID) != EvidenceSchemaID {
+		t.Errorf("expected ID %q, got %q", EvidenceSchemaID, schema.ID)
+	}
+}
+
+func TestGenerateDimensionDefinitionSchema(t *testing.T) {
+	gen := NewGenerator()
+
+	schema, err := gen.GenerateDimensionDefinitionSchema()
+	if err != nil {
+		t.Fatalf("GenerateDimensionDefinitionSchema failed: %v", err)
+	}
+	if schema == nil {
+		t.Fatal("schema is nil")
+	}
+	if string(schema.ID) != DimensionDefinitionSchemaID {
+		t.Errorf("expected ID %q, got %q", DimensionDefinitionSchemaID, schema.ID)
+	}
+}
+
+func TestGenerateOpportunityRankSchema(t *testing.T) {
+	gen := NewGenerator()
+
+	schema, err := gen.GenerateOpportunityRankSchema()
+	if err != nil {
+		t.Fatalf("GenerateOpportunityRankSchema failed: %v", err)
+	}
+	if schema == nil {
+		t.Fatal("schema is nil")
+	}
+	if string(schema.ID) != OpportunityRankSchemaID {
+		t.Errorf("expected ID %q, got %q", OpportunityRankSchemaID, schema.ID)
+	}
+}
+
+func TestGenerateAssessmentSchemas(t *testing.T) {
+	gen := NewGenerator()
+	dir := t.TempDir()
+
+	if err := gen.GenerateAssessmentSchemas(dir); err != nil {
+		t.Fatalf("GenerateAssessmentSchemas failed: %v", err)
+	}
+
+	for _, fileName := range []string{
+		"opportunity-assessment.schema.json",
+		"evidence.schema.json",
+		"dimension-definition.schema.json",
+		"opportunity-rank.schema.json",
+	} {
+		path := dir + "/" + fileName
+		data, err := readFile(path)
+		if err != nil {
+			t.Errorf("file %s does not exist: %v", fileName, err)
+			continue
+		}
+		var schema map[string]any
+		if err := json.Unmarshal(data, &schema); err != nil {
+			t.Errorf("file %s is not valid JSON: %v", fileName, err)
+		}
+	}
+}

@@ -8,6 +8,7 @@ import (
 
 	"github.com/invopop/jsonschema"
 
+	"github.com/grokify/prism-roadmap/assessment"
 	"github.com/grokify/prism-roadmap/canvas"
 	"github.com/grokify/prism-roadmap/effort"
 	"github.com/grokify/prism-roadmap/goals/okr"
@@ -112,6 +113,11 @@ func (g *Generator) GenerateAll(dir string) error {
 	// Generate prioritization schemas (MarketSignal, EffortEstimate, ComplexityFactors, RoadmapItem)
 	if err := g.GeneratePrioritizationSchemas(dir); err != nil {
 		return fmt.Errorf("generating prioritization schemas: %w", err)
+	}
+
+	// Generate Opportunity Assessment schemas (OpportunityAssessment, Evidence, DimensionDefinition, OpportunityRank)
+	if err := g.GenerateAssessmentSchemas(dir); err != nil {
+		return fmt.Errorf("generating assessment schemas: %w", err)
 	}
 
 	// TODO: Add MRD and TRD schema generation when types are ready
@@ -707,3 +713,146 @@ func (g *Generator) GeneratePrioritizationSchemas(dir string) error {
 
 // MoSCoW Prioritization uses the existing prioritization.RICEScore type.
 // MoSCoWPriority is a string enum and doesn't need its own schema file.
+
+// Opportunity Assessment Schema Generation
+
+// GenerateOpportunityAssessmentSchema generates JSON Schema for the
+// assessment.OpportunityAssessment type.
+func (g *Generator) GenerateOpportunityAssessmentSchema() (*jsonschema.Schema, error) {
+	schema := g.Reflector.Reflect(&assessment.OpportunityAssessment{})
+	if schema == nil {
+		return nil, fmt.Errorf("failed to generate schema for assessment.OpportunityAssessment")
+	}
+
+	schema.ID = jsonschema.ID(OpportunityAssessmentSchemaID)
+	schema.Title = "Opportunity Assessment"
+	schema.Description = "Schema for evidence-backed opportunity assessments: MoSCoW/RICE prioritization, portfolio dimensions, OKR contributions, and capability references"
+
+	return schema, nil
+}
+
+// GenerateOpportunityAssessmentSchemaJSON generates JSON Schema for
+// OpportunityAssessment and returns it as JSON bytes.
+func (g *Generator) GenerateOpportunityAssessmentSchemaJSON() ([]byte, error) {
+	schema, err := g.GenerateOpportunityAssessmentSchema()
+	if err != nil {
+		return nil, err
+	}
+	return json.MarshalIndent(schema, "", "  ")
+}
+
+// WriteOpportunityAssessmentSchema generates and writes the
+// OpportunityAssessment schema to a file.
+func (g *Generator) WriteOpportunityAssessmentSchema(path string) error {
+	return g.writeSchema(path, g.GenerateOpportunityAssessmentSchemaJSON)
+}
+
+// GenerateEvidenceSchema generates JSON Schema for the assessment.Evidence
+// type.
+func (g *Generator) GenerateEvidenceSchema() (*jsonschema.Schema, error) {
+	schema := g.Reflector.Reflect(&assessment.Evidence{})
+	if schema == nil {
+		return nil, fmt.Errorf("failed to generate schema for assessment.Evidence")
+	}
+
+	schema.ID = jsonschema.ID(EvidenceSchemaID)
+	schema.Title = "Evidence"
+	schema.Description = "Schema for an independently referenceable evidence record supporting rubric answers"
+
+	return schema, nil
+}
+
+// GenerateEvidenceSchemaJSON generates JSON Schema for Evidence and returns
+// it as JSON bytes.
+func (g *Generator) GenerateEvidenceSchemaJSON() ([]byte, error) {
+	schema, err := g.GenerateEvidenceSchema()
+	if err != nil {
+		return nil, err
+	}
+	return json.MarshalIndent(schema, "", "  ")
+}
+
+// WriteEvidenceSchema generates and writes the Evidence schema to a file.
+func (g *Generator) WriteEvidenceSchema(path string) error {
+	return g.writeSchema(path, g.GenerateEvidenceSchemaJSON)
+}
+
+// GenerateDimensionDefinitionSchema generates JSON Schema for the
+// assessment.DimensionDefinition type.
+func (g *Generator) GenerateDimensionDefinitionSchema() (*jsonschema.Schema, error) {
+	schema := g.Reflector.Reflect(&assessment.DimensionDefinition{})
+	if schema == nil {
+		return nil, fmt.Errorf("failed to generate schema for assessment.DimensionDefinition")
+	}
+
+	schema.ID = jsonschema.ID(DimensionDefinitionSchemaID)
+	schema.Title = "Portfolio Dimension Definition"
+	schema.Description = "Schema for a versioned portfolio dimension (Kano, Market Investment Horizon, or a custom category/tags dimension)"
+
+	return schema, nil
+}
+
+// GenerateDimensionDefinitionSchemaJSON generates JSON Schema for
+// DimensionDefinition and returns it as JSON bytes.
+func (g *Generator) GenerateDimensionDefinitionSchemaJSON() ([]byte, error) {
+	schema, err := g.GenerateDimensionDefinitionSchema()
+	if err != nil {
+		return nil, err
+	}
+	return json.MarshalIndent(schema, "", "  ")
+}
+
+// WriteDimensionDefinitionSchema generates and writes the
+// DimensionDefinition schema to a file.
+func (g *Generator) WriteDimensionDefinitionSchema(path string) error {
+	return g.writeSchema(path, g.GenerateDimensionDefinitionSchemaJSON)
+}
+
+// GenerateOpportunityRankSchema generates JSON Schema for the
+// assessment.OpportunityRank type.
+func (g *Generator) GenerateOpportunityRankSchema() (*jsonschema.Schema, error) {
+	schema := g.Reflector.Reflect(&assessment.OpportunityRank{})
+	if schema == nil {
+		return nil, fmt.Errorf("failed to generate schema for assessment.OpportunityRank")
+	}
+
+	schema.ID = jsonschema.ID(OpportunityRankSchemaID)
+	schema.Title = "Opportunity Rank"
+	schema.Description = "Schema for RankingPolicy.Rank's governance-aware output: calculated rank, ties, exclusions, and any applied override"
+
+	return schema, nil
+}
+
+// GenerateOpportunityRankSchemaJSON generates JSON Schema for
+// OpportunityRank and returns it as JSON bytes.
+func (g *Generator) GenerateOpportunityRankSchemaJSON() ([]byte, error) {
+	schema, err := g.GenerateOpportunityRankSchema()
+	if err != nil {
+		return nil, err
+	}
+	return json.MarshalIndent(schema, "", "  ")
+}
+
+// WriteOpportunityRankSchema generates and writes the OpportunityRank
+// schema to a file.
+func (g *Generator) WriteOpportunityRankSchema(path string) error {
+	return g.writeSchema(path, g.GenerateOpportunityRankSchemaJSON)
+}
+
+// GenerateAssessmentSchemas generates all Opportunity Assessment IR schemas
+// to the specified directory.
+func (g *Generator) GenerateAssessmentSchemas(dir string) error {
+	if err := g.WriteOpportunityAssessmentSchema(filepath.Join(dir, "opportunity-assessment.schema.json")); err != nil {
+		return fmt.Errorf("generating OpportunityAssessment schema: %w", err)
+	}
+	if err := g.WriteEvidenceSchema(filepath.Join(dir, "evidence.schema.json")); err != nil {
+		return fmt.Errorf("generating Evidence schema: %w", err)
+	}
+	if err := g.WriteDimensionDefinitionSchema(filepath.Join(dir, "dimension-definition.schema.json")); err != nil {
+		return fmt.Errorf("generating DimensionDefinition schema: %w", err)
+	}
+	if err := g.WriteOpportunityRankSchema(filepath.Join(dir, "opportunity-rank.schema.json")); err != nil {
+		return fmt.Errorf("generating OpportunityRank schema: %w", err)
+	}
+	return nil
+}

@@ -1,0 +1,404 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/grokify/prism-roadmap/schema/opportunity-assessment.schema.json",
+  "$ref": "#/$defs/OpportunityAssessment",
+  "$defs": {
+    "AssessmentCycle": {
+      "properties": {
+        "number": {
+          "type": "integer"
+        },
+        "assessedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "supersedesId": {
+          "type": "string"
+        },
+        "current": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "CapabilityRef": {
+      "properties": {
+        "capabilityId": {
+          "type": "string"
+        },
+        "relation": {
+          "type": "string"
+        },
+        "rationale": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "CategorySelection": {
+      "properties": {
+        "optionId": {
+          "type": "string"
+        },
+        "resolved": {
+          "type": "boolean"
+        },
+        "ambiguous": {
+          "type": "boolean"
+        },
+        "ambiguousOptionIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "DimensionAnswer": {
+      "properties": {
+        "optionId": {
+          "type": "string"
+        },
+        "questionId": {
+          "type": "string"
+        },
+        "answer": {
+          "type": "boolean"
+        },
+        "rationale": {
+          "type": "string"
+        },
+        "evidenceIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "DimensionAssignment": {
+      "properties": {
+        "dimensionId": {
+          "type": "string"
+        },
+        "dimensionVersion": {
+          "type": "string"
+        },
+        "answers": {
+          "items": {
+            "$ref": "#/$defs/DimensionAnswer"
+          },
+          "type": "array"
+        },
+        "category": {
+          "$ref": "#/$defs/CategorySelection"
+        },
+        "tags": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "EffortComponent": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "personDays": {
+          "type": "number"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "EffortEstimate": {
+      "properties": {
+        "components": {
+          "items": {
+            "$ref": "#/$defs/EffortComponent"
+          },
+          "type": "array"
+        },
+        "low": {
+          "type": "number"
+        },
+        "expected": {
+          "type": "number"
+        },
+        "high": {
+          "type": "number"
+        },
+        "gate": {
+          "$ref": "#/$defs/EstimabilityGate"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "EstimabilityGate": {
+      "properties": {
+        "scopeDefined": {
+          "type": "boolean"
+        },
+        "implementationIdentified": {
+          "type": "boolean"
+        },
+        "dependenciesIdentified": {
+          "type": "boolean"
+        },
+        "testingIdentified": {
+          "type": "boolean"
+        },
+        "deploymentIdentified": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "JudgeMetadata": {
+      "properties": {
+        "judge_id": {
+          "type": "string"
+        },
+        "model": {
+          "type": "string"
+        },
+        "model_provider": {
+          "type": "string"
+        },
+        "model_version": {
+          "type": "string"
+        },
+        "prompt_template": {
+          "type": "string"
+        },
+        "prompt_version": {
+          "type": "string"
+        },
+        "system_prompt": {
+          "type": "string"
+        },
+        "temperature": {
+          "type": "number"
+        },
+        "max_tokens": {
+          "type": "integer"
+        },
+        "rubric_id": {
+          "type": "string"
+        },
+        "rubric_version": {
+          "type": "string"
+        },
+        "evaluated_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "latency": {
+          "type": "integer"
+        },
+        "tokens_used": {
+          "$ref": "#/$defs/TokenUsage"
+        },
+        "trace_id": {
+          "type": "string"
+        },
+        "span_id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "OKRContribution": {
+      "properties": {
+        "objectiveId": {
+          "type": "string"
+        },
+        "keyResultId": {
+          "type": "string"
+        },
+        "strength": {
+          "type": "string"
+        },
+        "rationale": {
+          "type": "string"
+        },
+        "evidenceIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "OpportunityAssessment": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "opportunity": {
+          "$ref": "#/$defs/OpportunityRef"
+        },
+        "title": {
+          "type": "string"
+        },
+        "judge": {
+          "$ref": "#/$defs/JudgeMetadata"
+        },
+        "cycle": {
+          "$ref": "#/$defs/AssessmentCycle"
+        },
+        "moscowAnswers": {
+          "items": {
+            "$ref": "#/$defs/ThresholdAnswer"
+          },
+          "type": "array"
+        },
+        "rice": {
+          "$ref": "#/$defs/RICEAssessment"
+        },
+        "dimensions": {
+          "items": {
+            "$ref": "#/$defs/DimensionAssignment"
+          },
+          "type": "array"
+        },
+        "contributions": {
+          "items": {
+            "$ref": "#/$defs/OKRContribution"
+          },
+          "type": "array"
+        },
+        "capabilities": {
+          "items": {
+            "$ref": "#/$defs/CapabilityRef"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "OpportunityRef": {
+      "properties": {
+        "specId": {
+          "type": "string"
+        },
+        "rmiId": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "RICEAssessment": {
+      "properties": {
+        "reach": {
+          "$ref": "#/$defs/Reach"
+        },
+        "impactAnswers": {
+          "items": {
+            "$ref": "#/$defs/ThresholdAnswer"
+          },
+          "type": "array"
+        },
+        "confidenceAnswers": {
+          "items": {
+            "$ref": "#/$defs/ThresholdAnswer"
+          },
+          "type": "array"
+        },
+        "confidenceInsufficientEvidence": {
+          "type": "boolean"
+        },
+        "effort": {
+          "$ref": "#/$defs/EffortEstimate"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Reach": {
+      "properties": {
+        "fraction": {
+          "type": "number"
+        },
+        "population": {
+          "type": "string"
+        },
+        "rationale": {
+          "type": "string"
+        },
+        "evidenceIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "ThresholdAnswer": {
+      "properties": {
+        "levelId": {
+          "type": "string"
+        },
+        "satisfied": {
+          "type": "boolean"
+        },
+        "criterionMet": {
+          "type": "string"
+        },
+        "rationale": {
+          "type": "string"
+        },
+        "evidenceIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "TokenUsage": {
+      "properties": {
+        "input_tokens": {
+          "type": "integer"
+        },
+        "output_tokens": {
+          "type": "integer"
+        },
+        "total_tokens": {
+          "type": "integer"
+        },
+        "cache_read_tokens": {
+          "type": "integer"
+        },
+        "cache_write_tokens": {
+          "type": "integer"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    }
+  },
+  "title": "Opportunity Assessment",
+  "description": "Schema for evidence-backed opportunity assessments: MoSCoW/RICE prioritization, portfolio dimensions, OKR contributions, and capability references"
+}

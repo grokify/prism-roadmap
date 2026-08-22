@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/grokify/prism-roadmap/schema/dimension-definition.schema.json",
+  "$ref": "#/$defs/DimensionDefinition",
+  "$defs": {
+    "DimensionDefinition": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "kind": {
+          "type": "string"
+        },
+        "options": {
+          "items": {
+            "$ref": "#/$defs/DimensionOption"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "DimensionOption": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        },
+        "questions": {
+          "items": {
+            "$ref": "#/$defs/DimensionQuestion"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "DimensionQuestion": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "question": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    }
+  },
+  "title": "Portfolio Dimension Definition",
+  "description": "Schema for a versioned portfolio dimension (Kano, Market Investment Horizon, or a custom category/tags dimension)"
+}

@@ -1,0 +1,249 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/grokify/prism-roadmap/schema/evidence.schema.json",
+  "$ref": "#/$defs/Evidence",
+  "$defs": {
+    "Claim": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        },
+        "location": {
+          "$ref": "#/$defs/Location"
+        },
+        "category": {
+          "type": "string"
+        },
+        "validation": {
+          "$ref": "#/$defs/Validation"
+        },
+        "statistical": {
+          "$ref": "#/$defs/StatisticalDetail"
+        },
+        "verdict": {
+          "type": "string"
+        },
+        "rationale": {
+          "type": "string"
+        },
+        "relatedClaimIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "DerivedValidation": {
+      "properties": {
+        "sourceClaimIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "derivationMethod": {
+          "type": "string"
+        },
+        "formula": {
+          "type": "string"
+        },
+        "reasoning": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Evidence": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "claim": {
+          "$ref": "#/$defs/Claim"
+        },
+        "system": {
+          "type": "string"
+        },
+        "sensitivity": {
+          "type": "string"
+        },
+        "capturedBy": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "ExternalValidation": {
+      "properties": {
+        "url": {
+          "type": "string"
+        },
+        "sourceType": {
+          "type": "string"
+        },
+        "sourceRole": {
+          "type": "string"
+        },
+        "reliability": {
+          "type": "string"
+        },
+        "accessedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "archived": {
+          "type": "boolean"
+        },
+        "archiveUrl": {
+          "type": "string"
+        },
+        "quotedText": {
+          "type": "string"
+        },
+        "verifiedMatch": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "InternalValidation": {
+      "properties": {
+        "method": {
+          "type": "string"
+        },
+        "evidencePath": {
+          "type": "string"
+        },
+        "evidenceHash": {
+          "type": "string"
+        },
+        "reproducible": {
+          "type": "boolean"
+        },
+        "reproductionSteps": {
+          "type": "string"
+        },
+        "validatedBy": {
+          "type": "string"
+        },
+        "validatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "environment": {
+          "$ref": "#/$defs/ValidationEnvironment"
+        },
+        "output": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Location": {
+      "properties": {
+        "section": {
+          "type": "string"
+        },
+        "line": {
+          "type": "integer"
+        },
+        "startOffset": {
+          "type": "integer"
+        },
+        "endOffset": {
+          "type": "integer"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "StatisticalDetail": {
+      "properties": {
+        "value": {
+          "type": "number"
+        },
+        "unit": {
+          "type": "string"
+        },
+        "precision": {
+          "type": "string"
+        },
+        "asOfDate": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "SubjectiveValidation": {
+      "properties": {
+        "acknowledged": {
+          "type": "boolean"
+        },
+        "methodology": {
+          "type": "string"
+        },
+        "recommendation": {
+          "type": "string"
+        },
+        "rationale": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Validation": {
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "external": {
+          "$ref": "#/$defs/ExternalValidation"
+        },
+        "internal": {
+          "$ref": "#/$defs/InternalValidation"
+        },
+        "derived": {
+          "$ref": "#/$defs/DerivedValidation"
+        },
+        "subjective": {
+          "$ref": "#/$defs/SubjectiveValidation"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "ValidationEnvironment": {
+      "properties": {
+        "product": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "configuration": {
+          "type": "string"
+        },
+        "platform": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    }
+  },
+  "title": "Evidence",
+  "description": "Schema for an independently referenceable evidence record supporting rubric answers"
+}
