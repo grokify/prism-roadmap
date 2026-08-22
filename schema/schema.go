@@ -113,6 +113,23 @@ const (
 
 	// RoadmapItemSchemaID is the canonical ID for the Roadmap Item schema.
 	RoadmapItemSchemaID = "https://github.com/grokify/prism-roadmap/schema/roadmap-item.schema.json"
+
+	// Opportunity Assessment schema IDs
+
+	// OpportunityAssessmentSchemaID is the canonical ID for the Opportunity
+	// Assessment schema.
+	OpportunityAssessmentSchemaID = "https://github.com/grokify/prism-roadmap/schema/opportunity-assessment.schema.json"
+
+	// EvidenceSchemaID is the canonical ID for the Evidence schema.
+	EvidenceSchemaID = "https://github.com/grokify/prism-roadmap/schema/evidence.schema.json"
+
+	// DimensionDefinitionSchemaID is the canonical ID for the portfolio
+	// dimension definition schema (Kano, Market Investment Horizon, custom).
+	DimensionDefinitionSchemaID = "https://github.com/grokify/prism-roadmap/schema/dimension-definition.schema.json"
+
+	// OpportunityRankSchemaID is the canonical ID for the ranking-policy
+	// output schema.
+	OpportunityRankSchemaID = "https://github.com/grokify/prism-roadmap/schema/opportunity-rank.schema.json"
 )
 
 // OKR Schema
@@ -197,4 +214,58 @@ func JourneyRoadmapSchema() string {
 // JourneyRoadmapSchemaBytes returns the Journey Roadmap JSON Schema as a byte slice.
 func JourneyRoadmapSchemaBytes() []byte {
 	return JourneyRoadmapSchemaJSON
+}
+
+// Opportunity Assessment Schemas
+
+//go:embed opportunity-assessment.schema.json
+var OpportunityAssessmentSchemaJSON []byte
+
+// OpportunityAssessmentSchema returns the Opportunity Assessment JSON Schema as a string.
+func OpportunityAssessmentSchema() string {
+	return string(OpportunityAssessmentSchemaJSON)
+}
+
+// OpportunityAssessmentSchemaBytes returns the Opportunity Assessment JSON Schema as a byte slice.
+func OpportunityAssessmentSchemaBytes() []byte {
+	return OpportunityAssessmentSchemaJSON
+}
+
+//go:embed evidence.schema.json
+var EvidenceSchemaJSON []byte
+
+// EvidenceSchema returns the Evidence JSON Schema as a string.
+func EvidenceSchema() string {
+	return string(EvidenceSchemaJSON)
+}
+
+// EvidenceSchemaBytes returns the Evidence JSON Schema as a byte slice.
+func EvidenceSchemaBytes() []byte {
+	return EvidenceSchemaJSON
+}
+
+//go:embed dimension-definition.schema.json
+var DimensionDefinitionSchemaJSON []byte
+
+// DimensionDefinitionSchema returns the Dimension Definition JSON Schema as a string.
+func DimensionDefinitionSchema() string {
+	return string(DimensionDefinitionSchemaJSON)
+}
+
+// DimensionDefinitionSchemaBytes returns the Dimension Definition JSON Schema as a byte slice.
+func DimensionDefinitionSchemaBytes() []byte {
+	return DimensionDefinitionSchemaJSON
+}
+
+//go:embed opportunity-rank.schema.json
+var OpportunityRankSchemaJSON []byte
+
+// OpportunityRankSchema returns the Opportunity Rank JSON Schema as a string.
+func OpportunityRankSchema() string {
+	return string(OpportunityRankSchemaJSON)
+}
+
+// OpportunityRankSchemaBytes returns the Opportunity Rank JSON Schema as a byte slice.
+func OpportunityRankSchemaBytes() []byte {
+	return OpportunityRankSchemaJSON
 }

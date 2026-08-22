@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/grokify/prism-roadmap/schema/opportunity-rank.schema.json",
+  "$ref": "#/$defs/OpportunityRank",
+  "$defs": {
+    "OpportunityRank": {
+      "properties": {
+        "assessmentId": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "moscow": {
+          "type": "string"
+        },
+        "rice": {
+          "$ref": "#/$defs/RICEScoreResult"
+        },
+        "calculatedRank": {
+          "type": "integer"
+        },
+        "tiedWith": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "excluded": {
+          "type": "string"
+        },
+        "finalRank": {
+          "type": "integer"
+        },
+        "override": {
+          "$ref": "#/$defs/RankOverride"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "RICEScoreResult": {
+      "properties": {
+        "score": {
+          "type": "number"
+        },
+        "computable": {
+          "type": "boolean"
+        },
+        "reason": {
+          "type": "string"
+        },
+        "impact": {
+          "type": "string"
+        },
+        "confidence": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "RankOverride": {
+      "properties": {
+        "assessmentId": {
+          "type": "string"
+        },
+        "finalRank": {
+          "type": "integer"
+        },
+        "rationale": {
+          "type": "string"
+        },
+        "approvedBy": {
+          "type": "string"
+        },
+        "evidenceIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    }
+  },
+  "title": "Opportunity Rank",
+  "description": "Schema for RankingPolicy.Rank's governance-aware output: calculated rank, ties, exclusions, and any applied override"
+}

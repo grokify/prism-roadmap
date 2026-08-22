@@ -74,3 +74,40 @@ func TestPRDSchemaBytesFunction(t *testing.T) {
 		t.Error("PRDSchemaBytes() does not match PRDSchemaJSON")
 	}
 }
+
+func TestAssessmentSchemasEmbedded(t *testing.T) {
+	tests := []struct {
+		name string
+		data []byte
+	}{
+		{"OpportunityAssessmentSchemaJSON", OpportunityAssessmentSchemaJSON},
+		{"EvidenceSchemaJSON", EvidenceSchemaJSON},
+		{"DimensionDefinitionSchemaJSON", DimensionDefinitionSchemaJSON},
+		{"OpportunityRankSchemaJSON", OpportunityRankSchemaJSON},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if len(tt.data) == 0 {
+				t.Fatalf("%s is empty", tt.name)
+			}
+			var schema map[string]any
+			if err := json.Unmarshal(tt.data, &schema); err != nil {
+				t.Fatalf("%s is not valid JSON: %v", tt.name, err)
+			}
+			for _, key := range []string{"$schema", "$id", "$ref", "$defs"} {
+				if _, ok := schema[key]; !ok {
+					t.Errorf("%s missing expected key: %s", tt.name, key)
+				}
+			}
+		})
+	}
+}
+
+func TestOpportunityAssessmentSchemaFunctions(t *testing.T) {
+	if OpportunityAssessmentSchema() != string(OpportunityAssessmentSchemaJSON) {
+		t.Error("OpportunityAssessmentSchema() does not match OpportunityAssessmentSchemaJSON")
+	}
+	if string(OpportunityAssessmentSchemaBytes()) != string(OpportunityAssessmentSchemaJSON) {
+		t.Error("OpportunityAssessmentSchemaBytes() does not match OpportunityAssessmentSchemaJSON")
+	}
+}
