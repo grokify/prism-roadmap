@@ -4,7 +4,7 @@ go 1.25.0
 
 require (
 	github.com/grokify/priority-frameworks v0.2.0
-	github.com/grokify/prism-core v0.4.0
+	github.com/grokify/prism-core v0.5.0
 	github.com/grokify/structureddocs v0.1.0
 	github.com/invopop/jsonschema v0.14.0
 	github.com/modelcontextprotocol/go-sdk v1.7.0
