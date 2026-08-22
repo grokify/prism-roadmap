@@ -13,8 +13,8 @@ github.com/google/jsonschema-go v0.4.3 h1:/DBOLZTfDow7pe2GmaJNhltueGTtDKICi8V8p+
 github.com/google/jsonschema-go v0.4.3/go.mod h1:r5quNTdLOYEz95Ru18zA0ydNbBuYoo9tgaYcxEYhJVE=
 github.com/grokify/priority-frameworks v0.2.0 h1:rmSJnMCSmGwNh2GTXy6OorbXPmSOvIAlTngIDv2PpzY=
 github.com/grokify/priority-frameworks v0.2.0/go.mod h1:STc3170PyAAzqxnn7anXViyFsjSvIBvt+pNb8SP3Vwk=
-github.com/grokify/prism-core v0.4.0 h1:aJy92m4ls41RqfRt/FETZyDNj6ECzPtTyh8nVEtRJYU=
-github.com/grokify/prism-core v0.4.0/go.mod h1:MGwhaaZdFW8WShYx3lqzGkcx8f07xFDbwd+u+4uBAT0=
+github.com/grokify/prism-core v0.5.0 h1:pn+qSji72iJCUOuZISKGdxjxouGSEISuYCSo7MZ5SZw=
+github.com/grokify/prism-core v0.5.0/go.mod h1:MGwhaaZdFW8WShYx3lqzGkcx8f07xFDbwd+u+4uBAT0=
 github.com/grokify/structureddocs v0.1.0 h1:ziCUm7OeJDwKoq8KrmIm44AFDJR7UtWhgHqVEyNiGRY=
 github.com/grokify/structureddocs v0.1.0/go.mod h1:DD6ooCUwmtyLzGs12TAhRmf/PjEDNapcKH8DAnJQvzQ=
 github.com/inconshreveable/mousetrap v1.1.0 h1:wN+x4NVGpMsO7ErUn/mUI3vEoE6Jt13X2s0bqwp9tc8=
