@@ -281,6 +281,13 @@ type RICEScoreResult struct {
 
 	Impact     prioritization.ImpactLevel     `json:"impact,omitempty"`
 	Confidence prioritization.ConfidenceLevel `json:"confidence,omitempty"`
+
+	// ProfileID is set when this score was produced by ResolveCompassRICE
+	// rather than ComputeRICE — e.g. "customer/b2b/v1" — so a ranked list
+	// can show which scores are cross-profile-comparable COMPASS-RICE
+	// scores versus the legacy single-scale RICE. Empty for ComputeRICE
+	// results.
+	ProfileID string `json:"profileId,omitempty"`
 }
 
 // ComputeRICE deterministically resolves a RICEAssessment's ladder answers

@@ -22,13 +22,21 @@ type RankInput struct {
 	RICE   RICEScoreResult               `json:"rice"`
 }
 
-// ToRankInput resolves this assessment's MoSCoW answers and RICE inputs
-// into a RankInput for RankingPolicy.Rank. If no RICE assessment has been
-// recorded yet (a.RICE is nil), RICE.Computable is false with an explanatory
-// Reason, matching ComputeRICE's own "never fabricate a score" discipline.
+// ToRankInput resolves this assessment's MoSCoW answers and RICE score into
+// a RankInput for RankingPolicy.Rank. When a COMPASS-RICE assessment is
+// present (a.Compass != nil), it is resolved via ResolveCompassRICE and
+// takes precedence over the legacy ladder RICE — the two use different
+// Reach scales (0-100 banded vs. 0..1 fraction) and are never mixed for one
+// opportunity. Otherwise falls back to the legacy ComputeRICE(*a.RICE) path
+// unchanged. If neither is recorded, RICE.Computable is false with an
+// explanatory Reason, matching ComputeRICE's own "never fabricate a score"
+// discipline.
 func (a *OpportunityAssessment) ToRankInput() RankInput {
 	rice := RICEScoreResult{Reason: "no RICE assessment recorded"}
-	if a.RICE != nil {
+	switch {
+	case a.Compass != nil:
+		rice = ResolveCompassRICE(a.Compass)
+	case a.RICE != nil:
 		rice = ComputeRICE(*a.RICE)
 	}
 	return RankInput{
