@@ -10,6 +10,78 @@
   ],
   "releases": [
     {
+      "version": "v0.19.0",
+      "date": "2026-08-22",
+      "highlights": [
+        {
+          "description": "New assessment package: an evidence-backed opportunity prioritization system — a judge answers bounded Y/N rubric questions with cited evidence, and deterministic code (never the judge) resolves those answers into a MoSCoW tier, a RICE score, a portfolio classification (Kano, Market Investment Horizon), and a final rank. Phases 1-3 of INIT-PRISMROADMAP-001; the remaining phases land in omniroadmap"
+        },
+        {
+          "description": "JSON Schema generation for the new IR types: OpportunityAssessment, Evidence, DimensionDefinition, and OpportunityRank"
+        }
+      ],
+      "added": [
+        {
+          "description": "Ladder threshold-answer primitive: a top-down, evidence-required classifier shared by MoSCoW and RICE Impact/Confidence resolution",
+          "commit": "595e5fb"
+        },
+        {
+          "description": "MoSCoW and RICE rubric resolvers, reusing the existing prioritization package's MoSCoWPriority/ImpactLevel/ConfidenceLevel types with an Effort estimability gate",
+          "commit": "24152f9"
+        },
+        {
+          "description": "Category and Tags portfolio-dimension primitives (DimensionDefinition, DimensionAssignment), descriptive-only and never a ranking input",
+          "commit": "c1eafa5"
+        },
+        {
+          "description": "Built-in Kano and Market Investment Horizon portfolio dimensions",
+          "commit": "1569ed2"
+        },
+        {
+          "description": "OKR contribution links (OKRContribution) against the existing goals/okr package",
+          "commit": "acfa29b"
+        },
+        {
+          "description": "prism-capability reference links (CapabilityReference), a type alias for prism-core's CapabilityRef",
+          "commit": "e86759f"
+        },
+        {
+          "description": "Evidence entity wrapping structured-evaluation's claims.Claim with capture metadata, sensitivity gating, and an EvidenceIndex for reverse lookups",
+          "commit": "a48e995"
+        },
+        {
+          "description": "OpportunityAssessment aggregate tying Evidence, MoSCoW/RICE, dimensions, OKR contributions, and capability references into one per-cycle judgment record",
+          "commit": "bd90c66"
+        },
+        {
+          "description": "RankingPolicy and OpportunityRank: MoSCoW tier then RICE score with a ±5% tie band, and an auditable RankOverride record",
+          "commit": "c7d8551"
+        },
+        {
+          "description": "JSON Schema generation and embedded schemas for OpportunityAssessment, Evidence, DimensionDefinition, and OpportunityRank",
+          "commit": "f69a40f"
+        },
+        {
+          "description": "ReportDataset contract: computed facts, % Person-Day distributions, deltas since the previous review, and the override log",
+          "commit": "47193c3"
+        },
+        {
+          "description": "OpportunityReport template: the per-opportunity six-pager with typed, provenance-carrying narrative slots",
+          "commit": "d84572e"
+        },
+        {
+          "description": "PortfolioReview template: the whole-portfolio review agenda, plus a PresentationProjection() into slide form",
+          "commit": "557ba06"
+        }
+      ],
+      "dependencies": [
+        {
+          "description": "Pin github.com/grokify/prism-core to the tagged v0.5.0 (CapabilityRef/CapabilityRelation), removing the temporary local-dev replace directive",
+          "commit": "9046be2"
+        }
+      ]
+    },
+    {
       "version": "v0.18.0",
       "date": "2026-08-16",
       "highlights": [
