@@ -99,6 +99,25 @@ Each canvas supports multiple output formats:
 - **Mermaid** - Mermaid diagram syntax for documentation
 - **Lit/JSON** - Structured data for web components
 
+### Opportunity Prioritization (Assessment IR)
+
+The `assessment` package is an evidence-backed, rubric-driven prioritization record: a judge answers bounded Y/N rubric questions with cited evidence, and deterministic code — never the judge — resolves those answers into a MoSCoW tier, a RICE score, a portfolio classification, and a final rank. It reuses the `prioritization` package's `MoSCoWPriority`/`ImpactLevel`/`ConfidenceLevel` types rather than redefining them; the difference is the input path — resolved from cited evidence via a `Ladder` threshold classifier, instead of assigned directly.
+
+> **Note:** `assessment.OpportunityAssessment` is unrelated to `canvas.OpportunityAssessment` (the SVPG canvas above) — different types in different packages that happen to share a name.
+
+```go
+import "github.com/grokify/prism-roadmap/assessment"
+
+a := assessment.NewOpportunityAssessment("OA-018", ref, "Self-service SSO", time.Now())
+a.MoSCoWAnswers = moscowAnswers // evidence-backed Ladder answers
+a.RICE = &assessment.RICEAssessment{Reach: reach, ImpactAnswers: impactAnswers, ConfidenceAnswers: confidenceAnswers, Effort: effort}
+
+tier := a.MoSCoW()                  // resolved via assessment.ResolveMoSCoWPriority
+rank := assessment.DefaultRankingPolicy().Rank([]assessment.RankInput{a.ToRankInput()})
+```
+
+Portfolio dimensions (built-in Kano and Market Investment Horizon, or a custom `DimensionDefinition`), OKR contribution links, and `prism-capability` references attach to the same assessment but are descriptive only — never a `RankingPolicy` input. A `ReportDataset` compiled across an assessment corpus feeds a per-opportunity six-pager (`OpportunityReport`) and a whole-portfolio review (`PortfolioReview`), both pure functions of the dataset. See the [Opportunity Prioritization guide](https://grokify.github.io/prism-roadmap/assessment/overview/) for the full pipeline.
+
 ### Journey Roadmaps
 
 Plan capability maturity evolution over time with the `journey` package:
