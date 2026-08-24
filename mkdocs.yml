@@ -97,6 +97,9 @@ nav:
       - Feature Canvas: canvas/feature.md
       - Lean UX Canvas: canvas/leanux.md
       - Prioritization (RICE & Kano): canvas/prioritization.md
+  - Opportunity Prioritization:
+      - Overview: assessment/overview.md
+      - Report Contracts: assessment/reports.md
   - Features:
       - Scoring & Validation: features/scoring.md
       - Market Signal: features/market-signal.md
