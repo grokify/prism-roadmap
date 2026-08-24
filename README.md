@@ -118,6 +118,17 @@ rank := assessment.DefaultRankingPolicy().Rank([]assessment.RankInput{a.ToRankIn
 
 Portfolio dimensions (built-in Kano and Market Investment Horizon, or a custom `DimensionDefinition`), OKR contribution links, and `prism-capability` references attach to the same assessment but are descriptive only — never a `RankingPolicy` input. A `ReportDataset` compiled across an assessment corpus feeds a per-opportunity six-pager (`OpportunityReport`) and a whole-portfolio review (`PortfolioReview`), both pure functions of the dataset. See the [Opportunity Prioritization guide](https://grokify.github.io/prism-roadmap/assessment/overview/) for the full pipeline.
 
+**COMPASS-RICE** ([`compass-rice`](https://github.com/ProductBuildersHQ/compass-rice)) replaces the single-scale ladder RICE above when a portfolio mixes opportunity types whose raw metrics aren't comparable (a customer feature vs. a platform investment vs. a risk mitigation): six investment-thesis profiles each normalize their own domain-specific evidence into the same canonical, cross-profile-comparable score.
+
+```go
+score := assessment.ResolveCompassRICE(a.Compass) // same RICEScoreResult shape as ComputeRICE
+
+proposed := assessment.ProposeProfileAssignment("OS-042", "customer/b2b/v1", "primarily a retention play", "judge-session-9")
+confirmed := proposed.Confirm("pm@example.com", time.Now()) // two-phase: LLM proposes, PM confirms
+```
+
+`ToRankInput` prefers `a.Compass` over `a.RICE` when both are present. See the [COMPASS-RICE section](https://grokify.github.io/prism-roadmap/assessment/overview/#compass-rice-cross-profile-comparable-rice) of the same guide.
+
 ### Journey Roadmaps
 
 Plan capability maturity evolution over time with the `journey` package:
