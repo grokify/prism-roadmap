@@ -85,7 +85,7 @@ type OpportunityReport struct {
 // Related Opportunities appendix — may refine Present further; the values
 // here are the deterministic default given only the assessment/rank.
 func NewOpportunityReport(generatedAt time.Time, assessment OpportunityAssessment, rank *OpportunityRank) OpportunityReport {
-	hasPrioritization := assessment.RICE != nil || len(assessment.MoSCoWAnswers) > 0
+	hasPrioritization := assessment.RICE != nil || assessment.Compass != nil || len(assessment.MoSCoWAnswers) > 0
 	hasPortfolioContext := len(assessment.Dimensions) > 0
 	hasStrategicCapability := len(assessment.Contributions) > 0 || len(assessment.Capabilities) > 0
 

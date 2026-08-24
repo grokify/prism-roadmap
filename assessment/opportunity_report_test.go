@@ -137,6 +137,24 @@ func TestNewOpportunityReportPresenceForMinimalAssessment(t *testing.T) {
 	}
 }
 
+func TestNewOpportunityReportPresenceForCompassOnlyAssessment(t *testing.T) {
+	now := time.Date(2026, 8, 19, 0, 0, 0, 0, time.UTC)
+	a := NewOpportunityAssessment("OA-1", OpportunityRef{SpecID: "OPP-1"}, "Title", now)
+	n := mustNormalize(t) // from compass_test.go, same package
+	a.Compass = &CompassAssessment{ProfileID: n.ProfileID, Normalized: n}
+	// No RICE, no MoSCoWAnswers -- Compass alone must still trigger the
+	// prioritization section, so a COMPASS-scored opportunity's report
+	// isn't silently missing its prioritization rationale.
+
+	report := NewOpportunityReport(now, *a, nil)
+
+	for _, s := range report.Sections {
+		if s.ID == "prioritization" && !s.Present {
+			t.Error(`section "prioritization" Present = false, want true for a Compass-only assessment`)
+		}
+	}
+}
+
 func TestNewOpportunityReportPresenceForFullAssessment(t *testing.T) {
 	now := time.Date(2026, 8, 19, 0, 0, 0, 0, time.UTC)
 	a := NewOpportunityAssessment("OA-1", OpportunityRef{SpecID: "OPP-1"}, "Title", now)
