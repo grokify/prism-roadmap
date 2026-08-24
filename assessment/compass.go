@@ -90,3 +90,32 @@ func (c CompassAssessment) Validate() error {
 	}
 	return nil
 }
+
+// ResolveCompassRICE is the single gate deciding whether a CompassAssessment
+// is trusted for ranking. It never falls back to the legacy ladder RICE
+// scale — compass-rice's 0-100 Reach band and the legacy 0..1 Reach fraction
+// are different regimes, and mixing them in one ranked list would silently
+// distort relative ordering (an opportunity scored on one scale would not
+// really outrank one scored on the other). An opportunity with no COMPASS
+// assessment, or one still awaiting human review, is uncomputable — not
+// silently scored on a different methodology.
+func ResolveCompassRICE(c *CompassAssessment) RICEScoreResult {
+	if c == nil {
+		return RICEScoreResult{Reason: "no COMPASS assessment recorded"}
+	}
+	if c.NeedsHumanReview && c.HumanReview == nil {
+		return RICEScoreResult{Reason: "COMPASS assessment awaiting human review", ProfileID: string(c.ProfileID)}
+	}
+	if err := c.Validate(); err != nil {
+		return RICEScoreResult{Reason: err.Error(), ProfileID: string(c.ProfileID)}
+	}
+	score, err := c.Normalized.Score()
+	if err != nil {
+		return RICEScoreResult{Reason: err.Error(), ProfileID: string(c.ProfileID)}
+	}
+	return RICEScoreResult{
+		Score:      score,
+		Computable: true,
+		ProfileID:  string(c.ProfileID),
+	}
+}
