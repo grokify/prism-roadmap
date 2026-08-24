@@ -79,6 +79,30 @@ result := assessment.ComputeRICE(assessment.RICEAssessment{
 
 MoSCoW's "Won't/Not Now" tier and RICE's low end are the ladder's *floor*, not a rung with its own criteria — they're what you get when nothing else is satisfied with evidence, not something a judge tests for directly.
 
+## COMPASS-RICE: cross-profile-comparable RICE
+
+The ladder-based RICE above uses one Reach scale ("the fraction of the relevant customer population affected") for every opportunity, which breaks down once a portfolio mixes customer features, platform investments, risk mitigations, and cost optimizations — their raw metrics simply aren't comparable on one 0..1 fraction. [`compass-rice`](https://github.com/ProductBuildersHQ/compass-rice) solves this: six investment-thesis profiles (Customer, Platform, Market Expansion, Operational Efficiency, Supportability, Risk), each with a domain-specific evidence model whose deterministic `Normalizer` produces the same canonical `rice.Normalized` shape — Reach as a 0–100 band, standard Impact/Confidence multipliers, Effort in person-days — so `Score()` is comparable across profiles.
+
+!!! note "Two different Reach scales — never mix them"
+    compass-rice's `Normalized.Reach` is a 0–100 band; the ladder RICE above uses a 0..1 fraction. `ToRankInput` never blends the two for one opportunity — see below.
+
+`CompassAssessment` (`assessment/compass.go`) is the evidence-to-score record: a profile-typed evidence document (the source of truth), the `Normalized` result compass-rice's Normalizer derived from it, the judge's rubric reasoning and verified claims, and whether a flagged assessment has cleared human review.
+
+```go
+score := assessment.ResolveCompassRICE(a.Compass) // RICEScoreResult, same shape as ComputeRICE's
+```
+
+`ResolveCompassRICE` is the single gate: `nil` is uncomputable ("no COMPASS assessment recorded"), an assessment still flagged `NeedsHumanReview` stays uncomputable even though `Normalized` already holds a valid score, and a validation failure surfaces its own reason — never a silently-scored fallback.
+
+**Profile selection is two-phase**, per compass-rice's own "exactly one profile generates the canonical RICE score" rule (PRD D5): an LLM judge proposes a `ProfileAssignment` (the primary investment thesis, with rationale and optional secondary theses recorded as context only — never scored), and a PM confirms or rejects it before its `ProfileID` is trusted for scoring:
+
+```go
+proposed := assessment.ProposeProfileAssignment("OS-042", "customer/b2b/v1", "primarily a retention play", "judge-session-9")
+confirmed := proposed.Confirm("pm@example.com", time.Now()) // or .Reject(...) to send back for re-proposal
+```
+
+`ProfileAssignment` is spec-scoped and survives assessment cycles, like `RankOverride` — a re-assessment doesn't require re-selecting the profile. `ToRankInput` prefers `Compass` over the legacy `RICE` field whenever both are present on an `OpportunityAssessment`; a consumer enforcing the two-phase gate end-to-end (assignment confirmed *and* its `ProfileID` matching the assessment's) is the consumer's own responsibility — see [omniroadmap](https://github.com/grokify/omniroadmap)'s compile-time gating for a worked example.
+
 ## Portfolio dimensions: Kano and Market Investment Horizon
 
 `DimensionDefinition` is a versioned, referenceable portfolio dimension — either `DimensionKindCategory` (mutually exclusive, 0..1 selection) or `DimensionKindTags` (multi-select). Assessments reference a dimension by ID+version (`DimensionAssignment`), so a definition changing later never retroactively reinterprets a past assignment. **Dimensions are descriptive only — they never enter `RankingPolicy.Rank`.**
@@ -109,7 +133,8 @@ type OpportunityAssessment struct {
     Cycle       AssessmentCycle
 
     MoSCoWAnswers []ThresholdAnswer
-    RICE          *RICEAssessment
+    RICE          *RICEAssessment    // legacy ladder RICE
+    Compass       *CompassAssessment // COMPASS-RICE — ToRankInput prefers this when set
     Dimensions    []DimensionAssignment
     Contributions []OKRContribution
     Capabilities  []CapabilityReference
