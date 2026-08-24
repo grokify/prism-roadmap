@@ -10,6 +10,25 @@
   ],
   "releases": [
     {
+      "version": "v0.20.0",
+      "date": "2026-08-24",
+      "highlights": [
+        { "description": "New CompassAssessment type and ResolveCompassRICE gate adopt compass-rice's COMPASS-RICE methodology: six investment-thesis profiles normalize domain-specific evidence into one cross-profile-comparable score, replacing the ladder RICE's single 0..1 Reach fraction for portfolios that mix customer, platform, risk, and other opportunity types whose raw metrics aren't comparable", "commit": "790037c", "rmi": "RMI-PRISMROADMAP-015" },
+        { "description": "ToRankInput now prefers a.Compass over the legacy a.RICE when both are present -- the two use incompatible Reach scales and are never mixed for one opportunity", "commit": "baf8517", "rmi": "RMI-PRISMROADMAP-016" },
+        { "description": "New ProfileAssignment record implements the two-phase primary-investment-thesis workflow: an LLM judge proposes a profile, a PM confirms or rejects it via Propose/Confirm/Reject before its ProfileID is trusted for scoring", "commit": "bfb3004", "rmi": "RMI-PRISMROADMAP-017" }
+      ],
+      "added": [
+        { "description": "OpportunityAssessment.Compass *CompassAssessment field; its Claims fold into HasEvidence() and EvidenceReferences() alongside existing MoSCoW/RICE/dimension/OKR citations", "commit": "bc48622", "rmi": "RMI-PRISMROADMAP-015" },
+        { "description": "RICEScoreResult.ProfileID field (additive) so a ranked list can tell which scores are cross-profile-comparable COMPASS-RICE scores", "commit": "baf8517", "rmi": "RMI-PRISMROADMAP-016" }
+      ],
+      "dependencies": [
+        { "description": "New dependency on github.com/ProductBuildersHQ/compass-rice v0.4.0", "commit": "790037c", "rmi": "RMI-PRISMROADMAP-015" }
+      ],
+      "documentation": [
+        { "description": "docs/assessment/overview.md COMPASS-RICE section; README Opportunity Prioritization section extended", "commit": "23c3821", "rmi": "RMI-PRISMROADMAP-018" }
+      ]
+    },
+    {
       "version": "v0.19.0",
       "date": "2026-08-22",
       "highlights": [
