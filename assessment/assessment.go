@@ -104,6 +104,14 @@ type OpportunityAssessment struct {
 	// a RICE rubric has been run.
 	RICE *RICEAssessment `json:"rice,omitempty"`
 
+	// Compass is this cycle's COMPASS-RICE assessment: a profile-normalized
+	// evidence-to-score judgment (see CompassAssessment). Resolve a score
+	// via ResolveCompassRICE(a.Compass) — its cross-profile-comparable
+	// score is intended to supersede the legacy single-scale RICE for any
+	// opportunity that has adopted a profile. Nil until a COMPASS-RICE
+	// assessment has been ingested.
+	Compass *CompassAssessment `json:"compass,omitempty"`
+
 	// Dimensions are this cycle's portfolio-dimension classifications —
 	// Kano, Market Investment Horizon, and any custom Category/Tags
 	// dimensions (RMI-PRISMROADMAP-005/006). Descriptive only: never a
@@ -205,6 +213,9 @@ func (a *OpportunityAssessment) HasEvidence() bool {
 			}
 		}
 	}
+	if a.Compass != nil && len(a.Compass.Claims) > 0 {
+		return true
+	}
 	for _, d := range a.Dimensions {
 		for _, ans := range d.Answers {
 			if len(ans.EvidenceIDs) > 0 {
@@ -262,6 +273,14 @@ func (a *OpportunityAssessment) EvidenceReferences() []EvidenceRef {
 		}
 		for _, ans := range a.RICE.ConfidenceAnswers {
 			add("rice.confidence."+ans.LevelID, ans.EvidenceIDs)
+		}
+	}
+	if a.Compass != nil {
+		for _, cl := range a.Compass.Claims {
+			if cl == nil || cl.ID == "" {
+				continue
+			}
+			refs = append(refs, EvidenceRef{EvidenceID: cl.ID, AssessmentID: a.ID, QuestionID: "compass." + string(a.Compass.ProfileID)})
 		}
 	}
 	for _, d := range a.Dimensions {
