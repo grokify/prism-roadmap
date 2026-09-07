@@ -76,6 +76,18 @@ Feature and requirement prioritization models (see [Feature Prioritization](#fea
 | **Kano** | Qualitative classification | Must-Be, Performance, Attractive, Indifferent, Reverse | Feature classification from customer surveys |
 | **MoSCoW** | Release planning | Must Have, Should Have, Could Have, Won't Have | Scope negotiation and release planning |
 
+### Investment Mix Frameworks
+
+Portfolio dimensions in the `assessment` package classifying where product-development capacity is invested, resolved from evidence-backed judge answers like Kano and Market Investment Horizon:
+
+| Framework | Source | Categories | Use Case |
+|-----------|--------|------------|----------|
+| **Run/Grow/Transform** | Gartner | Run, Grow, Transform | Executive IT investment roll-up by business outcome |
+| **SRE Work Classification** | Google SRE | Software Engineering, Systems Engineering, Toil, Overhead | Engineering-efficiency lens; measure and reduce toil |
+| **Product Development Investment Mix** | prism-roadmap | Innovate, Improve, Automate, Maintain, Toil | Expose toil and the Toil → Automate → Capacity Reclaimed loop |
+
+**Product Development Investment Mix (PDIM)** synthesizes the other two and is the assessment grain. It classifies the mix of work *types* within the product portfolio (not an allocation across products); "product development" names the joint function — product management, engineering, design, docs — keeping the framework neutral between the product and engineering teams that present it together. Maintenance = non-toil maintenance + Toil, with Toil promoted to a first-class category while reducing it is an active objective (`PDIMRollup` collapses Toil into Maintain for the 4-bucket executive view). A PDIM classification deterministically projects onto both source frameworks — `PDIMToSREWork` definitionally (Toil → Toil, everything else → Engineering) and `PDIMToRGT` by documented convention (Innovate → Transform, Improve → Grow, Automate/Maintain/Toil → Run); an explicit RGT or SRE assignment takes precedence over the projection. `ToilReduction` quantifies the value an automation initiative captures from an identified toil source: hours reclaimed per month and payback period, treating automation as a capital-style investment.
+
 ### Strategic Planning Canvases
 
 Visual canvas frameworks for strategic planning and opportunity assessment:
@@ -116,7 +128,7 @@ tier := a.MoSCoW()                  // resolved via assessment.ResolveMoSCoWPrio
 rank := assessment.DefaultRankingPolicy().Rank([]assessment.RankInput{a.ToRankInput()})
 ```
 
-Portfolio dimensions (built-in Kano and Market Investment Horizon, or a custom `DimensionDefinition`), OKR contribution links, and `prism-capability` references attach to the same assessment but are descriptive only — never a `RankingPolicy` input. A `ReportDataset` compiled across an assessment corpus feeds a per-opportunity six-pager (`OpportunityReport`) and a whole-portfolio review (`PortfolioReview`), both pure functions of the dataset. See the [Opportunity Prioritization guide](https://grokify.github.io/prism-roadmap/assessment/overview/) for the full pipeline.
+Portfolio dimensions (built-in Kano, Market Investment Horizon, Run/Grow/Transform, SRE Work Classification, and Product Development Investment Mix, or a custom `DimensionDefinition`), OKR contribution links, and `prism-capability` references attach to the same assessment but are descriptive only — never a `RankingPolicy` input. A `ReportDataset` compiled across an assessment corpus feeds a per-opportunity six-pager (`OpportunityReport`) and a whole-portfolio review (`PortfolioReview`), both pure functions of the dataset. See the [Opportunity Prioritization guide](https://grokify.github.io/prism-roadmap/assessment/overview/) for the full pipeline.
 
 **COMPASS-RICE** ([`compass-rice`](https://github.com/ProductBuildersHQ/compass-rice)) replaces the single-scale ladder RICE above when a portfolio mixes opportunity types whose raw metrics aren't comparable (a customer feature vs. a platform investment vs. a risk mitigation): six investment-thesis profiles each normalize their own domain-specific evidence into the same canonical, cross-profile-comparable score.
 
