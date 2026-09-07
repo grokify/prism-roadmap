@@ -28,6 +28,7 @@ dataset := assessment.NewReportDataset(time.Now(), assessment.DefaultRankingPoli
 dataset.Distributions = []assessment.DimensionDistribution{
     assessment.ComputeDimensionDistribution("kano", assessments),
     assessment.ComputeDimensionDistribution("market-investment-horizon", assessments),
+    assessment.ComputeDimensionDistribution("product-development-investment-mix", assessments),
 }
 dataset.CapabilityOverlay = assessment.ComputeCapabilityOverlay(assessments)
 dataset.ObjectiveInvestment = assessment.ComputeObjectiveInvestment(assessments)

@@ -14,7 +14,7 @@ Every score, tier, or category in this package is *resolved* from evidence-backe
 ```mermaid
 graph LR
     EV[Evidence] --> LA[Ladder / MoSCoW / RICE]
-    EV --> DIM["Dimensions (Kano, MIH)"]
+    EV --> DIM["Dimensions (Kano, MIH, PDIM, …)"]
     LA --> OA[OpportunityAssessment]
     DIM --> OA
     OKR[OKR Contributions] --> OA
@@ -103,16 +103,46 @@ confirmed := proposed.Confirm("pm@example.com", time.Now()) // or .Reject(...) t
 
 `ProfileAssignment` is spec-scoped and survives assessment cycles, like `RankOverride` — a re-assessment doesn't require re-selecting the profile. `ToRankInput` prefers `Compass` over the legacy `RICE` field whenever both are present on an `OpportunityAssessment`; a consumer enforcing the two-phase gate end-to-end (assignment confirmed *and* its `ProfileID` matching the assessment's) is the consumer's own responsibility — see [omniroadmap](https://github.com/grokify/omniroadmap)'s compile-time gating for a worked example.
 
-## Portfolio dimensions: Kano and Market Investment Horizon
+## Portfolio dimensions
 
 `DimensionDefinition` is a versioned, referenceable portfolio dimension — either `DimensionKindCategory` (mutually exclusive, 0..1 selection) or `DimensionKindTags` (multi-select). Assessments reference a dimension by ID+version (`DimensionAssignment`), so a definition changing later never retroactively reinterprets a past assignment. **Dimensions are descriptive only — they never enter `RankingPolicy.Rank`.**
 
-Two dimensions ship built in:
+Six dimensions ship built in:
 
 - **Kano** (`KanoDimension()`, `ResolveKano`) — Must-be, Performance, Attractive, Indifferent, Reverse. Resolved by a bespoke pattern-matcher over eight cross-cutting characterization questions (`KanoAnswers`), not the generic per-option resolver — Kano's categories aren't independent criteria the way a Ladder's levels are.
-- **Market Investment Horizon** (`MarketInvestmentHorizonDimension()`) — KTLO / SAM+SOM / TAM Expansion, this project's own framework (not a published external standard) combining KTLO with TAM/SAM/SOM. Each category has its own independent criterion, so it resolves through the generic `DimensionDefinition.ResolveCategory`.
+- **Market Investment Horizon** (`MarketInvestmentHorizonDimension()`, dimension version 2.0) — a four-rung ordinal ladder, KTLO < SOM < SAM < TAM Expansion; this project's own framework (not a published external standard) combining KTLO with TAM/SAM/SOM. The options are incremental rings — an initiative is classified by the furthest-out horizon it opens — and `MIHRollup` collapses SOM/SAM (and the legacy combined `sam_som` id) to the 3-way KTLO / SAM+SOM / TAM presentation grain.
+- **Market Position** (`MarketPositionDimension()`) — the BCG growth-share quadrants (Star, Cash Cow, Question Mark, Dog) plus Enabler for a horizontal platform line whose value is cross-line leverage. Classifies a **product line**, not an opportunity — the assignment is made once per line and inherited by its initiatives.
+- **Run/Grow/Transform** (`RunGrowTransformDimension()`) — Gartner's executive IT investment classification by business outcome: operate today's business, grow it, or create tomorrow's.
+- **SRE Work Classification** (`SREWorkDimension()`) — Google SRE's Software Engineering / Systems Engineering / Toil / Overhead, per the SRE Book's "Eliminating Toil" chapter; `SREWorkRollup` collapses the engineering pair to the headline Engineering / Toil / Overhead grain.
+- **Product Development Investment Mix** (`ProductDevelopmentInvestmentMixDimension()`) — Innovate / Improve / Automate / Maintain / Toil, this project's own investment-mix framework; see the next section.
+
+Every dimension except Kano resolves through the generic `DimensionDefinition.ResolveCategory` — each option carries its own independent judge criterion, and more than one satisfied criterion is reported as `Ambiguous` for review rather than silently resolved to one.
 
 A custom, organization-defined dimension (e.g. a "2026 Strategic Priority" category) uses the exact same `DimensionDefinition` shape — no schema change needed to add one.
+
+### The investment mix: PDIM, RGT, and SRE Work
+
+**Product Development Investment Mix (PDIM)** classifies the mix of work *types* within the product portfolio — not an allocation across products. "Product development" names the joint function (product management, engineering, design, docs), keeping the framework neutral between the product and engineering teams that present it together. The key distinction between its categories is whether work changes the **outcome** (Innovate, Improve) or the **cost of producing the same outcome** (Automate, and negatively, Toil).
+
+Conceptually Maintenance = non-toil maintenance + Toil — not all maintenance is toil: a major database migration is deliberate sustaining engineering, while manually rotating certificates every month is toil. Toil is nonetheless a first-class category at the storage grain because exposing and reducing it is the point; `PDIMRollup` collapses Toil into Maintain for the cleaner 4-bucket executive view once toil is small.
+
+PDIM is the **assessment grain** for the three investment frameworks: an opportunity judged once at PDIM resolution projects deterministically onto the other two views, keeping the executive roll-up and the engineering-health view mutually consistent.
+
+- `PDIMToSREWork` is **definitional** — PDIM's Toil is Google's toil definition (generalized beyond production services), and every other category is enduring-value engineering work, so Toil → Toil and everything else → Engineering.
+- `PDIMToRGT` is a **documented convention** — Innovate → Transform, Improve → Grow, Automate/Maintain/Toil → Run. RGT classifies by business outcome while PDIM classifies by work intent, so the axes can genuinely diverge; when they do, an explicit native `RunGrowTransformDimension` (or `SREWorkDimension`) assignment on the same assessment takes precedence over the projection.
+
+`ToilReduction` makes the framework's causal loop — *toil identified → automation investment → toil eliminated → capacity reclaimed → reinvested in Improve/Innovate* — measurable, treating an Automate initiative as a capital-style investment:
+
+```go
+tr := assessment.ToilReduction{
+    ToilSource:            "manual certificate rotation",
+    BaselineHoursPerMonth: 40,
+    TargetHoursPerMonth:   2,
+    EvidenceIDs:           []string{"EV-042"}, // evidence behind the baseline measurement
+}
+reclaimed := tr.HoursReclaimedPerMonth()   // 38 hours/month
+months, err := tr.PaybackPeriodMonths(160) // ≈4.2 months to repay 160 hours of automation effort
+```
 
 ## OKR and capability links
 
@@ -157,7 +187,7 @@ first.MarkSuperseded()                        // caller persists both records
 
 ## Ranking
 
-`RankingPolicy.Rank` is the deterministic ranking algorithm: **MoSCoW tier first, RICE score descending within tier.** Kano, Market Investment Horizon, and OKR/capability links never enter it — they describe portfolio composition and inform a human tie-break, never automatic rank.
+`RankingPolicy.Rank` is the deterministic ranking algorithm: **MoSCoW tier first, RICE score descending within tier.** The portfolio dimensions (Kano, Market Investment Horizon, Market Position, RGT, SRE Work, PDIM) and OKR/capability links never enter it — they describe portfolio composition and inform a human tie-break, never automatic rank.
 
 ```go
 inputs := []assessment.RankInput{a1.ToRankInput(), a2.ToRankInput(), a3.ToRankInput()}
