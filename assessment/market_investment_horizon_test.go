@@ -7,9 +7,24 @@ func TestMarketInvestmentHorizonDimensionValidates(t *testing.T) {
 	if err := def.Validate(); err != nil {
 		t.Errorf("Validate() = %v", err)
 	}
-	for _, id := range []string{"ktlo", "sam_som", "tam_expansion"} {
+	for _, id := range []string{"ktlo", "som", "sam", "tam_expansion"} {
 		if def.OptionByID(id) == nil {
 			t.Errorf("missing option %q", id)
+		}
+	}
+	if def.OptionByID("sam_som") != nil {
+		t.Error(`legacy combined option "sam_som" should be gone after the SOM/SAM split`)
+	}
+}
+
+func TestMarketInvestmentHorizonRollup(t *testing.T) {
+	cases := map[string]string{
+		"ktlo": "ktlo", "som": "sam_som", "sam": "sam_som",
+		"tam_expansion": "tam_expansion", "sam_som": "sam_som",
+	}
+	for in, want := range cases {
+		if got := MIHRollup(in); got != want {
+			t.Errorf("MIHRollup(%q) = %q, want %q", in, got, want)
 		}
 	}
 }
@@ -44,10 +59,10 @@ func TestMarketInvestmentHorizonAmbiguousWhenMultipleCriteriaMatch(t *testing.T)
 func TestMarketInvestmentHorizonAssignment(t *testing.T) {
 	def := MarketInvestmentHorizonDimension()
 	answers := []DimensionAnswer{
-		{OptionID: "sam_som", QuestionID: "improves-current-market-position", Answer: true, EvidenceIDs: []string{"EV-1"}},
+		{OptionID: "som", QuestionID: "captures-obtainable-demand-now", Answer: true, EvidenceIDs: []string{"EV-1"}},
 	}
 	a := NewDimensionAssignment(def, answers)
-	if a.DimensionID != "market-investment-horizon" || a.Category == nil || a.Category.OptionID != "sam_som" {
+	if a.DimensionID != "market-investment-horizon" || a.Category == nil || a.Category.OptionID != "som" {
 		t.Errorf("NewDimensionAssignment() = %+v", a)
 	}
 }
