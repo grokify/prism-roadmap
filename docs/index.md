@@ -32,6 +32,7 @@ PRISM Roadmap provides typed data structures and utilities for planning document
 - **Scoring & validation** - Automated quality assessment
 - **Persona library** - Reusable persona definitions across documents
 - **Feature prioritization** - RICE scoring and Kano model classification
+- **Portfolio dimensions** - Investment-mix classification (Run/Grow/Transform, SRE Work, Product Development Investment Mix), Market Investment Horizon, and BCG Market Position
 - **Multi-format rendering** - D2, SVG, Mermaid, and Lit/JSON output for canvases
 
 ## Architecture

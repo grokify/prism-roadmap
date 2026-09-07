@@ -10,22 +10,118 @@
   ],
   "releases": [
     {
+      "version": "v0.21.0",
+      "date": "2026-09-07",
+      "highlights": [
+        {
+          "description": "New Product Development Investment Mix (PDIM) portfolio dimension classifies the mix of work types across the product portfolio -- Innovate / Improve / Automate / Maintain / Toil, where Maintenance = non-toil maintenance + Toil and Toil is a first-class category so exposing and reducing it stays visible; ToilReduction quantifies the value an Automate initiative captures from an identified toil source (hours reclaimed per month, payback period)",
+          "commit": "3bac44b"
+        },
+        {
+          "description": "Two external industry standards join the built-in dimensions -- Gartner Run/Grow/Transform and Google SRE Work Classification (Software/Systems Engineering, Toil, Overhead) -- modeled faithfully with source references; a PDIM classification projects deterministically onto both (PDIMToSREWork definitionally, PDIMToRGT by documented convention, with an explicit native assignment taking precedence)",
+          "commit": "b7aef09"
+        },
+        {
+          "description": "Market Investment Horizon becomes a four-rung ordinal ladder (KTLO < SOM < SAM < TAM Expansion, dimension version 2.0), splitting the combined SAM+SOM bucket; MIHRollup keeps the legacy sam_som key so pre-split data and rolled-up 4-way views share one presentation grain",
+          "commit": "5e5c9f2"
+        }
+      ],
+      "added": [
+        {
+          "description": "RunGrowTransformDimension() -- Gartner's executive IT investment classification by business outcome (Run / Grow / Transform), with RGTOption* constants",
+          "commit": "b7aef09"
+        },
+        {
+          "description": "SREWorkDimension() -- Google SRE's work categorization per the SRE Book's Eliminating Toil chapter (Software Engineering / Systems Engineering / Toil / Overhead), with SREWorkRollup collapsing the engineering pair to the headline Engineering/Toil/Overhead grain",
+          "commit": "69949d7"
+        },
+        {
+          "description": "ProductDevelopmentInvestmentMixDimension() with PDIMOption* constants, PDIMRollup (Toil collapses into Maintain for the 4-bucket executive view), PDIMToRGT / PDIMToSREWork projections, and the ToilReduction record (Validate, HoursReclaimedPerMonth, PaybackPeriodMonths)",
+          "commit": "3bac44b"
+        },
+        {
+          "description": "MarketPositionDimension() -- BCG growth-share quadrants (Star, Cash Cow, Question Mark, Dog) plus Enabler for horizontal platform lines; classifies a product line rather than an opportunity",
+          "commit": "a6bae0f"
+        }
+      ],
+      "changed": [
+        {
+          "description": "MarketInvestmentHorizonDimension() v2.0 replaces the combined sam_som option with distinct SOM and SAM rungs worded as incremental rings; adds MIHOption* constants and the MIHRollup helper",
+          "commit": "5e5c9f2"
+        }
+      ],
+      "fixed": [
+        {
+          "description": "A Compass (COMPASS-RICE) assessment now counts toward report prioritization",
+          "commit": "abbaccb"
+        }
+      ],
+      "dependencies": [
+        {
+          "description": "Indirect dependency updates via go mod tidy",
+          "commit": "08198aa"
+        },
+        {
+          "description": "go mod dependency updates",
+          "commit": "a735a3d"
+        }
+      ],
+      "documentation": [
+        {
+          "description": "README gains an Investment Mix Frameworks section covering RGT, SRE Work Classification, and PDIM",
+          "commit": "7f17bba"
+        },
+        {
+          "description": "Opportunity Prioritization guide documents all six built-in portfolio dimensions and adds an investment-mix section with the PDIM projections and a ToilReduction example; report-dataset distribution example extended with PDIM",
+          "commit": "92032af"
+        }
+      ]
+    },
+    {
       "version": "v0.20.0",
       "date": "2026-08-24",
       "highlights": [
-        { "description": "New CompassAssessment type and ResolveCompassRICE gate adopt compass-rice's COMPASS-RICE methodology: six investment-thesis profiles normalize domain-specific evidence into one cross-profile-comparable score, replacing the ladder RICE's single 0..1 Reach fraction for portfolios that mix customer, platform, risk, and other opportunity types whose raw metrics aren't comparable", "commit": "790037c", "rmi": "RMI-PRISMROADMAP-015" },
-        { "description": "ToRankInput now prefers a.Compass over the legacy a.RICE when both are present -- the two use incompatible Reach scales and are never mixed for one opportunity", "commit": "baf8517", "rmi": "RMI-PRISMROADMAP-016" },
-        { "description": "New ProfileAssignment record implements the two-phase primary-investment-thesis workflow: an LLM judge proposes a profile, a PM confirms or rejects it via Propose/Confirm/Reject before its ProfileID is trusted for scoring", "commit": "bfb3004", "rmi": "RMI-PRISMROADMAP-017" }
+        {
+          "description": "New CompassAssessment type and ResolveCompassRICE gate adopt compass-rice's COMPASS-RICE methodology: six investment-thesis profiles normalize domain-specific evidence into one cross-profile-comparable score, replacing the ladder RICE's single 0..1 Reach fraction for portfolios that mix customer, platform, risk, and other opportunity types whose raw metrics aren't comparable",
+          "commit": "790037c",
+          "rmi": "RMI-PRISMROADMAP-015"
+        },
+        {
+          "description": "ToRankInput now prefers a.Compass over the legacy a.RICE when both are present -- the two use incompatible Reach scales and are never mixed for one opportunity",
+          "commit": "baf8517",
+          "rmi": "RMI-PRISMROADMAP-016"
+        },
+        {
+          "description": "New ProfileAssignment record implements the two-phase primary-investment-thesis workflow: an LLM judge proposes a profile, a PM confirms or rejects it via Propose/Confirm/Reject before its ProfileID is trusted for scoring",
+          "commit": "bfb3004",
+          "rmi": "RMI-PRISMROADMAP-017"
+        }
       ],
       "added": [
-        { "description": "OpportunityAssessment.Compass *CompassAssessment field; its Claims fold into HasEvidence() and EvidenceReferences() alongside existing MoSCoW/RICE/dimension/OKR citations", "commit": "bc48622", "rmi": "RMI-PRISMROADMAP-015" },
-        { "description": "RICEScoreResult.ProfileID field (additive) so a ranked list can tell which scores are cross-profile-comparable COMPASS-RICE scores", "commit": "baf8517", "rmi": "RMI-PRISMROADMAP-016" }
+        {
+          "description": "OpportunityAssessment.Compass *CompassAssessment field; its Claims fold into HasEvidence() and EvidenceReferences() alongside existing MoSCoW/RICE/dimension/OKR citations",
+          "commit": "bc48622",
+          "rmi": "RMI-PRISMROADMAP-015"
+        },
+        {
+          "description": "RICEScoreResult.ProfileID field (additive) so a ranked list can tell which scores are cross-profile-comparable COMPASS-RICE scores",
+          "commit": "baf8517",
+          "rmi": "RMI-PRISMROADMAP-016"
+        }
       ],
       "dependencies": [
-        { "description": "New dependency on github.com/ProductBuildersHQ/compass-rice v0.4.0", "commit": "790037c", "rmi": "RMI-PRISMROADMAP-015" }
+        {
+          "description": "New dependency on github.com/ProductBuildersHQ/compass-rice v0.4.0",
+          "commit": "790037c",
+          "rmi": "RMI-PRISMROADMAP-015"
+        }
       ],
       "documentation": [
-        { "description": "docs/assessment/overview.md COMPASS-RICE section; README Opportunity Prioritization section extended", "commit": "23c3821", "rmi": "RMI-PRISMROADMAP-018" }
+        {
+          "description": "docs/assessment/overview.md COMPASS-RICE section; README Opportunity Prioritization section extended",
+          "commit": "23c3821",
+          "rmi": "RMI-PRISMROADMAP-018"
+        }
       ]
     },
     {
@@ -136,7 +232,7 @@
           "description": "v2mom and continuous-discovery OST templates/rubrics land in their canonical home here, upstreamed from downstream local copies"
         },
         {
-          "description": "assumption-map, bmc, and discovery-snapshot rubrics migrated to the canonical structured-evaluation rich format (id, passCriteria.maxFindingsSeverity) \u2014 the same fix downstream consumers had been applying locally"
+          "description": "assumption-map, bmc, and discovery-snapshot rubrics migrated to the canonical structured-evaluation rich format (id, passCriteria.maxFindingsSeverity) — the same fix downstream consumers had been applying locally"
         },
         {
           "description": "RICE Validate() now rejects unrecognized (non-empty) impact/confidence levels instead of silently falling back to a default multiplier"
@@ -166,7 +262,7 @@
           "commit": "e25f0df"
         },
         {
-          "description": "rmi.Service.Create no longer silently defaults an empty MoSCoW to should_have \u2014 empty persists as unset. The splan CLI's --moscow flag still defaults to should_have; pass --moscow=\"\" for an explicit unprioritized item",
+          "description": "rmi.Service.Create no longer silently defaults an empty MoSCoW to should_have — empty persists as unset. The splan CLI's --moscow flag still defaults to should_have; pass --moscow=\"\" for an explicit unprioritized item",
           "commit": "e25f0df"
         },
         {
@@ -234,7 +330,7 @@
           "description": "Consolidate TypeScript viewer into unified @grokify/prism npm package"
         },
         {
-          "description": "Native SVG rendering for the Business Model Canvas and OpportunitySpec \u2014 no external tooling required"
+          "description": "Native SVG rendering for the Business Model Canvas and OpportunitySpec — no external tooling required"
         },
         {
           "description": "New planning modules: effort estimation, market signals, and roadmap items (RMI)"
@@ -503,7 +599,7 @@
           "commit": "727d9c6"
         },
         {
-          "description": "Migrate from evaluation package to rubric package (EvaluationReport \u2192 Rubric)",
+          "description": "Migrate from evaluation package to rubric package (EvaluationReport → Rubric)",
           "commit": "ab48b15"
         }
       ],
@@ -824,7 +920,7 @@
           "commit": "531117f"
         },
         {
-          "description": "Add priority-based sorting for requirements (Must \u2192 Should \u2192 Could \u2192 Won't)",
+          "description": "Add priority-based sorting for requirements (Must → Should → Could → Won't)",
           "commit": "531117f"
         },
         {
