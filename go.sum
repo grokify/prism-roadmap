@@ -16,8 +16,8 @@ github.com/grokify/oscompat v0.13.0 h1:WVqStATaUe3cBj3Kep0htGBIGd8/X+jvnTuRXcUNN
 github.com/grokify/oscompat v0.13.0/go.mod h1:Ekex/WzHaA39LNt5xbeQRASo74NEXAIqBlqdvNF2oUM=
 github.com/grokify/priority-frameworks v0.4.0 h1:Wwl3uLRDjMF/EdoiIWklRQnI6q5ZTvYKXzdbSZ9jKUY=
 github.com/grokify/priority-frameworks v0.4.0/go.mod h1:41SQQzkkb94vCIMO9IYoCITowrNtTgMLwrJqq6Fe5DY=
-github.com/grokify/prism-core v0.5.0 h1:pn+qSji72iJCUOuZISKGdxjxouGSEISuYCSo7MZ5SZw=
-github.com/grokify/prism-core v0.5.0/go.mod h1:MGwhaaZdFW8WShYx3lqzGkcx8f07xFDbwd+u+4uBAT0=
+github.com/grokify/prism-core v0.6.0 h1:ea6kVOQxYGzody0uU0vyjLxcSzCymGVrIyda/kVgtXo=
+github.com/grokify/prism-core v0.6.0/go.mod h1:MGwhaaZdFW8WShYx3lqzGkcx8f07xFDbwd+u+4uBAT0=
 github.com/grokify/structureddocs v0.1.0 h1:ziCUm7OeJDwKoq8KrmIm44AFDJR7UtWhgHqVEyNiGRY=
 github.com/grokify/structureddocs v0.1.0/go.mod h1:DD6ooCUwmtyLzGs12TAhRmf/PjEDNapcKH8DAnJQvzQ=
 github.com/inconshreveable/mousetrap v1.1.0 h1:wN+x4NVGpMsO7ErUn/mUI3vEoE6Jt13X2s0bqwp9tc8=
