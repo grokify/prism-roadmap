@@ -460,6 +460,9 @@
         "judge_id": {
           "type": "string"
         },
+        "method": {
+          "type": "string"
+        },
         "model": {
           "type": "string"
         },
@@ -483,6 +486,18 @@
         },
         "max_tokens": {
           "type": "integer"
+        },
+        "check_id": {
+          "type": "string"
+        },
+        "check_version": {
+          "type": "string"
+        },
+        "reviewer_id": {
+          "type": "string"
+        },
+        "reviewer_name": {
+          "type": "string"
         },
         "rubric_id": {
           "type": "string"
