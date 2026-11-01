@@ -8,6 +8,29 @@
     "grokify",
     "johncwang@gmail.com"
   ],
+  "unreleased": {
+    "added": [
+      {
+        "description": "`goals/dmaic`: DMAIC (Define, Measure, Analyze, Improve, Control) metrics documents with categories, metrics by phase, Six Sigma control limits and process capability, root causes, and improvement initiatives, plus validation presets and Marp and Pandoc renderers. Moved from `structured-goals`, which the OKR and V2MOM types already came from"
+      },
+      {
+        "description": "`schema/dmaic.schema.json`, generated from the DMAIC types and embedded as `schema.DMAICSchema()`"
+      },
+      {
+        "description": "Fictional DMAIC examples for manufacturing, software development, and customer service"
+      }
+    ],
+    "documentation": [
+      {
+        "description": "A DMAIC guide in the goals section, and DMAIC in the README's goal frameworks"
+      }
+    ],
+    "changed": [
+      {
+        "description": "Regenerated the opportunity assessment and opportunity rank schemas, which had fallen behind their Go types after dependency updates"
+      }
+    ]
+  },
   "releases": [
     {
       "version": "v0.21.0",
