@@ -1,0 +1,272 @@
+{
+  "$schema": "../schema/dmaic.schema.json",
+  "metadata": {
+    "id": "DMAIC-MFG-2025-001",
+    "name": "Manufacturing Quality Metrics",
+    "description": "DMAIC metrics framework for manufacturing quality improvement and Six Sigma initiatives",
+    "owner": "Maria Rodriguez",
+    "team": "Quality Engineering",
+    "period": "FY2025-Q1",
+    "version": "1.0.0",
+    "status": "Active",
+    "reviewCadence": "Weekly"
+  },
+  "categories": [
+    {
+      "id": "production",
+      "name": "Production Quality",
+      "description": "Metrics tracking production line quality and defect rates",
+      "order": 1,
+      "owner": "Tom Chen",
+      "metrics": [
+        {
+          "id": "prod-001",
+          "name": "First Pass Yield",
+          "description": "Percentage of units passing quality inspection on first attempt",
+          "order": 1,
+          "baseline": 85.0,
+          "current": 94.2,
+          "target": 98.0,
+          "unit": "%",
+          "phase": "Control",
+          "trendDirection": "higher_better",
+          "controlLimits": {
+            "ucl": 99.0,
+            "lcl": 90.0,
+            "centerLine": 95.0,
+            "sigma": 1.5
+          },
+          "thresholds": {
+            "warning": 92.0,
+            "critical": 88.0
+          },
+          "frequency": "Daily",
+          "dataSource": "MES System",
+          "owner": "Tom Chen",
+          "status": "Green",
+          "processCapability": {
+            "cp": 1.45,
+            "cpk": 1.33,
+            "sigmaLevel": 4.0,
+            "dpmo": 6210
+          }
+        },
+        {
+          "id": "prod-002",
+          "name": "Defects Per Million Opportunities",
+          "description": "Number of defects per million production opportunities",
+          "order": 2,
+          "baseline": 15000,
+          "current": 3400,
+          "target": 2000,
+          "unit": "DPMO",
+          "phase": "Improve",
+          "trendDirection": "lower_better",
+          "thresholds": {
+            "warning": 5000,
+            "critical": 10000
+          },
+          "frequency": "Daily",
+          "dataSource": "Quality Database",
+          "owner": "Tom Chen",
+          "status": "Green"
+        },
+        {
+          "id": "prod-003",
+          "name": "Scrap Rate",
+          "description": "Percentage of materials scrapped due to defects",
+          "order": 3,
+          "baseline": 4.5,
+          "current": 1.8,
+          "target": 1.0,
+          "unit": "%",
+          "phase": "Control",
+          "trendDirection": "lower_better",
+          "controlLimits": {
+            "ucl": 3.0,
+            "lcl": 0.5,
+            "centerLine": 1.5,
+            "sigma": 0.5
+          },
+          "thresholds": {
+            "warning": 2.0,
+            "critical": 3.5
+          },
+          "frequency": "Daily",
+          "dataSource": "ERP System",
+          "owner": "Tom Chen",
+          "status": "Yellow"
+        }
+      ]
+    },
+    {
+      "id": "equipment",
+      "name": "Equipment Performance",
+      "description": "Metrics tracking equipment reliability and efficiency",
+      "order": 2,
+      "owner": "James Wilson",
+      "metrics": [
+        {
+          "id": "equip-001",
+          "name": "Overall Equipment Effectiveness",
+          "description": "OEE combining availability, performance, and quality factors",
+          "order": 1,
+          "baseline": 65.0,
+          "current": 82.5,
+          "target": 85.0,
+          "unit": "%",
+          "phase": "Improve",
+          "trendDirection": "higher_better",
+          "thresholds": {
+            "warning": 75.0,
+            "critical": 65.0
+          },
+          "frequency": "Daily",
+          "dataSource": "SCADA System",
+          "owner": "James Wilson",
+          "status": "Green"
+        },
+        {
+          "id": "equip-002",
+          "name": "Mean Time Between Failures",
+          "description": "Average operating time between equipment failures",
+          "order": 2,
+          "baseline": 120,
+          "current": 340,
+          "target": 500,
+          "unit": "hours",
+          "phase": "Measure",
+          "trendDirection": "higher_better",
+          "thresholds": {
+            "warning": 200,
+            "critical": 100
+          },
+          "frequency": "Weekly",
+          "dataSource": "CMMS",
+          "owner": "James Wilson",
+          "status": "Green"
+        },
+        {
+          "id": "equip-003",
+          "name": "Unplanned Downtime",
+          "description": "Percentage of production time lost to unplanned equipment stops",
+          "order": 3,
+          "baseline": 12.0,
+          "current": 4.2,
+          "target": 2.0,
+          "unit": "%",
+          "phase": "Improve",
+          "trendDirection": "lower_better",
+          "thresholds": {
+            "warning": 5.0,
+            "critical": 8.0
+          },
+          "frequency": "Daily",
+          "dataSource": "MES System",
+          "owner": "James Wilson",
+          "status": "Yellow"
+        }
+      ]
+    },
+    {
+      "id": "process",
+      "name": "Process Control",
+      "description": "Statistical process control metrics for critical processes",
+      "order": 3,
+      "owner": "Sarah Kim",
+      "metrics": [
+        {
+          "id": "proc-001",
+          "name": "Process Capability Index (Cpk)",
+          "description": "Overall process capability across critical dimensions",
+          "order": 1,
+          "baseline": 0.8,
+          "current": 1.25,
+          "target": 1.33,
+          "unit": "Cpk",
+          "phase": "Control",
+          "trendDirection": "higher_better",
+          "controlLimits": {
+            "ucl": 1.67,
+            "lcl": 1.0,
+            "centerLine": 1.33,
+            "sigma": 0.15
+          },
+          "thresholds": {
+            "warning": 1.0,
+            "critical": 0.67
+          },
+          "frequency": "Weekly",
+          "dataSource": "SPC Software",
+          "owner": "Sarah Kim",
+          "status": "Green"
+        },
+        {
+          "id": "proc-002",
+          "name": "Cycle Time Variation",
+          "description": "Standard deviation of production cycle times",
+          "order": 2,
+          "baseline": 15.0,
+          "current": 6.5,
+          "target": 5.0,
+          "unit": "seconds",
+          "phase": "Improve",
+          "trendDirection": "lower_better",
+          "thresholds": {
+            "warning": 8.0,
+            "critical": 12.0
+          },
+          "frequency": "Daily",
+          "dataSource": "MES System",
+          "owner": "Sarah Kim",
+          "status": "Yellow"
+        },
+        {
+          "id": "proc-003",
+          "name": "SPC Chart Compliance",
+          "description": "Percentage of processes with up-to-date control charts",
+          "order": 3,
+          "baseline": 60.0,
+          "current": 92.0,
+          "target": 100.0,
+          "unit": "%",
+          "phase": "Control",
+          "trendDirection": "higher_better",
+          "thresholds": {
+            "warning": 85.0,
+            "critical": 75.0
+          },
+          "frequency": "Weekly",
+          "dataSource": "SPC Software",
+          "owner": "Sarah Kim",
+          "status": "Green"
+        }
+      ]
+    }
+  ],
+  "initiatives": [
+    {
+      "id": "init-001",
+      "name": "Six Sigma Black Belt Project - Line 3",
+      "description": "Reduce defect rate on production line 3 through DMAIC methodology",
+      "owner": "Tom Chen",
+      "status": "In Progress",
+      "startDate": "2025-01-01",
+      "endDate": "2025-06-30",
+      "metricIds": ["prod-001", "prod-002", "prod-003"],
+      "expectedImpact": "Achieve 4.5 sigma level with DPMO below 3400",
+      "actualImpact": "Currently at 4.0 sigma, on track for target"
+    },
+    {
+      "id": "init-002",
+      "name": "Predictive Maintenance Implementation",
+      "description": "Deploy IoT sensors and ML models for predictive equipment maintenance",
+      "owner": "James Wilson",
+      "status": "In Progress",
+      "startDate": "2024-10-01",
+      "endDate": "2025-04-30",
+      "metricIds": ["equip-001", "equip-002", "equip-003"],
+      "expectedImpact": "Reduce unplanned downtime by 60%"
+    }
+  ]
+}

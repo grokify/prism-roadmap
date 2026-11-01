@@ -1,0 +1,368 @@
+{
+  "$schema": "../schema/dmaic.schema.json",
+  "metadata": {
+    "id": "DMAIC-CS-2025-001",
+    "name": "Customer Service Quality Metrics",
+    "description": "DMAIC metrics framework for customer service excellence and support operations improvement",
+    "owner": "Jennifer Martinez",
+    "team": "Customer Support",
+    "period": "FY2025-Q1",
+    "version": "1.0.0",
+    "status": "Active",
+    "reviewCadence": "Weekly"
+  },
+  "categories": [
+    {
+      "id": "satisfaction",
+      "name": "Customer Satisfaction",
+      "description": "Metrics tracking customer satisfaction and loyalty",
+      "order": 1,
+      "owner": "Kevin O'Brien",
+      "metrics": [
+        {
+          "id": "sat-001",
+          "name": "Customer Satisfaction Score",
+          "description": "Average CSAT score from post-interaction surveys",
+          "order": 1,
+          "baseline": 72.0,
+          "current": 88.0,
+          "target": 92.0,
+          "unit": "%",
+          "phase": "Control",
+          "trendDirection": "higher_better",
+          "controlLimits": {
+            "ucl": 95.0,
+            "lcl": 85.0,
+            "centerLine": 90.0,
+            "sigma": 2.5
+          },
+          "thresholds": {
+            "warning": 85.0,
+            "critical": 80.0
+          },
+          "frequency": "Daily",
+          "dataSource": "Survey Platform",
+          "owner": "Kevin O'Brien",
+          "status": "Green"
+        },
+        {
+          "id": "sat-002",
+          "name": "Net Promoter Score",
+          "description": "Customer likelihood to recommend (scale -100 to 100)",
+          "order": 2,
+          "baseline": 25,
+          "current": 52,
+          "target": 60,
+          "unit": "NPS",
+          "phase": "Improve",
+          "trendDirection": "higher_better",
+          "thresholds": {
+            "warning": 40,
+            "critical": 30
+          },
+          "frequency": "Monthly",
+          "dataSource": "NPS Survey",
+          "owner": "Kevin O'Brien",
+          "status": "Green"
+        },
+        {
+          "id": "sat-003",
+          "name": "Customer Effort Score",
+          "description": "Average effort required to resolve issues (1-7 scale, lower is better)",
+          "order": 3,
+          "baseline": 5.2,
+          "current": 2.8,
+          "target": 2.0,
+          "unit": "CES",
+          "phase": "Improve",
+          "trendDirection": "lower_better",
+          "thresholds": {
+            "warning": 3.5,
+            "critical": 4.5
+          },
+          "frequency": "Weekly",
+          "dataSource": "Survey Platform",
+          "owner": "Kevin O'Brien",
+          "status": "Green"
+        }
+      ]
+    },
+    {
+      "id": "response",
+      "name": "Response Performance",
+      "description": "Metrics tracking response times and SLA compliance",
+      "order": 2,
+      "owner": "Lisa Chen",
+      "metrics": [
+        {
+          "id": "resp-001",
+          "name": "First Response Time",
+          "description": "Average time to first response for support tickets",
+          "order": 1,
+          "baseline": 240,
+          "current": 45,
+          "target": 30,
+          "unit": "minutes",
+          "phase": "Control",
+          "trendDirection": "lower_better",
+          "controlLimits": {
+            "ucl": 60,
+            "lcl": 15,
+            "centerLine": 30,
+            "sigma": 10
+          },
+          "thresholds": {
+            "warning": 60,
+            "critical": 120
+          },
+          "frequency": "Daily",
+          "dataSource": "Helpdesk System",
+          "owner": "Lisa Chen",
+          "status": "Yellow"
+        },
+        {
+          "id": "resp-002",
+          "name": "SLA Compliance Rate",
+          "description": "Percentage of tickets resolved within SLA",
+          "order": 2,
+          "baseline": 78.0,
+          "current": 94.0,
+          "target": 98.0,
+          "unit": "%",
+          "phase": "Improve",
+          "trendDirection": "higher_better",
+          "thresholds": {
+            "warning": 90.0,
+            "critical": 85.0
+          },
+          "frequency": "Daily",
+          "dataSource": "Helpdesk System",
+          "owner": "Lisa Chen",
+          "status": "Green"
+        },
+        {
+          "id": "resp-003",
+          "name": "Average Handle Time",
+          "description": "Average time to handle customer interactions",
+          "order": 3,
+          "baseline": 15.0,
+          "current": 8.5,
+          "target": 7.0,
+          "unit": "minutes",
+          "phase": "Control",
+          "trendDirection": "lower_better",
+          "controlLimits": {
+            "ucl": 12.0,
+            "lcl": 5.0,
+            "centerLine": 8.0,
+            "sigma": 1.5
+          },
+          "thresholds": {
+            "warning": 10.0,
+            "critical": 15.0
+          },
+          "frequency": "Daily",
+          "dataSource": "Call Center Platform",
+          "owner": "Lisa Chen",
+          "status": "Yellow",
+          "rootCauses": [
+            {
+              "id": "rc-001",
+              "description": "Complex product knowledge requirements",
+              "category": "People",
+              "impact": "Medium",
+              "validated": true
+            },
+            {
+              "id": "rc-002",
+              "description": "Insufficient self-service documentation",
+              "category": "Process",
+              "impact": "High",
+              "validated": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "resolution",
+      "name": "Resolution Quality",
+      "description": "Metrics tracking issue resolution effectiveness",
+      "order": 3,
+      "owner": "Mark Thompson",
+      "metrics": [
+        {
+          "id": "res-001",
+          "name": "First Contact Resolution",
+          "description": "Percentage of issues resolved on first contact",
+          "order": 1,
+          "baseline": 55.0,
+          "current": 74.0,
+          "target": 80.0,
+          "unit": "%",
+          "phase": "Improve",
+          "trendDirection": "higher_better",
+          "thresholds": {
+            "warning": 65.0,
+            "critical": 55.0
+          },
+          "frequency": "Daily",
+          "dataSource": "Helpdesk System",
+          "owner": "Mark Thompson",
+          "status": "Green"
+        },
+        {
+          "id": "res-002",
+          "name": "Ticket Reopen Rate",
+          "description": "Percentage of tickets reopened after resolution",
+          "order": 2,
+          "baseline": 18.0,
+          "current": 6.0,
+          "target": 3.0,
+          "unit": "%",
+          "phase": "Control",
+          "trendDirection": "lower_better",
+          "controlLimits": {
+            "ucl": 8.0,
+            "lcl": 1.0,
+            "centerLine": 4.0,
+            "sigma": 1.5
+          },
+          "thresholds": {
+            "warning": 5.0,
+            "critical": 10.0
+          },
+          "frequency": "Weekly",
+          "dataSource": "Helpdesk System",
+          "owner": "Mark Thompson",
+          "status": "Yellow"
+        },
+        {
+          "id": "res-003",
+          "name": "Escalation Rate",
+          "description": "Percentage of tickets escalated to higher tiers",
+          "order": 3,
+          "baseline": 25.0,
+          "current": 12.0,
+          "target": 8.0,
+          "unit": "%",
+          "phase": "Improve",
+          "trendDirection": "lower_better",
+          "thresholds": {
+            "warning": 15.0,
+            "critical": 20.0
+          },
+          "frequency": "Weekly",
+          "dataSource": "Helpdesk System",
+          "owner": "Mark Thompson",
+          "status": "Green"
+        }
+      ]
+    },
+    {
+      "id": "channel",
+      "name": "Channel Performance",
+      "description": "Metrics tracking multi-channel support effectiveness",
+      "order": 4,
+      "owner": "Amanda Foster",
+      "metrics": [
+        {
+          "id": "chan-001",
+          "name": "Self-Service Resolution Rate",
+          "description": "Percentage of issues resolved through self-service channels",
+          "order": 1,
+          "baseline": 20.0,
+          "current": 42.0,
+          "target": 55.0,
+          "unit": "%",
+          "phase": "Improve",
+          "trendDirection": "higher_better",
+          "thresholds": {
+            "warning": 35.0,
+            "critical": 25.0
+          },
+          "frequency": "Weekly",
+          "dataSource": "Knowledge Base Analytics",
+          "owner": "Amanda Foster",
+          "status": "Green"
+        },
+        {
+          "id": "chan-002",
+          "name": "Chat Bot Containment Rate",
+          "description": "Percentage of chat interactions fully handled by bot",
+          "order": 2,
+          "baseline": 15.0,
+          "current": 38.0,
+          "target": 50.0,
+          "unit": "%",
+          "phase": "Measure",
+          "trendDirection": "higher_better",
+          "thresholds": {
+            "warning": 30.0,
+            "critical": 20.0
+          },
+          "frequency": "Daily",
+          "dataSource": "Chatbot Platform",
+          "owner": "Amanda Foster",
+          "status": "Green"
+        },
+        {
+          "id": "chan-003",
+          "name": "Channel Switch Rate",
+          "description": "Percentage of customers switching channels during resolution",
+          "order": 3,
+          "baseline": 35.0,
+          "current": 18.0,
+          "target": 10.0,
+          "unit": "%",
+          "phase": "Improve",
+          "trendDirection": "lower_better",
+          "thresholds": {
+            "warning": 20.0,
+            "critical": 30.0
+          },
+          "frequency": "Weekly",
+          "dataSource": "CRM System",
+          "owner": "Amanda Foster",
+          "status": "Green"
+        }
+      ]
+    }
+  ],
+  "initiatives": [
+    {
+      "id": "init-001",
+      "name": "Knowledge Base Enhancement",
+      "description": "Improve self-service content and AI-powered search capabilities",
+      "owner": "Amanda Foster",
+      "status": "In Progress",
+      "startDate": "2025-01-01",
+      "endDate": "2025-05-31",
+      "metricIds": ["chan-001", "res-001", "resp-003"],
+      "expectedImpact": "Increase self-service resolution to 55% and FCR to 80%",
+      "actualImpact": "Self-service up 22 points, FCR up 19 points"
+    },
+    {
+      "id": "init-002",
+      "name": "Agent Training Program",
+      "description": "Comprehensive training on product knowledge and soft skills",
+      "owner": "Kevin O'Brien",
+      "status": "In Progress",
+      "startDate": "2024-10-01",
+      "endDate": "2025-03-31",
+      "metricIds": ["sat-001", "sat-003", "res-001"],
+      "expectedImpact": "Achieve 92% CSAT and 2.0 CES"
+    },
+    {
+      "id": "init-003",
+      "name": "AI Chatbot Enhancement",
+      "description": "Deploy advanced NLU models and expand chatbot capabilities",
+      "owner": "Amanda Foster",
+      "status": "Planned",
+      "startDate": "2025-04-01",
+      "endDate": "2025-09-30",
+      "metricIds": ["chan-002", "resp-001", "res-003"],
+      "expectedImpact": "Achieve 50% chatbot containment rate"
+    }
+  ]
+}

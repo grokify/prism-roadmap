@@ -1,0 +1,373 @@
+{
+  "$schema": "../schema/dmaic.schema.json",
+  "metadata": {
+    "id": "DMAIC-SDEV-2025-001",
+    "name": "Software Development Quality Metrics",
+    "description": "DMAIC metrics framework for software development process improvement",
+    "owner": "Alex Thompson",
+    "team": "Engineering",
+    "period": "FY2025-Q1",
+    "version": "1.0.0",
+    "status": "Active",
+    "reviewCadence": "Bi-weekly"
+  },
+  "categories": [
+    {
+      "id": "code-quality",
+      "name": "Code Quality",
+      "description": "Metrics tracking code quality, technical debt, and maintainability",
+      "order": 1,
+      "owner": "Emily Zhang",
+      "metrics": [
+        {
+          "id": "cq-001",
+          "name": "Code Coverage",
+          "description": "Percentage of codebase covered by automated tests",
+          "order": 1,
+          "baseline": 45.0,
+          "current": 78.0,
+          "target": 85.0,
+          "unit": "%",
+          "phase": "Improve",
+          "trendDirection": "higher_better",
+          "thresholds": {
+            "warning": 70.0,
+            "critical": 60.0
+          },
+          "frequency": "Daily",
+          "dataSource": "SonarQube",
+          "owner": "Emily Zhang",
+          "status": "Green"
+        },
+        {
+          "id": "cq-002",
+          "name": "Technical Debt Ratio",
+          "description": "Ratio of remediation cost to development cost",
+          "order": 2,
+          "baseline": 18.0,
+          "current": 8.5,
+          "target": 5.0,
+          "unit": "%",
+          "phase": "Improve",
+          "trendDirection": "lower_better",
+          "thresholds": {
+            "warning": 10.0,
+            "critical": 15.0
+          },
+          "frequency": "Weekly",
+          "dataSource": "SonarQube",
+          "owner": "Emily Zhang",
+          "status": "Yellow"
+        },
+        {
+          "id": "cq-003",
+          "name": "Code Review Coverage",
+          "description": "Percentage of pull requests receiving thorough code review",
+          "order": 3,
+          "baseline": 70.0,
+          "current": 95.0,
+          "target": 100.0,
+          "unit": "%",
+          "phase": "Control",
+          "trendDirection": "higher_better",
+          "controlLimits": {
+            "ucl": 100.0,
+            "lcl": 90.0,
+            "centerLine": 95.0,
+            "sigma": 2.0
+          },
+          "thresholds": {
+            "warning": 90.0,
+            "critical": 80.0
+          },
+          "frequency": "Daily",
+          "dataSource": "GitHub",
+          "owner": "Emily Zhang",
+          "status": "Green"
+        }
+      ]
+    },
+    {
+      "id": "delivery",
+      "name": "Delivery Performance",
+      "description": "Metrics tracking deployment frequency, lead time, and reliability",
+      "order": 2,
+      "owner": "Michael Park",
+      "metrics": [
+        {
+          "id": "del-001",
+          "name": "Deployment Frequency",
+          "description": "Number of production deployments per week",
+          "order": 1,
+          "baseline": 2,
+          "current": 12,
+          "target": 20,
+          "unit": "deploys/week",
+          "phase": "Improve",
+          "trendDirection": "higher_better",
+          "thresholds": {
+            "warning": 8,
+            "critical": 4
+          },
+          "frequency": "Weekly",
+          "dataSource": "CI/CD Platform",
+          "owner": "Michael Park",
+          "status": "Green"
+        },
+        {
+          "id": "del-002",
+          "name": "Lead Time for Changes",
+          "description": "Time from code commit to production deployment",
+          "order": 2,
+          "baseline": 336,
+          "current": 24,
+          "target": 8,
+          "unit": "hours",
+          "phase": "Improve",
+          "trendDirection": "lower_better",
+          "thresholds": {
+            "warning": 48,
+            "critical": 168
+          },
+          "frequency": "Weekly",
+          "dataSource": "CI/CD Platform",
+          "owner": "Michael Park",
+          "status": "Green"
+        },
+        {
+          "id": "del-003",
+          "name": "Change Failure Rate",
+          "description": "Percentage of deployments causing production incidents",
+          "order": 3,
+          "baseline": 25.0,
+          "current": 8.0,
+          "target": 5.0,
+          "unit": "%",
+          "phase": "Control",
+          "trendDirection": "lower_better",
+          "controlLimits": {
+            "ucl": 10.0,
+            "lcl": 0.0,
+            "centerLine": 5.0,
+            "sigma": 2.0
+          },
+          "thresholds": {
+            "warning": 10.0,
+            "critical": 15.0
+          },
+          "frequency": "Weekly",
+          "dataSource": "Incident Management",
+          "owner": "Michael Park",
+          "status": "Yellow"
+        }
+      ]
+    },
+    {
+      "id": "reliability",
+      "name": "System Reliability",
+      "description": "Metrics tracking system availability, performance, and incident response",
+      "order": 3,
+      "owner": "Rachel Kim",
+      "metrics": [
+        {
+          "id": "rel-001",
+          "name": "Service Availability",
+          "description": "Percentage uptime for production services",
+          "order": 1,
+          "baseline": 99.0,
+          "current": 99.92,
+          "target": 99.95,
+          "unit": "%",
+          "phase": "Control",
+          "trendDirection": "higher_better",
+          "controlLimits": {
+            "ucl": 99.99,
+            "lcl": 99.9,
+            "centerLine": 99.95,
+            "sigma": 0.02
+          },
+          "thresholds": {
+            "warning": 99.9,
+            "critical": 99.5
+          },
+          "frequency": "Daily",
+          "dataSource": "Monitoring Platform",
+          "owner": "Rachel Kim",
+          "status": "Green"
+        },
+        {
+          "id": "rel-002",
+          "name": "Mean Time to Recovery",
+          "description": "Average time to restore service after an incident",
+          "order": 2,
+          "baseline": 180,
+          "current": 25,
+          "target": 15,
+          "unit": "minutes",
+          "phase": "Improve",
+          "trendDirection": "lower_better",
+          "thresholds": {
+            "warning": 30,
+            "critical": 60
+          },
+          "frequency": "Weekly",
+          "dataSource": "Incident Management",
+          "owner": "Rachel Kim",
+          "status": "Yellow",
+          "rootCauses": [
+            {
+              "id": "rc-001",
+              "description": "Insufficient runbook documentation",
+              "category": "Process",
+              "impact": "Medium",
+              "validated": true
+            },
+            {
+              "id": "rc-002",
+              "description": "Manual rollback procedures",
+              "category": "Technology",
+              "impact": "High",
+              "validated": true
+            }
+          ]
+        },
+        {
+          "id": "rel-003",
+          "name": "P95 Response Time",
+          "description": "95th percentile API response time",
+          "order": 3,
+          "baseline": 800,
+          "current": 180,
+          "target": 150,
+          "unit": "ms",
+          "phase": "Control",
+          "trendDirection": "lower_better",
+          "controlLimits": {
+            "ucl": 250,
+            "lcl": 100,
+            "centerLine": 150,
+            "sigma": 25
+          },
+          "thresholds": {
+            "warning": 200,
+            "critical": 500
+          },
+          "frequency": "Hourly",
+          "dataSource": "APM",
+          "owner": "Rachel Kim",
+          "status": "Green"
+        }
+      ]
+    },
+    {
+      "id": "defects",
+      "name": "Defect Management",
+      "description": "Metrics tracking bug discovery, resolution, and escape rate",
+      "order": 4,
+      "owner": "David Lee",
+      "metrics": [
+        {
+          "id": "def-001",
+          "name": "Production Bug Escape Rate",
+          "description": "Percentage of bugs found in production vs. pre-production",
+          "order": 1,
+          "baseline": 35.0,
+          "current": 12.0,
+          "target": 5.0,
+          "unit": "%",
+          "phase": "Improve",
+          "trendDirection": "lower_better",
+          "thresholds": {
+            "warning": 15.0,
+            "critical": 25.0
+          },
+          "frequency": "Weekly",
+          "dataSource": "Issue Tracker",
+          "owner": "David Lee",
+          "status": "Yellow"
+        },
+        {
+          "id": "def-002",
+          "name": "Bug Fix Cycle Time",
+          "description": "Average time from bug report to deployed fix",
+          "order": 2,
+          "baseline": 168,
+          "current": 36,
+          "target": 24,
+          "unit": "hours",
+          "phase": "Improve",
+          "trendDirection": "lower_better",
+          "thresholds": {
+            "warning": 48,
+            "critical": 96
+          },
+          "frequency": "Weekly",
+          "dataSource": "Issue Tracker",
+          "owner": "David Lee",
+          "status": "Green"
+        },
+        {
+          "id": "def-003",
+          "name": "Open Critical Bugs",
+          "description": "Number of unresolved critical severity bugs",
+          "order": 3,
+          "baseline": 23,
+          "current": 4,
+          "target": 0,
+          "unit": "bugs",
+          "phase": "Control",
+          "trendDirection": "lower_better",
+          "controlLimits": {
+            "ucl": 5,
+            "lcl": 0,
+            "centerLine": 2,
+            "sigma": 1
+          },
+          "thresholds": {
+            "warning": 3,
+            "critical": 8
+          },
+          "frequency": "Daily",
+          "dataSource": "Issue Tracker",
+          "owner": "David Lee",
+          "status": "Yellow"
+        }
+      ]
+    }
+  ],
+  "initiatives": [
+    {
+      "id": "init-001",
+      "name": "Test Automation Expansion",
+      "description": "Increase automated test coverage across all services",
+      "owner": "Emily Zhang",
+      "status": "In Progress",
+      "startDate": "2025-01-15",
+      "endDate": "2025-06-30",
+      "metricIds": ["cq-001", "def-001"],
+      "expectedImpact": "Achieve 85% code coverage and reduce bug escape rate to 5%"
+    },
+    {
+      "id": "init-002",
+      "name": "CI/CD Pipeline Optimization",
+      "description": "Reduce build and deployment times through pipeline improvements",
+      "owner": "Michael Park",
+      "status": "In Progress",
+      "startDate": "2024-11-01",
+      "endDate": "2025-03-31",
+      "metricIds": ["del-001", "del-002", "del-003"],
+      "expectedImpact": "Achieve 20 deploys/week with < 8 hour lead time"
+    },
+    {
+      "id": "init-003",
+      "name": "Incident Response Automation",
+      "description": "Implement automated rollback and self-healing capabilities",
+      "owner": "Rachel Kim",
+      "status": "Planned",
+      "startDate": "2025-04-01",
+      "endDate": "2025-09-30",
+      "metricIds": ["rel-002", "del-003"],
+      "expectedImpact": "Reduce MTTR to 15 minutes and change failure rate to 5%"
+    }
+  ]
+}
