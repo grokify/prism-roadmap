@@ -38,6 +38,9 @@ const (
 	// V2MOMSchemaID is the canonical ID for the V2MOM schema.
 	V2MOMSchemaID = "https://github.com/grokify/prism-roadmap/schema/v2mom.schema.json"
 
+	// DMAICSchemaID is the canonical ID for the DMAIC schema.
+	DMAICSchemaID = "https://github.com/grokify/prism-roadmap/schema/dmaic.schema.json"
+
 	// Canvas schema IDs
 
 	// CanvasSchemaID is the canonical ID for the Canvas wrapper schema.
@@ -160,6 +163,21 @@ func V2MOMSchema() string {
 // V2MOMSchemaBytes returns the V2MOM JSON Schema as a byte slice.
 func V2MOMSchemaBytes() []byte {
 	return V2MOMSchemaJSON
+}
+
+// DMAIC Schema
+
+//go:embed dmaic.schema.json
+var DMAICSchemaJSON []byte
+
+// DMAICSchema returns the DMAIC JSON Schema as a string.
+func DMAICSchema() string {
+	return string(DMAICSchemaJSON)
+}
+
+// DMAICSchemaBytes returns the DMAIC JSON Schema as a byte slice.
+func DMAICSchemaBytes() []byte {
+	return DMAICSchemaJSON
 }
 
 // Canvas Schemas

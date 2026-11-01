@@ -60,6 +60,7 @@ This library provides comprehensive, machine-readable formats for planning docum
 
 - **OKR** - Objectives and Key Results: Objectives with measurable key results and phase targets
 - **V2MOM** - Vision, Values, Methods, Obstacles, Measures: Salesforce-style goal alignment
+- **DMAIC** - Define, Measure, Analyze, Improve, Control: Six Sigma metrics with control limits, root causes, and improvement initiatives
 
 ### Roadmap
 
@@ -434,9 +435,9 @@ func main() {
 }
 ```
 
-### Goals (OKR and V2MOM)
+### Goals (OKR, V2MOM, and DMAIC)
 
-The `goals` package provides a framework-agnostic interface for both OKR and V2MOM:
+The `goals` package provides a framework-agnostic interface for both OKR and V2MOM. `goals/dmaic` adds DMAIC metrics documents with Six Sigma control limits, root causes, and improvement initiatives; see the [DMAIC guide](docs/goals/dmaic.md).
 
 ```go
 import (

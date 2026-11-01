@@ -81,6 +81,7 @@ nav:
       - Overview: goals/overview.md
       - V2MOM Integration: goals/v2mom.md
       - OKR Integration: goals/okr.md
+      - DMAIC Integration: goals/dmaic.md
   - Views & Output:
       - PM View: views/pm-view.md
       - Executive View: views/exec-view.md
@@ -119,6 +120,7 @@ nav:
           - TRD: specs/cascading-goals/TRD.md
           - Roadmap: specs/cascading-goals/ROADMAP.md
   - Releases:
+      - v0.22.0: releases/v0.22.0.md
       - v0.21.0: releases/v0.21.0.md
       - v0.20.0: releases/v0.20.0.md
       - v0.19.0: releases/v0.19.0.md

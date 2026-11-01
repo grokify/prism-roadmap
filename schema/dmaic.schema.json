@@ -1,0 +1,312 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/grokify/prism-roadmap/schema/dmaic.schema.json",
+  "$ref": "#/$defs/DMAICDocument",
+  "$defs": {
+    "Category": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "order": {
+          "type": "integer"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "metrics": {
+          "items": {
+            "$ref": "#/$defs/Metric"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "ControlLimits": {
+      "properties": {
+        "ucl": {
+          "type": "number"
+        },
+        "lcl": {
+          "type": "number"
+        },
+        "centerLine": {
+          "type": "number"
+        },
+        "sigma": {
+          "type": "number"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "DMAICDocument": {
+      "properties": {
+        "$schema": {
+          "type": "string"
+        },
+        "metadata": {
+          "$ref": "#/$defs/Metadata"
+        },
+        "categories": {
+          "items": {
+            "$ref": "#/$defs/Category"
+          },
+          "type": "array"
+        },
+        "initiatives": {
+          "items": {
+            "$ref": "#/$defs/Initiative"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "DataPoint": {
+      "properties": {
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "value": {
+          "type": "number"
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Initiative": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "startDate": {
+          "type": "string"
+        },
+        "endDate": {
+          "type": "string"
+        },
+        "metricIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "expectedImpact": {
+          "type": "string"
+        },
+        "actualImpact": {
+          "type": "string"
+        },
+        "externalLinks": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Metadata": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "team": {
+          "type": "string"
+        },
+        "period": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "reviewCadence": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Metric": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "order": {
+          "type": "integer"
+        },
+        "baseline": {
+          "type": "number"
+        },
+        "current": {
+          "type": "number"
+        },
+        "target": {
+          "type": "number"
+        },
+        "unit": {
+          "type": "string"
+        },
+        "phase": {
+          "type": "string"
+        },
+        "trendDirection": {
+          "type": "string"
+        },
+        "controlLimits": {
+          "$ref": "#/$defs/ControlLimits"
+        },
+        "thresholds": {
+          "$ref": "#/$defs/Thresholds"
+        },
+        "frequency": {
+          "type": "string"
+        },
+        "dataSource": {
+          "type": "string"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "processCapability": {
+          "$ref": "#/$defs/ProcessCapability"
+        },
+        "dataPoints": {
+          "items": {
+            "$ref": "#/$defs/DataPoint"
+          },
+          "type": "array"
+        },
+        "rootCauses": {
+          "items": {
+            "$ref": "#/$defs/RootCause"
+          },
+          "type": "array"
+        },
+        "initiativeIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "externalLinks": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "ProcessCapability": {
+      "properties": {
+        "cp": {
+          "type": "number"
+        },
+        "cpk": {
+          "type": "number"
+        },
+        "sigmaLevel": {
+          "type": "number"
+        },
+        "dpmo": {
+          "type": "number"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "RootCause": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string"
+        },
+        "impact": {
+          "type": "string"
+        },
+        "validated": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Thresholds": {
+      "properties": {
+        "warning": {
+          "type": "number"
+        },
+        "critical": {
+          "type": "number"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    }
+  },
+  "title": "DMAIC Document",
+  "description": "Schema for DMAIC (Define, Measure, Analyze, Improve, Control) metrics documents"
+}

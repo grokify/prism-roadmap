@@ -33,7 +33,7 @@ A release also needs `docs/releases/vX.Y.Z.md` (follow the previous version's fo
 
 A unified planning-document library: Go types + JSON serialization + markdown/Marp generation + JSON Schema, part of the PRISM ecosystem (`prism-core` primitives, `prism-capability`, `prism-maturity`). Dependencies flow toward leaf primitives with no cycles.
 
-- **Leaf packages**: `prioritization` (RICE/Kano/MoSCoW types), `signal` (MarketSignal), `effort`, `common` (Person/Decision/Risk over prism-core), `roadmap`, `journey`, `goals` (`okr`, `v2mom`).
+- **Leaf packages**: `prioritization` (RICE/Kano/MoSCoW types), `signal` (MarketSignal), `effort`, `common` (Person/Decision/Risk over prism-core), `roadmap`, `journey`, `goals` (`okr`, `v2mom`, `dmaic`).
 - **rmi** — `RoadmapItem`, the core roadmap unit combining MoSCoW+RICE, MarketSignal, and Effort, plus a file-backed `Service`/`Set` CRUD layer used by both the CLI and the MCP server.
 - **canvas** — strategic canvases (BMC, OST, Opportunity, SVPG OpportunityAssessment, Lean UX, …) with `render`/`export`.
 - **requirements** — MRD/PRD/TRD document types; PRD has `render`, `render/marp`, `render/terminal`.
