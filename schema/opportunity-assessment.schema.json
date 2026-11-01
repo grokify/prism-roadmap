@@ -37,6 +37,54 @@
       "additionalProperties": false,
       "type": "object"
     },
+    "CategoryResult": {
+      "properties": {
+        "category": {
+          "type": "string"
+        },
+        "score": {
+          "type": "string"
+        },
+        "intScore": {
+          "type": "integer"
+        },
+        "numericScore": {
+          "type": "number"
+        },
+        "confidence": {
+          "type": "number"
+        },
+        "severity": {
+          "type": "string"
+        },
+        "reasonCodes": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "reasoning": {
+          "type": "string"
+        },
+        "evidence": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "findings": {
+          "items": {
+            "$ref": "#/$defs/Finding"
+          },
+          "type": "array"
+        },
+        "checklistResults": {
+          "$ref": "#/$defs/ChecklistResults"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
     "CategorySelection": {
       "properties": {
         "optionId": {
@@ -53,6 +101,140 @@
             "type": "string"
           },
           "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "ChecklistResults": {
+      "properties": {
+        "requiredPresent": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "requiredMissing": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "optionalPresent": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "optionalMissing": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Claim": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        },
+        "location": {
+          "$ref": "#/$defs/Location"
+        },
+        "category": {
+          "type": "string"
+        },
+        "validation": {
+          "$ref": "#/$defs/Validation"
+        },
+        "statistical": {
+          "$ref": "#/$defs/StatisticalDetail"
+        },
+        "verdict": {
+          "type": "string"
+        },
+        "rationale": {
+          "type": "string"
+        },
+        "relatedClaimIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "CompassAssessment": {
+      "properties": {
+        "profileId": {
+          "type": "string"
+        },
+        "evidenceJson": true,
+        "normalized": {
+          "$ref": "#/$defs/Normalized"
+        },
+        "categories": {
+          "items": {
+            "$ref": "#/$defs/CategoryResult"
+          },
+          "type": "array"
+        },
+        "claims": {
+          "items": {
+            "$ref": "#/$defs/Claim"
+          },
+          "type": "array"
+        },
+        "needsHumanReview": {
+          "type": "boolean"
+        },
+        "humanReview": {
+          "$ref": "#/$defs/CompassHumanReview"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "CompassHumanReview": {
+      "properties": {
+        "reviewedBy": {
+          "type": "string"
+        },
+        "reviewedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "note": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "DerivedValidation": {
+      "properties": {
+        "sourceClaimIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "derivationMethod": {
+          "type": "string"
+        },
+        "formula": {
+          "type": "string"
+        },
+        "reasoning": {
+          "type": "string"
         }
       },
       "additionalProperties": false,
@@ -166,6 +348,113 @@
       "additionalProperties": false,
       "type": "object"
     },
+    "ExternalValidation": {
+      "properties": {
+        "url": {
+          "type": "string"
+        },
+        "sourceType": {
+          "type": "string"
+        },
+        "sourceRole": {
+          "type": "string"
+        },
+        "reliability": {
+          "type": "string"
+        },
+        "accessedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "archived": {
+          "type": "boolean"
+        },
+        "archiveUrl": {
+          "type": "string"
+        },
+        "quotedText": {
+          "type": "string"
+        },
+        "verifiedMatch": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Finding": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string"
+        },
+        "code": {
+          "type": "string"
+        },
+        "severity": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "recommendation": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "evidence": {
+          "type": "string"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "effort": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "InternalValidation": {
+      "properties": {
+        "method": {
+          "type": "string"
+        },
+        "evidencePath": {
+          "type": "string"
+        },
+        "evidenceHash": {
+          "type": "string"
+        },
+        "reproducible": {
+          "type": "boolean"
+        },
+        "reproductionSteps": {
+          "type": "string"
+        },
+        "validatedBy": {
+          "type": "string"
+        },
+        "validatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "environment": {
+          "$ref": "#/$defs/ValidationEnvironment"
+        },
+        "output": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
     "JudgeMetadata": {
       "properties": {
         "judge_id": {
@@ -221,6 +510,52 @@
       "additionalProperties": false,
       "type": "object"
     },
+    "Location": {
+      "properties": {
+        "section": {
+          "type": "string"
+        },
+        "line": {
+          "type": "integer"
+        },
+        "startOffset": {
+          "type": "integer"
+        },
+        "endOffset": {
+          "type": "integer"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Normalized": {
+      "properties": {
+        "profileId": {
+          "type": "string"
+        },
+        "reach": {
+          "type": "number"
+        },
+        "reachBand": {
+          "type": "string"
+        },
+        "impact": {
+          "type": "number"
+        },
+        "confidence": {
+          "type": "number"
+        },
+        "effortPd": {
+          "type": "number"
+        },
+        "method": {
+          "type": "string"
+        },
+        "inputs": true
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
     "OKRContribution": {
       "properties": {
         "objectiveId": {
@@ -270,6 +605,9 @@
         },
         "rice": {
           "$ref": "#/$defs/RICEAssessment"
+        },
+        "compass": {
+          "$ref": "#/$defs/CompassAssessment"
         },
         "dimensions": {
           "items": {
@@ -353,6 +691,43 @@
       "additionalProperties": false,
       "type": "object"
     },
+    "StatisticalDetail": {
+      "properties": {
+        "value": {
+          "type": "number"
+        },
+        "unit": {
+          "type": "string"
+        },
+        "precision": {
+          "type": "string"
+        },
+        "asOfDate": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "SubjectiveValidation": {
+      "properties": {
+        "acknowledged": {
+          "type": "boolean"
+        },
+        "methodology": {
+          "type": "string"
+        },
+        "recommendation": {
+          "type": "string"
+        },
+        "rationale": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
     "ThresholdAnswer": {
       "properties": {
         "levelId": {
@@ -393,6 +768,45 @@
         },
         "cache_write_tokens": {
           "type": "integer"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Validation": {
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "external": {
+          "$ref": "#/$defs/ExternalValidation"
+        },
+        "internal": {
+          "$ref": "#/$defs/InternalValidation"
+        },
+        "derived": {
+          "$ref": "#/$defs/DerivedValidation"
+        },
+        "subjective": {
+          "$ref": "#/$defs/SubjectiveValidation"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "ValidationEnvironment": {
+      "properties": {
+        "product": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "configuration": {
+          "type": "string"
+        },
+        "platform": {
+          "type": "string"
         }
       },
       "additionalProperties": false,

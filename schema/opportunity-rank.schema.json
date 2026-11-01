@@ -55,6 +55,9 @@
         },
         "confidence": {
           "type": "string"
+        },
+        "profileId": {
+          "type": "string"
         }
       },
       "additionalProperties": false,
