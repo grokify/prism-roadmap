@@ -45,6 +45,15 @@
         {
           "description": "Bumped `github.com/modelcontextprotocol/go-sdk` from v1.7.0 to v1.8.0",
           "commit": "02dc4fb"
+        },
+        {
+          "description": "Bumped `github.com/plexusone/structured-evaluation` from v0.14.0 to v0.15.0, which adds review provenance fields to the opportunity assessment schema",
+          "commit": "ad5b089"
+        }
+      ],
+      "tests": [
+        {
+          "description": "A test fails when a committed JSON Schema differs from what the generator writes, so a dependency update that changes a reflected type is caught before release"
         }
       ],
       "documentation": [
