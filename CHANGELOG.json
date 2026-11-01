@@ -49,11 +49,19 @@
         {
           "description": "Bumped `github.com/plexusone/structured-evaluation` from v0.14.0 to v0.15.0, which adds review provenance fields to the opportunity assessment schema",
           "commit": "ad5b089"
+        },
+        {
+          "description": "Added `github.com/grokify/oscompat` v0.13.0, used by tests only"
         }
       ],
       "tests": [
         {
-          "description": "A test fails when a committed JSON Schema differs from what the generator writes, so a dependency update that changes a reflected type is caught before release"
+          "description": "A test fails when a committed JSON Schema differs from what the generator writes, so a dependency update that changes a reflected type is caught before release. It reads the committed files with oscompat's `testutil.ReadFileLF`, so it passes on Windows checkouts too"
+        }
+      ],
+      "build": [
+        {
+          "description": "`.gitattributes` checks text files out with LF on every platform, so JSON Schemas embedded from a Windows checkout are byte-identical to the published ones"
         }
       ],
       "documentation": [
