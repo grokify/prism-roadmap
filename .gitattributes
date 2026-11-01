@@ -1,0 +1,4 @@
+# Check out text files with LF on every platform. The JSON Schemas are
+# embedded with go:embed and compared byte for byte with the generator, so a
+# Windows checkout must not convert them to CRLF.
+* text=auto eol=lf
