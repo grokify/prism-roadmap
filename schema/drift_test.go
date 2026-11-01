@@ -5,6 +5,8 @@ import (
 	"os"
 	"path/filepath"
 	"testing"
+
+	"github.com/grokify/oscompat/testutil"
 )
 
 // TestCommittedSchemasMatchGenerator fails when a committed schema differs from
@@ -28,11 +30,12 @@ func TestCommittedSchemasMatchGenerator(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		got, err := os.ReadFile(name)
-		if err != nil {
+		if _, err := os.Stat(name); err != nil {
 			t.Errorf("%s: generated but not committed: %v", name, err)
 			continue
 		}
+		// Git may check the committed file out with CRLF on Windows.
+		got := testutil.ReadFileLF(t, name)
 		if !bytes.Equal(got, want) {
 			t.Errorf("%s is out of date; regenerate with: cd schema && go run cmd/generate/main.go", name)
 		}
