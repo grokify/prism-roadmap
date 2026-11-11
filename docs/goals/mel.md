@@ -18,7 +18,7 @@ MEL plans are common in program work and are just as useful for a product or bus
 | **Assumptions** | What must hold for the results to follow, and how is it watched? | `assumptions`, each with how it is monitored |
 | **Evaluations** | When will we ask whether and why results happened? | `evaluations`, each with questions, type, method, evaluator, and dates |
 | **Learning agenda** | What do we most need to find out, by when, and how? | `learningAgenda`: questions with the decision each informs, methods, owner, and due date |
-| **Reviews and reports** | When do we stop to learn, and who hears what? | `reviews` and `reports`, each with a frequency |
+| **Reviews and reports** | When do we stop to learn, and who hears what? | `reviews`, and `reports` with what each audience needs to know, what it receives, and how often |
 
 Results use five levels, from the most immediate to the most distant: `output`, `short_term`, `medium_term`, `long_term`, and `impact`. Every element has an ID, IDs are unique across the plan, and elements refer to each other by ID.
 

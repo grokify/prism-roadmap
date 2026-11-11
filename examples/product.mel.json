@@ -282,6 +282,7 @@
     {
       "id": "rep-leadership",
       "audience": "Leadership team",
+      "needs": "Whether each step of onboarding is on track, and where to put the next quarter's effort",
       "product": "Onboarding dashboard",
       "frequency": "Monthly",
       "channel": "Leadership meeting",
@@ -291,6 +292,7 @@
     {
       "id": "rep-board",
       "audience": "Board",
+      "needs": "Whether the onboarding bet is paying off in retention",
       "product": "Quarterly product update",
       "frequency": "Quarterly",
       "channel": "Board deck",

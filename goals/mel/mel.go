@@ -279,8 +279,10 @@ type Review struct {
 
 // Report is what one audience receives, and how often.
 type Report struct {
-	ID        string `json:"id"`
-	Audience  string `json:"audience"`
+	ID       string `json:"id"`
+	Audience string `json:"audience"`
+	// Needs is what the audience needs to know, and the decisions it makes.
+	Needs     string `json:"needs,omitempty"`
 	Product   string `json:"product,omitempty"` // e.g. "Quarterly dashboard"
 	Frequency string `json:"frequency,omitempty"`
 	Channel   string `json:"channel,omitempty"`

@@ -335,15 +335,23 @@ func writeSchedule(b *strings.Builder, p *mel.Plan) {
 		b.WriteString("\n")
 	}
 	if len(p.Reports) > 0 {
-		b.WriteString("| Audience | Receives | Frequency | Channel | Prepared by | Indicators |\n")
-		b.WriteString("|----------|----------|-----------|---------|-------------|------------|\n")
+		b.WriteString("| Audience | Needs to know | Receives | Frequency | Prepared by | Indicators |\n")
+		b.WriteString("|----------|---------------|----------|-----------|-------------|------------|\n")
 		for _, r := range p.Reports {
 			var names []string
 			for _, id := range r.IndicatorIDs {
 				names = append(names, indicatorName(p, id))
 			}
-			fmt.Fprintf(b, "| %s | %s | %s | %s | %s | %s |\n", cell(r.Audience), cell(r.Product),
-				cell(r.Frequency), cell(r.Channel), cell(r.Owner), cell(strings.Join(names, "; ")))
+			receives := r.Product
+			if r.Channel != "" {
+				if receives != "" {
+					receives += ", in the " + r.Channel
+				} else {
+					receives = r.Channel
+				}
+			}
+			fmt.Fprintf(b, "| %s | %s | %s | %s | %s | %s |\n", cell(r.Audience), cell(r.Needs), cell(receives),
+				cell(r.Frequency), cell(r.Owner), cell(strings.Join(names, "; ")))
 		}
 		b.WriteString("\n")
 	}

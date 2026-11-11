@@ -198,10 +198,10 @@ Tells the product team, leadership, and the board whether the onboarding bet is 
 | Monthly metrics review | Monthly | Product leads, Data analyst | Head of Product | 2027-02-05 |  |
 | Quarterly learning review | Quarterly | Product leads, Design, User research, Customer success | Head of Product | 2027-04-02 | `lq-connect-cause`, `lq-abandon-step` |
 
-| Audience | Receives | Frequency | Channel | Prepared by | Indicators |
-|----------|----------|-----------|---------|-------------|------------|
-| Leadership team | Onboarding dashboard | Monthly | Leadership meeting | Data analyst | Accounts still active at 90 days; New accounts that connect a bank in their first session; Connected accounts that reconcile weekly |
-| Board | Quarterly product update | Quarterly | Board deck | Head of Product | Accounts still active at 90 days; Hours owners spend on their books each month |
+| Audience | Needs to know | Receives | Frequency | Prepared by | Indicators |
+|----------|---------------|----------|-----------|-------------|------------|
+| Leadership team | Whether each step of onboarding is on track, and where to put the next quarter's effort | Onboarding dashboard, in the Leadership meeting | Monthly | Data analyst | Accounts still active at 90 days; New accounts that connect a bank in their first session; Connected accounts that reconcile weekly |
+| Board | Whether the onboarding bet is paying off in retention | Quarterly product update, in the Board deck | Quarterly | Head of Product | Accounts still active at 90 days; Hours owners spend on their books each month |
 
 ## Budget
 

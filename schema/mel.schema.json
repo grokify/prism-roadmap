@@ -358,6 +358,9 @@
         "audience": {
           "type": "string"
         },
+        "needs": {
+          "type": "string"
+        },
         "product": {
           "type": "string"
         },
