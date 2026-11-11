@@ -1,6 +1,6 @@
 # Integration Examples
 
-Examples of integrating prism-execution with other tools and workflows.
+Examples of integrating prism-roadmap with other tools and workflows.
 
 ## CI/CD Integration
 
@@ -25,31 +25,27 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@v5
         with:
-          go-version: '1.21'
+          go-version: stable
 
-      - name: Install validator
-        run: go install github.com/grokify/prism-execution/cmd/srequirements@latest
+      - name: Install splan
+        run: go install github.com/grokify/prism-roadmap/cmd/splan@latest
 
       - name: Validate PRDs
         run: |
           for file in $(find . -name "*.prd.json"); do
             echo "Validating $file..."
-            srequirements validate "$file"
+            splan requirements prd validate "$file"
           done
 ```
 
 ### Scoring Gate
 
-Block PRs with low-scoring PRDs:
+Block PRs whose PRD fails its scoring criteria. `splan requirements prd score`
+exits with an error when the PRD does not pass:
 
 ```yaml
 - name: Score PRD
-  run: |
-    SCORE=$(srequirements score docs/feature.prd.json --output=score)
-    if [ "$SCORE" -lt 70 ]; then
-      echo "PRD score ($SCORE%) below threshold (70%)"
-      exit 1
-    fi
+  run: splan requirements prd score docs/feature.prd.json --format=markdown
 ```
 
 ## Slack Notifications
@@ -64,7 +60,7 @@ import (
     "encoding/json"
     "net/http"
 
-    "github.com/grokify/prism-execution/requirements/prd"
+    "github.com/grokify/prism-roadmap/requirements/prd"
 )
 
 func notifySlack(doc *prd.Document, webhookURL string) error {
@@ -104,7 +100,7 @@ Export PRD to Notion:
 package main
 
 import (
-    "github.com/grokify/prism-execution/requirements/prd"
+    "github.com/grokify/prism-roadmap/requirements/prd"
     // hypothetical notion client
     "github.com/example/notion-go"
 )

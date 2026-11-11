@@ -155,14 +155,14 @@ AlignedObjectives: map[string]string{
 ## Installation
 
 ```bash
-go get github.com/grokify/prism-execution
+go get github.com/grokify/prism-roadmap
 ```
 
 ```go
 import (
-    "github.com/grokify/prism-execution/requirements/prd"
-    "github.com/grokify/prism-execution/goals/v2mom"
-    "github.com/grokify/prism-execution/goals/okr"
+    "github.com/grokify/prism-roadmap/requirements/prd"
+    "github.com/grokify/prism-roadmap/goals/v2mom"
+    "github.com/grokify/prism-roadmap/goals/okr"
 )
 ```
 
