@@ -19,6 +19,10 @@ import (
 	melrender "github.com/grokify/prism-roadmap/goals/mel/render"
 	melmarkdown "github.com/grokify/prism-roadmap/goals/mel/render/markdown"
 	melpandoc "github.com/grokify/prism-roadmap/goals/mel/render/pandoc"
+	"github.com/grokify/prism-roadmap/goals/ogsm"
+	ogsmrender "github.com/grokify/prism-roadmap/goals/ogsm/render"
+	ogsmmarkdown "github.com/grokify/prism-roadmap/goals/ogsm/render/markdown"
+	ogsmmarp "github.com/grokify/prism-roadmap/goals/ogsm/render/marp"
 	"github.com/grokify/prism-roadmap/goals/okr"
 	"github.com/grokify/prism-roadmap/goals/v2mom"
 	"github.com/grokify/prism-roadmap/goals/vsem"
@@ -29,7 +33,7 @@ import (
 
 // GoalFrameworks are the goal document formats the goals commands read, in
 // the order they are listed.
-var GoalFrameworks = []string{"okr", "v2mom", "vsem", "dmaic", "mel"}
+var GoalFrameworks = []string{"okr", "v2mom", "vsem", "ogsm", "dmaic", "mel"}
 
 // GoalFinding is one validation result, whatever the framework.
 type GoalFinding struct {
@@ -41,8 +45,8 @@ type GoalFinding struct {
 func (f GoalFinding) String() string { return f.Path + ": " + f.Message }
 
 // DetectGoalFramework tells a goal document's framework from its top-level
-// fields: objectives (OKR), methods or values (V2MOM), strategies (VSEM),
-// categories (DMAIC), or results (MEL).
+// fields: objectives (OKR), methods or values (V2MOM), a single objective
+// (OGSM), strategies (VSEM), categories (DMAIC), or results (MEL).
 func DetectGoalFramework(data []byte) (string, error) {
 	var fields map[string]json.RawMessage
 	if err := json.Unmarshal(data, &fields); err != nil {
@@ -50,7 +54,7 @@ func DetectGoalFramework(data []byte) (string, error) {
 	}
 	for _, c := range []struct{ field, framework string }{
 		{"objectives", "okr"}, {"methods", "v2mom"}, {"values", "v2mom"},
-		{"strategies", "vsem"}, {"categories", "dmaic"}, {"results", "mel"},
+		{"objective", "ogsm"}, {"strategies", "vsem"}, {"categories", "dmaic"}, {"results", "mel"},
 	} {
 		if _, ok := fields[c.field]; ok {
 			return c.framework, nil
@@ -101,6 +105,18 @@ func ValidateGoals(data []byte, framework string, strict bool) (string, []GoalFi
 			opts = vsem.StrictValidationOptions()
 		}
 		for _, e := range v.Validate(opts) {
+			out = append(out, GoalFinding{e.Path, e.Message, e.IsError})
+		}
+	case "ogsm":
+		o, err := ogsm.Parse(data)
+		if err != nil {
+			return framework, nil, err
+		}
+		opts := ogsm.DefaultValidationOptions()
+		if strict {
+			opts = ogsm.StrictValidationOptions()
+		}
+		for _, e := range o.Validate(opts) {
 			out = append(out, GoalFinding{e.Path, e.Message, e.IsError})
 		}
 	case "dmaic":
@@ -209,6 +225,18 @@ func writeNewGoalsFile(cmd *cobra.Command, file string, v any, next string) erro
 	return nil
 }
 
+// rendered reads a document with read and renders it with render, which
+// receives the --theme value.
+func rendered[T any](read func(string) (*T, error), render func(*T, string) ([]byte, error)) func(string, bool, string) ([]byte, error) {
+	return func(file string, _ bool, theme string) ([]byte, error) {
+		doc, err := read(file)
+		if err != nil {
+			return nil, err
+		}
+		return render(doc, theme)
+	}
+}
+
 // frameworkCommands builds the validate, generate, and init subcommands for one
 // framework.
 type frameworkCommands struct {
@@ -300,25 +328,36 @@ var vsemCommands = frameworkCommands{
 render them as a Markdown document or Marp slides, and create a template.`,
 	generators: []generator{
 		{format: "markdown", short: "Generate a Markdown document", long: "Render a VSEM as a Markdown document: the vision, each strategy with its resources, execution, and metrics, then the vision's metrics.",
-			run: func(file string, _ bool, _ string) ([]byte, error) {
-				v, err := vsem.ReadFile(file)
-				if err != nil {
-					return nil, err
-				}
+			run: rendered(vsem.ReadFile, func(v *vsem.VSEM, _ string) ([]byte, error) {
 				return vsemmarkdown.New().Render(v, vsemrender.DefaultOptions())
-			}},
+			})},
 		{format: "marp", short: "Generate Marp slides", long: "Render a VSEM as Marp slides: the plan on one page, the vision, a slide per strategy, and the vision's metrics.", theme: true,
-			run: func(file string, _ bool, theme string) ([]byte, error) {
-				v, err := vsem.ReadFile(file)
-				if err != nil {
-					return nil, err
-				}
+			run: rendered(vsem.ReadFile, func(v *vsem.VSEM, theme string) ([]byte, error) {
 				opts := vsemrender.DefaultOptions()
 				opts.Theme = theme
 				return vsemmarp.New().Render(v, opts)
-			}},
+			})},
 	},
 	template: func(name string) any { return VSEMTemplate(name) },
+}
+
+var ogsmCommands = frameworkCommands{
+	name: "ogsm", title: "OGSM",
+	long: `Commands for OGSM (Objective, Goals, Strategies, Measures) plans: validate
+them, render them as a Markdown document or Marp slides, and create a template.`,
+	generators: []generator{
+		{format: "markdown", short: "Generate a Markdown document", long: "Render an OGSM as a Markdown document: the plan on one page, the objective, the goals, and each strategy with its measures and actions.",
+			run: rendered(ogsm.ReadFile, func(o *ogsm.OGSM, _ string) ([]byte, error) {
+				return ogsmmarkdown.New().Render(o, ogsmrender.DefaultOptions())
+			})},
+		{format: "marp", short: "Generate Marp slides", long: "Render an OGSM as Marp slides: the plan on one page, the objective and goals, and a slide per strategy.", theme: true,
+			run: rendered(ogsm.ReadFile, func(o *ogsm.OGSM, theme string) ([]byte, error) {
+				opts := ogsmrender.DefaultOptions()
+				opts.Theme = theme
+				return ogsmmarp.New().Render(o, opts)
+			})},
+	},
+	template: func(name string) any { return OGSMTemplate(name) },
 }
 
 var dmaicCommands = frameworkCommands{
@@ -328,23 +367,15 @@ documents: validate them, render them as Marp slides or Pandoc Markdown, and
 create a template.`,
 	generators: []generator{
 		{format: "marp", short: "Generate Marp slides", long: "Render a DMAIC document as Marp slides.", theme: true,
-			run: func(file string, _ bool, theme string) ([]byte, error) {
-				doc, err := dmaic.ReadFile(file)
-				if err != nil {
-					return nil, err
-				}
+			run: rendered(dmaic.ReadFile, func(doc *dmaic.DMAICDocument, theme string) ([]byte, error) {
 				opts := dmaicrender.DefaultOptions()
 				opts.Theme = theme
 				return dmaicmarp.New().Render(doc, opts)
-			}},
+			})},
 		{format: "pandoc", short: "Generate Pandoc Markdown for a PDF", long: "Render a DMAIC document as Pandoc Markdown with front matter for a PDF.",
-			run: func(file string, _ bool, _ string) ([]byte, error) {
-				doc, err := dmaic.ReadFile(file)
-				if err != nil {
-					return nil, err
-				}
+			run: rendered(dmaic.ReadFile, func(doc *dmaic.DMAICDocument, _ string) ([]byte, error) {
 				return dmaicpandoc.New().Render(doc, dmaicrender.DefaultOptions())
-			}},
+			})},
 	},
 	template: func(name string) any { return DMAICTemplate(name) },
 }
@@ -398,6 +429,30 @@ func VSEMTemplate(name string) *vsem.VSEM {
 		Owner: "Accountable person", Baseline: "0", Target: "1", Direction: vsem.DirectionIncrease,
 	}}
 	return v
+}
+
+// OGSMTemplate returns a small OGSM to start from. It meets the strict
+// options, so its objective is due three years from today.
+func OGSMTemplate(name string) *ogsm.OGSM {
+	o := ogsm.New(slug(name), name, "The one thing to achieve over the plan's horizon")
+	o.Objective.DueDate = time.Now().AddDate(3, 0, 0).Format(time.DateOnly)
+	o.Goals = []ogsm.Goal{{
+		ID: "goal-1", Name: "A number that says the objective is reached", Owner: "Goal owner",
+		Baseline: "0", Target: "1", Direction: ogsm.DirectionIncrease, DueDate: o.Objective.DueDate,
+	}}
+	o.Strategies = []ogsm.Strategy{{
+		ID: "strategy-1", Name: "A choice about how to reach the goals", Owner: "Strategy owner",
+		Priority: ogsm.PriorityP0, GoalIDs: []string{"goal-1"},
+	}}
+	o.Measures = []ogsm.Measure{{
+		ID: "measure-1", Name: "A number that shows the strategy is working", StrategyID: "strategy-1",
+		Owner: "Measure owner", Baseline: "0", Target: "1", Direction: ogsm.DirectionIncrease, Frequency: "Monthly",
+	}}
+	o.Actions = []ogsm.Action{{
+		ID: "action-1", Name: "The first action that carries out the strategy", StrategyID: "strategy-1",
+		Owner: "Action owner", Status: ogsm.ActionPlanned,
+	}}
+	return o
 }
 
 // DMAICTemplate returns a small DMAIC metrics document to start from.

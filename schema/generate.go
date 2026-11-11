@@ -13,6 +13,7 @@ import (
 	"github.com/grokify/prism-roadmap/effort"
 	"github.com/grokify/prism-roadmap/goals/dmaic"
 	"github.com/grokify/prism-roadmap/goals/mel"
+	"github.com/grokify/prism-roadmap/goals/ogsm"
 	"github.com/grokify/prism-roadmap/goals/okr"
 	"github.com/grokify/prism-roadmap/goals/v2mom"
 	"github.com/grokify/prism-roadmap/goals/vsem"
@@ -118,6 +119,12 @@ func (g *Generator) GenerateAll(dir string) error {
 	melPath := filepath.Join(dir, "mel.schema.json")
 	if err := g.WriteMELSchema(melPath); err != nil {
 		return fmt.Errorf("generating MEL schema: %w", err)
+	}
+
+	// Generate OGSM schema
+	ogsmPath := filepath.Join(dir, "ogsm.schema.json")
+	if err := g.WriteOGSMSchema(ogsmPath); err != nil {
+		return fmt.Errorf("generating OGSM schema: %w", err)
 	}
 
 	// Generate canvas schemas (Shape Up, Continuous Discovery)
@@ -352,6 +359,50 @@ func (g *Generator) GenerateMELSchemaJSON() ([]byte, error) {
 // WriteMELSchema generates and writes the MEL schema to a file.
 func (g *Generator) WriteMELSchema(path string) error {
 	data, err := g.GenerateMELSchemaJSON()
+	if err != nil {
+		return fmt.Errorf("generating schema: %w", err)
+	}
+
+	dir := filepath.Dir(path)
+	if err := os.MkdirAll(dir, 0o755); err != nil {
+		return fmt.Errorf("creating directory: %w", err)
+	}
+
+	if err := os.WriteFile(path, data, 0600); err != nil {
+		return fmt.Errorf("writing file: %w", err)
+	}
+
+	return nil
+}
+
+// GenerateOGSMSchema generates JSON Schema for the OGSM type.
+func (g *Generator) GenerateOGSMSchema() (*jsonschema.Schema, error) {
+	schema := g.Reflector.Reflect(&ogsm.OGSM{})
+	if schema == nil {
+		return nil, fmt.Errorf("failed to generate schema for ogsm.OGSM")
+	}
+
+	// Set schema metadata
+	schema.ID = jsonschema.ID(OGSMSchemaID)
+	schema.Title = "OGSM Document"
+	schema.Description = "Schema for OGSM (Objective, Goals, Strategies, Measures) plans"
+
+	return schema, nil
+}
+
+// GenerateOGSMSchemaJSON generates JSON Schema for OGSM and returns it as JSON bytes.
+func (g *Generator) GenerateOGSMSchemaJSON() ([]byte, error) {
+	schema, err := g.GenerateOGSMSchema()
+	if err != nil {
+		return nil, err
+	}
+
+	return json.MarshalIndent(schema, "", "  ")
+}
+
+// WriteOGSMSchema generates and writes the OGSM schema to a file.
+func (g *Generator) WriteOGSMSchema(path string) error {
+	data, err := g.GenerateOGSMSchemaJSON()
 	if err != nil {
 		return fmt.Errorf("generating schema: %w", err)
 	}

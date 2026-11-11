@@ -8,6 +8,40 @@
     "grokify",
     "johncwang@gmail.com"
   ],
+  "unreleased": {
+    "highlights": [
+      {
+        "description": "OGSM joins OKR, V2MOM, and VSEM in `goals`: one objective in words, goals in numbers, the strategies that reach them, the measures that track each strategy, and the actions that carry them out"
+      }
+    ],
+    "added": [
+      {
+        "description": "`goals/ogsm`: OGSM (Objective, Goals, Strategies, Measures) plans with an objective and its due date, goals with baselines and targets, strategies naming the goals they serve, measures and actions naming their strategy, and cascading through `metadata.parentId` and `objective.parentStrategyId`. Validation presets treat missing targets, owners, dates, measures, actions, and goal links as warnings or errors, and deterministic Markdown and Marp renderers open with the one-page table"
+      },
+      {
+        "description": "`goals.FrameworkOGSM` and `goals.NewOGSM`: a PRD or roadmap can carry an OGSM, whose strategies are goal items and goals and measures result items"
+      },
+      {
+        "description": "`schema/ogsm.schema.json`, generated from the OGSM types and embedded as `schema.OGSMSchema()`"
+      },
+      {
+        "description": "Fictional OGSM examples: a minimal plan and a three-year plan for a bookkeeping app"
+      },
+      {
+        "description": "`splan goals ogsm`: validate (with `--strict`), generate (`markdown` or `marp`), and init; `splan goals validate` detects an OGSM, `splan goals init --framework` and `splan schema generate --type` accept `ogsm`"
+      }
+    ],
+    "changed": [
+      {
+        "description": "The PRD schema includes the OGSM option of the goals union"
+      }
+    ],
+    "documentation": [
+      {
+        "description": "An OGSM guide covering the four parts, cascading, how OGSM differs from VSEM and V2MOM, validation, goals alignment, rendering, and the command line, and OGSM in the README, the goals overview, the documentation home, and the API reference"
+      }
+    ]
+  },
   "releases": [
     {
       "version": "v0.24.0",
