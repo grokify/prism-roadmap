@@ -17,7 +17,7 @@
     {
       "id": "ind-active-90",
       "name": "Accounts still active at 90 days",
-      "resultId": "active-90",
+      "measures": "active-90",
       "unit": "%",
       "baseline": { "value": "52" },
       "targets": [{ "value": "60", "date": "2027-12-31" }],

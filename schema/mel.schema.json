@@ -3,6 +3,39 @@
   "$id": "https://github.com/grokify/prism-roadmap/schema/mel.schema.json",
   "$ref": "#/$defs/Plan",
   "$defs": {
+    "Activity": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "resultIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "startDate": {
+          "type": "string"
+        },
+        "endDate": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
     "Assumption": {
       "properties": {
         "id": {
@@ -122,7 +155,7 @@
         "name": {
           "type": "string"
         },
-        "resultId": {
+        "measures": {
           "type": "string"
         },
         "definition": {
@@ -265,6 +298,12 @@
         "results": {
           "items": {
             "$ref": "#/$defs/Result"
+          },
+          "type": "array"
+        },
+        "activities": {
+          "items": {
+            "$ref": "#/$defs/Activity"
           },
           "type": "array"
         },

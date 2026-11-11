@@ -14,6 +14,13 @@ Tells the product team, leadership, and the board whether the onboarding bet is 
       - **Short-term outcome:** New accounts connect a bank in their first session (`first-session-connect`)
         - **Output:** Guided bank import is released to all new accounts (`guided-import-live`)
 
+## Activities
+
+| Activity | Produces | Lead | Timing | Status |
+|----------|----------|------|--------|--------|
+| Build and roll out guided bank import | Guided bank import is released to all new accounts | Onboarding squad | 2027-01-04 to 2027-03-26 | In Progress |
+| Send weekly reconciliation reminders | Connected accounts reconcile weekly | Lifecycle marketing | from 2027-01-04 | In Progress |
+
 ## Indicators
 
 | Indicator | Measures | Baseline | Target | Frequency | Source | Responsible |
@@ -23,6 +30,7 @@ Tells the product team, leadership, and the board whether the onboarding bet is 
 | Connected accounts that reconcile weekly | Connected accounts reconcile weekly | 30% | 50% by 2027-12-31 | Weekly | Product analytics | Head of Core Product |
 | New accounts that connect a bank in their first session | New accounts connect a bank in their first session | 45% | 70% by 2027-06-30 | Weekly | Product analytics | Head of Onboarding |
 | New accounts offered guided import | Guided bank import is released to all new accounts | 0% | 100% by 2027-03-31 | Weekly | Feature flag service | Onboarding squad |
+| Bank connection attempts that succeed | Bank aggregators keep connection success above 90%. | 93% | 90% by 2027-12-31 | Weekly | Aggregator API logs | Platform engineering lead |
 
 ## Indicator Reference Sheets
 
@@ -119,12 +127,30 @@ Tells the product team, leadership, and the board whether the onboarding bet is 
 | **Frequency** | Weekly |
 | **Responsible** | Onboarding squad |
 
+### Bank connection attempts that succeed
+
+| | |
+|---|---|
+| **ID** | `ind-connection-success` |
+| **Measures** | Bank aggregators keep connection success above 90%. |
+| **Definition** | Share of bank connection attempts that the aggregator completes without an error. |
+| **Type** | quantitative |
+| **Unit** | % |
+| **Direction** | maintain |
+| **Disaggregation** | Bank aggregator |
+| **Baseline** | 93% (2026-12-31) |
+| **Targets** | 90% by 2027-12-31 (Floor) |
+| **Data source** | Aggregator API logs |
+| **Collection method** | Daily error-rate query |
+| **Frequency** | Weekly |
+| **Responsible** | Platform engineering lead |
+
 ## Assumptions to Monitor
 
 | Assumption | Results that depend on it | How it is monitored |
 |------------|---------------------------|---------------------|
 | Connecting a bank, not reconciling itself, is what stops new accounts from forming the weekly habit. | Connected accounts reconcile weekly | Compare weekly reconciliation of accounts that connected in the first session with those that connected later. Indicators: Connected accounts that reconcile weekly, New accounts that connect a bank in their first session |
-| Bank aggregators keep connection success above 90%. | New accounts connect a bank in their first session | Aggregator status pages and the weekly connection-failure report. |
+| Bank aggregators keep connection success above 90%. | New accounts connect a bank in their first session | Aggregator status pages and the weekly connection-failure report. Indicators: Bank connection attempts that succeed |
 
 ## Evaluation Plan
 

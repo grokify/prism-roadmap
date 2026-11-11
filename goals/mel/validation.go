@@ -77,6 +77,7 @@ func StrictValidationOptions() *ValidationOptions {
 // element kinds, for reference checks
 const (
 	kindResult     = "result"
+	kindActivity   = "activity"
 	kindIndicator  = "indicator"
 	kindAssumption = "assumption"
 	kindEvaluation = "evaluation"
@@ -151,6 +152,7 @@ func (p *Plan) Validate(opts *ValidationOptions) []ValidationError {
 		v.oneOf("metadata.status", p.Metadata.Status, DocumentStatuses())
 	}
 	v.results()
+	v.activities()
 	v.indicators()
 	v.assumptions()
 	v.evaluations()
@@ -178,6 +180,9 @@ func (v *validator) identifiers() {
 	p := v.p
 	for i, x := range p.Results {
 		check(fmt.Sprintf("results[%d]", i), x.ID, kindResult)
+	}
+	for i, x := range p.Activities {
+		check(fmt.Sprintf("activities[%d]", i), x.ID, kindActivity)
 	}
 	for i, x := range p.Indicators {
 		check(fmt.Sprintf("indicators[%d]", i), x.ID, kindIndicator)
@@ -268,14 +273,28 @@ func (v *validator) cycle() string {
 	return ""
 }
 
+func (v *validator) activities() {
+	for i, a := range v.p.Activities {
+		path := fmt.Sprintf("activities[%d]", i)
+		v.required(path, "name", a.Name, "activity name")
+		v.refs(path+".resultIds", a.ResultIDs, kindResult)
+		v.oneOf(path+".status", a.Status, ActivityStatuses())
+		okStart := v.date(path+".startDate", a.StartDate)
+		okEnd := v.date(path+".endDate", a.EndDate)
+		if okStart && okEnd && a.EndDate < a.StartDate {
+			v.add(path+".endDate", fmt.Sprintf("end date %s is before start date %s", a.EndDate, a.StartDate), true)
+		}
+	}
+}
+
 func (v *validator) indicators() {
 	for i, ind := range v.p.Indicators {
 		path := fmt.Sprintf("indicators[%d]", i)
 		v.required(path, "name", ind.Name, "indicator name")
-		if ind.ResultID == "" {
-			v.add(path+".resultId", "an indicator must name the result it measures", true)
+		if ind.Measures == "" {
+			v.add(path+".measures", "an indicator must name the result, activity, or assumption it measures", true)
 		} else {
-			v.ref(path+".resultId", ind.ResultID, kindResult)
+			v.ref(path+".measures", ind.Measures, kindResult, kindActivity, kindAssumption)
 		}
 		v.oneOf(path+".type", ind.Type, IndicatorTypes())
 		v.oneOf(path+".direction", ind.Direction, Directions())
@@ -342,7 +361,7 @@ func (v *validator) evaluations() {
 		if e.StartDate == "" && e.EndDate == "" {
 			v.add(path, "evaluation has no dates", v.opts.RequireTiming)
 		}
-		v.refs(path+".relatedIds", e.RelatedIDs, kindResult, kindIndicator, kindAssumption, kindQuestion)
+		v.refs(path+".relatedIds", e.RelatedIDs, kindResult, kindActivity, kindIndicator, kindAssumption, kindQuestion)
 	}
 }
 
@@ -364,7 +383,7 @@ func (v *validator) learning() {
 		if q.Status == QuestionAnswered && strings.TrimSpace(q.Answer) == "" {
 			v.add(path+".answer", "question is marked answered but records no answer", false)
 		}
-		v.refs(path+".relatedIds", q.RelatedIDs, kindResult, kindIndicator, kindAssumption)
+		v.refs(path+".relatedIds", q.RelatedIDs, kindResult, kindActivity, kindIndicator, kindAssumption)
 	}
 }
 

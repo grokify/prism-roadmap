@@ -16,8 +16,13 @@ func sample() *Plan {
 			{ID: "r-long", Statement: "Accounts stay", Level: LevelLongTerm, ContributesTo: []string{"r-impact"}},
 			{ID: "r-short", Statement: "Accounts connect a bank", Level: LevelShortTerm, ContributesTo: []string{"r-long"}},
 		},
+		Activities: []Activity{{
+			ID: "act-import", Name: "Guided import", ResultIDs: []string{"r-short"}, Owner: "Squad",
+			StartDate: "2027-01-04", EndDate: "2027-03-26", Status: ActivityInProgress,
+		}},
 		Indicators: []Indicator{
 			ind("i-hours", "r-impact"), ind("i-active", "r-long"), ind("i-connect", "r-short"),
+			ind("i-rollout", "act-import"), ind("i-banks", "a-1"),
 		},
 		Assumptions: []Assumption{{ID: "a-1", Statement: "Banks stay reliable", ResultIDs: []string{"r-short"}, Monitoring: "Status pages"}},
 		Evaluations: []Evaluation{{
@@ -36,7 +41,7 @@ func sample() *Plan {
 
 func ind(id, result string) Indicator {
 	return Indicator{
-		ID: id, Name: id, ResultID: result, Type: TypeQuantitative, Direction: DirectionIncrease,
+		ID: id, Name: id, Measures: result, Type: TypeQuantitative, Direction: DirectionIncrease,
 		Baseline: &Baseline{Value: "1"}, Targets: []Target{{Value: "2", Date: "2027-12-31"}},
 		DataSource: "Analytics", CollectionMethod: "Query", Frequency: "Monthly", Owner: "Ana",
 	}
@@ -52,6 +57,15 @@ func TestHelpers(t *testing.T) {
 	}
 	if got := p.IndicatorsFor("r-short"); len(got) != 1 || got[0].ID != "i-connect" {
 		t.Errorf("IndicatorsFor(r-short) = %v", got)
+	}
+	if got := p.IndicatorsFor("act-import"); len(got) != 1 || got[0].ID != "i-rollout" {
+		t.Errorf("IndicatorsFor(act-import) = %v", got)
+	}
+	if a := p.Activity("act-import"); a == nil || a.Name != "Guided import" {
+		t.Errorf("Activity(act-import) = %v", a)
+	}
+	if got := p.ActivitiesFor("r-short"); len(got) != 1 || got[0].ID != "act-import" {
+		t.Errorf("ActivitiesFor(r-short) = %v", got)
 	}
 	if got := p.Contributors("r-long"); len(got) != 1 || got[0].ID != "r-short" {
 		t.Errorf("Contributors(r-long) = %v", got)

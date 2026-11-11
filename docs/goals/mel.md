@@ -8,12 +8,13 @@ A monitoring, evaluation, and learning (MEL) plan says how a team will know whet
 
 MEL plans are common in program work and are just as useful for a product or business team: any team that sets goals and has to show results needs to say how it will measure them and when it will stop to learn.
 
-## The Six Parts
+## The Seven Parts
 
 | Part | Question | In the document |
 |------|----------|-----------------|
 | **Results** | What should change, from outputs up to impact? | `results`, each with a `level` and the higher results it `contributesTo` |
-| **Indicators** | How exactly is each result measured? | `indicators`: one reference sheet each, with definition, baseline, targets, data source, collection method, frequency, owner, and data quality |
+| **Activities** | What work produces the results, who does it, and when? | `activities`, each with the results it produces, an owner, dates, and a status |
+| **Indicators** | How exactly is each result, activity, or assumption measured? | `indicators`: one reference sheet each, naming what it `measures`, with definition, baseline, targets, data source, collection method, frequency, owner, and data quality |
 | **Assumptions** | What must hold for the results to follow, and how is it watched? | `assumptions`, each with how it is monitored |
 | **Evaluations** | When will we ask whether and why results happened? | `evaluations`, each with questions, type, method, evaluator, and dates |
 | **Learning agenda** | What do we most need to find out, by when, and how? | `learningAgenda`: questions with the decision each informs, methods, owner, and due date |
@@ -36,7 +37,7 @@ Results use five levels, from the most immediate to the most distant: `output`, 
     {
       "id": "ind-active-90",
       "name": "Accounts still active at 90 days",
-      "resultId": "active-90",
+      "measures": "active-90",
       "unit": "%",
       "direction": "increase",
       "baseline": { "value": "52", "date": "2026-12-31" },
@@ -81,6 +82,8 @@ Results use five levels, from the most immediate to the most distant: `output`, 
 
 Values are strings, so a qualitative indicator can have a baseline such as "Emerging" and a target such as "Established".
 
+An indicator usually measures a result. One that measures an activity tracks delivery, such as the share of new accounts offered a feature; one that measures an assumption watches whether it still holds, such as a partner's connection success rate.
+
 ## Evaluation Types
 
 | Type | What it is for |
@@ -119,10 +122,10 @@ for _, top := range p.TopResults() {
 
 - no results, or a result without a statement or a known level
 - a missing or duplicate ID
-- a reference to an unknown element, or to the wrong kind of element, such as an indicator that measures an assumption
+- a reference to an unknown element, or to the wrong kind of element, such as an indicator that measures a review
 - a result that contributes to itself, or a cycle in the results framework
 - an unknown type, direction, evaluation type, evaluator, or status
-- a baseline or target without a value, a date that is not `YYYY-MM-DD`, or an evaluation that ends before it starts
+- a baseline or target without a value, a date that is not `YYYY-MM-DD`, or an activity or evaluation that ends before it starts
 
 A result that contributes to a lower-level result is a warning. Gaps in the plan are warnings under `DefaultValidationOptions()` and errors under `StrictValidationOptions()`:
 
@@ -160,7 +163,7 @@ pdfSource, err := pandoc.New().Render(p, render.SummaryOptions())
 pandoc plan.md -o plan.pdf --pdf-engine=lualatex
 ```
 
-The document draws the results framework as a nested list from impact down, then an indicator summary table, a reference sheet per indicator, the assumptions to monitor, the evaluation plan with each evaluation's questions, the learning agenda, and the review and reporting schedule. `SummaryOptions` leaves out the reference sheets and descriptions. Both renderers are deterministic; the Pandoc date is the plan's `metadata.updatedAt`, when set.
+The document draws the results framework as a nested list from impact down, then the activities, an indicator summary table, a reference sheet per indicator, the assumptions to monitor, the evaluation plan with each evaluation's questions, the learning agenda, and the review and reporting schedule. `SummaryOptions` leaves out the reference sheets and descriptions. Both renderers are deterministic; the Pandoc date is the plan's `metadata.updatedAt`, when set.
 
 ## Examples
 

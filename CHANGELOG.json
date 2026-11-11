@@ -11,12 +11,12 @@
   "unreleased": {
     "highlights": [
       {
-        "description": "MEL plans in `goals/mel`: a results framework, an indicator reference sheet per indicator, assumptions to monitor, an evaluation plan, a learning agenda, and a review and reporting schedule, in one validated document"
+        "description": "MEL plans in `goals/mel`: a results framework, the activities that produce it, an indicator reference sheet per indicator, assumptions to monitor, an evaluation plan, a learning agenda, and a review and reporting schedule, in one validated document"
       }
     ],
     "added": [
       {
-        "description": "`goals/mel`: monitoring, evaluation, and learning plans. Results at five levels from output to impact, each naming the results it contributes to; indicator reference sheets with definition, disaggregation, baseline, targets, data source, collection method, frequency, owner, and data quality; assumptions with how each is monitored; evaluations with questions, type, method, evaluator, and dates; learning questions with the decision each informs, methods, owner, and due date; and reviews and reports with their frequency. Validation reports structural problems, including cycles in the results framework, as errors, and gaps in the collection plan, evaluation plan, learning agenda, and schedule as warnings or, under the strict options, errors"
+        "description": "`goals/mel`: monitoring, evaluation, and learning plans. Results at five levels from output to impact, each naming the results it contributes to; activities with the results they produce, owners, and dates; indicator reference sheets for a result, an activity, or an assumption, with definition, disaggregation, baseline, targets, data source, collection method, frequency, owner, and data quality; assumptions with how each is monitored; evaluations with questions, type, method, evaluator, and dates; learning questions with the decision each informs, methods, owner, and due date; and reviews and reports with their frequency. Validation reports structural problems, including cycles in the results framework, as errors, and gaps in the collection plan, evaluation plan, learning agenda, and schedule as warnings or, under the strict options, errors"
       },
       {
         "description": "Deterministic Markdown and Pandoc renderers for MEL plans, with a summary option that leaves out the reference sheets"
@@ -30,7 +30,7 @@
     ],
     "documentation": [
       {
-        "description": "A MEL guide covering the six parts, evaluation types, validation, and rendering, and MEL in the README, the documentation home, and the API reference"
+        "description": "A MEL guide covering the seven parts, evaluation types, validation, and rendering, and MEL in the README, the documentation home, and the API reference"
       }
     ]
   },

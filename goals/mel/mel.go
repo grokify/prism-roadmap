@@ -2,12 +2,14 @@
 // learning (MEL) plans.
 //
 // A MEL plan says how a team will know whether its work is producing the
-// results it intends, and what it will do with what it learns. It has six
+// results it intends, and what it will do with what it learns. It has seven
 // parts:
 //
 //   - Results: the results framework, from outputs up to impact, each result
 //     naming the higher results it contributes to.
+//   - Activities: the work that produces the results, with owners and dates.
 //   - Indicators: one reference sheet per indicator, saying what it measures
+//     (a result, an activity, or an assumption)
 //     and exactly how: definition, unit, disaggregation, baseline, targets,
 //     data source, collection method, frequency, the person responsible, data
 //     quality checks, and known limitations.
@@ -90,6 +92,15 @@ const (
 	EvaluationCancelled  = "Cancelled"
 )
 
+// Activity status constants.
+const (
+	ActivityPlanned    = "Planned"
+	ActivityInProgress = "In Progress"
+	ActivityPaused     = "Paused"
+	ActivityCompleted  = "Completed"
+	ActivityCancelled  = "Cancelled"
+)
+
 // Learning question status constants.
 const (
 	QuestionOpen     = "Open"
@@ -104,6 +115,7 @@ type Plan struct {
 	// Purpose says what the plan is for and whom it serves.
 	Purpose     string             `json:"purpose,omitempty"`
 	Results     []Result           `json:"results"`
+	Activities  []Activity         `json:"activities,omitempty"`
 	Indicators  []Indicator        `json:"indicators,omitempty"`
 	Assumptions []Assumption       `json:"assumptions,omitempty"`
 	Evaluations []Evaluation       `json:"evaluations,omitempty"`
@@ -140,12 +152,27 @@ type Result struct {
 	ContributesTo []string `json:"contributesTo,omitempty"`
 }
 
+// Activity is work that produces results.
+type Activity struct {
+	ID          string `json:"id"`
+	Name        string `json:"name"`
+	Description string `json:"description,omitempty"`
+	// ResultIDs are the results the activity is meant to produce.
+	ResultIDs []string `json:"resultIds,omitempty"`
+	Owner     string   `json:"owner,omitempty"`
+	StartDate string   `json:"startDate,omitempty"` // ISO 8601 date
+	EndDate   string   `json:"endDate,omitempty"`   // ISO 8601 date
+	Status    string   `json:"status,omitempty"`
+}
+
 // Indicator is an indicator reference sheet.
 type Indicator struct {
 	ID   string `json:"id"`
 	Name string `json:"name"`
-	// ResultID is the result the indicator measures.
-	ResultID   string `json:"resultId"`
+	// Measures is the ID of the result, activity, or assumption the indicator
+	// measures. An activity's indicators track delivery; an assumption's
+	// indicators watch whether it still holds.
+	Measures   string `json:"measures"`
 	Definition string `json:"definition,omitempty"`
 	Type       string `json:"type,omitempty"` // quantitative, qualitative
 	Unit       string `json:"unit,omitempty"`
@@ -215,8 +242,8 @@ type Evaluation struct {
 	EndDate   string `json:"endDate,omitempty"`   // ISO 8601 date
 	Status    string `json:"status,omitempty"`
 	Budget    string `json:"budget,omitempty"`
-	// RelatedIDs are the results, indicators, assumptions, or learning
-	// questions the evaluation addresses.
+	// RelatedIDs are the results, activities, indicators, assumptions, or
+	// learning questions the evaluation addresses.
 	RelatedIDs []string `json:"relatedIds,omitempty"`
 }
 
@@ -232,7 +259,8 @@ type LearningQuestion struct {
 	DueDate string   `json:"dueDate,omitempty"` // ISO 8601 date
 	Status  string   `json:"status,omitempty"`
 	Answer  string   `json:"answer,omitempty"`
-	// RelatedIDs are the results, indicators, or assumptions it bears on.
+	// RelatedIDs are the results, activities, indicators, or assumptions it
+	// bears on.
 	RelatedIDs []string `json:"relatedIds,omitempty"`
 }
 
@@ -321,12 +349,37 @@ func (p *Plan) Indicator(id string) *Indicator {
 	return nil
 }
 
-// IndicatorsFor returns the indicators that measure the result, in document
-// order.
-func (p *Plan) IndicatorsFor(resultID string) []Indicator {
+// Activity returns the activity with the given ID, or nil.
+func (p *Plan) Activity(id string) *Activity {
+	for i := range p.Activities {
+		if p.Activities[i].ID == id {
+			return &p.Activities[i]
+		}
+	}
+	return nil
+}
+
+// ActivitiesFor returns the activities meant to produce the result, in
+// document order.
+func (p *Plan) ActivitiesFor(resultID string) []Activity {
+	var out []Activity
+	for _, a := range p.Activities {
+		for _, id := range a.ResultIDs {
+			if id == resultID {
+				out = append(out, a)
+				break
+			}
+		}
+	}
+	return out
+}
+
+// IndicatorsFor returns the indicators that measure the result, activity, or
+// assumption with the given ID, in document order.
+func (p *Plan) IndicatorsFor(id string) []Indicator {
 	var out []Indicator
 	for _, ind := range p.Indicators {
-		if ind.ResultID == resultID {
+		if ind.Measures == id {
 			out = append(out, ind)
 		}
 	}
@@ -415,6 +468,11 @@ func Evaluators() []string { return []string{EvaluatorInternal, EvaluatorExterna
 // EvaluationStatuses returns the evaluation statuses.
 func EvaluationStatuses() []string {
 	return []string{EvaluationPlanned, EvaluationInProgress, EvaluationCompleted, EvaluationCancelled}
+}
+
+// ActivityStatuses returns the activity statuses.
+func ActivityStatuses() []string {
+	return []string{ActivityPlanned, ActivityInProgress, ActivityPaused, ActivityCompleted, ActivityCancelled}
 }
 
 // QuestionStatuses returns the learning question statuses.

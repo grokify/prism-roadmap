@@ -1,5 +1,5 @@
 // Package markdown renders a MEL plan as a Markdown document: the purpose, the
-// results framework, the indicators and their reference sheets, the
+// results framework, the activities, the indicators and their reference sheets, the
 // assumptions to monitor, the evaluation plan, the learning agenda, and the
 // review and reporting schedule. The output is deterministic: the same plan
 // always renders to the same bytes.
@@ -64,6 +64,7 @@ func Body(p *mel.Plan, opts *render.Options) []byte {
 		fmt.Fprintf(&b, "## Purpose\n\n%s\n\n", p.Purpose)
 	}
 	writeResults(&b, p, opts)
+	writeActivities(&b, p)
 	writeIndicators(&b, p)
 	if opts.IncludeReferenceSheets {
 		writeReferenceSheets(&b, p)
@@ -122,6 +123,24 @@ func writeResults(b *strings.Builder, p *mel.Plan, opts *render.Options) {
 	b.WriteString("\n")
 }
 
+func writeActivities(b *strings.Builder, p *mel.Plan) {
+	if len(p.Activities) == 0 {
+		return
+	}
+	b.WriteString("## Activities\n\n")
+	b.WriteString("| Activity | Produces | Lead | Timing | Status |\n")
+	b.WriteString("|----------|----------|------|--------|--------|\n")
+	for _, a := range p.Activities {
+		var results []string
+		for _, id := range a.ResultIDs {
+			results = append(results, resultName(p, id))
+		}
+		fmt.Fprintf(b, "| %s | %s | %s | %s | %s |\n", cell(a.Name), cell(strings.Join(results, "; ")),
+			cell(a.Owner), cell(Timing(a.StartDate, a.EndDate)), cell(a.Status))
+	}
+	b.WriteString("\n")
+}
+
 func writeIndicators(b *strings.Builder, p *mel.Plan) {
 	if len(p.Indicators) == 0 {
 		return
@@ -142,7 +161,7 @@ func writeIndicators(b *strings.Builder, p *mel.Plan) {
 			}
 		}
 		fmt.Fprintf(b, "| %s | %s | %s | %s | %s | %s | %s |\n",
-			cell(ind.Name), cell(resultName(p, ind.ResultID)), cell(baseline), cell(target),
+			cell(ind.Name), cell(elementName(p, ind.Measures)), cell(baseline), cell(target),
 			cell(ind.Frequency), cell(ind.DataSource), cell(ind.Owner))
 	}
 	b.WriteString("\n")
@@ -162,7 +181,7 @@ func writeReferenceSheets(b *strings.Builder, p *mel.Plan) {
 			}
 		}
 		row("ID", "`"+ind.ID+"`")
-		row("Measures", resultName(p, ind.ResultID))
+		row("Measures", elementName(p, ind.Measures))
 		row("Definition", ind.Definition)
 		row("Type", ind.Type)
 		row("Unit", ind.Unit)
@@ -370,6 +389,23 @@ func Value(v, unit string) string {
 func resultName(p *mel.Plan, id string) string {
 	if r := p.Result(id); r != nil {
 		return r.Statement
+	}
+	return id
+}
+
+// elementName names what an indicator measures: a result's statement, an
+// activity's name, or an assumption's statement.
+func elementName(p *mel.Plan, id string) string {
+	if r := p.Result(id); r != nil {
+		return r.Statement
+	}
+	if a := p.Activity(id); a != nil {
+		return a.Name
+	}
+	for _, a := range p.Assumptions {
+		if a.ID == id {
+			return a.Statement
+		}
 	}
 	return id
 }

@@ -42,11 +42,31 @@
       "contributesTo": ["first-session-connect"]
     }
   ],
+  "activities": [
+    {
+      "id": "act-guided-import",
+      "name": "Build and roll out guided bank import",
+      "description": "Walk new accounts through connecting a bank, with a fallback to a file upload when the connection fails.",
+      "resultIds": ["guided-import-live"],
+      "owner": "Onboarding squad",
+      "startDate": "2027-01-04",
+      "endDate": "2027-03-26",
+      "status": "In Progress"
+    },
+    {
+      "id": "act-weekly-reminders",
+      "name": "Send weekly reconciliation reminders",
+      "resultIds": ["weekly-reconcile"],
+      "owner": "Lifecycle marketing",
+      "startDate": "2027-01-04",
+      "status": "In Progress"
+    }
+  ],
   "indicators": [
     {
       "id": "ind-hours-on-books",
       "name": "Hours owners spend on their books each month",
-      "resultId": "less-time-on-books",
+      "measures": "less-time-on-books",
       "definition": "Median self-reported hours per month spent on bookkeeping, from the twice-yearly owner survey.",
       "type": "quantitative",
       "unit": "hours",
@@ -66,7 +86,7 @@
     {
       "id": "ind-active-90",
       "name": "Accounts still active at 90 days",
-      "resultId": "active-90",
+      "measures": "active-90",
       "definition": "Share of accounts created in a month that have any activity in their 13th week.",
       "type": "quantitative",
       "unit": "%",
@@ -88,7 +108,7 @@
     {
       "id": "ind-weekly-reconcile",
       "name": "Connected accounts that reconcile weekly",
-      "resultId": "weekly-reconcile",
+      "measures": "weekly-reconcile",
       "definition": "Share of accounts with a connected bank that reconcile in at least three of the last four weeks.",
       "type": "quantitative",
       "unit": "%",
@@ -105,7 +125,7 @@
     {
       "id": "ind-first-session-connect",
       "name": "New accounts that connect a bank in their first session",
-      "resultId": "first-session-connect",
+      "measures": "first-session-connect",
       "type": "quantitative",
       "unit": "%",
       "direction": "increase",
@@ -121,7 +141,7 @@
     {
       "id": "ind-guided-import-rollout",
       "name": "New accounts offered guided import",
-      "resultId": "guided-import-live",
+      "measures": "guided-import-live",
       "type": "quantitative",
       "unit": "%",
       "direction": "increase",
@@ -132,6 +152,22 @@
       "frequency": "Weekly",
       "owner": "Onboarding squad",
       "current": "100"
+    },
+    {
+      "id": "ind-connection-success",
+      "name": "Bank connection attempts that succeed",
+      "measures": "asm-aggregators-reliable",
+      "definition": "Share of bank connection attempts that the aggregator completes without an error.",
+      "type": "quantitative",
+      "unit": "%",
+      "direction": "maintain",
+      "disaggregation": ["Bank aggregator"],
+      "baseline": { "value": "93", "date": "2026-12-31" },
+      "targets": [{ "value": "90", "date": "2027-12-31", "label": "Floor" }],
+      "dataSource": "Aggregator API logs",
+      "collectionMethod": "Daily error-rate query",
+      "frequency": "Weekly",
+      "owner": "Platform engineering lead"
     }
   ],
   "assumptions": [
@@ -146,7 +182,8 @@
       "id": "asm-aggregators-reliable",
       "statement": "Bank aggregators keep connection success above 90%.",
       "resultIds": ["first-session-connect"],
-      "monitoring": "Aggregator status pages and the weekly connection-failure report."
+      "monitoring": "Aggregator status pages and the weekly connection-failure report.",
+      "indicatorIds": ["ind-connection-success"]
     }
   ],
   "evaluations": [
