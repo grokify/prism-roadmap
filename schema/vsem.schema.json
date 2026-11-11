@@ -1,0 +1,221 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/grokify/prism-roadmap/schema/vsem.schema.json",
+  "$ref": "#/$defs/VSEM",
+  "$defs": {
+    "Execution": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "strategyId": {
+          "type": "string"
+        },
+        "kind": {
+          "type": "string"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "startDate": {
+          "type": "string"
+        },
+        "endDate": {
+          "type": "string"
+        },
+        "dependencies": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "externalLinks": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Metadata": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "author": {
+          "type": "string"
+        },
+        "team": {
+          "type": "string"
+        },
+        "period": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "parentId": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Metric": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "strategyId": {
+          "type": "string"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "baseline": {
+          "type": "string"
+        },
+        "target": {
+          "type": "string"
+        },
+        "current": {
+          "type": "string"
+        },
+        "unit": {
+          "type": "string"
+        },
+        "direction": {
+          "type": "string"
+        },
+        "dueDate": {
+          "type": "string"
+        },
+        "frequency": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string"
+        },
+        "progress": {
+          "type": "number"
+        },
+        "status": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Resource": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "allocation": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Strategy": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "priority": {
+          "type": "string"
+        },
+        "resources": {
+          "items": {
+            "$ref": "#/$defs/Resource"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "VSEM": {
+      "properties": {
+        "$schema": {
+          "type": "string"
+        },
+        "metadata": {
+          "$ref": "#/$defs/Metadata"
+        },
+        "vision": {
+          "type": "string"
+        },
+        "mission": {
+          "type": "string"
+        },
+        "strategies": {
+          "items": {
+            "$ref": "#/$defs/Strategy"
+          },
+          "type": "array"
+        },
+        "execution": {
+          "items": {
+            "$ref": "#/$defs/Execution"
+          },
+          "type": "array"
+        },
+        "metrics": {
+          "items": {
+            "$ref": "#/$defs/Metric"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    }
+  },
+  "title": "VSEM Document",
+  "description": "Schema for VSEM (Vision, Strategy, Execution, Metrics) strategic plans"
+}
