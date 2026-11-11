@@ -83,6 +83,27 @@ func TestRenderSurvivesACycle(t *testing.T) {
 	}
 }
 
+// A result shared by two branches is drawn in full once and referred to after.
+func TestSharedResultIsDrawnOnce(t *testing.T) {
+	p := &mel.Plan{Results: []mel.Result{
+		{ID: "a", Statement: "A", Level: mel.LevelImpact},
+		{ID: "b", Statement: "B", Level: mel.LevelImpact},
+		{ID: "s", Statement: "Shared", Level: mel.LevelShortTerm, ContributesTo: []string{"a", "b"}},
+		{ID: "o", Statement: "Out", Level: mel.LevelOutput, ContributesTo: []string{"s"}},
+	}}
+	out, err := New().Render(p, nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	s := string(out)
+	if strings.Count(s, "Out (`o`)") != 1 {
+		t.Errorf("the shared branch's child should be drawn once:\n%s", s)
+	}
+	if !strings.Contains(s, "  - **Short-term outcome:** Shared (`s`), shown above\n") {
+		t.Errorf("the second appearance should refer back:\n%s", s)
+	}
+}
+
 func TestRenderNil(t *testing.T) {
 	if _, err := New().Render(nil, nil); err == nil {
 		t.Error("Render(nil) should fail")

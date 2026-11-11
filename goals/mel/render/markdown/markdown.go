@@ -95,30 +95,34 @@ func metadataLine(m *mel.Metadata) string {
 }
 
 // writeResults draws the results framework as a nested list from the top
-// results down. A result that contributes to several is listed under each.
+// results down. A result that contributes to several is drawn in full the
+// first time; later it is a one-line reference, so a shared branch is not
+// repeated.
 func writeResults(b *strings.Builder, p *mel.Plan, opts *render.Options) {
 	if len(p.Results) == 0 {
 		return
 	}
 	b.WriteString("## Results Framework\n\n")
-	var walk func(r mel.Result, depth int, path map[string]bool)
-	walk = func(r mel.Result, depth int, path map[string]bool) {
+	listed := map[string]bool{}
+	var walk func(r mel.Result, depth int)
+	walk = func(r mel.Result, depth int) {
 		indent := strings.Repeat("  ", depth)
 		line := fmt.Sprintf("%s- **%s:** %s (`%s`)", indent, mel.LevelLabel(r.Level), oneLine(r.Statement), r.ID)
+		if listed[r.ID] {
+			b.WriteString(line + ", shown above\n")
+			return
+		}
+		listed[r.ID] = true // also stops a cycle, which validation reports
 		if opts.IncludeDescriptions && r.Description != "" {
 			line += " — " + oneLine(r.Description)
 		}
 		b.WriteString(line + "\n")
-		path[r.ID] = true
 		for _, c := range p.Contributors(r.ID) {
-			if !path[c.ID] { // a cycle is a validation error; never loop on one
-				walk(c, depth+1, path)
-			}
+			walk(c, depth+1)
 		}
-		delete(path, r.ID)
 	}
 	for _, r := range p.TopResults() {
-		walk(r, 0, map[string]bool{})
+		walk(r, 0)
 	}
 	b.WriteString("\n")
 }
