@@ -12,6 +12,7 @@ import (
 	"github.com/grokify/prism-roadmap/canvas"
 	"github.com/grokify/prism-roadmap/effort"
 	"github.com/grokify/prism-roadmap/goals/dmaic"
+	"github.com/grokify/prism-roadmap/goals/mel"
 	"github.com/grokify/prism-roadmap/goals/okr"
 	"github.com/grokify/prism-roadmap/goals/v2mom"
 	"github.com/grokify/prism-roadmap/goals/vsem"
@@ -111,6 +112,12 @@ func (g *Generator) GenerateAll(dir string) error {
 	vsemPath := filepath.Join(dir, "vsem.schema.json")
 	if err := g.WriteVSEMSchema(vsemPath); err != nil {
 		return fmt.Errorf("generating VSEM schema: %w", err)
+	}
+
+	// Generate MEL schema
+	melPath := filepath.Join(dir, "mel.schema.json")
+	if err := g.WriteMELSchema(melPath); err != nil {
+		return fmt.Errorf("generating MEL schema: %w", err)
 	}
 
 	// Generate canvas schemas (Shape Up, Continuous Discovery)
@@ -301,6 +308,50 @@ func (g *Generator) GenerateVSEMSchemaJSON() ([]byte, error) {
 // WriteVSEMSchema generates and writes the VSEM schema to a file.
 func (g *Generator) WriteVSEMSchema(path string) error {
 	data, err := g.GenerateVSEMSchemaJSON()
+	if err != nil {
+		return fmt.Errorf("generating schema: %w", err)
+	}
+
+	dir := filepath.Dir(path)
+	if err := os.MkdirAll(dir, 0o755); err != nil {
+		return fmt.Errorf("creating directory: %w", err)
+	}
+
+	if err := os.WriteFile(path, data, 0600); err != nil {
+		return fmt.Errorf("writing file: %w", err)
+	}
+
+	return nil
+}
+
+// GenerateMELSchema generates JSON Schema for the MEL Plan type.
+func (g *Generator) GenerateMELSchema() (*jsonschema.Schema, error) {
+	schema := g.Reflector.Reflect(&mel.Plan{})
+	if schema == nil {
+		return nil, fmt.Errorf("failed to generate schema for mel.Plan")
+	}
+
+	// Set schema metadata
+	schema.ID = jsonschema.ID(MELSchemaID)
+	schema.Title = "MEL Plan"
+	schema.Description = "Schema for monitoring, evaluation, and learning (MEL) plans"
+
+	return schema, nil
+}
+
+// GenerateMELSchemaJSON generates JSON Schema for MEL and returns it as JSON bytes.
+func (g *Generator) GenerateMELSchemaJSON() ([]byte, error) {
+	schema, err := g.GenerateMELSchema()
+	if err != nil {
+		return nil, err
+	}
+
+	return json.MarshalIndent(schema, "", "  ")
+}
+
+// WriteMELSchema generates and writes the MEL schema to a file.
+func (g *Generator) WriteMELSchema(path string) error {
+	data, err := g.GenerateMELSchemaJSON()
 	if err != nil {
 		return fmt.Errorf("generating schema: %w", err)
 	}

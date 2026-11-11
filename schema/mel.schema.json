@@ -1,0 +1,422 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/grokify/prism-roadmap/schema/mel.schema.json",
+  "$ref": "#/$defs/Plan",
+  "$defs": {
+    "Assumption": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "statement": {
+          "type": "string"
+        },
+        "resultIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "monitoring": {
+          "type": "string"
+        },
+        "indicatorIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Baseline": {
+      "properties": {
+        "value": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "DataQuality": {
+      "properties": {
+        "checks": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "limitations": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "lastAssessed": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Evaluation": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "questions": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "method": {
+          "type": "string"
+        },
+        "evaluator": {
+          "type": "string"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "startDate": {
+          "type": "string"
+        },
+        "endDate": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "budget": {
+          "type": "string"
+        },
+        "relatedIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Indicator": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "resultId": {
+          "type": "string"
+        },
+        "definition": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "unit": {
+          "type": "string"
+        },
+        "direction": {
+          "type": "string"
+        },
+        "disaggregation": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "baseline": {
+          "$ref": "#/$defs/Baseline"
+        },
+        "targets": {
+          "items": {
+            "$ref": "#/$defs/Target"
+          },
+          "type": "array"
+        },
+        "dataSource": {
+          "type": "string"
+        },
+        "collectionMethod": {
+          "type": "string"
+        },
+        "frequency": {
+          "type": "string"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "dataQuality": {
+          "$ref": "#/$defs/DataQuality"
+        },
+        "current": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "LearningQuestion": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "question": {
+          "type": "string"
+        },
+        "rationale": {
+          "type": "string"
+        },
+        "methods": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "dueDate": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "answer": {
+          "type": "string"
+        },
+        "relatedIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Metadata": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "author": {
+          "type": "string"
+        },
+        "team": {
+          "type": "string"
+        },
+        "period": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "parentId": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Plan": {
+      "properties": {
+        "$schema": {
+          "type": "string"
+        },
+        "metadata": {
+          "$ref": "#/$defs/Metadata"
+        },
+        "purpose": {
+          "type": "string"
+        },
+        "results": {
+          "items": {
+            "$ref": "#/$defs/Result"
+          },
+          "type": "array"
+        },
+        "indicators": {
+          "items": {
+            "$ref": "#/$defs/Indicator"
+          },
+          "type": "array"
+        },
+        "assumptions": {
+          "items": {
+            "$ref": "#/$defs/Assumption"
+          },
+          "type": "array"
+        },
+        "evaluations": {
+          "items": {
+            "$ref": "#/$defs/Evaluation"
+          },
+          "type": "array"
+        },
+        "learningAgenda": {
+          "items": {
+            "$ref": "#/$defs/LearningQuestion"
+          },
+          "type": "array"
+        },
+        "reviews": {
+          "items": {
+            "$ref": "#/$defs/Review"
+          },
+          "type": "array"
+        },
+        "reports": {
+          "items": {
+            "$ref": "#/$defs/Report"
+          },
+          "type": "array"
+        },
+        "budget": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Report": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "audience": {
+          "type": "string"
+        },
+        "product": {
+          "type": "string"
+        },
+        "frequency": {
+          "type": "string"
+        },
+        "channel": {
+          "type": "string"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "indicatorIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Result": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "statement": {
+          "type": "string"
+        },
+        "level": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "contributesTo": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Review": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "purpose": {
+          "type": "string"
+        },
+        "frequency": {
+          "type": "string"
+        },
+        "participants": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "nextDate": {
+          "type": "string"
+        },
+        "questionIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Target": {
+      "properties": {
+        "value": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    }
+  },
+  "title": "MEL Plan",
+  "description": "Schema for monitoring, evaluation, and learning (MEL) plans"
+}
