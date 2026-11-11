@@ -62,6 +62,7 @@ This library provides comprehensive, machine-readable formats for planning docum
 - **V2MOM** - Vision, Values, Methods, Obstacles, Measures: Salesforce-style goal alignment
 - **VSEM** - Vision, Strategy, Execution, Metrics: a one-page plan with the resources each strategy commits and an accountable owner for every metric
 - **DMAIC** - Define, Measure, Analyze, Improve, Control: Six Sigma metrics with control limits, root causes, and improvement initiatives
+- **MEL** - Monitoring, Evaluation, and Learning: a results framework with indicator reference sheets, assumptions to monitor, an evaluation plan, a learning agenda, and a review and reporting schedule
 
 ### Roadmap
 
@@ -438,7 +439,7 @@ func main() {
 
 ### Goals (OKR, V2MOM, VSEM, and DMAIC)
 
-The `goals` package provides a framework-agnostic interface for OKR, V2MOM, and VSEM; see the [VSEM guide](docs/goals/vsem.md). `goals/dmaic` adds DMAIC metrics documents with Six Sigma control limits, root causes, and improvement initiatives; see the [DMAIC guide](docs/goals/dmaic.md).
+The `goals` package provides a framework-agnostic interface for OKR, V2MOM, and VSEM; see the [VSEM guide](docs/goals/vsem.md). `goals/dmaic` adds DMAIC metrics documents with Six Sigma control limits, root causes, and improvement initiatives; see the [DMAIC guide](docs/goals/dmaic.md). `goals/mel` adds MEL plans; see the [MEL guide](docs/goals/mel.md).
 
 ```go
 import (

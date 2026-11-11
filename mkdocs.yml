@@ -83,6 +83,7 @@ nav:
       - OKR Integration: goals/okr.md
       - VSEM Integration: goals/vsem.md
       - DMAIC Integration: goals/dmaic.md
+      - MEL Plans: goals/mel.md
   - Views & Output:
       - PM View: views/pm-view.md
       - Executive View: views/exec-view.md
