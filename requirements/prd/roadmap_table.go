@@ -38,11 +38,13 @@ func (d *Document) ToSwimlaneTableWithOKRs(opts RoadmapTableOptions) string {
 
 // ToSwimlaneTableWithGoals generates a markdown table with phases as columns,
 // deliverable types as swimlane rows, and goal swimlanes auto-derived from PhaseTargets.
-// This method supports both OKR and V2MOM frameworks via the Goals abstraction.
+// This method supports the OKR, V2MOM, and VSEM frameworks via the Goals
+// abstraction.
 //
 // Labels are dynamic based on the framework:
 //   - OKR: "Objectives" and "Key Results"
 //   - V2MOM: "Methods" and "Measures"
+//   - VSEM: "Strategies" and "Metrics"
 //
 // Example output:
 //

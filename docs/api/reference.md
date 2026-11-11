@@ -12,7 +12,9 @@ github.com/grokify/prism-roadmap/
 │   └── trd/    # Technical Requirements Document
 ├── goals/
 │   ├── okr/    # Objectives and Key Results
-│   └── v2mom/  # Vision, Values, Methods, Obstacles, Measures
+│   ├── v2mom/  # Vision, Values, Methods, Obstacles, Measures
+│   ├── vsem/   # Vision, Strategy, Execution, Metrics
+│   └── dmaic/  # Define, Measure, Analyze, Improve, Control
 └── roadmap/    # Roadmap with phases and deliverables
 ```
 
@@ -470,10 +472,12 @@ See [TRD Documentation](../documents/trd.md) for types and functions.
 import (
     "github.com/grokify/prism-roadmap/goals/v2mom"
     "github.com/grokify/prism-roadmap/goals/okr"
+    "github.com/grokify/prism-roadmap/goals/vsem"
+    "github.com/grokify/prism-roadmap/goals/dmaic"
 )
 ```
 
-See [Goals Integration](../goals/overview.md) for V2MOM and OKR types.
+See [Goals Integration](../goals/overview.md) for the OKR, V2MOM, and VSEM types and the [DMAIC guide](../goals/dmaic.md).
 
 ## Error Handling
 
