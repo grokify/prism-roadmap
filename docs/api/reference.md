@@ -14,6 +14,7 @@ github.com/grokify/prism-roadmap/
 │   ├── okr/    # Objectives and Key Results
 │   ├── v2mom/  # Vision, Values, Methods, Obstacles, Measures
 │   ├── vsem/   # Vision, Strategy, Execution, Metrics
+│   ├── ogsm/   # Objective, Goals, Strategies, Measures
 │   ├── dmaic/  # Define, Measure, Analyze, Improve, Control
 │   └── mel/    # Monitoring, Evaluation, and Learning plans
 └── roadmap/    # Roadmap with phases and deliverables
@@ -474,12 +475,13 @@ import (
     "github.com/grokify/prism-roadmap/goals/v2mom"
     "github.com/grokify/prism-roadmap/goals/okr"
     "github.com/grokify/prism-roadmap/goals/vsem"
+    "github.com/grokify/prism-roadmap/goals/ogsm"
     "github.com/grokify/prism-roadmap/goals/dmaic"
     "github.com/grokify/prism-roadmap/goals/mel"
 )
 ```
 
-See [Goals Integration](../goals/overview.md) for the OKR, V2MOM, and VSEM types the [DMAIC guide](../goals/dmaic.md), and the [MEL guide](../goals/mel.md).
+See [Goals Integration](../goals/overview.md) for the OKR, V2MOM, VSEM, and OGSM types the [DMAIC guide](../goals/dmaic.md), and the [MEL guide](../goals/mel.md).
 
 ## Error Handling
 

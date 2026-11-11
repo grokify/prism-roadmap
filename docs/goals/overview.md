@@ -9,6 +9,7 @@ PRISM Execution supports alignment with strategic goal frameworks.
 | **V2MOM** | Vision, Values, Methods, Obstacles, Measures | Company/team strategic planning |
 | **OKR** | Objectives and Key Results | Quarterly goal setting |
 | **VSEM** | Vision, Strategy, Execution, Metrics | A one-page plan with resources and accountable owners |
+| **OGSM** | Objective, Goals, Strategies, Measures | One objective with goals in numbers and measures per strategy |
 
 ## Why Integrate Goals?
 
@@ -155,6 +156,12 @@ AlignedObjectives: map[string]string{
 - You need to say where people and money go for each strategy
 - Every metric needs a named owner
 
+**Use OGSM when:**
+
+- The plan has one overriding objective for the next few years
+- You want goals for the objective kept apart from measures for each strategy
+- Plans cascade, each team's objective being a strategy of the level above
+
 **Use both when:**
 
 - V2MOM for annual strategy
@@ -177,12 +184,14 @@ import (
 
 A PRD's `goals` alignment block embeds a V2MOM or OKRs. To align a PRD with a
 VSEM, set `ProductGoals` to `goals.NewVSEM(v)`: roadmap tables then label goals
-"Strategies" and results "Metrics".
+"Strategies" and results "Metrics". `goals.NewOGSM(o)` does the same for an
+OGSM, with results labelled "Goals and Measures".
 
 ## Next Steps
 
 - [V2MOM Integration](v2mom.md)
 - [OKR Integration](okr.md)
 - [VSEM Integration](vsem.md)
+- [OGSM Integration](ogsm.md)
 - [DMAIC Integration](dmaic.md)
 - [MEL Plans](mel.md)
