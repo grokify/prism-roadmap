@@ -186,6 +186,17 @@ slides, err := marp.New().Render(v, render.OnePageOptions())
 
 `DefaultOptions` includes descriptions and resources; `OnePageOptions` leaves descriptions out.
 
+## Command Line
+
+```bash
+splan goals vsem init --name "FY2027 plan" -o plan.vsem.json
+splan goals vsem validate plan.vsem.json --strict
+splan goals vsem generate markdown plan.vsem.json -o plan.md
+splan goals vsem generate marp plan.vsem.json --theme corporate -o slides.md
+```
+
+`splan goals validate` also accepts a VSEM, detected from its `strategies`.
+
 ## Examples
 
 - [`examples/minimal.vsem.json`](https://github.com/grokify/prism-roadmap/blob/main/examples/minimal.vsem.json)

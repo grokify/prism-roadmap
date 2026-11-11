@@ -165,6 +165,17 @@ pandoc plan.md -o plan.pdf --pdf-engine=lualatex
 
 The document draws the results framework as a nested list from impact down, then the activities, an indicator summary table, a reference sheet per indicator, the assumptions to monitor, the evaluation plan with each evaluation's questions, the learning agenda, and the review and reporting schedule. `SummaryOptions` leaves out the reference sheets and descriptions. Both renderers are deterministic; the Pandoc date is the plan's `metadata.updatedAt`, when set.
 
+## Command Line
+
+```bash
+splan goals mel init --name "Onboarding MEL Plan" -o plan.mel.json
+splan goals mel validate plan.mel.json --strict
+splan goals mel generate markdown plan.mel.json -o plan.md
+splan goals mel generate pandoc plan.mel.json --summary -o plan-summary.md
+```
+
+The template meets the strict options, with its dates set from today. `splan goals validate` also accepts a MEL plan, detected from its `results`.
+
 ## Examples
 
 - [`examples/minimal.mel.json`](https://github.com/grokify/prism-roadmap/blob/main/examples/minimal.mel.json)
