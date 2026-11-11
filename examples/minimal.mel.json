@@ -1,0 +1,38 @@
+{
+  "$schema": "../schema/mel.schema.json",
+  "results": [
+    {
+      "id": "active-90",
+      "statement": "New accounts are still active at 90 days",
+      "level": "long_term"
+    },
+    {
+      "id": "first-session-connect",
+      "statement": "New accounts connect a bank in their first session",
+      "level": "short_term",
+      "contributesTo": ["active-90"]
+    }
+  ],
+  "indicators": [
+    {
+      "id": "ind-active-90",
+      "name": "Accounts still active at 90 days",
+      "resultId": "active-90",
+      "unit": "%",
+      "baseline": { "value": "52" },
+      "targets": [{ "value": "60", "date": "2027-12-31" }],
+      "dataSource": "Product analytics",
+      "collectionMethod": "Monthly cohort query",
+      "frequency": "Monthly",
+      "owner": "Head of Product"
+    }
+  ],
+  "learningAgenda": [
+    {
+      "id": "lq-connect-cause",
+      "question": "Does connecting a bank early lead accounts to stay, or do committed owners simply do both?",
+      "methods": ["Holdout cohort comparison"],
+      "dueDate": "2027-06-30"
+    }
+  ]
+}
