@@ -1,0 +1,304 @@
+{
+  "$schema": "../schema/mel.schema.json",
+  "metadata": {
+    "id": "bookkeeping-onboarding-mel",
+    "name": "Onboarding MEL Plan",
+    "author": "Head of Product",
+    "team": "Product",
+    "period": "FY2027",
+    "version": "1.0.0",
+    "status": "Active"
+  },
+  "purpose": "Tells the product team, leadership, and the board whether the onboarding bet is working: whether new accounts reach a reconciled month and stay, which step of the chain is holding, and what to change next.",
+  "results": [
+    {
+      "id": "less-time-on-books",
+      "statement": "Small business owners spend less time on their books",
+      "level": "impact"
+    },
+    {
+      "id": "active-90",
+      "statement": "New accounts are still active at 90 days",
+      "level": "long_term",
+      "description": "Retention past the first quarter is when an account has formed the habit the product depends on.",
+      "contributesTo": ["less-time-on-books"]
+    },
+    {
+      "id": "weekly-reconcile",
+      "statement": "Connected accounts reconcile weekly",
+      "level": "medium_term",
+      "contributesTo": ["active-90"]
+    },
+    {
+      "id": "first-session-connect",
+      "statement": "New accounts connect a bank in their first session",
+      "level": "short_term",
+      "contributesTo": ["weekly-reconcile"]
+    },
+    {
+      "id": "guided-import-live",
+      "statement": "Guided bank import is released to all new accounts",
+      "level": "output",
+      "contributesTo": ["first-session-connect"]
+    }
+  ],
+  "activities": [
+    {
+      "id": "act-guided-import",
+      "name": "Build and roll out guided bank import",
+      "description": "Walk new accounts through connecting a bank, with a fallback to a file upload when the connection fails.",
+      "resultIds": ["guided-import-live"],
+      "owner": "Onboarding squad",
+      "startDate": "2027-01-04",
+      "endDate": "2027-03-26",
+      "status": "In Progress"
+    },
+    {
+      "id": "act-weekly-reminders",
+      "name": "Send weekly reconciliation reminders",
+      "resultIds": ["weekly-reconcile"],
+      "owner": "Lifecycle marketing",
+      "startDate": "2027-01-04",
+      "status": "In Progress"
+    }
+  ],
+  "indicators": [
+    {
+      "id": "ind-hours-on-books",
+      "name": "Hours owners spend on their books each month",
+      "measures": "less-time-on-books",
+      "definition": "Median self-reported hours per month spent on bookkeeping, from the twice-yearly owner survey.",
+      "type": "quantitative",
+      "unit": "hours",
+      "direction": "decrease",
+      "disaggregation": ["Business size", "Tenure"],
+      "baseline": { "value": "6", "date": "2026-11-30", "source": "Owner survey, November 2026" },
+      "targets": [{ "value": "4", "date": "2027-12-31" }],
+      "dataSource": "Owner survey",
+      "collectionMethod": "In-app survey to a random sample of active accounts",
+      "frequency": "Every six months",
+      "owner": "User research lead",
+      "dataQuality": {
+        "checks": ["Sample of at least 400 responses", "Weighted by business size"],
+        "limitations": ["Self-reported; owners tend to underestimate time"]
+      }
+    },
+    {
+      "id": "ind-active-90",
+      "name": "Accounts still active at 90 days",
+      "measures": "active-90",
+      "definition": "Share of accounts created in a month that have any activity in their 13th week.",
+      "type": "quantitative",
+      "unit": "%",
+      "direction": "increase",
+      "baseline": { "value": "52", "date": "2026-12-31" },
+      "targets": [
+        { "value": "56", "date": "2027-06-30", "label": "Midyear" },
+        { "value": "60", "date": "2027-12-31" }
+      ],
+      "dataSource": "Product analytics",
+      "collectionMethod": "Monthly cohort query",
+      "frequency": "Monthly",
+      "owner": "Head of Product",
+      "dataQuality": {
+        "checks": ["Test accounts excluded", "Query reviewed when the event schema changes"]
+      },
+      "current": "53"
+    },
+    {
+      "id": "ind-weekly-reconcile",
+      "name": "Connected accounts that reconcile weekly",
+      "measures": "weekly-reconcile",
+      "definition": "Share of accounts with a connected bank that reconcile in at least three of the last four weeks.",
+      "type": "quantitative",
+      "unit": "%",
+      "direction": "increase",
+      "disaggregation": ["Bank aggregator"],
+      "baseline": { "value": "30", "date": "2026-12-31" },
+      "targets": [{ "value": "50", "date": "2027-12-31" }],
+      "dataSource": "Product analytics",
+      "collectionMethod": "Weekly query on reconciliation events",
+      "frequency": "Weekly",
+      "owner": "Head of Core Product",
+      "current": "31"
+    },
+    {
+      "id": "ind-first-session-connect",
+      "name": "New accounts that connect a bank in their first session",
+      "measures": "first-session-connect",
+      "type": "quantitative",
+      "unit": "%",
+      "direction": "increase",
+      "disaggregation": ["Bank aggregator", "Signup channel"],
+      "baseline": { "value": "45", "date": "2026-12-31" },
+      "targets": [{ "value": "70", "date": "2027-06-30" }],
+      "dataSource": "Product analytics",
+      "collectionMethod": "Weekly funnel query",
+      "frequency": "Weekly",
+      "owner": "Head of Onboarding",
+      "current": "51"
+    },
+    {
+      "id": "ind-guided-import-rollout",
+      "name": "New accounts offered guided import",
+      "measures": "guided-import-live",
+      "type": "quantitative",
+      "unit": "%",
+      "direction": "increase",
+      "baseline": { "value": "0", "date": "2026-12-31" },
+      "targets": [{ "value": "100", "date": "2027-03-31" }],
+      "dataSource": "Feature flag service",
+      "collectionMethod": "Rollout percentage read from the flag",
+      "frequency": "Weekly",
+      "owner": "Onboarding squad",
+      "current": "100"
+    },
+    {
+      "id": "ind-connection-success",
+      "name": "Bank connection attempts that succeed",
+      "measures": "asm-aggregators-reliable",
+      "definition": "Share of bank connection attempts that the aggregator completes without an error.",
+      "type": "quantitative",
+      "unit": "%",
+      "direction": "maintain",
+      "disaggregation": ["Bank aggregator"],
+      "baseline": { "value": "93", "date": "2026-12-31" },
+      "targets": [{ "value": "90", "date": "2027-12-31", "label": "Floor" }],
+      "dataSource": "Aggregator API logs",
+      "collectionMethod": "Daily error-rate query",
+      "frequency": "Weekly",
+      "owner": "Platform engineering lead"
+    }
+  ],
+  "assumptions": [
+    {
+      "id": "asm-friction-is-connection",
+      "statement": "Connecting a bank, not reconciling itself, is what stops new accounts from forming the weekly habit.",
+      "resultIds": ["weekly-reconcile"],
+      "monitoring": "Compare weekly reconciliation of accounts that connected in the first session with those that connected later.",
+      "indicatorIds": ["ind-weekly-reconcile", "ind-first-session-connect"]
+    },
+    {
+      "id": "asm-aggregators-reliable",
+      "statement": "Bank aggregators keep connection success above 90%.",
+      "resultIds": ["first-session-connect"],
+      "monitoring": "Aggregator status pages and the weekly connection-failure report.",
+      "indicatorIds": ["ind-connection-success"]
+    }
+  ],
+  "evaluations": [
+    {
+      "id": "eval-baseline",
+      "title": "Onboarding baseline",
+      "type": "baseline",
+      "questions": ["Where do new accounts stall before reaching a reconciled month?"],
+      "method": "Funnel analysis of the last four cohorts and 20 owner interviews",
+      "evaluator": "internal",
+      "owner": "User research lead",
+      "startDate": "2026-11-01",
+      "endDate": "2026-12-31",
+      "status": "Completed",
+      "relatedIds": ["first-session-connect", "weekly-reconcile"]
+    },
+    {
+      "id": "eval-usability",
+      "title": "Guided import usability study",
+      "type": "formative",
+      "questions": [
+        "Can owners connect a bank without help on the first try?",
+        "What makes owners abandon the connection step?"
+      ],
+      "method": "Moderated sessions with 12 new owners, repeated after each major change",
+      "evaluator": "internal",
+      "owner": "Onboarding designer",
+      "startDate": "2027-01-11",
+      "endDate": "2027-03-26",
+      "status": "In Progress",
+      "relatedIds": ["guided-import-live", "lq-abandon-step"]
+    },
+    {
+      "id": "eval-first-year",
+      "title": "First-year results evaluation",
+      "type": "impact",
+      "questions": [
+        "Did guided import raise 90-day activity, compared with the holdout cohort?",
+        "Did owners who formed the weekly habit spend less time on their books?"
+      ],
+      "method": "Comparison with a 10% holdout cohort, plus the owner survey",
+      "evaluator": "external",
+      "owner": "Head of Product",
+      "startDate": "2027-10-01",
+      "endDate": "2028-01-31",
+      "status": "Planned",
+      "budget": "Research agency engagement",
+      "relatedIds": ["active-90", "less-time-on-books", "asm-friction-is-connection"]
+    }
+  ],
+  "learningAgenda": [
+    {
+      "id": "lq-connect-cause",
+      "question": "Does connecting a bank early lead accounts to reconcile weekly, or do committed owners simply do both?",
+      "rationale": "If early connection is not the cause, the team should invest in the review screen instead of onboarding.",
+      "methods": ["Holdout cohort comparison", "Owner interviews"],
+      "owner": "Head of Product",
+      "dueDate": "2027-06-30",
+      "status": "Open",
+      "relatedIds": ["asm-friction-is-connection", "weekly-reconcile"]
+    },
+    {
+      "id": "lq-abandon-step",
+      "question": "At which step of connecting a bank do owners give up, and why?",
+      "rationale": "Decides which part of guided import to change first.",
+      "methods": ["Funnel analysis", "Usability sessions"],
+      "owner": "Head of Onboarding",
+      "dueDate": "2027-03-31",
+      "status": "Answered",
+      "answer": "Most owners who give up do so at bank login, when their bank asks for a second factor the flow did not explain.",
+      "relatedIds": ["first-session-connect"]
+    }
+  ],
+  "reviews": [
+    {
+      "id": "rev-monthly-metrics",
+      "name": "Monthly metrics review",
+      "purpose": "Check each indicator against its target and decide what needs attention.",
+      "frequency": "Monthly",
+      "participants": ["Product leads", "Data analyst"],
+      "owner": "Head of Product",
+      "nextDate": "2027-02-05"
+    },
+    {
+      "id": "rev-quarterly-learning",
+      "name": "Quarterly learning review",
+      "purpose": "Take up the learning questions and decide what to change in the plan.",
+      "frequency": "Quarterly",
+      "participants": ["Product leads", "Design", "User research", "Customer success"],
+      "owner": "Head of Product",
+      "nextDate": "2027-04-02",
+      "questionIds": ["lq-connect-cause", "lq-abandon-step"]
+    }
+  ],
+  "reports": [
+    {
+      "id": "rep-leadership",
+      "audience": "Leadership team",
+      "needs": "Whether each step of onboarding is on track, and where to put the next quarter's effort",
+      "product": "Onboarding dashboard",
+      "frequency": "Monthly",
+      "channel": "Leadership meeting",
+      "owner": "Data analyst",
+      "indicatorIds": ["ind-active-90", "ind-first-session-connect", "ind-weekly-reconcile"]
+    },
+    {
+      "id": "rep-board",
+      "audience": "Board",
+      "needs": "Whether the onboarding bet is paying off in retention",
+      "product": "Quarterly product update",
+      "frequency": "Quarterly",
+      "channel": "Board deck",
+      "owner": "Head of Product",
+      "indicatorIds": ["ind-active-90", "ind-hours-on-books"]
+    }
+  ],
+  "budget": "About 5% of the product team's time, plus the research agency engagement for the first-year evaluation"
+}

@@ -199,6 +199,17 @@ import (
 slides, err := marp.New().Render(doc, render.DefaultOptions())
 ```
 
+## Command Line
+
+```bash
+splan goals dmaic init --name "Quality Metrics" -o quality.dmaic.json
+splan goals dmaic validate quality.dmaic.json --strict
+splan goals dmaic generate marp quality.dmaic.json -o slides.md
+splan goals dmaic generate pandoc quality.dmaic.json -o report.md
+```
+
+`splan goals validate` also accepts a DMAIC document, detected from its `categories`.
+
 ## Examples
 
 - [`examples/manufacturing.dmaic.json`](https://github.com/grokify/prism-roadmap/blob/main/examples/manufacturing.dmaic.json)

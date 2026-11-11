@@ -131,12 +131,18 @@ func deepMerge(a, b map[string]interface{}) map[string]interface{} {
 
 var goalsCmd = &cobra.Command{
 	Use:   "goals",
-	Short: "Work with goal frameworks (OKR, V2MOM)",
-	Long: `Commands for generating and validating goal framework documents.
+	Short: "Work with goal frameworks (OKR, V2MOM, VSEM, DMAIC, MEL)",
+	Long: `Commands for creating, validating, and rendering goal framework documents.
 
 Supported frameworks:
+  - okr:   Objectives and Key Results
   - v2mom: Vision, Values, Methods, Obstacles, Measures
-  - okr: Objectives and Key Results (coming soon)`,
+  - vsem:  Vision, Strategy, Execution, Metrics
+  - dmaic: Define, Measure, Analyze, Improve, Control metrics
+  - mel:   Monitoring, Evaluation, and Learning plans
+
+'splan goals validate' and 'splan goals init' work with every framework;
+each framework's subcommand adds its own generators.`,
 }
 
 // ============================================================================
@@ -1846,19 +1852,19 @@ var schemaGenerateCmd = &cobra.Command{
 	Short: "Generate JSON Schema from Go types",
 	Long: `Generate JSON Schema files from Go type definitions.
 
-By default, generates all schema files (PRD, OKR, V2MOM) to the schema/ directory.
-Use --type to generate a specific document type's schema.`,
+By default, generates every schema file to the output directory. Use --type to
+generate one document type's schema: prd, okr, v2mom, vsem, dmaic, or mel.`,
 	Example: `  splan schema generate
   splan schema generate -o ./schema/
   splan schema generate --type prd -o prd.schema.json
   splan schema generate --type okr -o okr.schema.json
-  splan schema generate --type v2mom -o v2mom.schema.json`,
+  splan schema generate --type mel -o mel.schema.json`,
 	RunE: runSchemaGenerate,
 }
 
 func init() {
 	schemaGenerateCmd.Flags().StringVarP(&schemaGenerateFlags.output, "output", "o", ".", "Output directory or file path")
-	schemaGenerateCmd.Flags().StringVarP(&schemaGenerateFlags.docType, "type", "t", "all", "Document type to generate (prd, okr, v2mom, mrd, trd, or all)")
+	schemaGenerateCmd.Flags().StringVarP(&schemaGenerateFlags.docType, "type", "t", "all", "Document type to generate (prd, okr, v2mom, vsem, dmaic, mel, or all)")
 
 	schemaCmd.AddCommand(schemaGenerateCmd)
 }
@@ -1868,20 +1874,7 @@ func runSchemaGenerate(cmd *cobra.Command, args []string) error {
 	output := schemaGenerateFlags.output
 	docType := strings.ToLower(schemaGenerateFlags.docType)
 
-	switch docType {
-	case "prd":
-		// Single PRD schema
-		path := output
-		if isDir(output) {
-			path = filepath.Join(output, "prd.schema.json")
-		}
-		if err := gen.WritePRDSchema(path); err != nil {
-			return fmt.Errorf("generating PRD schema: %w", err)
-		}
-		fmt.Printf("Generated: %s\n", path)
-
-	case "all":
-		// All schemas to directory
+	if docType == "all" {
 		dir := output
 		if !isDir(dir) {
 			dir = filepath.Dir(output)
@@ -1890,34 +1883,34 @@ func runSchemaGenerate(cmd *cobra.Command, args []string) error {
 			return fmt.Errorf("generating schemas: %w", err)
 		}
 		fmt.Printf("Generated schemas in: %s\n", dir)
+		return nil
+	}
 
-	case "okr":
-		// Single OKR schema
+	single := map[string]struct {
+		file  string
+		write func(string) error
+	}{
+		"prd":   {"prd.schema.json", gen.WritePRDSchema},
+		"okr":   {"okr.schema.json", gen.WriteOKRSchema},
+		"v2mom": {"v2mom.schema.json", gen.WriteV2MOMSchema},
+		"vsem":  {"vsem.schema.json", gen.WriteVSEMSchema},
+		"dmaic": {"dmaic.schema.json", gen.WriteDMAICSchema},
+		"mel":   {"mel.schema.json", gen.WriteMELSchema},
+	}
+	switch t, ok := single[docType]; {
+	case ok:
 		path := output
 		if isDir(output) {
-			path = filepath.Join(output, "okr.schema.json")
+			path = filepath.Join(output, t.file)
 		}
-		if err := gen.WriteOKRSchema(path); err != nil {
-			return fmt.Errorf("generating OKR schema: %w", err)
-		}
-		fmt.Printf("Generated: %s\n", path)
-
-	case "v2mom":
-		// Single V2MOM schema
-		path := output
-		if isDir(output) {
-			path = filepath.Join(output, "v2mom.schema.json")
-		}
-		if err := gen.WriteV2MOMSchema(path); err != nil {
-			return fmt.Errorf("generating V2MOM schema: %w", err)
+		if err := t.write(path); err != nil {
+			return fmt.Errorf("generating %s schema: %w", strings.ToUpper(docType), err)
 		}
 		fmt.Printf("Generated: %s\n", path)
-
-	case "mrd", "trd":
+	case docType == "mrd" || docType == "trd":
 		return fmt.Errorf("schema generation for %s is not yet implemented", docType)
-
 	default:
-		return fmt.Errorf("unknown document type: %s (expected prd, okr, v2mom, mrd, trd, or all)", docType)
+		return fmt.Errorf("unknown document type: %s (expected prd, okr, v2mom, vsem, dmaic, mel, or all)", docType)
 	}
 
 	return nil

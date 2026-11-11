@@ -137,7 +137,7 @@ templates.Names()
 
 Every template has a matching `<name>.rubric.yaml` except `shapeup-scope`
 (authoring-only, no evaluation rubric). The full set, grouped by framework, is
-cataloged in the [README](../../README.md#templates-and-rubrics); the V2MOM
+cataloged in the [README](https://github.com/grokify/prism-roadmap#templates-and-rubrics); the V2MOM
 section-plus-summary assets are detailed in the
 [V2MOM guide](../goals/v2mom.md#templates--rubrics).
 

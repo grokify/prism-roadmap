@@ -44,6 +44,9 @@ const (
 	// VSEMSchemaID is the canonical ID for the VSEM schema.
 	VSEMSchemaID = "https://github.com/grokify/prism-roadmap/schema/vsem.schema.json"
 
+	// MELSchemaID is the canonical ID for the MEL plan schema.
+	MELSchemaID = "https://github.com/grokify/prism-roadmap/schema/mel.schema.json"
+
 	// Canvas schema IDs
 
 	// CanvasSchemaID is the canonical ID for the Canvas wrapper schema.
@@ -196,6 +199,21 @@ func VSEMSchema() string {
 // VSEMSchemaBytes returns the VSEM JSON Schema as a byte slice.
 func VSEMSchemaBytes() []byte {
 	return VSEMSchemaJSON
+}
+
+// MEL Schema
+
+//go:embed mel.schema.json
+var MELSchemaJSON []byte
+
+// MELSchema returns the MEL plan JSON Schema as a string.
+func MELSchema() string {
+	return string(MELSchemaJSON)
+}
+
+// MELSchemaBytes returns the MEL plan JSON Schema as a byte slice.
+func MELSchemaBytes() []byte {
+	return MELSchemaJSON
 }
 
 // Canvas Schemas

@@ -185,3 +185,4 @@ VSEM, set `ProductGoals` to `goals.NewVSEM(v)`: roadmap tables then label goals
 - [OKR Integration](okr.md)
 - [VSEM Integration](vsem.md)
 - [DMAIC Integration](dmaic.md)
+- [MEL Plans](mel.md)

@@ -28,7 +28,7 @@ PRISM Roadmap provides typed data structures and utilities for planning document
 
 - **JSON format** - Machine-readable documents with defined schemas
 - **Multiple output views** - PM View, Executive View, Amazon 6-Pager, PR/FAQ
-- **Goals alignment** - Integrate with OKR, V2MOM, and VSEM plans and DMAIC metrics
+- **Goals alignment** - Integrate with OKR, V2MOM, and VSEM plans, DMAIC metrics, and MEL plans
 - **Scoring & validation** - Automated quality assessment
 - **Persona library** - Reusable persona definitions across documents
 - **Feature prioritization** - RICE scoring and Kano model classification
