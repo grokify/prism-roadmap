@@ -54,6 +54,9 @@ func init() {
 	// Add goals subcommands
 	goalsCmd.AddCommand(v2momCmd)
 	goalsCmd.AddCommand(okrCmd)
+	goalsCmd.AddCommand(vsemCommands.command())
+	goalsCmd.AddCommand(dmaicCommands.command())
+	goalsCmd.AddCommand(melCommands.command())
 	goalsCmd.AddCommand(goalsCascadeCmd)
 	goalsCmd.AddCommand(goalsAlignCmd)
 	goalsCmd.AddCommand(goalsValidateCmd)

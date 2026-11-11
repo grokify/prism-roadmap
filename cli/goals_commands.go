@@ -225,76 +225,36 @@ func printAlignmentReport(score *goals.AlignmentScore, parentFile, childFile str
 // Goals Validate Command
 // ============================================================================
 
+var goalsValidateFlags struct {
+	framework string
+	strict    bool
+}
+
 var goalsValidateCmd = &cobra.Command{
 	Use:   "validate FILE",
 	Short: "Validate a goals file",
-	Long: `Validate an OKR or V2MOM file for structure and best practices.
+	Long: `Validate an OKR, V2MOM, VSEM, DMAIC, or MEL file with that framework's rules.
 
-Checks:
-  - Required fields are present
-  - Objectives have 1-5 key results (OKR best practice)
-  - Key results have measurable targets
-  - References are valid
+The framework is detected from the file's top-level fields (objectives,
+methods, strategies, categories, or results); --framework overrides it.
+Structural problems are errors; gaps are warnings, or errors with --strict
+(V2MOM has no strict rules).
 
 Examples:
-  splan goals validate okrs.json`,
+  splan goals validate okrs.json
+  splan goals validate plan.json --framework=mel --strict`,
 	Args: cobra.ExactArgs(1),
-	RunE: runGoalsValidate,
+	RunE: func(cmd *cobra.Command, args []string) error {
+		if f := goalsValidateFlags.framework; f != "" && !isGoalFramework(f) {
+			return fmt.Errorf("unknown framework %q (use %s)", f, strings.Join(GoalFrameworks, ", "))
+		}
+		return validateGoalsFile(cmd, args[0], goalsValidateFlags.framework, goalsValidateFlags.strict)
+	},
 }
 
-func runGoalsValidate(cmd *cobra.Command, args []string) error {
-	// Try to load as OKR
-	doc, err := okr.ReadFile(args[0])
-	if err != nil {
-		return fmt.Errorf("reading file: %w", err)
-	}
-
-	issues := validateOKRDocument(doc)
-	if len(issues) > 0 {
-		fmt.Println("Validation issues found:")
-		for _, issue := range issues {
-			fmt.Printf("  - %s\n", issue)
-		}
-		return fmt.Errorf("validation failed with %d issues", len(issues))
-	}
-
-	fmt.Printf("✓ %s is valid\n", args[0])
-	return nil
-}
-
-func validateOKRDocument(doc *okr.OKRDocument) []string {
-	var issues []string
-
-	if doc.Metadata == nil || doc.Metadata.ID == "" {
-		issues = append(issues, "missing metadata.id")
-	}
-
-	if len(doc.Objectives) == 0 {
-		issues = append(issues, "no objectives defined")
-	}
-
-	for i, obj := range doc.Objectives {
-		prefix := fmt.Sprintf("objectives[%d]", i)
-
-		if obj.Title == "" && obj.Description == "" {
-			issues = append(issues, fmt.Sprintf("%s: missing title and description", prefix))
-		}
-
-		if len(obj.KeyResults) == 0 {
-			issues = append(issues, fmt.Sprintf("%s: no key results (OKR requires at least 1)", prefix))
-		} else if len(obj.KeyResults) > 5 {
-			issues = append(issues, fmt.Sprintf("%s: too many key results (%d, best practice is 1-5)", prefix, len(obj.KeyResults)))
-		}
-
-		for j, kr := range obj.KeyResults {
-			krPrefix := fmt.Sprintf("%s.keyResults[%d]", prefix, j)
-			if kr.Title == "" && kr.Description == "" {
-				issues = append(issues, fmt.Sprintf("%s: missing title and description", krPrefix))
-			}
-		}
-	}
-
-	return issues
+func init() {
+	goalsValidateCmd.Flags().StringVar(&goalsValidateFlags.framework, "framework", "", "framework: "+strings.Join(GoalFrameworks, ", ")+" (default: detected)")
+	goalsValidateCmd.Flags().BoolVar(&goalsValidateFlags.strict, "strict", false, "treat gaps as errors")
 }
 
 // ============================================================================
@@ -313,17 +273,20 @@ var goalsInitCmd = &cobra.Command{
 	Short: "Create a goals template",
 	Long: `Create a new goals template file.
 
-Supports OKR and V2MOM frameworks.
+Supports the OKR, V2MOM, VSEM, DMAIC, and MEL frameworks. The goals
+subcommand for each (for example 'splan goals mel init') offers the same
+template with more options.
 
 Examples:
   splan goals init --framework=okr --team="Engineering" --period="Q3 2026"
-  splan goals init --framework=v2mom -o my-v2mom.json`,
+  splan goals init --framework=v2mom -o my-v2mom.json
+  splan goals init --framework=mel --team="Onboarding" -o onboarding.mel.json`,
 	RunE: runGoalsInit,
 }
 
 func init() {
 	goalsInitCmd.Flags().StringVarP(&goalsInitFlags.output, "output", "o", "goals.json", "Output file")
-	goalsInitCmd.Flags().StringVar(&goalsInitFlags.framework, "framework", "okr", "Framework: okr or v2mom")
+	goalsInitCmd.Flags().StringVar(&goalsInitFlags.framework, "framework", "okr", "Framework: "+strings.Join(GoalFrameworks, ", "))
 	goalsInitCmd.Flags().StringVar(&goalsInitFlags.team, "team", "Team Name", "Team name")
 	goalsInitCmd.Flags().StringVar(&goalsInitFlags.period, "period", "Q3 2026", "Period (e.g., Q3 2026, FY2026)")
 }
@@ -338,8 +301,20 @@ func runGoalsInit(cmd *cobra.Command, args []string) error {
 		content, err = doc.JSON()
 	case "v2mom":
 		content = []byte(createV2MOMTemplate(goalsInitFlags.team))
+	case "vsem":
+		v := VSEMTemplate(goalsInitFlags.team + " VSEM")
+		v.Metadata.Team, v.Metadata.Period = goalsInitFlags.team, goalsInitFlags.period
+		content, err = v.JSON()
+	case "dmaic":
+		doc := DMAICTemplate(goalsInitFlags.team + " DMAIC")
+		doc.Metadata.Team, doc.Metadata.Period = goalsInitFlags.team, goalsInitFlags.period
+		content, err = doc.JSON()
+	case "mel":
+		p := MELTemplate(goalsInitFlags.team + " MEL Plan")
+		p.Metadata.Team, p.Metadata.Period = goalsInitFlags.team, goalsInitFlags.period
+		content, err = p.JSON()
 	default:
-		return fmt.Errorf("unknown framework: %s (use okr or v2mom)", goalsInitFlags.framework)
+		return fmt.Errorf("unknown framework: %s (use %s)", goalsInitFlags.framework, strings.Join(GoalFrameworks, ", "))
 	}
 
 	if err != nil {

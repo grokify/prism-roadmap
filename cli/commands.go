@@ -131,12 +131,18 @@ func deepMerge(a, b map[string]interface{}) map[string]interface{} {
 
 var goalsCmd = &cobra.Command{
 	Use:   "goals",
-	Short: "Work with goal frameworks (OKR, V2MOM)",
-	Long: `Commands for generating and validating goal framework documents.
+	Short: "Work with goal frameworks (OKR, V2MOM, VSEM, DMAIC, MEL)",
+	Long: `Commands for creating, validating, and rendering goal framework documents.
 
 Supported frameworks:
+  - okr:   Objectives and Key Results
   - v2mom: Vision, Values, Methods, Obstacles, Measures
-  - okr: Objectives and Key Results (coming soon)`,
+  - vsem:  Vision, Strategy, Execution, Metrics
+  - dmaic: Define, Measure, Analyze, Improve, Control metrics
+  - mel:   Monitoring, Evaluation, and Learning plans
+
+'splan goals validate' and 'splan goals init' work with every framework;
+each framework's subcommand adds its own generators.`,
 }
 
 // ============================================================================

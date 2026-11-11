@@ -12,6 +12,7 @@ require (
 	github.com/modelcontextprotocol/go-sdk v1.8.0
 	github.com/plexusone/structured-evaluation v0.15.0
 	github.com/spf13/cobra v1.10.2
+	github.com/spf13/pflag v1.1.0
 	gopkg.in/yaml.v3 v3.0.1
 )
 
@@ -26,7 +27,6 @@ require (
 	github.com/rogpeppe/go-internal v1.16.0 // indirect
 	github.com/segmentio/asm v1.2.1 // indirect
 	github.com/segmentio/encoding v0.5.4 // indirect
-	github.com/spf13/pflag v1.1.0 // indirect
 	github.com/stretchr/testify v1.12.1 // indirect
 	github.com/yosida95/uritemplate/v3 v3.0.2 // indirect
 	golang.org/x/oauth2 v0.38.0 // indirect
