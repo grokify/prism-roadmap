@@ -46,6 +46,7 @@ func TestDetectGoalFramework(t *testing.T) {
 	for file, want := range map[string]string{
 		"product.vsem.json": "vsem", "product.mel.json": "mel", "manufacturing.dmaic.json": "dmaic",
 		"product.v2mom.json": "v2mom", "minimal.v2mom.json": "v2mom",
+		"product.ogsm.json": "ogsm", "minimal.ogsm.json": "ogsm",
 	} {
 		data, err := os.ReadFile(filepath.Join("..", "examples", file))
 		if err != nil {
@@ -94,7 +95,7 @@ func TestGoalsInitTemplatesValidate(t *testing.T) {
 			t.Errorf("%s template: %v\n%s", fw, err, out)
 		}
 	}
-	for _, fw := range []string{"vsem", "dmaic", "mel"} {
+	for _, fw := range []string{"vsem", "ogsm", "dmaic", "mel"} {
 		file := filepath.Join(dir, "sub-"+fw+".json")
 		if out, err := run(t, "goals", fw, "init", "--name", "Plan", "-o", file); err != nil {
 			t.Fatalf("%s init: %v\n%s", fw, err, out)
@@ -116,6 +117,8 @@ func TestGoalsGenerate(t *testing.T) {
 	}{
 		{[]string{"goals", "vsem", "generate", "markdown", "../examples/product.vsem.json"}, "## Strategy"},
 		{[]string{"goals", "vsem", "generate", "marp", "../examples/product.vsem.json", "--theme", "corporate"}, "marp: true"},
+		{[]string{"goals", "ogsm", "generate", "markdown", "../examples/product.ogsm.json"}, "## On One Page"},
+		{[]string{"goals", "ogsm", "generate", "marp", "../examples/product.ogsm.json"}, "## The Plan on One Page"},
 		{[]string{"goals", "mel", "generate", "markdown", "../examples/product.mel.json"}, "## Indicator Reference Sheets"},
 		{[]string{"goals", "mel", "generate", "pandoc", "../examples/product.mel.json", "--summary"}, "toc: true"},
 		{[]string{"goals", "dmaic", "generate", "marp", "../examples/manufacturing.dmaic.json"}, "marp: true"},

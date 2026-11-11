@@ -55,6 +55,7 @@ func init() {
 	goalsCmd.AddCommand(v2momCmd)
 	goalsCmd.AddCommand(okrCmd)
 	goalsCmd.AddCommand(vsemCommands.command())
+	goalsCmd.AddCommand(ogsmCommands.command())
 	goalsCmd.AddCommand(dmaicCommands.command())
 	goalsCmd.AddCommand(melCommands.command())
 	goalsCmd.AddCommand(goalsCascadeCmd)
