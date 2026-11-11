@@ -47,6 +47,9 @@ const (
 	// MELSchemaID is the canonical ID for the MEL plan schema.
 	MELSchemaID = "https://github.com/grokify/prism-roadmap/schema/mel.schema.json"
 
+	// OGSMSchemaID is the canonical ID for the OGSM schema.
+	OGSMSchemaID = "https://github.com/grokify/prism-roadmap/schema/ogsm.schema.json"
+
 	// Canvas schema IDs
 
 	// CanvasSchemaID is the canonical ID for the Canvas wrapper schema.
@@ -214,6 +217,21 @@ func MELSchema() string {
 // MELSchemaBytes returns the MEL plan JSON Schema as a byte slice.
 func MELSchemaBytes() []byte {
 	return MELSchemaJSON
+}
+
+// OGSM Schema
+
+//go:embed ogsm.schema.json
+var OGSMSchemaJSON []byte
+
+// OGSMSchema returns the OGSM JSON Schema as a string.
+func OGSMSchema() string {
+	return string(OGSMSchemaJSON)
+}
+
+// OGSMSchemaBytes returns the OGSM JSON Schema as a byte slice.
+func OGSMSchemaBytes() []byte {
+	return OGSMSchemaJSON
 }
 
 // Canvas Schemas
