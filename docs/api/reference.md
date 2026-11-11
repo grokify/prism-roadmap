@@ -5,21 +5,23 @@ Complete API reference for PRISM Execution packages.
 ## Package Overview
 
 ```
-github.com/grokify/prism-execution/
+github.com/grokify/prism-roadmap/
 ├── requirements/
 │   ├── prd/    # Product Requirements Document
 │   ├── mrd/    # Market Requirements Document
 │   └── trd/    # Technical Requirements Document
 ├── goals/
 │   ├── okr/    # Objectives and Key Results
-│   └── v2mom/  # Vision, Values, Methods, Obstacles, Measures
+│   ├── v2mom/  # Vision, Values, Methods, Obstacles, Measures
+│   ├── vsem/   # Vision, Strategy, Execution, Metrics
+│   └── dmaic/  # Define, Measure, Analyze, Improve, Control
 └── roadmap/    # Roadmap with phases and deliverables
 ```
 
 ## PRD Package
 
 ```go
-import "github.com/grokify/prism-execution/requirements/prd"
+import "github.com/grokify/prism-roadmap/requirements/prd"
 ```
 
 ### Document Operations
@@ -169,7 +171,7 @@ Generates markdown output for PR/FAQ.
 ### Slide Renderers
 
 ```go
-import "github.com/grokify/prism-execution/requirements/prd/render/marp"
+import "github.com/grokify/prism-roadmap/requirements/prd/render/marp"
 ```
 
 #### NewPRDRenderer
@@ -451,7 +453,7 @@ const (
 ## MRD Package
 
 ```go
-import "github.com/grokify/prism-execution/requirements/mrd"
+import "github.com/grokify/prism-roadmap/requirements/mrd"
 ```
 
 See [MRD Documentation](../documents/mrd.md) for types and functions.
@@ -459,7 +461,7 @@ See [MRD Documentation](../documents/mrd.md) for types and functions.
 ## TRD Package
 
 ```go
-import "github.com/grokify/prism-execution/requirements/trd"
+import "github.com/grokify/prism-roadmap/requirements/trd"
 ```
 
 See [TRD Documentation](../documents/trd.md) for types and functions.
@@ -468,12 +470,14 @@ See [TRD Documentation](../documents/trd.md) for types and functions.
 
 ```go
 import (
-    "github.com/grokify/prism-execution/goals/v2mom"
-    "github.com/grokify/prism-execution/goals/okr"
+    "github.com/grokify/prism-roadmap/goals/v2mom"
+    "github.com/grokify/prism-roadmap/goals/okr"
+    "github.com/grokify/prism-roadmap/goals/vsem"
+    "github.com/grokify/prism-roadmap/goals/dmaic"
 )
 ```
 
-See [Goals Integration](../goals/overview.md) for V2MOM and OKR types.
+See [Goals Integration](../goals/overview.md) for the OKR, V2MOM, and VSEM types and the [DMAIC guide](../goals/dmaic.md).
 
 ## Error Handling
 

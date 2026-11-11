@@ -294,7 +294,7 @@ Each document type supports:
 - JSON serialization with Go types (camelCase field names)
 - Markdown generation with Pandoc-compatible YAML frontmatter
 - Validation of required fields
-- Framework-agnostic goals (OKR or V2MOM)
+- Framework-agnostic goals (OKR, V2MOM, or VSEM)
 
 ## Installation
 
@@ -445,39 +445,44 @@ import (
     "github.com/grokify/prism-roadmap/goals"
     "github.com/grokify/prism-roadmap/goals/okr"
     "github.com/grokify/prism-roadmap/goals/v2mom"
+    "github.com/grokify/prism-roadmap/goals/vsem"
 )
 
 // Create OKR-based goals
-okrSet := okr.OKRSet{
-    Objectives: []okr.Objective{
-        {
-            ID:          "obj-1",
-            Description: "Increase customer satisfaction",
-            KeyResults: []okr.KeyResult{
-                {ID: "kr-1", Description: "NPS score", Target: "> 50"},
-            },
+okrSet := &okr.OKRSet{
+    OKRs: []okr.OKR{{
+        Objective: okr.Objective{
+            ID:    "obj-1",
+            Title: "Increase customer satisfaction",
         },
-    },
+        KeyResults: []okr.KeyResult{
+            {ID: "kr-1", Title: "NPS score", Target: "> 50"},
+        },
+    }},
 }
 g := goals.NewOKR(okrSet)
 
-// Or create V2MOM-based goals
-v := v2mom.V2MOM{
-    Vision: "Be the market leader",
-    Methods: []v2mom.Method{
-        {ID: "m-1", Description: "Launch enterprise features"},
-    },
-}
-g := goals.NewV2MOM(v)
+// Or V2MOM-based goals
+g = goals.NewV2MOM(&v2mom.V2MOM{
+    Vision:  "Be the market leader",
+    Methods: []v2mom.Method{{ID: "m-1", Name: "Launch enterprise features"}},
+})
+
+// Or VSEM-based goals
+g = goals.NewVSEM(&vsem.VSEM{
+    Vision:     "Be the market leader",
+    Strategies: []vsem.Strategy{{ID: "s-1", Name: "Win enterprise accounts"}},
+    Metrics:    []vsem.Metric{{ID: "m-1", Name: "Enterprise accounts", StrategyID: "s-1", Target: "200"}},
+})
 
 // Framework-agnostic access
 for _, item := range g.GoalItems() {
-    fmt.Println(item.Description())  // Works with both OKR and V2MOM
+    fmt.Println(item.Title) // An objective, a method, or a strategy
 }
 
 // Dynamic labels based on framework
-fmt.Println(g.GoalLabel())   // "Objectives" (OKR) or "Methods" (V2MOM)
-fmt.Println(g.ResultLabel()) // "Key Results" (OKR) or "Measures" (V2MOM)
+fmt.Println(g.GoalLabel())   // "Objectives", "Methods", or "Strategies"
+fmt.Println(g.ResultLabel()) // "Key Results", "Measures", or "Metrics"
 ```
 
 ### PRD with Goals
@@ -492,11 +497,11 @@ import (
 
 doc := prd.Document{
     // ... metadata, executive summary, etc.
-    ProductGoals: goals.NewOKR(okrSet),  // or goals.NewV2MOM(v2mom)
+    ProductGoals: goals.NewOKR(okrSet),  // or goals.NewV2MOM(v) or goals.NewVSEM(v)
 }
 
 // Roadmap tables use correct terminology automatically
-table := doc.ToSwimlaneTableWithGoals(opts)  // Uses "Objectives" or "Methods"
+table := doc.ToSwimlaneTableWithGoals(opts)  // Uses "Objectives", "Methods", or "Strategies"
 ```
 
 ### Strategic Planning Canvases

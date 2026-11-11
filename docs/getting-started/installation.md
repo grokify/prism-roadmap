@@ -56,7 +56,7 @@ import (
 
 ## Goals Integration (Optional)
 
-To use V2MOM and OKR integration, also install:
+To use OKR, V2MOM, VSEM, and DMAIC integration, also install:
 
 ```bash
 go get github.com/grokify/prism-roadmap/goals

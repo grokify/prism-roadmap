@@ -122,14 +122,16 @@ AlignedObjectives: map[string]string{
 
 ## Framework Comparison
 
-| Aspect | V2MOM | OKR |
-|--------|-------|-----|
-| **Scope** | Annual/multi-year | Quarterly |
-| **Structure** | 5 components | 2 components |
-| **Scoring** | Optional | 0.0-1.0 standard |
-| **Hierarchy** | Methods → Measures | Objectives → Key Results |
-| **Values** | Explicit | Not included |
-| **Obstacles** | Explicit | Track as risks |
+| Aspect | V2MOM | OKR | VSEM |
+|--------|-------|-----|------|
+| **Scope** | Annual/multi-year | Quarterly | Annual or a planning period |
+| **Structure** | 5 components | 2 components | 4 components |
+| **Scoring** | Optional | 0.0-1.0 standard | Optional progress |
+| **Hierarchy** | Methods → Measures | Objectives → Key Results | Strategies → Execution and Metrics |
+| **Values** | Explicit | Not included | Not included |
+| **Obstacles** | Explicit | Track as risks | Not included |
+| **Resources** | Not included | Not included | Committed per strategy |
+| **Accountability** | Owners on methods | Owners on objectives | An owner on every metric |
 
 ## Choosing a Framework
 
@@ -147,6 +149,12 @@ AlignedObjectives: map[string]string{
 - Want lightweight goal tracking
 - Prefer Google-style planning
 
+**Use VSEM when:**
+
+- The plan has to fit on one page
+- You need to say where people and money go for each strategy
+- Every metric needs a named owner
+
 **Use both when:**
 
 - V2MOM for annual strategy
@@ -155,18 +163,25 @@ AlignedObjectives: map[string]string{
 ## Installation
 
 ```bash
-go get github.com/grokify/prism-execution
+go get github.com/grokify/prism-roadmap
 ```
 
 ```go
 import (
-    "github.com/grokify/prism-execution/requirements/prd"
-    "github.com/grokify/prism-execution/goals/v2mom"
-    "github.com/grokify/prism-execution/goals/okr"
+    "github.com/grokify/prism-roadmap/requirements/prd"
+    "github.com/grokify/prism-roadmap/goals/v2mom"
+    "github.com/grokify/prism-roadmap/goals/okr"
+    "github.com/grokify/prism-roadmap/goals/vsem"
 )
 ```
+
+A PRD's `goals` alignment block embeds a V2MOM or OKRs. To align a PRD with a
+VSEM, set `ProductGoals` to `goals.NewVSEM(v)`: roadmap tables then label goals
+"Strategies" and results "Metrics".
 
 ## Next Steps
 
 - [V2MOM Integration](v2mom.md)
 - [OKR Integration](okr.md)
+- [VSEM Integration](vsem.md)
+- [DMAIC Integration](dmaic.md)

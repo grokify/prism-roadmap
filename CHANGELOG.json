@@ -8,38 +8,85 @@
     "grokify",
     "johncwang@gmail.com"
   ],
-  "unreleased": {
-    "highlights": [
-      {
-        "description": "VSEM joins OKR and V2MOM in `goals`: a one-page plan of vision, strategies with the resources they commit, the work that carries them out, and metrics each with an accountable owner"
-      }
-    ],
-    "added": [
-      {
-        "description": "`goals/vsem`: VSEM (Vision, Strategy, Execution, Metrics) plans with a vision or mission, strategies and their resources, execution items and metrics linked to a strategy by ID, validation presets that treat missing owners, targets, resources, and coverage as warnings or errors, and deterministic Markdown and Marp renderers"
-      },
-      {
-        "description": "`goals.FrameworkVSEM` and `goals.NewVSEM`: a PRD or roadmap can carry a VSEM, whose strategies are goal items and metrics result items"
-      },
-      {
-        "description": "`schema/vsem.schema.json`, generated from the VSEM types and embedded as `schema.VSEMSchema()`"
-      },
-      {
-        "description": "Fictional VSEM examples: a minimal plan and a full one for a bookkeeping app"
-      }
-    ],
-    "changed": [
-      {
-        "description": "The PRD schema includes the VSEM option of the goals union"
-      }
-    ],
-    "documentation": [
-      {
-        "description": "A VSEM guide covering the four sections, the form followed, how VSEM differs from V2MOM, validation, goals alignment, and rendering"
-      }
-    ]
-  },
   "releases": [
+    {
+      "version": "v0.23.0",
+      "date": "2026-11-11",
+      "highlights": [
+        {
+          "description": "VSEM joins OKR and V2MOM in `goals`: a one-page plan of vision, strategies with the resources they commit, the work that carries them out, and metrics each with an accountable owner"
+        }
+      ],
+      "added": [
+        {
+          "description": "`goals/vsem`: VSEM (Vision, Strategy, Execution, Metrics) plans with a vision or mission, strategies and their resources, execution items and metrics linked to a strategy by ID, validation presets that treat missing owners, targets, resources, and coverage as warnings or errors, and deterministic Markdown and Marp renderers",
+          "commit": "ad08b77"
+        },
+        {
+          "description": "`goals.FrameworkVSEM` and `goals.NewVSEM`: a PRD or roadmap can carry a VSEM, whose strategies are goal items and metrics result items",
+          "commit": "20499f4"
+        },
+        {
+          "description": "`schema/vsem.schema.json`, generated from the VSEM types and embedded as `schema.VSEMSchema()`",
+          "commit": "efcc436"
+        },
+        {
+          "description": "Fictional VSEM examples: a minimal plan and a full one for a bookkeeping app",
+          "commit": "ad08b77"
+        }
+      ],
+      "changed": [
+        {
+          "description": "The PRD schema includes the VSEM option of the goals union",
+          "commit": "20499f4"
+        }
+      ],
+      "fixed": [
+        {
+          "description": "Releases publish their binaries again: GoReleaser targeted the repository's former name, and asset uploads do not follow GitHub's redirect, so v0.22.0 was published without binaries",
+          "commit": "9c983bf"
+        }
+      ],
+      "dependencies": [
+        {
+          "description": "Bumped `github.com/spf13/pflag` from v1.0.10 to v1.1.0 (indirect)",
+          "commit": "6a8245c"
+        },
+        {
+          "description": "Bumped `golang.org/x/oauth2` from v0.37.0 to v0.38.0, `golang.org/x/sync` from v0.24.0 to v0.25.0, and `golang.org/x/sys` from v0.49.0 to v0.50.0 (indirect)",
+          "commit": "6a8245c"
+        }
+      ],
+      "documentation": [
+        {
+          "description": "A VSEM guide covering the four sections, the form followed, how VSEM differs from V2MOM, validation, goals alignment, and rendering",
+          "commit": "39d2e90"
+        },
+        {
+          "description": "The README, the documentation home, the goals overview, the API reference, and the getting-started pages list VSEM beside OKR and V2MOM, and the README goals example compiles",
+          "commit": "ee9bc00"
+        },
+        {
+          "description": "Examples use the `github.com/grokify/prism-roadmap` module path, and the CI example installs `splan`, validates with `splan requirements prd validate`, and gates on `splan requirements prd score`",
+          "commit": "2d60f6f"
+        },
+        {
+          "description": "Release notes for v0.23.0"
+        }
+      ],
+      "tests": [
+        {
+          "description": "The VSEM examples are checked to validate, and the full example to meet the strict options",
+          "commit": "6fcbcb4"
+        }
+      ],
+      "ci": [
+        {
+          "description": "The release workflow takes the Go version from `go.mod` and pins GoReleaser v2",
+          "commit": "fd868f7"
+        }
+      ]
+    },
     {
       "version": "v0.22.0",
       "date": "2026-11-01",
