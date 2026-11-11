@@ -14,6 +14,7 @@ import (
 	"github.com/grokify/prism-roadmap/goals/dmaic"
 	"github.com/grokify/prism-roadmap/goals/okr"
 	"github.com/grokify/prism-roadmap/goals/v2mom"
+	"github.com/grokify/prism-roadmap/goals/vsem"
 	"github.com/grokify/prism-roadmap/journey"
 	"github.com/grokify/prism-roadmap/requirements/prd"
 	"github.com/grokify/prism-roadmap/rmi"
@@ -104,6 +105,12 @@ func (g *Generator) GenerateAll(dir string) error {
 	dmaicPath := filepath.Join(dir, "dmaic.schema.json")
 	if err := g.WriteDMAICSchema(dmaicPath); err != nil {
 		return fmt.Errorf("generating DMAIC schema: %w", err)
+	}
+
+	// Generate VSEM schema
+	vsemPath := filepath.Join(dir, "vsem.schema.json")
+	if err := g.WriteVSEMSchema(vsemPath); err != nil {
+		return fmt.Errorf("generating VSEM schema: %w", err)
 	}
 
 	// Generate canvas schemas (Shape Up, Continuous Discovery)
@@ -250,6 +257,50 @@ func (g *Generator) GenerateDMAICSchemaJSON() ([]byte, error) {
 // WriteDMAICSchema generates and writes the DMAIC schema to a file.
 func (g *Generator) WriteDMAICSchema(path string) error {
 	data, err := g.GenerateDMAICSchemaJSON()
+	if err != nil {
+		return fmt.Errorf("generating schema: %w", err)
+	}
+
+	dir := filepath.Dir(path)
+	if err := os.MkdirAll(dir, 0o755); err != nil {
+		return fmt.Errorf("creating directory: %w", err)
+	}
+
+	if err := os.WriteFile(path, data, 0600); err != nil {
+		return fmt.Errorf("writing file: %w", err)
+	}
+
+	return nil
+}
+
+// GenerateVSEMSchema generates JSON Schema for the VSEM type.
+func (g *Generator) GenerateVSEMSchema() (*jsonschema.Schema, error) {
+	schema := g.Reflector.Reflect(&vsem.VSEM{})
+	if schema == nil {
+		return nil, fmt.Errorf("failed to generate schema for vsem.VSEM")
+	}
+
+	// Set schema metadata
+	schema.ID = jsonschema.ID(VSEMSchemaID)
+	schema.Title = "VSEM Document"
+	schema.Description = "Schema for VSEM (Vision, Strategy, Execution, Metrics) strategic plans"
+
+	return schema, nil
+}
+
+// GenerateVSEMSchemaJSON generates JSON Schema for VSEM and returns it as JSON bytes.
+func (g *Generator) GenerateVSEMSchemaJSON() ([]byte, error) {
+	schema, err := g.GenerateVSEMSchema()
+	if err != nil {
+		return nil, err
+	}
+
+	return json.MarshalIndent(schema, "", "  ")
+}
+
+// WriteVSEMSchema generates and writes the VSEM schema to a file.
+func (g *Generator) WriteVSEMSchema(path string) error {
+	data, err := g.GenerateVSEMSchemaJSON()
 	if err != nil {
 		return fmt.Errorf("generating schema: %w", err)
 	}

@@ -3,6 +3,7 @@ package goals
 // GoalItem represents a high-level goal that can be either:
 // - An Objective (OKR framework)
 // - A Method (V2MOM framework)
+// - A Strategy (VSEM framework)
 //
 // This abstraction enables framework-agnostic rendering for roadmaps,
 // reports, and presentations.
@@ -19,6 +20,7 @@ type GoalItem struct {
 // ResultItem represents a measurable result that can be either:
 // - A Key Result (OKR framework)
 // - A Measure (V2MOM framework)
+// - A Metric (VSEM framework)
 //
 // This abstraction enables framework-agnostic rendering for tracking
 // and reporting.
@@ -38,7 +40,7 @@ type ResultItem struct {
 }
 
 // GoalItems returns all goals as a unified slice.
-// Returns Objectives for OKR, Methods for V2MOM.
+// Returns Objectives for OKR, Methods for V2MOM, and Strategies for VSEM.
 func (g *Goals) GoalItems() []GoalItem {
 	if g == nil {
 		return nil
@@ -84,13 +86,30 @@ func (g *Goals) GoalItems() []GoalItem {
 		}
 		return items
 
+	case FrameworkVSEM:
+		if g.VSEM == nil {
+			return nil
+		}
+		items := make([]GoalItem, 0, len(g.VSEM.Strategies))
+		for _, s := range g.VSEM.Strategies {
+			items = append(items, GoalItem{
+				ID:          s.ID,
+				Title:       s.Name,
+				Description: s.Description,
+				Owner:       s.Owner,
+				Priority:    s.Priority,
+			})
+		}
+		return items
+
 	default:
 		return nil
 	}
 }
 
 // ResultItems returns all measurable results as a unified slice.
-// Returns Key Results for OKR, Measures for V2MOM.
+// Returns Key Results for OKR, Measures for V2MOM, and Metrics for VSEM. A
+// VSEM metric that measures the vision as a whole has no GoalID.
 func (g *Goals) ResultItems() []ResultItem {
 	if g == nil {
 		return nil
@@ -181,13 +200,34 @@ func (g *Goals) ResultItems() []ResultItem {
 		}
 		return items
 
+	case FrameworkVSEM:
+		if g.VSEM == nil {
+			return nil
+		}
+		items := make([]ResultItem, 0, len(g.VSEM.Metrics))
+		for _, m := range g.VSEM.Metrics {
+			items = append(items, ResultItem{
+				ID:       m.ID,
+				Title:    m.Name,
+				Metric:   m.Name,
+				Baseline: m.Baseline,
+				Target:   m.Target,
+				Current:  m.Current,
+				Unit:     m.Unit,
+				Status:   m.Status,
+				Score:    m.Progress,
+				GoalID:   m.StrategyID,
+			})
+		}
+		return items
+
 	default:
 		return nil
 	}
 }
 
 // GoalLabel returns the display label for goals.
-// Returns "Objectives" for OKR, "Methods" for V2MOM.
+// Returns "Objectives" for OKR, "Methods" for V2MOM, "Strategies" for VSEM.
 func (g *Goals) GoalLabel() string {
 	if g == nil {
 		return "Goals"
@@ -197,13 +237,15 @@ func (g *Goals) GoalLabel() string {
 		return "Objectives"
 	case FrameworkV2MOM:
 		return "Methods"
+	case FrameworkVSEM:
+		return "Strategies"
 	default:
 		return "Goals"
 	}
 }
 
 // ResultLabel returns the display label for results.
-// Returns "Key Results" for OKR, "Measures" for V2MOM.
+// Returns "Key Results" for OKR, "Measures" for V2MOM, "Metrics" for VSEM.
 func (g *Goals) ResultLabel() string {
 	if g == nil {
 		return "Results"
@@ -213,6 +255,8 @@ func (g *Goals) ResultLabel() string {
 		return "Key Results"
 	case FrameworkV2MOM:
 		return "Measures"
+	case FrameworkVSEM:
+		return "Metrics"
 	default:
 		return "Results"
 	}

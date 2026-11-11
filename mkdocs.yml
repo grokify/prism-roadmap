@@ -81,6 +81,7 @@ nav:
       - Overview: goals/overview.md
       - V2MOM Integration: goals/v2mom.md
       - OKR Integration: goals/okr.md
+      - VSEM Integration: goals/vsem.md
       - DMAIC Integration: goals/dmaic.md
   - Views & Output:
       - PM View: views/pm-view.md

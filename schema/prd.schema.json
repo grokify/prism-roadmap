@@ -975,6 +975,51 @@
       "additionalProperties": false,
       "type": "object"
     },
+    "Execution": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "strategyId": {
+          "type": "string"
+        },
+        "kind": {
+          "type": "string"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "startDate": {
+          "type": "string"
+        },
+        "endDate": {
+          "type": "string"
+        },
+        "dependencies": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "externalLinks": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
     "ExecutiveSummary": {
       "properties": {
         "problemStatement": {
@@ -1135,6 +1180,9 @@
         },
         "v2mom": {
           "$ref": "#/$defs/V2MOM"
+        },
+        "vsem": {
+          "$ref": "#/$defs/VSEM"
         }
       },
       "additionalProperties": false,
@@ -1462,13 +1510,40 @@
         "description": {
           "type": "string"
         },
+        "strategyId": {
+          "type": "string"
+        },
+        "owner": {
+          "type": "string"
+        },
         "baseline": {
           "type": "string"
         },
         "target": {
           "type": "string"
         },
-        "measurementMethod": {
+        "current": {
+          "type": "string"
+        },
+        "unit": {
+          "type": "string"
+        },
+        "direction": {
+          "type": "string"
+        },
+        "dueDate": {
+          "type": "string"
+        },
+        "frequency": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string"
+        },
+        "progress": {
+          "type": "number"
+        },
+        "status": {
           "type": "string"
         }
       },
@@ -2269,6 +2344,21 @@
       "additionalProperties": false,
       "type": "object"
     },
+    "Resource": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "allocation": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
     "ReviewsDefinition": {
       "properties": {
         "reviewBoardSummary": {
@@ -2756,6 +2846,33 @@
       "additionalProperties": false,
       "type": "object"
     },
+    "Strategy": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "priority": {
+          "type": "string"
+        },
+        "resources": {
+          "items": {
+            "$ref": "#/$defs/Resource"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
     "SuccessMetrics": {
       "properties": {
         "northStar": {
@@ -3058,6 +3175,42 @@
         "projects": {
           "items": {
             "$ref": "#/$defs/Project"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "VSEM": {
+      "properties": {
+        "$schema": {
+          "type": "string"
+        },
+        "metadata": {
+          "$ref": "#/$defs/Metadata"
+        },
+        "vision": {
+          "type": "string"
+        },
+        "mission": {
+          "type": "string"
+        },
+        "strategies": {
+          "items": {
+            "$ref": "#/$defs/Strategy"
+          },
+          "type": "array"
+        },
+        "execution": {
+          "items": {
+            "$ref": "#/$defs/Execution"
+          },
+          "type": "array"
+        },
+        "metrics": {
+          "items": {
+            "$ref": "#/$defs/Metric"
           },
           "type": "array"
         }

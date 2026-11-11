@@ -1,0 +1,29 @@
+{
+  "$schema": "../schema/vsem.schema.json",
+  "vision": "Every small business closes its books in an hour a month.",
+  "strategies": [
+    {
+      "id": "onboarding",
+      "name": "Get new accounts to a reconciled month in their first week"
+    }
+  ],
+  "execution": [
+    {
+      "id": "guided-import",
+      "name": "Guided bank import",
+      "strategyId": "onboarding",
+      "owner": "Onboarding team"
+    }
+  ],
+  "metrics": [
+    {
+      "id": "first-session-connect",
+      "name": "New accounts that connect a bank in their first session",
+      "strategyId": "onboarding",
+      "owner": "Head of Onboarding",
+      "baseline": "45",
+      "target": "70",
+      "unit": "%"
+    }
+  ]
+}

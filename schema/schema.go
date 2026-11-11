@@ -41,6 +41,9 @@ const (
 	// DMAICSchemaID is the canonical ID for the DMAIC schema.
 	DMAICSchemaID = "https://github.com/grokify/prism-roadmap/schema/dmaic.schema.json"
 
+	// VSEMSchemaID is the canonical ID for the VSEM schema.
+	VSEMSchemaID = "https://github.com/grokify/prism-roadmap/schema/vsem.schema.json"
+
 	// Canvas schema IDs
 
 	// CanvasSchemaID is the canonical ID for the Canvas wrapper schema.
@@ -178,6 +181,21 @@ func DMAICSchema() string {
 // DMAICSchemaBytes returns the DMAIC JSON Schema as a byte slice.
 func DMAICSchemaBytes() []byte {
 	return DMAICSchemaJSON
+}
+
+// VSEM Schema
+
+//go:embed vsem.schema.json
+var VSEMSchemaJSON []byte
+
+// VSEMSchema returns the VSEM JSON Schema as a string.
+func VSEMSchema() string {
+	return string(VSEMSchemaJSON)
+}
+
+// VSEMSchemaBytes returns the VSEM JSON Schema as a byte slice.
+func VSEMSchemaBytes() []byte {
+	return VSEMSchemaJSON
 }
 
 // Canvas Schemas

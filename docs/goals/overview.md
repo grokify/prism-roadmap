@@ -8,6 +8,7 @@ PRISM Execution supports alignment with strategic goal frameworks.
 |-----------|-------------|----------|
 | **V2MOM** | Vision, Values, Methods, Obstacles, Measures | Company/team strategic planning |
 | **OKR** | Objectives and Key Results | Quarterly goal setting |
+| **VSEM** | Vision, Strategy, Execution, Metrics | A one-page plan with resources and accountable owners |
 
 ## Why Integrate Goals?
 

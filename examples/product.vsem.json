@@ -1,0 +1,162 @@
+{
+  "$schema": "../schema/vsem.schema.json",
+  "metadata": {
+    "id": "bookkeeping-fy2027",
+    "name": "Bookkeeping App FY2027",
+    "author": "Head of Product",
+    "team": "Product",
+    "period": "FY2027",
+    "version": "1.0.0",
+    "status": "Active"
+  },
+  "vision": "Every small business closes its books in an hour a month.",
+  "mission": "We take the busywork out of bookkeeping so owners can run their business.",
+  "strategies": [
+    {
+      "id": "onboarding",
+      "name": "Get new accounts to a reconciled month in their first week",
+      "description": "Most new accounts that leave never reconcile a month. Connecting a bank is where they stall, so the first week is built around it.",
+      "owner": "Head of Onboarding",
+      "priority": "P0",
+      "resources": [
+        { "name": "Engineering", "allocation": "2 squads" },
+        { "name": "Design", "allocation": "1 designer" },
+        { "name": "Bank connection fees", "allocation": "Included in the platform budget" }
+      ]
+    },
+    {
+      "id": "weekly-habit",
+      "name": "Make weekly reconciliation a habit",
+      "description": "Accounts that reconcile weekly stay. Reminders and a faster review screen make the weekly session short.",
+      "owner": "Head of Core Product",
+      "priority": "P1",
+      "resources": [
+        { "name": "Engineering", "allocation": "1 squad" },
+        { "name": "Lifecycle marketing", "allocation": "20% of the email team" }
+      ]
+    },
+    {
+      "id": "accountants",
+      "name": "Bring owners in through their accountants",
+      "description": "Accountants who manage several clients invite them and keep them reconciling.",
+      "owner": "Head of Partnerships",
+      "priority": "P2",
+      "resources": [
+        { "name": "Partner managers", "allocation": "2 people" },
+        { "name": "Partner program budget", "allocation": "15% of the marketing budget" }
+      ]
+    }
+  ],
+  "execution": [
+    {
+      "id": "guided-import",
+      "name": "Guided bank import",
+      "description": "Walk new accounts through connecting a bank, with a fallback to a file upload when the connection fails.",
+      "strategyId": "onboarding",
+      "kind": "initiative",
+      "owner": "Onboarding squad",
+      "status": "In Progress",
+      "startDate": "2027-01-04",
+      "endDate": "2027-03-26"
+    },
+    {
+      "id": "first-month-review",
+      "name": "First reconciled month walkthrough",
+      "strategyId": "onboarding",
+      "kind": "initiative",
+      "owner": "Onboarding squad",
+      "status": "Planned",
+      "startDate": "2027-03-29",
+      "endDate": "2027-06-25",
+      "dependencies": ["guided-import"]
+    },
+    {
+      "id": "weekly-reminders",
+      "name": "Weekly reconciliation reminders",
+      "strategyId": "weekly-habit",
+      "kind": "program",
+      "owner": "Lifecycle marketing",
+      "status": "In Progress",
+      "startDate": "2027-01-04"
+    },
+    {
+      "id": "fast-review",
+      "name": "Faster transaction review screen",
+      "strategyId": "weekly-habit",
+      "kind": "initiative",
+      "owner": "Core squad",
+      "status": "Planned",
+      "startDate": "2027-04-05",
+      "endDate": "2027-07-30"
+    },
+    {
+      "id": "partner-program",
+      "name": "Accountant partner program",
+      "strategyId": "accountants",
+      "kind": "program",
+      "owner": "Partnerships",
+      "status": "Planned",
+      "startDate": "2027-02-01"
+    }
+  ],
+  "metrics": [
+    {
+      "id": "active-90",
+      "name": "Accounts still active at 90 days",
+      "owner": "Head of Product",
+      "baseline": "52",
+      "target": "60",
+      "current": "53",
+      "unit": "%",
+      "direction": "increase",
+      "dueDate": "2027-12-31",
+      "frequency": "Monthly",
+      "status": "On Track"
+    },
+    {
+      "id": "first-session-connect",
+      "name": "New accounts that connect a bank in their first session",
+      "strategyId": "onboarding",
+      "owner": "Head of Onboarding",
+      "baseline": "45",
+      "target": "70",
+      "current": "51",
+      "unit": "%",
+      "direction": "increase",
+      "dueDate": "2027-06-30",
+      "frequency": "Weekly",
+      "source": "Product analytics",
+      "progress": 0.24,
+      "status": "On Track"
+    },
+    {
+      "id": "weekly-reconcile",
+      "name": "Connected accounts that reconcile weekly",
+      "strategyId": "weekly-habit",
+      "owner": "Head of Core Product",
+      "baseline": "30",
+      "target": "50",
+      "current": "31",
+      "unit": "%",
+      "direction": "increase",
+      "dueDate": "2027-12-31",
+      "frequency": "Weekly",
+      "source": "Product analytics",
+      "progress": 0.05,
+      "status": "At Risk"
+    },
+    {
+      "id": "partner-accounts",
+      "name": "New accounts invited by an accountant",
+      "strategyId": "accountants",
+      "owner": "Head of Partnerships",
+      "baseline": "0",
+      "target": "2,000",
+      "unit": "accounts",
+      "direction": "increase",
+      "dueDate": "2027-12-31",
+      "frequency": "Monthly",
+      "source": "Partner program records"
+    }
+  ]
+}
