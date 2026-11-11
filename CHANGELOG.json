@@ -8,6 +8,37 @@
     "grokify",
     "johncwang@gmail.com"
   ],
+  "unreleased": {
+    "highlights": [
+      {
+        "description": "VSEM joins OKR and V2MOM in `goals`: a one-page plan of vision, strategies with the resources they commit, the work that carries them out, and metrics each with an accountable owner"
+      }
+    ],
+    "added": [
+      {
+        "description": "`goals/vsem`: VSEM (Vision, Strategy, Execution, Metrics) plans with a vision or mission, strategies and their resources, execution items and metrics linked to a strategy by ID, validation presets that treat missing owners, targets, resources, and coverage as warnings or errors, and deterministic Markdown and Marp renderers"
+      },
+      {
+        "description": "`goals.FrameworkVSEM` and `goals.NewVSEM`: a PRD or roadmap can carry a VSEM, whose strategies are goal items and metrics result items"
+      },
+      {
+        "description": "`schema/vsem.schema.json`, generated from the VSEM types and embedded as `schema.VSEMSchema()`"
+      },
+      {
+        "description": "Fictional VSEM examples: a minimal plan and a full one for a bookkeeping app"
+      }
+    ],
+    "changed": [
+      {
+        "description": "The PRD schema includes the VSEM option of the goals union"
+      }
+    ],
+    "documentation": [
+      {
+        "description": "A VSEM guide covering the four sections, the form followed, how VSEM differs from V2MOM, validation, goals alignment, and rendering"
+      }
+    ]
+  },
   "releases": [
     {
       "version": "v0.22.0",
