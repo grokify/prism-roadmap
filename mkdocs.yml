@@ -122,6 +122,7 @@ nav:
           - TRD: specs/cascading-goals/TRD.md
           - Roadmap: specs/cascading-goals/ROADMAP.md
   - Releases:
+      - v0.24.0: releases/v0.24.0.md
       - v0.23.0: releases/v0.23.0.md
       - v0.22.0: releases/v0.22.0.md
       - v0.21.0: releases/v0.21.0.md
