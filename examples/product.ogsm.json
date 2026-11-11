@@ -1,0 +1,172 @@
+{
+  "$schema": "../schema/ogsm.schema.json",
+  "metadata": {
+    "id": "bookkeeping-2027-2029",
+    "name": "Bookkeeping App OGSM 2027-2029",
+    "author": "Chief Executive",
+    "team": "Company",
+    "period": "2027-2029",
+    "version": "1.0.0",
+    "status": "Active"
+  },
+  "objective": {
+    "statement": "Become the bookkeeping app small businesses keep using, because closing the books takes them an hour a month",
+    "description": "Growth has come from sign-ups; the business now depends on accounts staying and owners recommending us.",
+    "dueDate": "2029-12-31"
+  },
+  "goals": [
+    {
+      "id": "goal-retention",
+      "name": "Accounts still active at 90 days",
+      "owner": "Head of Product",
+      "baseline": "52",
+      "target": "65",
+      "current": "53",
+      "unit": "%",
+      "direction": "increase",
+      "dueDate": "2029-12-31",
+      "progress": 0.08,
+      "status": "On Track"
+    },
+    {
+      "id": "goal-paying",
+      "name": "Paying accounts",
+      "owner": "Chief Revenue Officer",
+      "baseline": "40,000",
+      "target": "100,000",
+      "unit": "accounts",
+      "direction": "increase",
+      "dueDate": "2029-12-31"
+    },
+    {
+      "id": "goal-hours",
+      "name": "Hours owners spend on their books each month",
+      "description": "Median from the twice-yearly owner survey.",
+      "owner": "Head of Research",
+      "baseline": "6",
+      "target": "2",
+      "unit": "hours",
+      "direction": "decrease",
+      "dueDate": "2029-12-31"
+    }
+  ],
+  "strategies": [
+    {
+      "id": "onboarding",
+      "name": "Get every new account to a reconciled month in its first week",
+      "description": "Accounts that reconcile a month early stay. Connecting a bank is where they stall.",
+      "owner": "Head of Onboarding",
+      "priority": "P0",
+      "goalIds": ["goal-retention", "goal-hours"]
+    },
+    {
+      "id": "weekly-habit",
+      "name": "Make reconciling a short weekly habit",
+      "owner": "Head of Core Product",
+      "priority": "P1",
+      "goalIds": ["goal-retention", "goal-hours"]
+    },
+    {
+      "id": "accountants",
+      "name": "Grow through the accountants owners already trust",
+      "owner": "Head of Partnerships",
+      "priority": "P1",
+      "goalIds": ["goal-paying"]
+    }
+  ],
+  "measures": [
+    {
+      "id": "first-session-connect",
+      "name": "New accounts that connect a bank in their first session",
+      "strategyId": "onboarding",
+      "owner": "Head of Onboarding",
+      "baseline": "45",
+      "target": "75",
+      "current": "51",
+      "unit": "%",
+      "direction": "increase",
+      "dueDate": "2027-12-31",
+      "frequency": "Weekly",
+      "source": "Product analytics",
+      "status": "On Track"
+    },
+    {
+      "id": "weekly-reconcile",
+      "name": "Connected accounts that reconcile weekly",
+      "strategyId": "weekly-habit",
+      "owner": "Head of Core Product",
+      "baseline": "30",
+      "target": "55",
+      "current": "31",
+      "unit": "%",
+      "direction": "increase",
+      "dueDate": "2028-12-31",
+      "frequency": "Weekly",
+      "source": "Product analytics",
+      "status": "At Risk"
+    },
+    {
+      "id": "review-minutes",
+      "name": "Median minutes to finish a weekly review",
+      "strategyId": "weekly-habit",
+      "owner": "Head of Core Product",
+      "baseline": "22",
+      "target": "10",
+      "unit": "minutes",
+      "direction": "decrease",
+      "frequency": "Monthly",
+      "source": "Product analytics"
+    },
+    {
+      "id": "partner-accounts",
+      "name": "New accounts invited by an accountant",
+      "strategyId": "accountants",
+      "owner": "Head of Partnerships",
+      "baseline": "0",
+      "target": "15,000",
+      "unit": "accounts a year",
+      "direction": "increase",
+      "dueDate": "2028-12-31",
+      "frequency": "Monthly",
+      "source": "Partner program records"
+    }
+  ],
+  "actions": [
+    {
+      "id": "guided-import",
+      "name": "Ship guided bank import",
+      "strategyId": "onboarding",
+      "owner": "Onboarding squad",
+      "startDate": "2027-01-04",
+      "endDate": "2027-03-26",
+      "status": "In Progress"
+    },
+    {
+      "id": "first-month-walkthrough",
+      "name": "Walk new accounts through their first reconciled month",
+      "strategyId": "onboarding",
+      "owner": "Onboarding squad",
+      "startDate": "2027-04-05",
+      "endDate": "2027-06-25",
+      "status": "Planned",
+      "dependencies": ["guided-import"]
+    },
+    {
+      "id": "fast-review",
+      "name": "Rebuild the transaction review screen for speed",
+      "strategyId": "weekly-habit",
+      "owner": "Core squad",
+      "startDate": "2027-04-05",
+      "endDate": "2027-09-30",
+      "status": "Planned"
+    },
+    {
+      "id": "partner-program",
+      "name": "Launch the accountant partner program",
+      "strategyId": "accountants",
+      "owner": "Partnerships",
+      "startDate": "2027-02-01",
+      "status": "Planned"
+    }
+  ]
+}
