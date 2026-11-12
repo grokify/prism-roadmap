@@ -8,87 +8,97 @@
     "grokify",
     "johncwang@gmail.com"
   ],
-  "unreleased": {
-    "highlights": [
-      {
-        "description": "The Balanced Scorecard joins OKR, V2MOM, VSEM, and OGSM in `goals`: strategic objectives in perspectives, linked cause to effect in a strategy map, with lead and lag measures and the initiatives that close the gaps"
-      },
-      {
-        "description": "Every goal framework's Markdown can be embedded in a larger document: `OmitHeader` drops the title and `HeadingOffset` moves the headings down, and DMAIC gains a Markdown renderer"
-      }
-    ],
-    "added": [
-      {
-        "description": "`goals/bsc`: Balanced Scorecards with a mission, vision, and strategy; perspectives, the four classic ones by default and renamable, reorderable, or replaceable, such as a mission perspective on top; strategic themes; objectives linked cause to effect with `contributesTo`; lead and lag measures with targets and stoplight thresholds; and initiatives that serve objectives. Validation reports a cycle in the strategy map as an error and a link that runs down the perspectives as a warning, and the strict options require owners, targets, measure types, both lead and lag measures, and a connected strategy map. Markdown (with the strategy map as a Mermaid diagram) and Marp renderers",
-        "commit": "65b4524"
-      },
-      {
-        "description": "`goals.FrameworkBSC` and `goals.NewBSC`: a PRD or roadmap can carry a Balanced Scorecard, whose objectives are goal items tagged with their perspective and measures result items",
-        "commit": "8d2f331"
-      },
-      {
-        "description": "`schema/bsc.schema.json`, generated from the Balanced Scorecard types and embedded as `schema.BSCSchema()`",
-        "commit": "75b62a9"
-      },
-      {
-        "description": "Fictional Balanced Scorecard examples: a minimal scorecard and a bookkeeping app's scorecard with two strategic themes",
-        "commit": "65b4524"
-      },
-      {
-        "description": "`splan goals bsc`: validate (with `--strict`), generate (`markdown` or `marp`), and init; `splan goals validate` detects a scorecard from its `perspectives`, and `splan goals init --framework` and `splan schema generate --type` accept `bsc`",
-        "commit": "3d78d0b"
-      },
-      {
-        "description": "`OmitHeader` and `HeadingOffset` render options for the VSEM, OGSM, MEL, and DMAIC Markdown renderers: leave out the title and metadata line, and push every heading down, capped at level 6, leaving fenced code blocks alone. The Marp and Pandoc renderers ignore them, and the defaults keep the output unchanged",
-        "commit": "33c2ddf"
-      },
-      {
-        "description": "The same options for the Balanced Scorecard Markdown renderer, leaving its Mermaid strategy map alone",
-        "commit": "fdb858c"
-      },
-      {
-        "description": "`goals/dmaic/render/markdown`: a portable Markdown renderer for DMAIC documents, with no front matter or LaTeX: an overview with category health, a metrics table per category, detail for each metric that needs attention, and the phase distribution, root causes, initiatives, and capability metrics behind their options",
-        "commit": "c1cbc23"
-      },
-      {
-        "description": "`splan goals dmaic generate markdown`",
-        "commit": "e9e692d"
-      }
-    ],
-    "changed": [
-      {
-        "description": "The PRD schema includes the Balanced Scorecard option of the goals union",
-        "commit": "8d2f331"
-      }
-    ],
-    "documentation": [
-      {
-        "description": "A Balanced Scorecard guide covering perspectives, the strategy map, lead and lag measures, how it differs from OGSM and VSEM, validation, goals alignment, rendering, and the command line"
-      },
-      {
-        "description": "The goals overview sorts the frameworks into strategy plans, improvement plans, and measurement and learning plans, and gives each framework's origin"
-      },
-      {
-        "description": "The DMAIC guide covers the Markdown renderer, and the VSEM, OGSM, MEL, DMAIC, and Balanced Scorecard guides explain embedding",
-        "commit": "63cbe42"
-      }
-    ],
-    "tests": [
-      {
-        "description": "The Balanced Scorecard examples are checked to validate, and the full example to meet the strict options",
-        "commit": "c207212"
-      },
-      {
-        "description": "The heading shift is tested on levels, the level-6 cap, both fence styles, and unclosed fences, and each Markdown renderer on embedded output",
-        "commit": "da561a8"
-      },
-      {
-        "description": "Golden files for the DMAIC Markdown renderer with the default and Six Sigma options",
-        "commit": "c1cbc23"
-      }
-    ]
-  },
   "releases": [
+    {
+      "version": "v0.26.0",
+      "date": "2026-11-12",
+      "highlights": [
+        {
+          "description": "The Balanced Scorecard joins OKR, V2MOM, VSEM, and OGSM in `goals`: strategic objectives in perspectives, linked cause to effect in a strategy map, with lead and lag measures and the initiatives that close the gaps"
+        },
+        {
+          "description": "Every goal framework's Markdown can be embedded in a larger document: `OmitHeader` drops the title and `HeadingOffset` moves the headings down, and DMAIC gains a Markdown renderer"
+        }
+      ],
+      "added": [
+        {
+          "description": "`goals/bsc`: Balanced Scorecards with a mission, vision, and strategy; perspectives, the four classic ones by default and renamable, reorderable, or replaceable, such as a mission perspective on top; strategic themes; objectives linked cause to effect with `contributesTo`; lead and lag measures with targets and stoplight thresholds; and initiatives that serve objectives. Validation reports a cycle in the strategy map as an error and a link that runs down the perspectives as a warning, and the strict options require owners, targets, measure types, both lead and lag measures, and a connected strategy map. Markdown (with the strategy map as a Mermaid diagram) and Marp renderers",
+          "commit": "65b4524"
+        },
+        {
+          "description": "`goals.FrameworkBSC` and `goals.NewBSC`: a PRD or roadmap can carry a Balanced Scorecard, whose objectives are goal items tagged with their perspective and measures result items",
+          "commit": "8d2f331"
+        },
+        {
+          "description": "`schema/bsc.schema.json`, generated from the Balanced Scorecard types and embedded as `schema.BSCSchema()`",
+          "commit": "75b62a9"
+        },
+        {
+          "description": "Fictional Balanced Scorecard examples: a minimal scorecard and a bookkeeping app's scorecard with two strategic themes",
+          "commit": "65b4524"
+        },
+        {
+          "description": "`splan goals bsc`: validate (with `--strict`), generate (`markdown` or `marp`), and init; `splan goals validate` detects a scorecard from its `perspectives`, and `splan goals init --framework` and `splan schema generate --type` accept `bsc`",
+          "commit": "3d78d0b"
+        },
+        {
+          "description": "`OmitHeader` and `HeadingOffset` render options for the VSEM, OGSM, MEL, and DMAIC Markdown renderers: leave out the title and metadata line, and push every heading down, capped at level 6, leaving fenced code blocks alone. The Marp and Pandoc renderers ignore them, and the defaults keep the output unchanged",
+          "commit": "33c2ddf"
+        },
+        {
+          "description": "The same options for the Balanced Scorecard Markdown renderer, leaving its Mermaid strategy map alone",
+          "commit": "fdb858c"
+        },
+        {
+          "description": "`goals/dmaic/render/markdown`: a portable Markdown renderer for DMAIC documents, with no front matter or LaTeX: an overview with category health, a metrics table per category, detail for each metric that needs attention, and the phase distribution, root causes, initiatives, and capability metrics behind their options",
+          "commit": "c1cbc23"
+        },
+        {
+          "description": "`splan goals dmaic generate markdown`",
+          "commit": "e9e692d"
+        }
+      ],
+      "changed": [
+        {
+          "description": "The PRD schema includes the Balanced Scorecard option of the goals union",
+          "commit": "8d2f331"
+        }
+      ],
+      "documentation": [
+        {
+          "description": "A Balanced Scorecard guide covering perspectives, the strategy map, lead and lag measures, how it differs from OGSM and VSEM, validation, goals alignment, rendering, and the command line",
+          "commit": "34a4a0c"
+        },
+        {
+          "description": "The goals overview sorts the frameworks into strategy plans, improvement plans, and measurement and learning plans, and gives each framework's origin",
+          "commit": "34a4a0c"
+        },
+        {
+          "description": "The DMAIC guide covers the Markdown renderer, and the VSEM, OGSM, MEL, DMAIC, and Balanced Scorecard guides explain embedding",
+          "commit": "63cbe42"
+        },
+        {
+          "description": "The goals overview and the README explain how to embed rendered plans in a larger document"
+        },
+        {
+          "description": "Release notes for v0.26.0"
+        }
+      ],
+      "tests": [
+        {
+          "description": "The Balanced Scorecard examples are checked to validate, and the full example to meet the strict options",
+          "commit": "c207212"
+        },
+        {
+          "description": "The heading shift is tested on levels, the level-6 cap, both fence styles, and unclosed fences, and each Markdown renderer on embedded output",
+          "commit": "da561a8"
+        },
+        {
+          "description": "Golden files for the DMAIC Markdown renderer with the default and Six Sigma options",
+          "commit": "c1cbc23"
+        }
+      ]
+    },
     {
       "version": "v0.25.0",
       "date": "2026-11-11",

@@ -450,9 +450,11 @@ func main() {
 }
 ```
 
-### Goals (OKR, V2MOM, VSEM, and DMAIC)
+### Goals (OKR, V2MOM, VSEM, OGSM, Balanced Scorecard, DMAIC, and MEL)
 
 The `goals` package provides a framework-agnostic interface for OKR, V2MOM, VSEM, OGSM, and the Balanced Scorecard; see the [VSEM guide](docs/goals/vsem.md), the [OGSM guide](docs/goals/ogsm.md), and the [Balanced Scorecard guide](docs/goals/bsc.md). `goals/dmaic` adds DMAIC metrics documents with Six Sigma control limits, root causes, and improvement initiatives; see the [DMAIC guide](docs/goals/dmaic.md). `goals/mel` adds MEL plans; see the [MEL guide](docs/goals/mel.md).
+
+The VSEM, OGSM, Balanced Scorecard, DMAIC, and MEL Markdown renderers can also write a plan to embed in a larger document: `OmitHeader` leaves out the title, and `HeadingOffset` moves the headings down. See [Embedding Rendered Plans](docs/goals/overview.md#embedding-rendered-plans).
 
 ```go
 import (
