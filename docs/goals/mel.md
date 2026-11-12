@@ -165,6 +165,8 @@ pandoc plan.md -o plan.pdf --pdf-engine=lualatex
 
 The document draws the results framework as a nested list from impact down, then the activities, an indicator summary table, a reference sheet per indicator, the assumptions to monitor, the evaluation plan with each evaluation's questions, the learning agenda, and the review and reporting schedule. `SummaryOptions` leaves out the reference sheets and descriptions. Both renderers are deterministic; the Pandoc date is the plan's `metadata.updatedAt`, when set.
 
+To embed the Markdown document in a larger one, set `OmitHeader` to leave out the title and the metadata line under it, and `HeadingOffset` to push every heading down that many levels, capped at level 6; fenced code blocks are left alone. With `OmitHeader` and a `HeadingOffset` of 1, the sections that were level-two headings become level three. The Pandoc renderer ignores both options.
+
 ## Command Line
 
 ```bash

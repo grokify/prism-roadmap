@@ -187,25 +187,44 @@ Three validation presets are available:
 
 ## Rendering
 
-The `render/marp` package writes Marp slides and `render/pandoc` writes Pandoc
-Markdown for PDF or Word:
+The `render/markdown` package writes a portable Markdown document, `render/marp`
+writes Marp slides, and `render/pandoc` writes Pandoc Markdown for PDF or Word:
 
 ```go
 import (
     "github.com/grokify/prism-roadmap/goals/dmaic/render"
+    "github.com/grokify/prism-roadmap/goals/dmaic/render/markdown"
     "github.com/grokify/prism-roadmap/goals/dmaic/render/marp"
 )
 
+report, err := markdown.New().Render(doc, render.DefaultOptions())
 slides, err := marp.New().Render(doc, render.DefaultOptions())
 ```
+
+The Markdown document has the content of the Pandoc one without its front
+matter, LaTeX, or page breaks, so it reads on any Markdown viewer. It opens with
+an overview of each category's health, then each category's metrics with the
+detail of every Yellow or Red metric. The options add the rest:
+
+- `GroupByPhase` adds the DMAIC phase distribution.
+- `IncludeRootCauses` adds the root cause analysis.
+- `IncludeInitiatives` adds the improvement initiatives.
+- `ShowCapabilityMetrics` adds the process capability and control limits appendix.
+
+The output is deterministic. To embed it in a larger document, set `OmitHeader`
+to leave out the title and the metadata line under it, and `HeadingOffset` to
+push every heading down that many levels, capped at level 6. With `OmitHeader`
+and a `HeadingOffset` of 1, the sections that were level-two headings become
+level three. The Marp and Pandoc renderers ignore both options.
 
 ## Command Line
 
 ```bash
 splan goals dmaic init --name "Quality Metrics" -o quality.dmaic.json
 splan goals dmaic validate quality.dmaic.json --strict
+splan goals dmaic generate markdown quality.dmaic.json -o report.md
 splan goals dmaic generate marp quality.dmaic.json -o slides.md
-splan goals dmaic generate pandoc quality.dmaic.json -o report.md
+splan goals dmaic generate pandoc quality.dmaic.json -o report-pdf.md
 ```
 
 `splan goals validate` also accepts a DMAIC document, detected from its `categories`.
