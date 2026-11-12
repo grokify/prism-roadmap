@@ -50,6 +50,9 @@ const (
 	// OGSMSchemaID is the canonical ID for the OGSM schema.
 	OGSMSchemaID = "https://github.com/grokify/prism-roadmap/schema/ogsm.schema.json"
 
+	// BSCSchemaID is the canonical ID for the Balanced Scorecard schema.
+	BSCSchemaID = "https://github.com/grokify/prism-roadmap/schema/bsc.schema.json"
+
 	// Canvas schema IDs
 
 	// CanvasSchemaID is the canonical ID for the Canvas wrapper schema.
@@ -232,6 +235,21 @@ func OGSMSchema() string {
 // OGSMSchemaBytes returns the OGSM JSON Schema as a byte slice.
 func OGSMSchemaBytes() []byte {
 	return OGSMSchemaJSON
+}
+
+// Balanced Scorecard Schema
+
+//go:embed bsc.schema.json
+var BSCSchemaJSON []byte
+
+// BSCSchema returns the Balanced Scorecard JSON Schema as a string.
+func BSCSchema() string {
+	return string(BSCSchemaJSON)
+}
+
+// BSCSchemaBytes returns the Balanced Scorecard JSON Schema as a byte slice.
+func BSCSchemaBytes() []byte {
+	return BSCSchemaJSON
 }
 
 // Canvas Schemas

@@ -11,6 +11,7 @@ import (
 	"github.com/grokify/prism-roadmap/assessment"
 	"github.com/grokify/prism-roadmap/canvas"
 	"github.com/grokify/prism-roadmap/effort"
+	"github.com/grokify/prism-roadmap/goals/bsc"
 	"github.com/grokify/prism-roadmap/goals/dmaic"
 	"github.com/grokify/prism-roadmap/goals/mel"
 	"github.com/grokify/prism-roadmap/goals/ogsm"
@@ -125,6 +126,12 @@ func (g *Generator) GenerateAll(dir string) error {
 	ogsmPath := filepath.Join(dir, "ogsm.schema.json")
 	if err := g.WriteOGSMSchema(ogsmPath); err != nil {
 		return fmt.Errorf("generating OGSM schema: %w", err)
+	}
+
+	// Generate Balanced Scorecard schema
+	bscPath := filepath.Join(dir, "bsc.schema.json")
+	if err := g.WriteBSCSchema(bscPath); err != nil {
+		return fmt.Errorf("generating Balanced Scorecard schema: %w", err)
 	}
 
 	// Generate canvas schemas (Shape Up, Continuous Discovery)
@@ -403,6 +410,50 @@ func (g *Generator) GenerateOGSMSchemaJSON() ([]byte, error) {
 // WriteOGSMSchema generates and writes the OGSM schema to a file.
 func (g *Generator) WriteOGSMSchema(path string) error {
 	data, err := g.GenerateOGSMSchemaJSON()
+	if err != nil {
+		return fmt.Errorf("generating schema: %w", err)
+	}
+
+	dir := filepath.Dir(path)
+	if err := os.MkdirAll(dir, 0o755); err != nil {
+		return fmt.Errorf("creating directory: %w", err)
+	}
+
+	if err := os.WriteFile(path, data, 0600); err != nil {
+		return fmt.Errorf("writing file: %w", err)
+	}
+
+	return nil
+}
+
+// GenerateBSCSchema generates JSON Schema for the Balanced Scorecard type.
+func (g *Generator) GenerateBSCSchema() (*jsonschema.Schema, error) {
+	schema := g.Reflector.Reflect(&bsc.BSC{})
+	if schema == nil {
+		return nil, fmt.Errorf("failed to generate schema for bsc.BSC")
+	}
+
+	// Set schema metadata
+	schema.ID = jsonschema.ID(BSCSchemaID)
+	schema.Title = "Balanced Scorecard Document"
+	schema.Description = "Schema for Balanced Scorecards: perspectives, strategic objectives and their strategy map, measures, and initiatives"
+
+	return schema, nil
+}
+
+// GenerateBSCSchemaJSON generates JSON Schema for the Balanced Scorecard and returns it as JSON bytes.
+func (g *Generator) GenerateBSCSchemaJSON() ([]byte, error) {
+	schema, err := g.GenerateBSCSchema()
+	if err != nil {
+		return nil, err
+	}
+
+	return json.MarshalIndent(schema, "", "  ")
+}
+
+// WriteBSCSchema generates and writes the Balanced Scorecard schema to a file.
+func (g *Generator) WriteBSCSchema(path string) error {
+	data, err := g.GenerateBSCSchemaJSON()
 	if err != nil {
 		return fmt.Errorf("generating schema: %w", err)
 	}

@@ -1,0 +1,290 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/grokify/prism-roadmap/schema/bsc.schema.json",
+  "$ref": "#/$defs/BSC",
+  "$defs": {
+    "BSC": {
+      "properties": {
+        "$schema": {
+          "type": "string"
+        },
+        "metadata": {
+          "$ref": "#/$defs/Metadata"
+        },
+        "mission": {
+          "type": "string"
+        },
+        "vision": {
+          "type": "string"
+        },
+        "strategy": {
+          "type": "string"
+        },
+        "perspectives": {
+          "items": {
+            "$ref": "#/$defs/Perspective"
+          },
+          "type": "array"
+        },
+        "themes": {
+          "items": {
+            "$ref": "#/$defs/Theme"
+          },
+          "type": "array"
+        },
+        "objectives": {
+          "items": {
+            "$ref": "#/$defs/Objective"
+          },
+          "type": "array"
+        },
+        "measures": {
+          "items": {
+            "$ref": "#/$defs/Measure"
+          },
+          "type": "array"
+        },
+        "initiatives": {
+          "items": {
+            "$ref": "#/$defs/Initiative"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Initiative": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "objectiveIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "startDate": {
+          "type": "string"
+        },
+        "endDate": {
+          "type": "string"
+        },
+        "budget": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "dependencies": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "externalLinks": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Measure": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "objectiveId": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "baseline": {
+          "type": "string"
+        },
+        "target": {
+          "type": "string"
+        },
+        "current": {
+          "type": "string"
+        },
+        "unit": {
+          "type": "string"
+        },
+        "direction": {
+          "type": "string"
+        },
+        "dueDate": {
+          "type": "string"
+        },
+        "frequency": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string"
+        },
+        "thresholds": {
+          "$ref": "#/$defs/Thresholds"
+        },
+        "progress": {
+          "type": "number"
+        },
+        "status": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Metadata": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "author": {
+          "type": "string"
+        },
+        "team": {
+          "type": "string"
+        },
+        "period": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "parentId": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Objective": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "perspectiveId": {
+          "type": "string"
+        },
+        "themeIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "priority": {
+          "type": "string"
+        },
+        "contributesTo": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Perspective": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "kind": {
+          "type": "string"
+        },
+        "question": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Theme": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "owner": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Thresholds": {
+      "properties": {
+        "green": {
+          "type": "string"
+        },
+        "red": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    }
+  },
+  "title": "Balanced Scorecard Document",
+  "description": "Schema for Balanced Scorecards: perspectives, strategic objectives and their strategy map, measures, and initiatives"
+}
