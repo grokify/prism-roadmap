@@ -133,3 +133,43 @@ func TestHelpers(t *testing.T) {
 		t.Error("Format or FileExtension is wrong")
 	}
 }
+
+func TestRenderEmbedded(t *testing.T) {
+	p, err := mel.ReadFile("../../../../examples/product.mel.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	opts := render.DefaultOptions()
+	opts.OmitHeader = true
+	opts.HeadingOffset = 1
+	out, err := New().Render(p, opts)
+	if err != nil {
+		t.Fatal(err)
+	}
+	s := string(out)
+	if !strings.HasPrefix(s, "### Purpose\n\n") {
+		t.Errorf("embedded output should start with %q:\n%s", "### Purpose", s)
+	}
+	for _, unwanted := range []string{"# Onboarding MEL Plan", "**Team:**"} {
+		if strings.Contains(s, unwanted) {
+			t.Errorf("embedded output should not contain %q", unwanted)
+		}
+	}
+	for _, line := range strings.Split(s, "\n") {
+		if strings.HasPrefix(line, "# ") || strings.HasPrefix(line, "## ") {
+			t.Errorf("heading %q was not pushed down", line)
+		}
+	}
+	if !strings.Contains(s, "\n#### ") {
+		t.Errorf("embedded output lacks %q", "#### ")
+	}
+
+	opts.HeadingOffset = 0
+	flat, err := New().Render(p, opts)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !strings.HasPrefix(string(flat), "## Purpose\n\n") {
+		t.Errorf("OmitHeader alone should start with %q:\n%s", "## Purpose", flat)
+	}
+}

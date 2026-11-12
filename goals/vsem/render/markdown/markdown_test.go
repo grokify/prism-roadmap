@@ -106,3 +106,43 @@ func TestFormat(t *testing.T) {
 		t.Errorf("Format() = %q, FileExtension() = %q", r.Format(), r.FileExtension())
 	}
 }
+
+func TestRenderEmbedded(t *testing.T) {
+	v, err := vsem.ReadFile("../../../../examples/product.vsem.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	opts := render.DefaultOptions()
+	opts.OmitHeader = true
+	opts.HeadingOffset = 1
+	out, err := New().Render(v, opts)
+	if err != nil {
+		t.Fatal(err)
+	}
+	s := string(out)
+	if !strings.HasPrefix(s, "### Vision\n\n") {
+		t.Errorf("embedded output should start with %q:\n%s", "### Vision", s)
+	}
+	for _, unwanted := range []string{"# Bookkeeping App FY2027", "**Team:**"} {
+		if strings.Contains(s, unwanted) {
+			t.Errorf("embedded output should not contain %q", unwanted)
+		}
+	}
+	for _, line := range strings.Split(s, "\n") {
+		if strings.HasPrefix(line, "# ") || strings.HasPrefix(line, "## ") {
+			t.Errorf("heading %q was not pushed down", line)
+		}
+	}
+	if !strings.Contains(s, "\n#### 1. ") {
+		t.Errorf("embedded output lacks %q", "#### 1. ")
+	}
+
+	opts.HeadingOffset = 0
+	flat, err := New().Render(v, opts)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !strings.HasPrefix(string(flat), "## Vision\n\n") {
+		t.Errorf("OmitHeader alone should start with %q:\n%s", "## Vision", flat)
+	}
+}
