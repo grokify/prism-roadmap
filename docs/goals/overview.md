@@ -208,6 +208,39 @@ AlignedObjectives: map[string]string{
 - V2MOM for annual strategy
 - OKR for quarterly execution
 
+## Embedding Rendered Plans
+
+The Markdown renderers for VSEM, OGSM, the Balanced Scorecard, DMAIC, and MEL
+each write a whole document by default. To assemble several plans into one
+document, such as a theory of change followed by a VSEM and a MEL plan, set two
+render options:
+
+- `OmitHeader` leaves out the document title and the metadata line under it.
+- `HeadingOffset` pushes every heading down that many levels, capped at level 6. Fenced code blocks, such as a Mermaid strategy map, are left alone.
+
+With `OmitHeader` and a `HeadingOffset` of 1, a plan's level-two sections
+become level three, under a level-two heading of your own:
+
+```go
+import (
+    vsemrender "github.com/grokify/prism-roadmap/goals/vsem/render"
+    vsemmd "github.com/grokify/prism-roadmap/goals/vsem/render/markdown"
+)
+
+opts := vsemrender.DefaultOptions()
+opts.OmitHeader = true
+opts.HeadingOffset = 1
+
+body, err := vsemmd.New().Render(v, opts)
+if err != nil {
+    return err
+}
+doc := "## Strategy (VSEM)\n\n" + string(body)
+```
+
+Both options default to off, so output is unchanged unless you set them. The
+Marp and Pandoc renderers ignore them.
+
 ## Installation
 
 ```bash
