@@ -233,12 +233,12 @@ var goalsValidateFlags struct {
 var goalsValidateCmd = &cobra.Command{
 	Use:   "validate FILE",
 	Short: "Validate a goals file",
-	Long: `Validate an OKR, V2MOM, VSEM, OGSM, DMAIC, or MEL file with that framework's
-rules.
+	Long: `Validate an OKR, V2MOM, VSEM, OGSM, Balanced Scorecard, DMAIC, or MEL
+file with that framework's rules.
 
-The framework is detected from the file's top-level fields (objectives,
-methods, strategies, objective, categories, or results); --framework
-overrides it.
+The framework is detected from the file's top-level fields (perspectives,
+objectives, methods, objective, strategies, categories, or results);
+--framework overrides it.
 Structural problems are errors; gaps are warnings, or errors with --strict
 (V2MOM has no strict rules).
 
@@ -275,8 +275,8 @@ var goalsInitCmd = &cobra.Command{
 	Short: "Create a goals template",
 	Long: `Create a new goals template file.
 
-Supports the OKR, V2MOM, VSEM, OGSM, DMAIC, and MEL frameworks. The goals
-subcommand for each (for example 'splan goals mel init') offers the same
+Supports the OKR, V2MOM, VSEM, OGSM, Balanced Scorecard, DMAIC, and MEL
+frameworks. The goals subcommand for each (for example 'splan goals mel init') offers the same
 template with more options.
 
 Examples:
@@ -311,6 +311,10 @@ func runGoalsInit(cmd *cobra.Command, args []string) error {
 		o := OGSMTemplate(goalsInitFlags.team + " OGSM")
 		o.Metadata.Team, o.Metadata.Period = goalsInitFlags.team, goalsInitFlags.period
 		content, err = o.JSON()
+	case "bsc":
+		b := BSCTemplate(goalsInitFlags.team + " Balanced Scorecard")
+		b.Metadata.Team, b.Metadata.Period = goalsInitFlags.team, goalsInitFlags.period
+		content, err = b.JSON()
 	case "dmaic":
 		doc := DMAICTemplate(goalsInitFlags.team + " DMAIC")
 		doc.Metadata.Team, doc.Metadata.Period = goalsInitFlags.team, goalsInitFlags.period

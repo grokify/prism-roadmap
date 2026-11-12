@@ -131,7 +131,7 @@ func deepMerge(a, b map[string]interface{}) map[string]interface{} {
 
 var goalsCmd = &cobra.Command{
 	Use:   "goals",
-	Short: "Work with goal frameworks (OKR, V2MOM, VSEM, OGSM, DMAIC, MEL)",
+	Short: "Work with goal frameworks (OKR, V2MOM, VSEM, OGSM, BSC, DMAIC, MEL)",
 	Long: `Commands for creating, validating, and rendering goal framework documents.
 
 Supported frameworks:
@@ -139,6 +139,7 @@ Supported frameworks:
   - v2mom: Vision, Values, Methods, Obstacles, Measures
   - vsem:  Vision, Strategy, Execution, Metrics
   - ogsm:  Objective, Goals, Strategies, Measures
+  - bsc:   Balanced Scorecard: perspectives, objectives, strategy map, measures
   - dmaic: Define, Measure, Analyze, Improve, Control metrics
   - mel:   Monitoring, Evaluation, and Learning plans
 
@@ -1854,7 +1855,8 @@ var schemaGenerateCmd = &cobra.Command{
 	Long: `Generate JSON Schema files from Go type definitions.
 
 By default, generates every schema file to the output directory. Use --type to
-generate one document type's schema: prd, okr, v2mom, vsem, ogsm, dmaic, or mel.`,
+generate one document type's schema: prd, okr, v2mom, vsem, ogsm, bsc, dmaic,
+or mel.`,
 	Example: `  splan schema generate
   splan schema generate -o ./schema/
   splan schema generate --type prd -o prd.schema.json
@@ -1865,7 +1867,7 @@ generate one document type's schema: prd, okr, v2mom, vsem, ogsm, dmaic, or mel.
 
 func init() {
 	schemaGenerateCmd.Flags().StringVarP(&schemaGenerateFlags.output, "output", "o", ".", "Output directory or file path")
-	schemaGenerateCmd.Flags().StringVarP(&schemaGenerateFlags.docType, "type", "t", "all", "Document type to generate (prd, okr, v2mom, vsem, ogsm, dmaic, mel, or all)")
+	schemaGenerateCmd.Flags().StringVarP(&schemaGenerateFlags.docType, "type", "t", "all", "Document type to generate (prd, okr, v2mom, vsem, ogsm, bsc, dmaic, mel, or all)")
 
 	schemaCmd.AddCommand(schemaGenerateCmd)
 }
@@ -1896,6 +1898,7 @@ func runSchemaGenerate(cmd *cobra.Command, args []string) error {
 		"v2mom": {"v2mom.schema.json", gen.WriteV2MOMSchema},
 		"vsem":  {"vsem.schema.json", gen.WriteVSEMSchema},
 		"ogsm":  {"ogsm.schema.json", gen.WriteOGSMSchema},
+		"bsc":   {"bsc.schema.json", gen.WriteBSCSchema},
 		"dmaic": {"dmaic.schema.json", gen.WriteDMAICSchema},
 		"mel":   {"mel.schema.json", gen.WriteMELSchema},
 	}
@@ -1912,7 +1915,7 @@ func runSchemaGenerate(cmd *cobra.Command, args []string) error {
 	case docType == "mrd" || docType == "trd":
 		return fmt.Errorf("schema generation for %s is not yet implemented", docType)
 	default:
-		return fmt.Errorf("unknown document type: %s (expected prd, okr, v2mom, vsem, ogsm, dmaic, mel, or all)", docType)
+		return fmt.Errorf("unknown document type: %s (expected prd, okr, v2mom, vsem, ogsm, bsc, dmaic, mel, or all)", docType)
 	}
 
 	return nil
