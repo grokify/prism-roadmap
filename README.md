@@ -345,7 +345,7 @@ splan goals vsem generate marp <file.json>     # VSEM as Marp slides (also: mark
 splan goals ogsm generate markdown <file.json> # OGSM with the one-page table (also: marp)
 splan goals bsc generate markdown <file.json>  # Balanced Scorecard with its strategy map (also: marp)
 splan goals mel generate markdown <file.json>  # MEL plan as Markdown (also: pandoc, --summary)
-splan goals dmaic generate pandoc <file.json>  # DMAIC as Pandoc Markdown (also: marp)
+splan goals dmaic generate markdown <file.json> # DMAIC as Markdown (also: marp, pandoc)
 
 # Utility commands
 splan merge file1.json file2.json -o out.json # Merge JSON files

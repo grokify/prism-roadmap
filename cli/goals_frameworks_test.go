@@ -125,6 +125,7 @@ func TestGoalsGenerate(t *testing.T) {
 		{[]string{"goals", "bsc", "generate", "marp", "../examples/product.bsc.json"}, "## Strategy Map"},
 		{[]string{"goals", "mel", "generate", "markdown", "../examples/product.mel.json"}, "## Indicator Reference Sheets"},
 		{[]string{"goals", "mel", "generate", "pandoc", "../examples/product.mel.json", "--summary"}, "toc: true"},
+		{[]string{"goals", "dmaic", "generate", "markdown", "../examples/manufacturing.dmaic.json"}, "## Production Quality"},
 		{[]string{"goals", "dmaic", "generate", "marp", "../examples/manufacturing.dmaic.json"}, "marp: true"},
 		{[]string{"goals", "dmaic", "generate", "pandoc", "../examples/manufacturing.dmaic.json"}, "geometry:"},
 	} {

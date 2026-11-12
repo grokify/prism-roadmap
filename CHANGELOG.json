@@ -12,6 +12,9 @@
     "highlights": [
       {
         "description": "The Balanced Scorecard joins OKR, V2MOM, VSEM, and OGSM in `goals`: strategic objectives in perspectives, linked cause to effect in a strategy map, with lead and lag measures and the initiatives that close the gaps"
+      },
+      {
+        "description": "Every goal framework's Markdown can be embedded in a larger document: `OmitHeader` drops the title and `HeadingOffset` moves the headings down, and DMAIC gains a Markdown renderer"
       }
     ],
     "added": [
@@ -34,6 +37,22 @@
       {
         "description": "`splan goals bsc`: validate (with `--strict`), generate (`markdown` or `marp`), and init; `splan goals validate` detects a scorecard from its `perspectives`, and `splan goals init --framework` and `splan schema generate --type` accept `bsc`",
         "commit": "3d78d0b"
+      },
+      {
+        "description": "`OmitHeader` and `HeadingOffset` render options for the VSEM, OGSM, MEL, and DMAIC Markdown renderers: leave out the title and metadata line, and push every heading down, capped at level 6, leaving fenced code blocks alone. The Marp and Pandoc renderers ignore them, and the defaults keep the output unchanged",
+        "commit": "33c2ddf"
+      },
+      {
+        "description": "The same options for the Balanced Scorecard Markdown renderer, leaving its Mermaid strategy map alone",
+        "commit": "fdb858c"
+      },
+      {
+        "description": "`goals/dmaic/render/markdown`: a portable Markdown renderer for DMAIC documents, with no front matter or LaTeX: an overview with category health, a metrics table per category, detail for each metric that needs attention, and the phase distribution, root causes, initiatives, and capability metrics behind their options",
+        "commit": "c1cbc23"
+      },
+      {
+        "description": "`splan goals dmaic generate markdown`",
+        "commit": "e9e692d"
       }
     ],
     "changed": [
@@ -48,12 +67,24 @@
       },
       {
         "description": "The goals overview sorts the frameworks into strategy plans, improvement plans, and measurement and learning plans, and gives each framework's origin"
+      },
+      {
+        "description": "The DMAIC guide covers the Markdown renderer, and the VSEM, OGSM, MEL, DMAIC, and Balanced Scorecard guides explain embedding",
+        "commit": "63cbe42"
       }
     ],
     "tests": [
       {
         "description": "The Balanced Scorecard examples are checked to validate, and the full example to meet the strict options",
         "commit": "c207212"
+      },
+      {
+        "description": "The heading shift is tested on levels, the level-6 cap, both fence styles, and unclosed fences, and each Markdown renderer on embedded output",
+        "commit": "da561a8"
+      },
+      {
+        "description": "Golden files for the DMAIC Markdown renderer with the default and Six Sigma options",
+        "commit": "c1cbc23"
       }
     ]
   },

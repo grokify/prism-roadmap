@@ -95,3 +95,43 @@ func TestRenderNil(t *testing.T) {
 		t.Error("Timing or Value is wrong")
 	}
 }
+
+func TestRenderEmbedded(t *testing.T) {
+	o, err := ogsm.ReadFile("../../../../examples/product.ogsm.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	opts := render.DefaultOptions()
+	opts.OmitHeader = true
+	opts.HeadingOffset = 1
+	out, err := New().Render(o, opts)
+	if err != nil {
+		t.Fatal(err)
+	}
+	s := string(out)
+	if !strings.HasPrefix(s, "### On One Page\n\n") {
+		t.Errorf("embedded output should start with %q:\n%s", "### On One Page", s)
+	}
+	for _, unwanted := range []string{"# Bookkeeping App OGSM", "**Team:**"} {
+		if strings.Contains(s, unwanted) {
+			t.Errorf("embedded output should not contain %q", unwanted)
+		}
+	}
+	for _, line := range strings.Split(s, "\n") {
+		if strings.HasPrefix(line, "# ") || strings.HasPrefix(line, "## ") {
+			t.Errorf("heading %q was not pushed down", line)
+		}
+	}
+	if !strings.Contains(s, "\n#### 1. ") {
+		t.Errorf("embedded output lacks %q", "#### 1. ")
+	}
+
+	opts.HeadingOffset = 0
+	flat, err := New().Render(o, opts)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !strings.HasPrefix(string(flat), "## On One Page\n\n") {
+		t.Errorf("OmitHeader alone should start with %q:\n%s", "## On One Page", flat)
+	}
+}

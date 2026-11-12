@@ -125,6 +125,8 @@ slides, err := marp.New().Render(o, render.OnePageOptions())
 
 `DefaultOptions` includes descriptions and actions; `OnePageOptions` leaves them out.
 
+To embed the Markdown document in a larger one, set `OmitHeader` to leave out the title and the metadata line under it, and `HeadingOffset` to push every heading down that many levels, capped at level 6; fenced code blocks are left alone. With `OmitHeader` and a `HeadingOffset` of 1, the sections that were level-two headings become level three. The Marp renderer ignores both options.
+
 ## Command Line
 
 ```bash

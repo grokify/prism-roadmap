@@ -17,6 +17,7 @@ import (
 	bscmarp "github.com/grokify/prism-roadmap/goals/bsc/render/marp"
 	"github.com/grokify/prism-roadmap/goals/dmaic"
 	dmaicrender "github.com/grokify/prism-roadmap/goals/dmaic/render"
+	dmaicmarkdown "github.com/grokify/prism-roadmap/goals/dmaic/render/markdown"
 	dmaicmarp "github.com/grokify/prism-roadmap/goals/dmaic/render/marp"
 	dmaicpandoc "github.com/grokify/prism-roadmap/goals/dmaic/render/pandoc"
 	"github.com/grokify/prism-roadmap/goals/mel"
@@ -400,9 +401,13 @@ Markdown document or Marp slides, and create a template.`,
 var dmaicCommands = frameworkCommands{
 	name: "dmaic", title: "DMAIC",
 	long: `Commands for DMAIC (Define, Measure, Analyze, Improve, Control) metrics
-documents: validate them, render them as Marp slides or Pandoc Markdown, and
-create a template.`,
+documents: validate them, render them as a Markdown document, Marp slides, or
+Pandoc Markdown, and create a template.`,
 	generators: []generator{
+		{format: "markdown", short: "Generate a Markdown document", long: "Render a DMAIC document as portable Markdown: an overview with each category's health, each category's metrics with detail on those that need attention, the root causes, and the improvement initiatives.",
+			run: rendered(dmaic.ReadFile, func(doc *dmaic.DMAICDocument, _ string) ([]byte, error) {
+				return dmaicmarkdown.New().Render(doc, dmaicrender.DefaultOptions())
+			})},
 		{format: "marp", short: "Generate Marp slides", long: "Render a DMAIC document as Marp slides.", theme: true,
 			run: rendered(dmaic.ReadFile, func(doc *dmaic.DMAICDocument, theme string) ([]byte, error) {
 				opts := dmaicrender.DefaultOptions()

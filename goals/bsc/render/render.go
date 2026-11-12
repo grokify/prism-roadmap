@@ -25,6 +25,13 @@ type Options struct {
 	IncludeStrategyMap bool
 	// IncludeInitiatives shows the initiatives.
 	IncludeInitiatives bool
+
+	// OmitHeader leaves out the document title and the metadata line under it,
+	// for a caller that embeds the output under a heading of its own. Markdown only.
+	OmitHeader bool
+	// HeadingOffset pushes every heading down this many levels (capped at level 6),
+	// for embedding the output inside a larger document. Markdown only.
+	HeadingOffset int
 }
 
 // DefaultOptions returns the full rendering: descriptions, the strategy map,
