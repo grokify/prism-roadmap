@@ -409,6 +409,57 @@
       "additionalProperties": false,
       "type": "object"
     },
+    "BSC": {
+      "properties": {
+        "$schema": {
+          "type": "string"
+        },
+        "metadata": {
+          "$ref": "#/$defs/Metadata"
+        },
+        "mission": {
+          "type": "string"
+        },
+        "vision": {
+          "type": "string"
+        },
+        "strategy": {
+          "type": "string"
+        },
+        "perspectives": {
+          "items": {
+            "$ref": "#/$defs/Perspective"
+          },
+          "type": "array"
+        },
+        "themes": {
+          "items": {
+            "$ref": "#/$defs/Theme"
+          },
+          "type": "array"
+        },
+        "objectives": {
+          "items": {
+            "$ref": "#/$defs/Objective"
+          },
+          "type": "array"
+        },
+        "measures": {
+          "items": {
+            "$ref": "#/$defs/Measure"
+          },
+          "type": "array"
+        },
+        "initiatives": {
+          "items": {
+            "$ref": "#/$defs/Initiative"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
     "BaselineMetric": {
       "properties": {
         "id": {
@@ -1270,6 +1321,9 @@
         },
         "ogsm": {
           "$ref": "#/$defs/OGSM"
+        },
+        "bsc": {
+          "$ref": "#/$defs/BSC"
         }
       },
       "additionalProperties": false,
@@ -1290,6 +1344,54 @@
           "$ref": "#/$defs/OKRDocument"
         },
         "alignedObjectives": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Initiative": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "objectiveIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "startDate": {
+          "type": "string"
+        },
+        "endDate": {
+          "type": "string"
+        },
+        "budget": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "dependencies": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "externalLinks": {
           "additionalProperties": {
             "type": "string"
           },
@@ -2196,6 +2298,27 @@
             "type": "string"
           },
           "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Perspective": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "kind": {
+          "type": "string"
+        },
+        "question": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
         }
       },
       "additionalProperties": false,
@@ -3138,6 +3261,24 @@
             "$ref": "#/$defs/Technology"
           },
           "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Theme": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "owner": {
+          "type": "string"
         }
       },
       "additionalProperties": false,
