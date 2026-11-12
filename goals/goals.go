@@ -2,8 +2,8 @@
 //
 // Organizations use OKR (Objectives and Key Results), V2MOM (Vision, Values,
 // Methods, Obstacles, Measures), VSEM (Vision, Strategy, Execution,
-// Metrics), or OGSM (Objective, Goals, Strategies, Measures) for strategic
-// planning. This package provides a unified interface
+// Metrics), OGSM (Objective, Goals, Strategies, Measures), or the Balanced
+// Scorecard for strategic planning. This package provides a unified interface
 // that supports each framework through a discriminated union pattern.
 //
 // Use Goals in PRDs and roadmaps to support organizations using either framework,
@@ -11,6 +11,7 @@
 package goals
 
 import (
+	"github.com/grokify/prism-roadmap/goals/bsc"
 	"github.com/grokify/prism-roadmap/goals/ogsm"
 	"github.com/grokify/prism-roadmap/goals/okr"
 	"github.com/grokify/prism-roadmap/goals/v2mom"
@@ -29,15 +30,17 @@ const (
 	FrameworkVSEM Framework = "vsem"
 	// FrameworkOGSM indicates OGSM (Objective, Goals, Strategies, Measures) framework.
 	FrameworkOGSM Framework = "ogsm"
+	// FrameworkBSC indicates the Balanced Scorecard framework.
+	FrameworkBSC Framework = "bsc"
 )
 
 // Goals is a framework-agnostic container for organizational goals.
-// It supports OKR, V2MOM, VSEM, and OGSM through a discriminated union
-// pattern. Exactly one of OKR, V2MOM, VSEM, or OGSM should be set based on
-// the Framework field.
+// It supports OKR, V2MOM, VSEM, OGSM, and the Balanced Scorecard through a
+// discriminated union pattern. Exactly one of OKR, V2MOM, VSEM, OGSM, or BSC
+// should be set based on the Framework field.
 type Goals struct {
 	// Framework identifies which goal system is in use ("okr", "v2mom",
-	// "vsem", or "ogsm").
+	// "vsem", "ogsm", or "bsc").
 	Framework Framework `json:"framework"`
 
 	// OKR contains OKR data when Framework is "okr".
@@ -51,6 +54,9 @@ type Goals struct {
 
 	// OGSM contains OGSM data when Framework is "ogsm".
 	OGSM *ogsm.OGSM `json:"ogsm,omitempty"`
+
+	// BSC contains Balanced Scorecard data when Framework is "bsc".
+	BSC *bsc.BSC `json:"bsc,omitempty"`
 }
 
 // NewOKR creates a Goals wrapper containing OKR data.
@@ -85,6 +91,14 @@ func NewOGSM(o *ogsm.OGSM) *Goals {
 	}
 }
 
+// NewBSC creates a Goals wrapper containing Balanced Scorecard data.
+func NewBSC(b *bsc.BSC) *Goals {
+	return &Goals{
+		Framework: FrameworkBSC,
+		BSC:       b,
+	}
+}
+
 // IsOKR returns true if this Goals uses the OKR framework.
 func (g *Goals) IsOKR() bool {
 	return g != nil && g.Framework == FrameworkOKR
@@ -103,4 +117,9 @@ func (g *Goals) IsVSEM() bool {
 // IsOGSM returns true if this Goals uses the OGSM framework.
 func (g *Goals) IsOGSM() bool {
 	return g != nil && g.Framework == FrameworkOGSM
+}
+
+// IsBSC returns true if this Goals uses the Balanced Scorecard framework.
+func (g *Goals) IsBSC() bool {
+	return g != nil && g.Framework == FrameworkBSC
 }

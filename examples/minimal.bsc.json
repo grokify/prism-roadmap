@@ -1,0 +1,34 @@
+{
+  "$schema": "../schema/bsc.schema.json",
+  "vision": "The bookkeeping app small businesses keep using",
+  "perspectives": [
+    { "id": "financial", "name": "Financial", "kind": "financial" },
+    { "id": "customer", "name": "Customer", "kind": "customer" },
+    { "id": "internal-process", "name": "Internal Process", "kind": "internal_process" },
+    { "id": "learning-growth", "name": "Learning and Growth", "kind": "learning_growth" }
+  ],
+  "objectives": [
+    {
+      "id": "cus-retention",
+      "name": "Keep small businesses using the app",
+      "perspectiveId": "customer"
+    },
+    {
+      "id": "ip-onboarding",
+      "name": "Get every new account to a reconciled month in its first week",
+      "perspectiveId": "internal-process",
+      "contributesTo": ["cus-retention"]
+    }
+  ],
+  "measures": [
+    {
+      "id": "m-retention-90",
+      "name": "Accounts still active at 90 days",
+      "objectiveId": "cus-retention",
+      "type": "lag",
+      "baseline": "52",
+      "target": "65",
+      "unit": "%"
+    }
+  ]
+}

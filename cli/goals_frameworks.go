@@ -11,6 +11,10 @@ import (
 
 	"github.com/spf13/cobra"
 
+	"github.com/grokify/prism-roadmap/goals/bsc"
+	bscrender "github.com/grokify/prism-roadmap/goals/bsc/render"
+	bscmarkdown "github.com/grokify/prism-roadmap/goals/bsc/render/markdown"
+	bscmarp "github.com/grokify/prism-roadmap/goals/bsc/render/marp"
 	"github.com/grokify/prism-roadmap/goals/dmaic"
 	dmaicrender "github.com/grokify/prism-roadmap/goals/dmaic/render"
 	dmaicmarp "github.com/grokify/prism-roadmap/goals/dmaic/render/marp"
@@ -33,7 +37,7 @@ import (
 
 // GoalFrameworks are the goal document formats the goals commands read, in
 // the order they are listed.
-var GoalFrameworks = []string{"okr", "v2mom", "vsem", "ogsm", "dmaic", "mel"}
+var GoalFrameworks = []string{"okr", "v2mom", "vsem", "ogsm", "bsc", "dmaic", "mel"}
 
 // GoalFinding is one validation result, whatever the framework.
 type GoalFinding struct {
@@ -45,15 +49,16 @@ type GoalFinding struct {
 func (f GoalFinding) String() string { return f.Path + ": " + f.Message }
 
 // DetectGoalFramework tells a goal document's framework from its top-level
-// fields: objectives (OKR), methods or values (V2MOM), a single objective
-// (OGSM), strategies (VSEM), categories (DMAIC), or results (MEL).
+// fields: perspectives (Balanced Scorecard, checked first because it also
+// has objectives), objectives (OKR), methods or values (V2MOM), a single
+// objective (OGSM), strategies (VSEM), categories (DMAIC), or results (MEL).
 func DetectGoalFramework(data []byte) (string, error) {
 	var fields map[string]json.RawMessage
 	if err := json.Unmarshal(data, &fields); err != nil {
 		return "", fmt.Errorf("parsing JSON: %w", err)
 	}
 	for _, c := range []struct{ field, framework string }{
-		{"objectives", "okr"}, {"methods", "v2mom"}, {"values", "v2mom"},
+		{"perspectives", "bsc"}, {"objectives", "okr"}, {"methods", "v2mom"}, {"values", "v2mom"},
 		{"objective", "ogsm"}, {"strategies", "vsem"}, {"categories", "dmaic"}, {"results", "mel"},
 	} {
 		if _, ok := fields[c.field]; ok {
@@ -117,6 +122,18 @@ func ValidateGoals(data []byte, framework string, strict bool) (string, []GoalFi
 			opts = ogsm.StrictValidationOptions()
 		}
 		for _, e := range o.Validate(opts) {
+			out = append(out, GoalFinding{e.Path, e.Message, e.IsError})
+		}
+	case "bsc":
+		b, err := bsc.Parse(data)
+		if err != nil {
+			return framework, nil, err
+		}
+		opts := bsc.DefaultValidationOptions()
+		if strict {
+			opts = bsc.StrictValidationOptions()
+		}
+		for _, e := range b.Validate(opts) {
 			out = append(out, GoalFinding{e.Path, e.Message, e.IsError})
 		}
 	case "dmaic":
@@ -360,6 +377,26 @@ them, render them as a Markdown document or Marp slides, and create a template.`
 	template: func(name string) any { return OGSMTemplate(name) },
 }
 
+var bscCommands = frameworkCommands{
+	name: "bsc", title: "Balanced Scorecard",
+	long: `Commands for Balanced Scorecards (perspectives, strategic objectives and
+their strategy map, measures, and initiatives): validate them, render them as a
+Markdown document or Marp slides, and create a template.`,
+	generators: []generator{
+		{format: "markdown", short: "Generate a Markdown document", long: "Render a Balanced Scorecard as a Markdown document: the mission, vision, and strategy, the strategy map as a Mermaid diagram, the strategic themes, the scorecard by perspective, and the initiatives.",
+			run: rendered(bsc.ReadFile, func(b *bsc.BSC, _ string) ([]byte, error) {
+				return bscmarkdown.New().Render(b, bscrender.DefaultOptions())
+			})},
+		{format: "marp", short: "Generate Marp slides", long: "Render a Balanced Scorecard as Marp slides: the mission, vision, and strategy, the strategy map, a slide per perspective, and the initiatives.", theme: true,
+			run: rendered(bsc.ReadFile, func(b *bsc.BSC, theme string) ([]byte, error) {
+				opts := bscrender.DefaultOptions()
+				opts.Theme = theme
+				return bscmarp.New().Render(b, opts)
+			})},
+	},
+	template: func(name string) any { return BSCTemplate(name) },
+}
+
 var dmaicCommands = frameworkCommands{
 	name: "dmaic", title: "DMAIC",
 	long: `Commands for DMAIC (Define, Measure, Analyze, Improve, Control) metrics
@@ -453,6 +490,44 @@ func OGSMTemplate(name string) *ogsm.OGSM {
 		Owner: "Action owner", Status: ogsm.ActionPlanned,
 	}}
 	return o
+}
+
+// BSCTemplate returns a small Balanced Scorecard to start from: the four
+// classic perspectives with an objective each, linked from learning and
+// growth up to the financial result, a measure on each, and an initiative.
+// It meets the strict options.
+func BSCTemplate(name string) *bsc.BSC {
+	b := bsc.New(slug(name), name)
+	b.Vision = "What the organization wants to become"
+	b.Strategy = "How it will get there, in a sentence or two"
+	due := time.Now().AddDate(1, 0, 0).Format(time.DateOnly)
+	steps := []struct{ id, perspective, name, measureType string }{
+		{"financial-1", "financial", "The financial result the strategy delivers", bsc.TypeLag},
+		{"customer-1", "customer", "What customers must experience", bsc.TypeLag},
+		{"process-1", "internal-process", "The process the organization must excel at", bsc.TypeLead},
+		{"learning-1", "learning-growth", "The capability the organization must build", bsc.TypeLead},
+	}
+	ids := make([]string, 0, len(steps))
+	above := ""
+	for i, st := range steps {
+		o := bsc.Objective{ID: st.id, Name: st.name, PerspectiveID: st.perspective, Owner: "Objective owner"}
+		if above != "" {
+			o.ContributesTo = []string{above}
+		}
+		above = st.id
+		ids = append(ids, st.id)
+		b.Objectives = append(b.Objectives, o)
+		b.Measures = append(b.Measures, bsc.Measure{
+			ID: fmt.Sprintf("measure-%d", i+1), Name: "How you will know: " + strings.ToLower(st.name[:1]) + st.name[1:],
+			ObjectiveID: st.id, Type: st.measureType, Owner: "Measure owner", Baseline: "0", Target: "1",
+			Direction: bsc.DirectionIncrease, DueDate: due, Frequency: "Quarterly",
+		})
+	}
+	b.Initiatives = []bsc.Initiative{{
+		ID: "initiative-1", Name: "The first initiative that closes the gap", ObjectiveIDs: ids,
+		Owner: "Initiative owner", Status: bsc.InitiativePlanned,
+	}}
+	return b
 }
 
 // DMAICTemplate returns a small DMAIC metrics document to start from.
