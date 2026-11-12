@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/grokify/prism-roadmap/goals/internal/mdshift"
 	"github.com/grokify/prism-roadmap/goals/vsem"
 	"github.com/grokify/prism-roadmap/goals/vsem/render"
 )
@@ -44,9 +45,11 @@ func (r *Renderer) Render(v *vsem.VSEM, opts *render.Options) ([]byte, error) {
 	if v.Metadata != nil && v.Metadata.Name != "" {
 		title = v.Metadata.Name
 	}
-	fmt.Fprintf(&b, "# %s\n\n", title)
-	if line := metadataLine(v.Metadata); line != "" {
-		fmt.Fprintf(&b, "%s\n\n", line)
+	if !opts.OmitHeader {
+		fmt.Fprintf(&b, "# %s\n\n", title)
+		if line := metadataLine(v.Metadata); line != "" {
+			fmt.Fprintf(&b, "%s\n\n", line)
+		}
 	}
 
 	b.WriteString("## Vision\n\n")
@@ -95,7 +98,7 @@ func (r *Renderer) Render(v *vsem.VSEM, opts *render.Options) ([]byte, error) {
 		writeMetrics(&b, metrics, opts)
 	}
 
-	return []byte(strings.TrimRight(b.String(), "\n") + "\n"), nil
+	return []byte(mdshift.Shift(strings.TrimRight(b.String(), "\n")+"\n", opts.HeadingOffset)), nil
 }
 
 func metadataLine(m *vsem.Metadata) string {

@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/grokify/prism-roadmap/goals/internal/mdshift"
 	"github.com/grokify/prism-roadmap/goals/mel"
 	"github.com/grokify/prism-roadmap/goals/mel/render"
 )
@@ -36,13 +37,18 @@ func (r *Renderer) Render(p *mel.Plan, opts *render.Options) ([]byte, error) {
 	if p == nil {
 		return nil, fmt.Errorf("markdown: nil MEL plan")
 	}
+	if opts == nil {
+		opts = render.DefaultOptions()
+	}
 	var b strings.Builder
-	fmt.Fprintf(&b, "# %s\n\n", Title(p))
-	if line := metadataLine(p.Metadata); line != "" {
-		fmt.Fprintf(&b, "%s\n\n", line)
+	if !opts.OmitHeader {
+		fmt.Fprintf(&b, "# %s\n\n", Title(p))
+		if line := metadataLine(p.Metadata); line != "" {
+			fmt.Fprintf(&b, "%s\n\n", line)
+		}
 	}
 	b.Write(Body(p, opts))
-	return []byte(strings.TrimRight(b.String(), "\n") + "\n"), nil
+	return []byte(mdshift.Shift(strings.TrimRight(b.String(), "\n")+"\n", opts.HeadingOffset)), nil
 }
 
 // Title returns the plan's name, or "MEL Plan".

@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/grokify/prism-roadmap/goals/internal/mdshift"
 	"github.com/grokify/prism-roadmap/goals/ogsm"
 	"github.com/grokify/prism-roadmap/goals/ogsm/render"
 )
@@ -39,9 +40,11 @@ func (r *Renderer) Render(o *ogsm.OGSM, opts *render.Options) ([]byte, error) {
 		opts = render.DefaultOptions()
 	}
 	var b strings.Builder
-	fmt.Fprintf(&b, "# %s\n\n", Title(o))
-	if line := metadataLine(o.Metadata); line != "" {
-		fmt.Fprintf(&b, "%s\n\n", line)
+	if !opts.OmitHeader {
+		fmt.Fprintf(&b, "# %s\n\n", Title(o))
+		if line := metadataLine(o.Metadata); line != "" {
+			fmt.Fprintf(&b, "%s\n\n", line)
+		}
 	}
 
 	b.WriteString("## On One Page\n\n")
@@ -122,7 +125,7 @@ func (r *Renderer) Render(o *ogsm.OGSM, opts *render.Options) ([]byte, error) {
 			b.WriteString("\n")
 		}
 	}
-	return []byte(strings.TrimRight(b.String(), "\n") + "\n"), nil
+	return []byte(mdshift.Shift(strings.TrimRight(b.String(), "\n")+"\n", opts.HeadingOffset)), nil
 }
 
 // OnePage renders the classic one-page OGSM: the objective, the goals, the
