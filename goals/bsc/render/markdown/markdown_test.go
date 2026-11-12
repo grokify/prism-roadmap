@@ -105,3 +105,45 @@ func TestHelpers(t *testing.T) {
 		t.Errorf("Purpose = %v", got)
 	}
 }
+
+func TestRenderEmbedded(t *testing.T) {
+	b, err := bsc.ReadFile("../../../../examples/product.bsc.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	full, err := New().Render(b, render.DefaultOptions())
+	if err != nil {
+		t.Fatal(err)
+	}
+	opts := render.DefaultOptions()
+	opts.OmitHeader = true
+	opts.HeadingOffset = 1
+	out, err := New().Render(b, opts)
+	if err != nil {
+		t.Fatal(err)
+	}
+	s := string(out)
+	if strings.Contains(s, "# "+Title(b)+"\n") {
+		t.Errorf("embedded output keeps the title %q", Title(b))
+	}
+	inFence := false
+	for _, line := range strings.Split(s, "\n") {
+		if strings.HasPrefix(line, "```") {
+			inFence = !inFence
+		}
+		if !inFence && (strings.HasPrefix(line, "# ") || strings.HasPrefix(line, "## ")) {
+			t.Errorf("heading %q was not pushed down", line)
+		}
+	}
+	if !strings.Contains(s, "### ") {
+		t.Error("embedded output has no level-3 heading")
+	}
+	opts.OmitHeader, opts.HeadingOffset = false, 0
+	again, err := New().Render(b, opts)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if string(again) != string(full) {
+		t.Error("zero options changed the output")
+	}
+}

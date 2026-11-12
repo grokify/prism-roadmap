@@ -11,6 +11,7 @@ import (
 
 	"github.com/grokify/prism-roadmap/goals/bsc"
 	"github.com/grokify/prism-roadmap/goals/bsc/render"
+	"github.com/grokify/prism-roadmap/goals/internal/mdshift"
 )
 
 // Renderer implements render.Renderer for Markdown.
@@ -40,9 +41,11 @@ func (r *Renderer) Render(b *bsc.BSC, opts *render.Options) ([]byte, error) {
 		opts = render.DefaultOptions()
 	}
 	var s strings.Builder
-	fmt.Fprintf(&s, "# %s\n\n", Title(b))
-	if line := metadataLine(b.Metadata); line != "" {
-		fmt.Fprintf(&s, "%s\n\n", line)
+	if !opts.OmitHeader {
+		fmt.Fprintf(&s, "# %s\n\n", Title(b))
+		if line := metadataLine(b.Metadata); line != "" {
+			fmt.Fprintf(&s, "%s\n\n", line)
+		}
 	}
 
 	if purpose := Purpose(b); len(purpose) > 0 {
@@ -126,7 +129,7 @@ func (r *Renderer) Render(b *bsc.BSC, opts *render.Options) ([]byte, error) {
 		}
 		s.WriteString("\n")
 	}
-	return []byte(strings.TrimRight(s.String(), "\n") + "\n"), nil
+	return []byte(mdshift.Shift(strings.TrimRight(s.String(), "\n")+"\n", opts.HeadingOffset)), nil
 }
 
 // StrategyMap renders the strategy map as a Mermaid flowchart in a fenced
