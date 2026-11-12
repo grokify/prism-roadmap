@@ -156,4 +156,4 @@ doc.Goals = &prd.GoalsAlignment{
 - [PRD Documentation](../documents/prd.md) - Full PRD structure reference
 - [Scoring](../features/scoring.md) - Understand the scoring system
 - [Views](../views/pm-view.md) - All available output formats
-- [Goals Integration](../goals/overview.md) - OKR, V2MOM, VSEM, and OGSM alignment
+- [Goals Integration](../goals/overview.md) - OKR, V2MOM, VSEM, OGSM, and Balanced Scorecard alignment

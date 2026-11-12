@@ -62,6 +62,7 @@ This library provides comprehensive, machine-readable formats for planning docum
 - **V2MOM** - Vision, Values, Methods, Obstacles, Measures: Salesforce-style goal alignment
 - **VSEM** - Vision, Strategy, Execution, Metrics: a one-page plan with the resources each strategy commits and an accountable owner for every metric
 - **OGSM** - Objective, Goals, Strategies, Measures: one objective in words, goals in numbers, the strategies that reach them, and the measures that track each strategy
+- **Balanced Scorecard** - Strategic objectives in financial, customer, internal process, and learning and growth perspectives, linked cause to effect in a strategy map, with lead and lag measures and the initiatives that close the gaps
 - **DMAIC** - Define, Measure, Analyze, Improve, Control: Six Sigma metrics with control limits, root causes, and improvement initiatives
 - **MEL** - Monitoring, Evaluation, and Learning: a results framework with indicator reference sheets, assumptions to monitor, an evaluation plan, a learning agenda, and a review and reporting schedule
 
@@ -296,7 +297,7 @@ Each document type supports:
 - JSON serialization with Go types (camelCase field names)
 - Markdown generation with Pandoc-compatible YAML frontmatter
 - Validation of required fields
-- Framework-agnostic goals (OKR, V2MOM, VSEM, or OGSM)
+- Framework-agnostic goals (OKR, V2MOM, VSEM, OGSM, or Balanced Scorecard)
 
 ## Installation
 
@@ -336,19 +337,20 @@ splan requirements mrd validate <file.json>   # Validate MRD structure
 splan requirements trd generate <file.json>   # Generate markdown from TRD
 splan requirements trd validate <file.json>   # Validate TRD structure
 
-# Goal framework commands (okr, v2mom, vsem, ogsm, dmaic, mel)
+# Goal framework commands (okr, v2mom, vsem, ogsm, bsc, dmaic, mel)
 splan goals validate <file.json>               # Validate any goals file; the framework is detected
 splan goals validate <file.json> --strict      # Treat gaps as errors
 splan goals init --framework=mel -o plan.json  # Create a template for any framework
 splan goals vsem generate marp <file.json>     # VSEM as Marp slides (also: markdown)
 splan goals ogsm generate markdown <file.json> # OGSM with the one-page table (also: marp)
+splan goals bsc generate markdown <file.json>  # Balanced Scorecard with its strategy map (also: marp)
 splan goals mel generate markdown <file.json>  # MEL plan as Markdown (also: pandoc, --summary)
 splan goals dmaic generate pandoc <file.json>  # DMAIC as Pandoc Markdown (also: marp)
 
 # Utility commands
 splan merge file1.json file2.json -o out.json # Merge JSON files
 splan schema generate                          # Generate all JSON schemas
-splan schema generate --type mel -o mel.schema.json # One schema: prd, okr, v2mom, vsem, ogsm, dmaic, or mel
+splan schema generate --type mel -o mel.schema.json # One schema: prd, okr, v2mom, vsem, ogsm, bsc, dmaic, or mel
 ```
 
 **Shorthand:** Use `req` instead of `requirements` (e.g., `splan req prd generate`).
@@ -450,7 +452,7 @@ func main() {
 
 ### Goals (OKR, V2MOM, VSEM, and DMAIC)
 
-The `goals` package provides a framework-agnostic interface for OKR, V2MOM, VSEM, and OGSM; see the [VSEM guide](docs/goals/vsem.md) and the [OGSM guide](docs/goals/ogsm.md). `goals/dmaic` adds DMAIC metrics documents with Six Sigma control limits, root causes, and improvement initiatives; see the [DMAIC guide](docs/goals/dmaic.md). `goals/mel` adds MEL plans; see the [MEL guide](docs/goals/mel.md).
+The `goals` package provides a framework-agnostic interface for OKR, V2MOM, VSEM, OGSM, and the Balanced Scorecard; see the [VSEM guide](docs/goals/vsem.md), the [OGSM guide](docs/goals/ogsm.md), and the [Balanced Scorecard guide](docs/goals/bsc.md). `goals/dmaic` adds DMAIC metrics documents with Six Sigma control limits, root causes, and improvement initiatives; see the [DMAIC guide](docs/goals/dmaic.md). `goals/mel` adds MEL plans; see the [MEL guide](docs/goals/mel.md).
 
 ```go
 import (
