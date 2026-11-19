@@ -10,7 +10,7 @@ require (
 	github.com/grokify/structureddocs v0.1.0
 	github.com/invopop/jsonschema v0.14.0
 	github.com/modelcontextprotocol/go-sdk v1.8.0
-	github.com/plexusone/structured-evaluation v0.15.0
+	github.com/plexusone/structured-evaluation v0.16.0
 	github.com/spf13/cobra v1.10.2
 	github.com/spf13/pflag v1.1.0
 	gopkg.in/yaml.v3 v3.0.1

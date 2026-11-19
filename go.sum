@@ -38,8 +38,8 @@ github.com/pb33f/go-yaml v0.1.1/go.mod h1:QvWdkHP5VjFYAeHMQUkaPQqREaQnBNOXmWzAjN
 github.com/pb33f/ordered-map/v2 v2.3.2 h1:wDyaZ2Pv9QLh64X4utCeD5Zoi9nIv2aW3lwv172O5PQ=
 github.com/pb33f/ordered-map/v2 v2.3.2/go.mod h1:1OhFrXu3OYw3kM+FXF+Ug3ugmmZ9LE8z0JfQMLvtV0w=
 github.com/pkg/diff v0.0.0-20210226163009-20ebb0f2a09e/go.mod h1:pJLUxLENpZxwdsKMEsNbx1VGcRFpLqf3715MtcvvzbA=
-github.com/plexusone/structured-evaluation v0.15.0 h1:g7iZspYk7KXCBA8cop593qFAkm9hFyNOlL6JzUu+4os=
-github.com/plexusone/structured-evaluation v0.15.0/go.mod h1:OTnHiQTahzDllybpy7qrPfrjhJVN6RKHZ06awY68PRE=
+github.com/plexusone/structured-evaluation v0.16.0 h1:voJX1VTb6aBe3CG1KUivW2GeMDThL3g+CIS3tnE0PNA=
+github.com/plexusone/structured-evaluation v0.16.0/go.mod h1:8QPMyL3n8P7N7kmYVCBH0tNIbqqh6AbMUGHSmQVGnPA=
 github.com/rogpeppe/go-internal v1.9.0/go.mod h1:WtVeX8xhTBvf0smdhujwtBcq4Qrzq/fJaraNFVN+nFs=
 github.com/rogpeppe/go-internal v1.16.0 h1:O9DK+vNMDVGLr2BeZqmpLeMjiMNkuXfcqntWbZV6S5g=
 github.com/rogpeppe/go-internal v1.16.0/go.mod h1:DrUVZyrJU+txYW5/1kwtXQSMFio52ZOxX7yM1VHvnxs=
