@@ -4,7 +4,7 @@ go 1.26.5
 
 require (
 	github.com/ProductBuildersHQ/compass-rice v0.4.0
-	github.com/grokify/oscompat v0.13.0
+	github.com/grokify/oscompat v0.14.0
 	github.com/grokify/priority-frameworks v0.4.0
 	github.com/grokify/prism-core v0.6.0
 	github.com/grokify/structureddocs v0.1.0
